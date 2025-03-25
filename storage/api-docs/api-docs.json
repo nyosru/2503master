@@ -1,0 +1,30 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My API",
+        "description": "Описание API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://example.com/api"
+        },
+        {
+            "url": "https://example.local/api"
+        }
+    ],
+    "paths": {
+        "/api/example": {
+            "get": {
+                "summary": "Пример запроса",
+                "description": "Получение примера",
+                "operationId": "58460a22e78af2ea52798f37fe467583",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ"
+                    }
+                }
+            }
+        }
+    }
+}
