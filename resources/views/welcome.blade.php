@@ -4,7 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>{{ config('app.name', 'ПроцессМастер.рф') }}</title>
+
+    <link rel="icon" href="/favicons/favicon.ico"> <!-- 32×32 -->
+{{--    <link rel="icon" href="images/favicons/icon.svg" type="image/svg+xml">--}}
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png">  <!-- 180×180 -->
+    <link rel="manifest" href="/favicons/site.webmanifest">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
