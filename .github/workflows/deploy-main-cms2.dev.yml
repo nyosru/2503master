@@ -37,7 +37,7 @@ jobs:
 
       - name: Обновление кода на сервере
         run: |
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
+          ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
             cd ${{ env.DIR }}
             git fetch --all
             git reset --hard origin/main
@@ -49,7 +49,7 @@ jobs:
 
       - name: composer & migrate
         run: |
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
+          ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
             cd ${{ env.DIR }}
             #/usr/local/php/cgi/8.2/bin/php composer.phar i --no-dev
             /usr/local/php/cgi/8.2/bin/php composer.phar i
