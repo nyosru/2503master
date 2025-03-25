@@ -28,8 +28,8 @@ jobs:
       - name: Настройка SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/proc-master_key
+          chmod 600 ~/.ssh/proc-master_key
           echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
 #
 #          # Добавляем публичный ключ хоста в known_hosts для предотвращения ошибки "Host key verification failed"
