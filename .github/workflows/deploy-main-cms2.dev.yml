@@ -52,7 +52,7 @@ jobs:
           ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
             cd ${{ env.DIR }}
             #/usr/local/php/cgi/8.2/bin/php composer.phar i --no-dev
-            docker exec 2503master php composer i
+            docker exec 2503master composer i
             docker exec 2503master php artisan migrate
           EOF
 
