@@ -64,7 +64,6 @@
 {{--                <button class="bg-blue-300 rounded px-3 py-1">Услуги, посмотреть!</button>--}}
             </div>
 
-
             {{--            <div class="w-full flex flex-row--}}
             {{--            space-x-5--}}
             {{--            ">--}}
