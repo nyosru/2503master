@@ -17,9 +17,9 @@
         <div class="container-fluid"> <!--begin::Row-->
             <div class="flex flex-row space-x-4">
                 @if(1==2)
-                <div>
+                    <div>
                         <livewire:Cms2.App.Breadcrumb :menu="[['route'=>'leed','name'=>'Лиды']]"/>
-                </div>
+                    </div>
                 @endif
                 <div>
 
@@ -206,17 +206,16 @@
                 <ul class="space-y-1">
 
 
-
                     @if($column->can_create)
                         @permission('р.Лиды / добавить лида')
-                                                    <li>
-                        <livewire:Cms2.Leed.AddLeedFormSimple :column="$column"/>
-                                                    </li>
+                        <li>
+                            <livewire:Cms2.Leed.AddLeedFormSimple :column="$column"/>
+                        </li>
                         @endpermission
                     @endif
 
 
-                @foreach($column->records as $record)
+                    @foreach($column->records as $record)
 
                         {{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($record->toArray()) }}</pre>--}}
 
@@ -385,14 +384,17 @@
                                                     @if( empty($record->client_id) )
                                                         <div class="
                                                         text-gray-600
-                                                        bg-gray-200 rounded border-gray-500 border p-1 my-1">Добавте клиента</div>
+                                                        bg-gray-200 rounded border-gray-500 border p-1 my-1">Добавте
+                                                            клиента
+                                                        </div>
                                                     @endif
                                                     @if( empty($record->order_id) )
                                                         <div class="
                                                         text-gray-600
                                                         bg-gray-200 rounded border-gray-500 border p-1 my-1
 {{--                                                        bg-yellow-200 p-1 my-1--}}
-                                                        ">Добавте заказ</div>
+                                                        ">Добавте заказ
+                                                        </div>
                                                     @endif
                                                 @else
                                                     <livewire:cms2.leed.item-transfer-form :lead="$record"
