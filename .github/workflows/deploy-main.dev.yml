@@ -35,6 +35,19 @@ jobs:
             git reset --hard ${{ env.GIT_BRANCH }}
 
 
+      - name: "refresh git & restart docker"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.VPS_HOST }}
+          username: ${{ env.VPS_USERNAME }}
+          #key: ${{ secrets.DEPLOY_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ env.DIR }}
+            docker exec -it 2503master composer i
+            docker exec -it 2503master php artisan migrate
+
+
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
