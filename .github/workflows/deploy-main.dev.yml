@@ -32,6 +32,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ env.VPS_IP }} >> ~/.ssh/known_hosts
 
+
       - name: deploy
         run: |
           ssh ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
