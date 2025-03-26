@@ -43,8 +43,8 @@ jobs:
             #echo "Checking current Git remote..."
             #git remote -v
 
-            #echo "Setting remote to SSH..."
-            #            git remote set-url origin git@github.com:${{ env.GITHUB_USERNAME }}/${{ env.GIT_REPO }}
+            echo "Setting remote to SSH..."
+            git remote set-url origin git@github.com:${{ env.GITHUB_USERNAME }}/${{ env.GIT_REPO }}
 
             echo "Fetching latest changes..."
             git fetch --all
