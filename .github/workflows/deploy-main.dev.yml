@@ -16,6 +16,7 @@ on:
       - main  # Замените на нужную ветку
 
 jobs:
+
   deploy:
     runs-on: ubuntu-latest
 
@@ -34,6 +35,11 @@ jobs:
             git fetch --all
             git reset --hard ${{ env.GIT_BRANCH }}
 
+  up:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+
 
       - name: "update-laravel"
         uses: appleboy/ssh-action@master
@@ -45,6 +51,39 @@ jobs:
           script: |
             docker exec 2503master composer i
             docker exec 2503master php artisan migrate
+
+
+
+  sms_start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: send telega
+        uses: appleboy/telegram-action@master
+        with:
+          # to: ${{ secrets.TELEGRAM_TO }}
+          to: 360209578, phpcat,
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            🐥🐥🐥 ${{ github.repository }}
+            ${{ github.event_name }} > ${{ github.event.head_commit.message }}
+            👨🏻‍💻 ${{github.actor}} (${{ github.run_id }})
+
+  sms_end00:
+    runs-on: ubuntu-latest
+    # needs: [deploy_composer, deploy_npm]
+    needs: up
+    steps:
+      - name: send telega
+        uses: appleboy/telegram-action@master
+        with:
+          # to: ${{ secrets.TELEGRAM_TO }}
+          to: 360209578, phpcat,
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            🍀🍀🍀 ${{ github.repository }} 👨🏻‍💻 ${{github.actor}} > ${{ github.run_id }}
+            ${{ github.event_name }} > ${{ github.event.head_commit.message }}
+            завершили норм
+
 
 #
 #      - name: Checkout Repository
