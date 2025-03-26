@@ -25,17 +25,20 @@ jobs:
       - name: Checkout репозитория
         uses: actions/checkout@v4
 
+      - name: Debug VPS_HOST
+        run: echo "VPS_HOST is ${{ env.VPS_IP }}"
+
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ env.VPS_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ env.VPS_IP }} >> ~/.ssh/known_hosts
 
 
       - name: deploy
         run: |
-          ssh ${{ env.VPS_USER }}@${{ env.VPS_HOST }} << 'EOF'
+          ssh ${{ env.VPS_USER }}@${{ env.VPS_IP }} << 'EOF'
           cd ${{ env.DIR }}
           git fetch --all
           git reset --hard origin/main
