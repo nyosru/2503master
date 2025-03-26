@@ -20,6 +20,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+
+      - name: "refresh git & restart docker"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.VPS_HOST }}
+          username: ${{ env.VPS_USERNAME }}
+          #key: ${{ secrets.DEPLOY_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ env.DIR }}
+            git fetch --all
+            git reset --hard ${{ env.GIT_BRANCH }}
+
+
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
