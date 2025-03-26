@@ -40,8 +40,11 @@ jobs:
             echo "Changing directory to /home/proc-master..."
             cd ${{ env.DIR }} || exit 1
 
-            #echo "Checking current Git remote..."
+            echo "Checking current Git remote..."
             git remote -v
+
+            echo "Checking SSH Access to GitHub..."
+            ssh -T git@github.com
 
             echo "Setting remote to SSH..."
             git remote set-url origin git@github.com:${{ env.GITHUB_USERNAME }}/${{ env.GIT_REPO }}
