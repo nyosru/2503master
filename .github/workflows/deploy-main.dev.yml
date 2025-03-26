@@ -4,7 +4,7 @@ name: Deploy to cms2dev2
 env:
   VPS_IP: 91.218.230.97
   VPS_USERNAME: root
-  DIR: ~/home/proc-master
+  DIR: /home/proc-master
   GIT_BRANCH: origin/main
   Username: nyosru
 
