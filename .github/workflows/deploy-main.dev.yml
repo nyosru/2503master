@@ -8,13 +8,10 @@ env:
   GIT_BRANCH: origin/main
   Username: nyosru
 
-
 on:
   push:
     branches:
       - main
-
-
 
 jobs:
 
@@ -43,10 +40,10 @@ jobs:
           git fetch --all
           git reset --hard origin/main
 
-          docker exec -it 2503master php artisan migrate
-          docker exec -it 2503master php artisan npm i && npm run build
-          docker exec -it 2503master php artisan cache:clear
-          docker exec -it 2503master php artisan config:cache
+#          docker exec -it 2503master php artisan migrate
+#          docker exec -it 2503master php artisan npm i && npm run build
+#          docker exec -it 2503master php artisan cache:clear
+#          docker exec -it 2503master php artisan config:cache
           EOF
 
   sms_start:
