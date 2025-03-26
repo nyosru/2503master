@@ -38,7 +38,7 @@ jobs:
 
       - name: deploy
         run: |
-          ssh ${{ env.VPS_USER }}@${{ env.VPS_IP }} << 'EOF'
+          ssh ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
           cd ${{ env.DIR }}
           git fetch --all
           git reset --hard origin/main
