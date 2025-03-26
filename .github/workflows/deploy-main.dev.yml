@@ -35,7 +35,7 @@ jobs:
             git reset --hard ${{ env.GIT_BRANCH }}
 
 
-      - name: "refresh git & restart docker"
+      - name: "update-laravel"
         uses: appleboy/ssh-action@master
         with:
           host: ${{ env.VPS_HOST }}
@@ -43,8 +43,8 @@ jobs:
           #key: ${{ secrets.DEPLOY_KEY }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker exec -it 2503master composer i
-            docker exec -it 2503master php artisan migrate
+            docker exec 2503master composer i
+            docker exec 2503master php artisan migrate
 
 #
 #      - name: Checkout Repository
