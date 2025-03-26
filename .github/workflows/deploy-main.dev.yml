@@ -38,13 +38,13 @@ jobs:
         run: |
           ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no root@${{ env.VPS_HOST }} << 'EOF'
             echo "Changing directory to /home/proc-master..."
-            cd /home/proc-master || exit 1
+            cd ${{ env.DIR }} || exit 1
 
-            echo "Checking current Git remote..."
-            git remote -v
+            #echo "Checking current Git remote..."
+            #git remote -v
 
-            echo "Setting remote to SSH..."
-            git remote set-url origin git@github.com:${{ env.GITHUB_USERNAME }}/${{ env.GIT_REPO }}
+            #echo "Setting remote to SSH..."
+            #            git remote set-url origin git@github.com:${{ env.GITHUB_USERNAME }}/${{ env.GIT_REPO }}
 
             echo "Fetching latest changes..."
             git fetch --all
