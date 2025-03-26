@@ -33,18 +33,27 @@ jobs:
           chmod 600 ~/.ssh/proc-master_key
           ssh-keyscan -H ${{ env.VPS_IP }} >> ~/.ssh/known_hosts
 
-
-      - name: deploy
+      - name: Deploy to VPS
         run: |
-          ssh ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
-          cd ${{ env.DIR }}
-          git fetch --all
-          git reset --hard origin/main
-          #          docker exec -it 2503master php artisan migrate
-          #          docker exec -it 2503master php artisan npm i && npm run build
-          #          docker exec -it 2503master php artisan cache:clear
-          #          docker exec -it 2503master php artisan config:cache
+          ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
+            cd /home/proc-master
+            git fetch --all
+            git reset --hard origin/main
+            # Добавьте команду перезапуска сервиса, если нужно
+            # systemctl restart myservice
           EOF
+
+#      - name: deploy
+#        run: |
+#          ssh ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
+#          cd ${{ env.DIR }}
+#          git fetch --all
+#          git reset --hard origin/main
+#          #          docker exec -it 2503master php artisan migrate
+#          #          docker exec -it 2503master php artisan npm i && npm run build
+#          #          docker exec -it 2503master php artisan cache:clear
+#          #          docker exec -it 2503master php artisan config:cache
+#          EOF
 
   sms_start:
     runs-on: ubuntu-latest
