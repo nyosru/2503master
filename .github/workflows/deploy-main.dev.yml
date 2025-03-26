@@ -43,51 +43,50 @@ jobs:
           #key: ${{ secrets.DEPLOY_KEY }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ${{ env.DIR }}
             docker exec -it 2503master composer i
             docker exec -it 2503master php artisan migrate
 
-
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Debug SSH
-        run: |
-          echo "Checking SSH connection..."
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/proc-master_key
-          echo "" > ~/.ssh/config
-          chmod 600 ~/.ssh/proc-master_key
-          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-          ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no root@${{ env.VPS_HOST }} "echo 'SSH to VPS successful'"
-
-
-      - name: Set Correct Git Remote URL
-        run: |
-          git remote set-url origin git@github.com:nyosru/proc-master.git
-
-      - name: Deploy Code to VPS
-        run: |
-          ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no root@${{ env.VPS_HOST }} << 'EOF'
-            echo "Changing directory to /home/proc-master..."
-            cd ${{ env.DIR }} || exit 1
-
-            echo "Checking current Git remote..."
-            git remote -v
-
-            echo "Checking SSH Access to GitHub..."
-            ssh -T git@github.com
-
-            echo "Setting remote to SSH..."
-            git remote set-url origin git@github.com:${{ env.GITHUB_USERNAME }}/${{ env.GIT_REPO }}
-
-            echo "Fetching latest changes..."
-            git fetch --all
-
-            echo "Resetting to latest commit..."
-            git reset --hard origin/main
-
-            echo "Deployment complete!"
-          EOF
+#
+#      - name: Checkout Repository
+#        uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      - name: Debug SSH
+#        run: |
+#          echo "Checking SSH connection..."
+#          mkdir -p ~/.ssh
+#          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/proc-master_key
+#          echo "" > ~/.ssh/config
+#          chmod 600 ~/.ssh/proc-master_key
+#          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+#          ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no root@${{ env.VPS_HOST }} "echo 'SSH to VPS successful'"
+#
+#
+#      - name: Set Correct Git Remote URL
+#        run: |
+#          git remote set-url origin git@github.com:nyosru/proc-master.git
+#
+#      - name: Deploy Code to VPS
+#        run: |
+#          ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no root@${{ env.VPS_HOST }} << 'EOF'
+#            echo "Changing directory to /home/proc-master..."
+#            cd ${{ env.DIR }} || exit 1
+#
+#            echo "Checking current Git remote..."
+#            git remote -v
+#
+#            echo "Checking SSH Access to GitHub..."
+#            ssh -T git@github.com
+#
+#            echo "Setting remote to SSH..."
+#            git remote set-url origin git@github.com:${{ env.GITHUB_USERNAME }}/${{ env.GIT_REPO }}
+#
+#            echo "Fetching latest changes..."
+#            git fetch --all
+#
+#            echo "Resetting to latest commit..."
+#            git reset --hard origin/main
+#
+#            echo "Deployment complete!"
+#          EOF
