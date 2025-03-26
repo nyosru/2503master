@@ -29,8 +29,8 @@ jobs:
         run: |
           echo "Checking SSH connection..."
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/proc-master2_key
-          chmod 600 ~/.ssh/proc-master2_key
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/proc-master_key
+          chmod 600 ~/.ssh/proc-master_key
           ssh-keyscan -H github.com >> ~/.ssh/known_hosts
           ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no root@${{ env.VPS_HOST }} "echo 'SSH to VPS successful'"
 
