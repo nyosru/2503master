@@ -4,7 +4,7 @@ name: Deploy to cms2dev2
 env:
   VPS_IP: 91.218.230.97
   VPS_USERNAME: root
-  DIR: ~/
+  DIR: ~/home/proc-master
   GIT_BRANCH: origin/main
   Username: nyosru
 
@@ -47,7 +47,7 @@ jobs:
           docker exec -it 2503master php artisan npm i && npm run build
           docker exec -it 2503master php artisan cache:clear
           docker exec -it 2503master php artisan config:cache
-               EOF
+          EOF
 
   sms_start:
     runs-on: ubuntu-latest
