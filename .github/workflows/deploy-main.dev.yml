@@ -2,12 +2,8 @@ name: Deploy to cms2dev2
 
 
 env:
-#  VPS_IP: sachathw.beget.tech
-  VPS_IP: cms2.dev.marudi.store
-#VPS_IP: 5.101.152.170
-  VPS_USERNAME: sachathw_ssdev
-#  DIR: /
-#  DIR: /home/s/sachathw/cms2.dev.marudi.store/public_html/
+  VPS_IP: 91.218.230.97
+  VPS_USERNAME: root
   DIR: ~/
   GIT_BRANCH: origin/main
   Username: nyosru
@@ -34,12 +30,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ env.VPS_HOST }} >> ~/.ssh/known_hosts
 
 
       - name: deploy
         run: |
-          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+          ssh ${{ env.VPS_USER }}@${{ env.VPS_HOST }} << 'EOF'
           cd ${{ env.DIR }}
           git fetch --all
           git reset --hard origin/main
