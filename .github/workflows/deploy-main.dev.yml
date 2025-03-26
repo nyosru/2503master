@@ -32,18 +32,16 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ env.VPS_IP }} >> ~/.ssh/known_hosts
 
-
       - name: deploy
         run: |
           ssh ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
           cd ${{ env.DIR }}
           git fetch --all
           git reset --hard origin/main
-
-#          docker exec -it 2503master php artisan migrate
-#          docker exec -it 2503master php artisan npm i && npm run build
-#          docker exec -it 2503master php artisan cache:clear
-#          docker exec -it 2503master php artisan config:cache
+          #          docker exec -it 2503master php artisan migrate
+          #          docker exec -it 2503master php artisan npm i && npm run build
+          #          docker exec -it 2503master php artisan cache:clear
+          #          docker exec -it 2503master php artisan config:cache
           EOF
 
   sms_start:
