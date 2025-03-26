@@ -41,7 +41,7 @@ jobs:
 
       - name: Deploy Code to VPS
         run: |
-          ssh -i ~/.ssh/proc-master2_key -o StrictHostKeyChecking=no root@${{ env.VPS_HOST }} << 'EOF'
+          ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no root@${{ env.VPS_HOST }} << 'EOF'
             echo "Changing directory to /home/proc-master..."
             cd ${{ env.DIR }} || exit 1
 
