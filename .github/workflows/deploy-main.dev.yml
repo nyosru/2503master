@@ -1,135 +1,56 @@
-name: Deploy to cms2dev2
+name: Deploy to VPS
 
 
 env:
-  VPS_IP: 91.218.230.97
+  VPS_HOST: 91.218.230.97
   VPS_USERNAME: root
   DIR: /home/proc-master
   GIT_BRANCH: origin/main
-  Username: nyosru
+  GITHUB_USERNAME: nyosru
+  GIT_REPO: proc-master.git
+
 
 on:
   push:
     branches:
-      - main
+      - main  # Замените на нужную ветку
 
 jobs:
-
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout репозитория
+      - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Debug VPS_HOST
-        run: echo "VPS_HOST is ${{ env.VPS_IP }}"
-
-
-      - name: Setup SSH Key
+      - name: Debug SSH
         run: |
+          echo "Checking SSH connection..."
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/proc-master_key
           chmod 600 ~/.ssh/proc-master_key
-          ssh-keyscan -H ${{ env.VPS_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+          ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no root@${{ env.VPS_HOST }} "echo 'SSH to VPS successful'"
 
-      - name: Deploy to VPS
+      - name: Deploy Code to VPS
         run: |
-          ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
-            cd /home/proc-master
+          ssh -i ~/.ssh/proc-master_key -o StrictHostKeyChecking=no root@${{ env.VPS_HOST }} << 'EOF'
+            echo "Changing directory to /home/proc-master..."
+            cd /home/proc-master || exit 1
+
+            echo "Checking current Git remote..."
+            git remote -v
+
+            echo "Setting remote to SSH..."
+            git remote set-url origin git@github.com:${{ env.GITHUB_USERNAME }}/${{ env.GIT_REPO }}
+
+            echo "Fetching latest changes..."
             git fetch --all
+
+            echo "Resetting to latest commit..."
             git reset --hard origin/main
-            # Добавьте команду перезапуска сервиса, если нужно
-            # systemctl restart myservice
+
+            echo "Deployment complete!"
           EOF
-
-#      - name: deploy
-#        run: |
-#          ssh ${{ env.VPS_USERNAME }}@${{ env.VPS_IP }} << 'EOF'
-#          cd ${{ env.DIR }}
-#          git fetch --all
-#          git reset --hard origin/main
-#          #          docker exec -it 2503master php artisan migrate
-#          #          docker exec -it 2503master php artisan npm i && npm run build
-#          #          docker exec -it 2503master php artisan cache:clear
-#          #          docker exec -it 2503master php artisan config:cache
-#          EOF
-
-  sms_start:
-    runs-on: ubuntu-latest
-    steps:
-      - name: send telega
-        uses: appleboy/telegram-action@master
-        with:
-          # to: ${{ secrets.TELEGRAM_TO }}
-          to: 360209578, phpcat,
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            🐥🐥🐥 ${{ github.repository }}
-            ${{ github.event_name }} > ${{ github.event.head_commit.message }}
-            👨🏻‍💻 ${{github.actor}} (${{ github.run_id }})
-
-  sms_end00:
-    runs-on: ubuntu-latest
-    # needs: [deploy_composer, deploy_npm]
-    needs: deploy
-    steps:
-      - name: send telega
-        uses: appleboy/telegram-action@master
-        with:
-          # to: ${{ secrets.TELEGRAM_TO }}
-          to: 360209578, phpcat,
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            🍀🍀🍀 ${{ github.repository }} 👨🏻‍💻 ${{github.actor}} > ${{ github.run_id }}
-            ${{ github.event_name }} > ${{ github.event.head_commit.message }}
-            завершили норм
-#
-#  sms_end:
-#    runs-on: ubuntu-latest
-#    # needs: [deploy_composer, deploy_npm]
-#    needs: deploy_composer_db
-#    steps:
-#      - name: send telega
-#        uses: appleboy/telegram-action@master
-#        with:
-#          # to: ${{ secrets.TELEGRAM_TO }}
-#          to: 360209578, phpcat,
-#          token: ${{ secrets.TELEGRAM_TOKEN }}
-#          message: |
-#            🍀🍀🍀 ${{ github.repository }} 👨🏻‍💻 ${{github.actor}} > ${{ github.run_id }}
-#            ${{ github.event_name }} > ${{ github.event.head_commit.message }}
-#            миграции прошли норм
-#
-#
-#
-#  sms_end3:
-#    runs-on: ubuntu-latest
-#    # needs: [deploy_composer, deploy_npm]
-#    needs: deploy_composer
-#    steps:
-#      - name: send telega
-#        uses: appleboy/telegram-action@master
-#        with:
-#          # to: ${{ secrets.TELEGRAM_TO }}
-#          to: 360209578, phpcat,
-#          token: ${{ secrets.TELEGRAM_TOKEN }}
-#          message: |
-#            🍀🍀🍀 ${{ github.repository }} 👨🏻‍💻 ${{github.actor}} > ${{ github.run_id }}
-#            ${{ github.event_name }} > ${{ github.event.head_commit.message }}
-#            установка композере норм
-#
-#  # Шаг для отправки сообщения об ошибке
-#  sms_error:
-#    runs-on: ubuntu-latest
-#    if: failure()  # Отправляем сообщение только в случае ошибки
-#    steps:
-#      - name: send error telega
-#        uses: appleboy/telegram-action@master
-#        with:
-#          to: 360209578, phpcat,
-#          token: ${{ secrets.TELEGRAM_TOKEN }}
-#          message: |
-#            ❌❌❌ Ошибка в ${{ github.repository }}
-#            Действие: ${{ github.event_name }} > ${{ github.event.head_commit.message }}
-#            Ошибку вызвал: 👨🏻‍💻 ${{github.actor}} (${{ github.run_id }})
