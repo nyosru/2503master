@@ -8,6 +8,7 @@ env:
   GIT_BRANCH: origin/main
   GITHUB_USERNAME: nyosru
   GIT_REPO: 2503master.git
+  DOCKER_CONTAINER: proc_master
 
 
 on:
@@ -49,8 +50,8 @@ jobs:
           #key: ${{ secrets.DEPLOY_KEY }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker exec 2503master composer i
-            docker exec 2503master php artisan migrate
+            docker exec ${{ env.DOCKER_CONTAINER }} composer i
+            docker exec ${{ env.DOCKER_CONTAINER }} php artisan migrate
 
 
 
