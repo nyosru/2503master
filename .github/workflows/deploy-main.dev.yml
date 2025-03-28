@@ -4,10 +4,10 @@ name: Deploy to VPS
 env:
   VPS_HOST: 91.218.230.97
   VPS_USERNAME: root
-  DIR: /home/proc-master
+  DIR: /home/2503master
   GIT_BRANCH: origin/main
   GITHUB_USERNAME: nyosru
-  GIT_REPO: proc-master.git
+  GIT_REPO: 2503master.git
 
 
 on:
