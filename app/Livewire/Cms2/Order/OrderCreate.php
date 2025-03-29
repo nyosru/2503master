@@ -58,7 +58,7 @@ class OrderCreate extends Component
     public $design;
 
     // метки // грузим для показа
-    public $labels;
+    public $labels = [];
 // метки нью
     public $metki = [];
     public $metki_show;
@@ -153,7 +153,8 @@ class OrderCreate extends Component
         $this->clients = ClientController::get('mini');
         $this->product_type = OrderProductTypeController::get('mini');
         $this->payment_type = OrderPaymentTypeController::get('mini');
-        $this->labels = OrderLabelController::get('mini');
+//        $this->labels = OrderLabelController::get('mini');
+//        $this->labels = [];
 
         if (!empty($this->return_leed)) {
             $leed = LeedRecord::whereId($this->return_leed)->select('name')->first();

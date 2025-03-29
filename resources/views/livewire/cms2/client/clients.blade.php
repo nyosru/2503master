@@ -1,4 +1,4 @@
-<div >
+<div>
     <div class="container mx-auto">
 
         <div class="app-content-header"> <!--begin::Container-->
@@ -11,8 +11,8 @@
             </div>
         @endif
 
-{{--        return_url: {{ $return_url }}--}}
-{{--        / return_leed: {{ $return_leed }}--}}
+        {{--        return_url: {{ $return_url }}--}}
+        {{--        / return_leed: {{ $return_leed }}--}}
         {{--        <a href="{{ route('clients', ['return_url' => 'leed', 'return_leed' => $record->id  ]) }}"--}}
 
         {{--            если делаем клиента для лида--}}
@@ -229,3 +229,4 @@
 
         </div>
     </div>
+</div>

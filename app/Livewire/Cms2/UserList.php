@@ -53,19 +53,19 @@ class UserList extends Component
         }
     }
 
-    public function updateStaff($userId, $staffId)
-    {
-        $user = User::find($userId);
-
-        if ($user && \App\Models\Staff::find($staffId)) {
-            $user->staff_id = $staffId; // Установить новый staff_id
-            $user->save(); // Сохранить изменения
-
-            $this->new_staff_message[$userId] = "Привязан пользователь с marudi.store: " . \App\Models\Staff::find($staffId)->name;
-        } else {
-            $this->new_staff_message[$userId] = "Ошибка настройки связи с пользователем.";
-        }
-    }
+//    public function updateStaff($userId, $staffId)
+//    {
+//        $user = User::find($userId);
+//
+//        if ($user && \App\Models\Staff::find($staffId)) {
+//            $user->staff_id = $staffId; // Установить новый staff_id
+//            $user->save(); // Сохранить изменения
+//
+//            $this->new_staff_message[$userId] = "Привязан пользователь с marudi.store: " . \App\Models\Staff::find($staffId)->name;
+//        } else {
+//            $this->new_staff_message[$userId] = "Ошибка настройки связи с пользователем.";
+//        }
+//    }
 
 
     public function updatedSelectedRoleId($roleId, $userId)
@@ -85,7 +85,7 @@ class UserList extends Component
         $this->users = User::withTrashed()->with('roles')->get();
 //        $this->users = User::all();
         $this->roles = Role::all();
-        $this->stafs = \App\Models\Staff::select('id','name','phone')->orderBy('name')->get();
+//        $this->stafs = \App\Models\Staff::select('id','name','phone')->orderBy('name')->get();
 
     }
     public function mount()

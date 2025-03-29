@@ -1,3 +1,124 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Стили для таблицы с правами */
+.table-permission {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+/* Заголовок таблицы */
+.table-permission th {
+    background-color: #f3f4f6; /* Светлый фон */
+    padding: 0.5rem 1rem; /* Padding по оси X = 4 (1rem), Y = 2 (0.5rem) */
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Строки таблицы */
+.table-permission td {
+    padding: 0.5rem 1rem; /* Padding по оси X = 4 (1rem), Y = 2 (0.5rem) */
+    border-bottom: 1px solid #ddd;
+}
+
+/* Чередование цветов строк */
+.table-permission tr:nth-child(even) {
+    background-color: #f9fafb; /* Светлый фон для четных строк */
+}
+
+.table-permission tr:nth-child(odd) {
+    background-color: #ffffff; /* Белый фон для нечетных строк */
+}
+
+/* Стили для строк при наведении */
+.table-permission tr:hover {
+    background-color: #e5e7eb; /* Цвет фона при наведении */
+}
+
+/* Класс для отмеченных элементов */
+.table-permission input[type="checkbox"]:checked {
+    background-color: #4CAF50; /* Зеленый цвет для выбранных чекбоксов */
+    border-color: #4CAF50;
+}
+
+/**
+поворот текста в заголовках
+ */
+.box_rotate {
+    writing-mode: vertical-rl;
+    -moz-transform: rotate(180deg); /* FF3.5+ */
+    -o-transform: rotate(180deg); /* Opera 10.5 */
+    -webkit-transform: rotate(180deg); /* Saf3.1+, Chrome */
+    transform: rotate(180deg);
+}
+
+
+/*лиды */
+.highlight {
+    background-color: rgba(59, 130, 246, 0.3); /* Синий фон */
+    border: 2px dashed blue;
+}
+
+[draggable="true"] {
+    cursor: grab;
+}
+
+[draggable="true"]:active {
+    cursor: grabbing;
+}
+
+
+.link {
+    @apply text-blue-800 hover:underline ;
+    height: auto;
+
+}
+
+
+
+
+.bg_client {
+    /*margin: 0;*/
+    /*height: 100vh; !* Занимает всю высоту экрана *!*/
+    /*background: linear-gradient(270deg, #b2ebf2, #80deea); !* Начальный градиент *!*/
+    /*background: linear-gradient(270deg, #b2ebf2, #80deea, #4dd0e1, #26c6da, #00bcd4); !* Градиент с 5 цветами *!*/
+
+    /*background: linear-gradient(90deg, #96e2ee, #cbebef, #bbe9ef, #b1dbe5, #00bcd4); !* Градиент с 5 цветами *!*/
+    /*background-size: 400% 400%; !* Увеличиваем размер фона для анимации *!*/
+    /*animation: gradientAnimation 20s ease infinite; !* Анимация градиента *!*/
+    background-color: white;
+
+}
+
+.bg_base {
+    /*background: linear-gradient(90deg, #fbf6f3, #fffdfc, #fff8f8, #ffffff); !* Градиент с 5 цветами *!*/
+    /*background-size: 400% 400%; !* Увеличиваем размер фона для анимации *!*/
+    /*animation: gradientAnimation 20s ease infinite; !* Анимация градиента *!*/
+    background-color: white;
+}
+
+.bg_order {
+    /*background: linear-gradient(90deg, #fffcf6, #ffefa8, #fffae3, #fcffe5); !* Градиент с 5 цветами *!*/
+    /*background-size: 400% 400%; !* Увеличиваем размер фона для анимации *!*/
+    /*animation: gradientAnimation 20s ease infinite; !* Анимация градиента *!*/
+    background-color: white;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%; /* Начальная позиция */
+    }
+    30% {
+        background-position: 70% 20%; /* Позиция в середине анимации */
+    }
+    70% {
+        background-position: 100% 50%; /* Позиция в середине анимации */
+    }
+    100% {
+        background-position: 0% 50%; /* Возвращаемся к началу */
+    }
+}

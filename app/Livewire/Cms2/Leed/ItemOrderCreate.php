@@ -64,7 +64,7 @@ class ItemOrderCreate extends Component
 
     public function render()
     {
-        $this->users = User::with('staff','roles')->get();
+        $this->users = User::with('roles')->get();
         return view('livewire.cms2.leed.item-order-create');
     }
 }

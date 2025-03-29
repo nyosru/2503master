@@ -140,7 +140,7 @@ flex-col
                                 @permission('разработка')
                                 order_product_type_id
                                 @endpermission
-                                <label class="block text-gray-700 text-sm">Тип изделия:
+                                <label class="block text-gray-700 text-sm">Тип заказа:
                                     <div class="relative">
                                         <select wire:model="order_product_type_id" id="order_product_type_id">
                                             <option>- выбрать -</option>
@@ -171,6 +171,7 @@ flex-col
                             </div>
                         </div>
 
+                        @if(1==2)
                         <div class="flex flex-row space-x-2">
                             <div class="
 {{--                            @if($modal_view1) w-1/4 @else w-1/2 @endif--}}
@@ -212,6 +213,7 @@ w-1/2
                             </div>
                         </div>
 
+                    @endif
                     @endif
                 </div>
                 {{--                            Комментарий--}}
@@ -396,7 +398,7 @@ w-1/2
                         @endforeach
                     @endif
                 </div>
-
+@if(1==2)
                 <div class="mb-4">
                     @permission('разработка')
                     $price_without_decor
@@ -452,7 +454,7 @@ w-1/2
                     </label>
                     @error('design') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
-
+@endif
 
             </div>
 

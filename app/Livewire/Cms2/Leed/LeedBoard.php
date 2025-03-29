@@ -265,68 +265,68 @@ class LeedBoard extends Component
 
             $this->columns = LeedColumn::orderBy('order', 'asc')
                 ->with([
-                    'records' => function ($query) use ($user, $user_id) {
-                        if (
-                            !$user->hasAnyPermission('Полный//доступ', 'р.Лиды / видеть все лиды')
-                        ) {
-                            $query->whereUserId($user_id)
-                                // Добавляем условие для выбора записей с user_id = 3 в LeadUserAssignment
-                                ->orWhereHas('userAssignments', function ($assignmentQuery) use ($user_id) {
-                                    $assignmentQuery->where('user_id', $user_id);
-                                });; // Получаем только последнюю запись о передаче
-                        }
-
-                        $query->withCount([
-                            'leedComments',
-                            'leedComments as unread_comments_from_others_user' => function ($q) use ($user_id) {
-                                $q->where('user_id', '!=', $user_id)
-                                    ->where('readed', false);
-                            }
-                        ]);
-
-                        $query->withCount([
-                            'orders as leed_orders_hot_count' => function ($query) use ($user_id) {
-                                $query->where('status', 'новая')
-//                                    ->where('user_id', $user_id)
-                                    ->where('reminder_at', '<', now()); // Например, считать только активные комментарии
-                            }
-                        ]);
-
-                        $query->withCount([
-                            'orders as leed_orders_hot_from_other_count' => function ($query) use ($user_id) {
-                                $query->where('status', 'новая')
-//                                    ->where('user_worder_id', $user_id)
-//                                    ->where(function ($query) {
-//                                        $query
-//                                            ->where('reminder_at', '<', now())
-//                                            ->orWhere('reminder_at', null);
-//                                    })
-//                                ->where('reminder_at', '<', now())
-                                ; // Например, считать только активные комментарии
-                            }
-                        ]);
-                    },
-                    'records.client' => function ($query) {
-                        $query->select(['id', 'name_f', 'name_i', 'physical_person']
-                        ); // Выбираем только нужные поля для client
-                    },
-                    'records.order' => function ($query) {
-                        $query->select(['id', 'name', 'price']); // Выбираем только нужные поля
-                    },
-
-                    'records.userAssignments',
-
-                    'records.user' => function ($query) {
-                        $query->withTrashed()->select(['id', 'name', 'deleted_at']); // Выбираем только нужные поля
-                        $query->with([
-                            'roles' => function ($q2) {
-                                $q2->select('name')->first();
-                            }
-                        ]);
-                    },
-                    'records.leedComments' => function ($query) {
-                        $query->select(['id']); // Выбираем только нужные поля
-                    },
+//                    'records' => function ($query) use ($user, $user_id) {
+//                        if (
+//                            !$user->hasAnyPermission('Полный//доступ', 'р.Лиды / видеть все лиды')
+//                        ) {
+//                            $query->whereUserId($user_id)
+//                                // Добавляем условие для выбора записей с user_id = 3 в LeadUserAssignment
+//                                ->orWhereHas('userAssignments', function ($assignmentQuery) use ($user_id) {
+//                                    $assignmentQuery->where('user_id', $user_id);
+//                                });; // Получаем только последнюю запись о передаче
+//                        }
+//
+//                        $query->withCount([
+//                            'leedComments',
+//                            'leedComments as unread_comments_from_others_user' => function ($q) use ($user_id) {
+//                                $q->where('user_id', '!=', $user_id)
+//                                    ->where('readed', false);
+//                            }
+//                        ]);
+//
+//                        $query->withCount([
+//                            'orders as leed_orders_hot_count' => function ($query) use ($user_id) {
+//                                $query->where('status', 'новая')
+////                                    ->where('user_id', $user_id)
+//                                    ->where('reminder_at', '<', now()); // Например, считать только активные комментарии
+//                            }
+//                        ]);
+//
+//                        $query->withCount([
+//                            'orders as leed_orders_hot_from_other_count' => function ($query) use ($user_id) {
+//                                $query->where('status', 'новая')
+////                                    ->where('user_worder_id', $user_id)
+////                                    ->where(function ($query) {
+////                                        $query
+////                                            ->where('reminder_at', '<', now())
+////                                            ->orWhere('reminder_at', null);
+////                                    })
+////                                ->where('reminder_at', '<', now())
+//                                ; // Например, считать только активные комментарии
+//                            }
+//                        ]);
+//                    },
+//                    'records.client' => function ($query) {
+//                        $query->select(['id', 'name_f', 'name_i', 'physical_person']
+//                        ); // Выбираем только нужные поля для client
+//                    },
+//                    'records.order' => function ($query) {
+//                        $query->select(['id', 'name', 'price']); // Выбираем только нужные поля
+//                    },
+//
+//                    'records.userAssignments',
+//
+//                    'records.user' => function ($query) {
+//                        $query->withTrashed()->select(['id', 'name', 'deleted_at']); // Выбираем только нужные поля
+//                        $query->with([
+//                            'roles' => function ($q2) {
+//                                $q2->select('name')->first();
+//                            }
+//                        ]);
+//                    },
+//                    'records.leedComments' => function ($query) {
+//                        $query->select(['id']); // Выбираем только нужные поля
+//                    },
 
                 ])
 //                ->whereHas('roles', function ($query) use ($user, $roleId) {
@@ -336,6 +336,7 @@ class LeedBoard extends Component
 //                })
                 ->get();
 
+            $this->columns = LeedColumn::orderBy('order', 'asc')->get();
 
 //// Вывод результата
 //        if ($columns->isNotEmpty()) {
@@ -605,7 +606,7 @@ class LeedBoard extends Component
 
     public function render()
     {
-//        \Log::info('рендер leed-board');
+        \Log::info('рендер leed-board');
 //        Debugbar::addMessage('Пример сообщения', 'debug');
         $this->loadColumns();
         return view('livewire.cms2.leed.leed-board');

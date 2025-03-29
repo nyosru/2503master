@@ -4,19 +4,20 @@
     {{--    <pre style="max-height: 150px; overflow: auto;" >{{ print_r($columns) }}</pre>--}}
     {{--</div>--}}
 
-    @section('head-line-content')
+{{--    @section('head-line-content')--}}
+    @if(1==2)
         <livewire:Cms2.App.Breadcrumb
             {{--                :menu="[['route'=>'leed','name'=>'Лиды'], [ 'link' => 'no', 'name'=> ( $leed->name ?? 'Лид' ) ] ]"--}}
-            :menu="[['route'=>'leed','name'=>'Лиды'],
+            :menu="[['route'=>'leed','name'=>'Обьекты'],
              ]"
         />
-    @endsection
-
+{{--    @endsection--}}
+@endif
     {{--шапка над доской--}}
     <div class="app-content-header"> <!--begin::Container-->
         <div class="container-fluid"> <!--begin::Row-->
             <div class="flex flex-row space-x-4">
-                @if(1==2)
+                @if(1==1)
                     <div>
                         <livewire:Cms2.App.Breadcrumb :menu="[['route'=>'leed','name'=>'Лиды']]"/>
                     </div>
@@ -81,8 +82,11 @@
         </div> <!--end::Container-->
     </div> <!--end::App Content Header--> <!--begin::App Content-->
 
+{{--<pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>--}}
 
-    @if( $columns && count($columns) > 0 )
+
+    {{--    @if( $columns && count($columns) > 0 )--}}
+    @if( 1 == 1 )
         <div class="flex  xspace-x-1 relative">
             @foreach($columns as $k => $column)
                 <div
@@ -450,7 +454,8 @@
 @else
     <div
         class="py-10 w-[60%] mx-auto text-center bg-gradient-to-br from-orange-200 to-red-200 rounded-xl shadow-xl">
-        Недостаточно прав доступа для просмотра данного раздела
+        нет этапов
+        {{--        Недостаточно прав доступа для просмотра данного раздела--}}
         {{--            <a href="#" wire:click.prevent="createColumnsForUser"--}}
         {{--               class="text-blue-600 underline mr-2">Активировать</a> работу с лидами--}}
     </div>
@@ -458,8 +463,7 @@
 
 
 
-
-
+{{--<livewire:cms2.leed.create-column-form />--}}
 
 {{--leed-border перетаскивать лиды--}}
 @if(1==1)
@@ -555,12 +559,12 @@
 {{--перетаскиваем на livewire--}}
 @if(1==2)
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             @foreach($columns as $column => $tasks)
             new Sortable(document.querySelector('[wire\\:sortable-group="{{ $column }}"]'), {
                 group: 'shared',
                 animation: 150,
-                onEnd: function(evt) {
+                onEnd: function (evt) {
                     let order = {};
 
                     document.querySelectorAll('[wire\\:sortable-group]').forEach(el => {
@@ -578,7 +582,7 @@
 
 
 <div id="move_record_show" style=" display:none; position: fixed; bottom:10px; right: 10px; width: 200px;"
-     class="text-center rounded-xl bg-green-200 py-2">Перемещаю Лида<br/>
+     class="text-center rounded-xl bg-green-200 py-2">Перемещаю<br/>
     <img src="/icon/move.svg" class="mx-auto mt-2" style="height: 30px;" alt="" border="0"/>
 </div>
 

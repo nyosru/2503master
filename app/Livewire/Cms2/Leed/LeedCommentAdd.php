@@ -41,7 +41,7 @@ class LeedCommentAdd extends Component
     public function mount($leed_record_id)
     {
         $this->leed_record_id = $leed_record_id;
-        $this->users = User::select('id', 'name', 'staff_id')
+        $this->users = User::select('id', 'name')
             ->with([
                 'roles',
 //                'roles' => function ($query) {
@@ -49,9 +49,9 @@ class LeedCommentAdd extends Component
 ////                        ->first()
 //                    ->selectRaw('name as role_name');
 //                },
-                'staff' => function ($query) {
-                    $query->select('id', 'name', 'department');
-                }
+//                'staff' => function ($query) {
+//                    $query->select('id', 'name', 'department');
+//                }
             ])
             ->get();
     }

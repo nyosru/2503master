@@ -11,7 +11,7 @@
     </div>
 
 
-    <div>
+    <div class="container mx-auto">
 
 
         {{--        <pre>--}}
@@ -46,7 +46,13 @@
         {{--            разделПользователи нет--}}
         {{--        @endcan--}}
 
-        <table class="table-permission table-auto">
+        <style>
+            .table-permission thead tr th:nt (n\2){
+                background-color: rgba(0,0,0,0.3);
+            }
+        </style>
+
+        <table class="table-permission table-auto w-full border">
             <thead>
             <tr>
                 <th>ID</th>
@@ -57,12 +63,11 @@
                 <th>Изменить роль</th>
                 @endpermission
 
-                <th>Пользователь<br/>marudi.store</th>
             </tr>
             </thead>
             <tbody>
             @foreach ($users as $user)
-                <tr>
+                <tr class="bg-white hover:bg-gray-200">
                     <td>{{ $user->id }}</td>
                     <td class=" @if($user->deleted_at) line-through @endif ">{{ $user->name }}
                         {{--                    <pre class="text-sm max-h-[200px] overflow-auto">{{ print_r($user->toArray()) }}</pre>--}}
@@ -121,46 +126,7 @@
                     @endpermission
 
 
-                    <td x-data="{
-                    isChanged: false,
-                    handleChange(event) {
-                    this.isChanged = true;
-                    },
-                    hideBlock() {
-                    this.isChanged = false;
-                    }
-                    }">
 
-                        <div x-show="!isChanged">
-                            {{ $user->staff->name ?? '' }} {{$user->staff->phone ?? '' }}
-                        </div>
-
-
-                        @if($user->deleted_at)
-                        @else
-                            @permission('р.Пользователи / выбрать пользователя с маруди')
-
-                            {{--<pre>{{ print_r($user->staff_id) }}</pre>--}}
-                            <select class="w-full min-w-[150px]"
-                                    @change="handleChange($event)"
-                                    wire:model.live="selected_staff.{{ $user->id }}">
-                                <option value="">Выберите пользователя из marude.store</option>
-                                @foreach ($stafs as $s)
-                                    {{--                                @if($user->staff_id == $s->id) <option>222</option> @endif--}}
-                                    <option value="{{ $s->id }}" @if($user->staff_id == $s->id) selected @endif >
-                                        {{ $s->name }} {{$s->phone}} ({{ $s->id }})
-                                    </option>
-                                @endforeach
-                            </select>
-                            {{--                        staff--}}
-                            @if (!empty($new_staff_message[$user->id]))
-                                <div style="color: green;">{{ $new_staff_message[$user->id] }}</div>
-                            @endif
-                        @endif
-                        @endpermission
-
-
-                    </td>
                 </tr>
             @endforeach
             </tbody>

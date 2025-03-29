@@ -1,0 +1,101 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class LeedRecord extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name' ,
+        'phone' ,
+//        'telegram' ,
+//        'whatsapp' ,
+//        'company' ,
+        'fio' ,
+        'comment' ,
+//        'content',
+        'client_id',
+        'client_supplier_id', // Добавляем поле для связи с поставщиком клиента
+        'order_product_types_id', // Добавляем поле для связи с поставщиком клиента
+
+        'leed_column_id',
+        'user_id',
+        'otkaz_reason',
+        'leed_id',
+        'budget',
+    ];
+
+    public function column()
+    {
+        return $this->belongsTo(LeedColumn::class, 'leed_column_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Logs2::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(LeedRecordOrder::class);
+    }
+
+    public function supplier() // Добавляем метод для связи с ClientSupplier
+    {
+        return $this->belongsTo(ClientSupplier::class, 'client_supplier_id');
+    }
+
+    public function userAssignments() // Добавляем метод для связи с LeadUserAssignment
+    {
+        return $this->hasMany(LeadUserAssignment::class, 'lead_id');
+    }
+
+
+//    // Определение отношения один-ко-многим с LeadTransfer
+//    public function transfers()
+//    {
+//        return $this->hasMany(LeadTransfer::class, 'lead_id');
+//    }
+
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function productTypes()
+    {
+        return $this->belongsTo(OrderProductType::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    // Связь с моделью LeedRecord
+    public function leedRecord()
+    {
+        return $this->belongsTo(LeedRecord::class, 'leed_id');
+    }
+
+    public function order()
+    {
+        return $this->hasOne(\App\Models\Order::class, 'id', 'order_id');
+    }
+
+    // Лид-рекорд имеет много комментариев
+    public function leedComments()
+    {
+        return $this->hasMany(LeedRecordComment::class);
+    }
+
+    public function userChanges()
+    {
+        return $this->hasMany(LeedRecordUserChange::class);
+    }
+
+}

@@ -30,6 +30,9 @@
 
             <!-- Page Content -->
             <main>
+
+{{--                меню--}}
+
                 {{ $slot }}
             </main>
         </div>

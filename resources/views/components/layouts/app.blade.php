@@ -29,7 +29,21 @@
     ">
         <livewire:app.header/>
 
-        {{ $slot }}
+        <div class="flex flex-row space-x-5">
+            @if (Route::is('tech*')
+|| Route::is('leed*')
+|| Route::is('clients*')
+|| Route::is('order*')
+)
+{{--            <div class="w-[200px] bg-orange-500">--}}
+{{--                меню--}}
+{{--            </div>--}}
+                <livewire:app.menu />
+            @endif
+            <div class="flex-1 min-h-[400px]">
+                {{ $slot }}
+            </div>
+        </div>
 
         <livewire:app.footer/>
     </div>
@@ -200,8 +214,8 @@
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
-        (function(m, e, t, r, i, k, a) {
-            m[i] = m[i] || function() {
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () {
                 (m[i].a = m[i].a || []).push(arguments);
             };
             m[i].l = 1 * new Date();

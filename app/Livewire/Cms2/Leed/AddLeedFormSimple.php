@@ -5,8 +5,8 @@ namespace App\Livewire\Cms2\Leed;
 
 use App\Http\Controllers\LeedChangeUserController;
 use App\Models\ClientSupplier;
-use App\Models\Cms1\Clients;
-use App\Models\Cms1\Order;
+use App\Models\Client;
+use App\Models\Order;
 use App\Models\LeadUserAssignment;
 use App\Models\LeedColumn;
 use App\Models\LeedRecord;
@@ -136,7 +136,7 @@ class AddLeedFormSimple extends Component
     {
         // Получаем список поставщиков из модели ClientSupplier
         $suppliers = ClientSupplier::all();
-        $clients = Clients::orderBy('name_f')->get();
+        $clients = Client::orderBy('name_f')->get();
         $types = OrderProductType::orderBy('order','asc')->get();
 
         return view('livewire.cms2.leed.add-leed-form-simple', [
