@@ -64,11 +64,11 @@ Route::group(['as' => 'order', 'prefix' => 'order'], function () {
     Route::get('create', Order\OrderCreate::class)->name('.create');
 });
 
-Route::middleware('check.permission:р.Лиды')->group(function () {
+//Route::middleware('check.permission:р.Лиды')->group(function () {
     Route::get('leed', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leed');
     Route::get('leed/{id}', \App\Livewire\Cms2\Leed\Item::class)->name('leed.item');
 //        Route::get('/leed/{id}', \App\Livewire\Cms2\ClientsInfo::class)->name('clients.info');
-});
+//});
 
 
 //Route::view('dashboard', 'dashboard')
