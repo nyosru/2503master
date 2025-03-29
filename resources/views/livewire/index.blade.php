@@ -8,7 +8,8 @@
                 <span class="text-lg font-bold">
                 Демо версия, посмотреть, покликать
 {{--                <button class="bg-blue-300 rounded px-3 py-1">Посмотреть!</button>--}}
-                <a href="{{ route('leed') }}" wire:navigate class="bg-blue-300 rounded px-3 py-1">Посмотреть!</a>
+{{--                <a href="{{ route('leed') }}" wire:navigate class="bg-blue-300 rounded px-3 py-1">Посмотреть!</a>--}}
+                <a href="/leed" class="bg-blue-300 rounded px-3 py-1">Посмотреть!</a>
                     </span>
         <br/>
 {{--        каждые 2 часа все изменения сбрасываются на тестовый набор (шаги,пользователи,комментарии)--}}
