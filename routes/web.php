@@ -7,7 +7,7 @@ use App\Livewire\Cms2\Order;
 //Route::view('/', 'welcome');
 Route::get('', \App\Livewire\Index::class)->name('index');
 
-Route::get('bo', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leeds');
+//Route::get('bo', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leeds');
 
 //Route::get('bo/1', \App\Livewire\Cms2\Tech\Index::class)->name('tech.order.product-type-manager');
 //Route::get('bo/2', \App\Livewire\Cms2\Tech\Index::class)->name('tech.order.payment-type-manager');
@@ -69,6 +69,7 @@ Route::middleware('check.permission:р.Лиды')->group(function () {
     Route::get('leed/{id}', \App\Livewire\Cms2\Leed\Item::class)->name('leed.item');
 //        Route::get('/leed/{id}', \App\Livewire\Cms2\ClientsInfo::class)->name('clients.info');
 });
+
 
 //Route::view('dashboard', 'dashboard')
 //    ->middleware(['auth', 'verified'])
