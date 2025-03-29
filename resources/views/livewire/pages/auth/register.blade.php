@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
+use Illuminate\Support\Facades\URL;
 
 new #[Layout('layouts.guest')] class extends Component
 {
@@ -32,8 +33,9 @@ new #[Layout('layouts.guest')] class extends Component
 
         Auth::login($user);
 
+        $this->redirect(URL::to('/'), navigate: true);
 //        $this->redirect(route('index', absolute: false), navigate: true);
-        $this->redirect()->route('index');
+//        $this->redirect()->route('index');
     }
 }; ?>
 
