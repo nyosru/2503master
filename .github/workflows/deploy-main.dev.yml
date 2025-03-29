@@ -52,7 +52,7 @@ jobs:
           script: |
             docker exec ${{ env.DOCKER_CONTAINER }} composer i
             docker exec ${{ env.DOCKER_CONTAINER }} php artisan migrate
-            docker exec ${{ env.DOCKER_CONTAINER }} chmod 0755 storage
+            docker exec ${{ env.DOCKER_CONTAINER }} chmod 0755 -R storage
 
 
 
