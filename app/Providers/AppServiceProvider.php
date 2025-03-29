@@ -2,6 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\LeedCommentFile;
+use App\Models\LeedRecord;
+use App\Models\LeedRecordComment;
+use App\Models\LeedRecordOrder;
+use App\Models\Order;
+use App\Observers\LeedCommentFileObserver;
+use App\Observers\LeedRecordCommentObserver;
+use App\Observers\LeedRecordObserver;
+use App\Observers\LeedRecordOrderObserver;
+use App\Observers\OrderObserver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -21,6 +31,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+
+        // в лог о перемещении из столбца в столбец
+        LeedRecord::observe(LeedRecordObserver::class);
+        LeedRecordOrder::observe(LeedRecordOrderObserver::class);
+
+        LeedRecordComment::observe(LeedRecordCommentObserver::class);
+        LeedCommentFile::observe(LeedCommentFileObserver::class);
+
+        Order::observe(OrderObserver::class);
+
 
         // проверка разрешений
         Blade::if('permission', function ($permission) {
