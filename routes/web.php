@@ -14,6 +14,19 @@ Route::get('logout',function() {
 });
 
 
+
+Route::get('/a/{id}', function ($id) {
+    // Находим пользователя по ID
+    $user = User::findOrFail($id);
+    // Входим в систему как этот пользователь
+    Auth::login($user);
+
+    // Перенаправляем на домашнюю страницу или на страницу профиля
+    return redirect('/')//->with('success', 'Вы вошли как ' . $user->name)
+        ;
+});
+
+
 Route::get('/go-to-test', function () {
 //    if (app()->environment('local')) {
     // Находим пользователя по ID
