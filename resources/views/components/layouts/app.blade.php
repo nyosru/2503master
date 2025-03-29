@@ -27,7 +27,8 @@
 {{--    bg-blue-100 bg-contain bg-no-repeat bg-center sm:bg-[url('/img/bg1.jpg')] --}}
     flex-grow flex-col space-y-5
     ">
-        <livewire:app.header/>
+{{--        <livewire:app.header/>--}}
+        <livewire:app.navigation/>
 
         <div class="flex flex-row space-x-5">
             @if (Route::is('tech*')

@@ -20,7 +20,7 @@
         </div>
         <div class="w-2/3 text-right py-3">
             @if (Route::has('login'))
-                <livewire:welcome.navigation/>
+                <livewire:app.navigation/>
             @endif
         </div>
     </div>

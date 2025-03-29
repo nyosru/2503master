@@ -1,10 +1,36 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Cms2\Client;
 use App\Livewire\Cms2\Order;
+use Illuminate\Support\Facades\Session;
+
+Route::get('logout',function() {
+    Auth::guard('web')->logout();
+    Session::invalidate();
+    Session::regenerateToken();
+});
+
+
+Route::get('/go-to-test', function () {
+//    if (app()->environment('local')) {
+    // Находим пользователя по ID
+    $user = User::findOrFail(2);
+    // Входим в систему как этот пользователь
+    Auth::login($user);
+//    }
+
+    // Перенаправляем на домашнюю страницу или на страницу профиля
+    return redirect('/leed')//->with('success', 'Вы вошли как ' . $user->name)
+        ;
+});
+
+
 
 //Route::view('/', 'welcome');
+
 Route::get('', \App\Livewire\Index::class)->name('index');
 
 //Route::get('bo', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leeds');
@@ -23,24 +49,24 @@ Route::middleware('check.permission:р.Техничка')->group(function () {
             Route::get('adm_role_column', \App\Livewire\RoleColumnAccess::class)->name('adm_role_column');
         });
 
-            // пользователи
-            Route::middleware('check.permission:р.Пользователи')->group(function () {
-                Route::get('/u-list', \App\Livewire\Cms2\UserList::class)->name('user_list');
-            });
+        // пользователи
+        Route::middleware('check.permission:р.Пользователи')->group(function () {
+            Route::get('/u-list', \App\Livewire\Cms2\UserList::class)->name('user_list');
+        });
 
 
-                    Route::prefix('order')->name('order.')->group(function () {
-                Route::middleware('check.permission:тех.ТипПродуктаУпр')->group(function () {
-                    Route::get('prod-type', \App\Livewire\Cms2\Tech\ProductTypeManager::class)->name(
-                        'product-type-manager'
-                    );
-                });
-                Route::middleware('check.permission:тех.ТипОплатыМен')->group(function () {
-                    Route::get('payment-type', \App\Livewire\Cms2\Order\PaymentTypeManager::class)->name(
-                        'payment-type-manager'
-                    );
-                });
+        Route::prefix('order')->name('order.')->group(function () {
+            Route::middleware('check.permission:тех.ТипПродуктаУпр')->group(function () {
+                Route::get('prod-type', \App\Livewire\Cms2\Tech\ProductTypeManager::class)->name(
+                    'product-type-manager'
+                );
             });
+            Route::middleware('check.permission:тех.ТипОплатыМен')->group(function () {
+                Route::get('payment-type', \App\Livewire\Cms2\Order\PaymentTypeManager::class)->name(
+                    'payment-type-manager'
+                );
+            });
+        });
 
     });
 });
@@ -65,8 +91,8 @@ Route::group(['as' => 'order', 'prefix' => 'order'], function () {
 });
 
 //Route::middleware('check.permission:р.Лиды')->group(function () {
-    Route::get('leed', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leed');
-    Route::get('leed/{id}', \App\Livewire\Cms2\Leed\Item::class)->name('leed.item');
+Route::get('leed', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leed');
+Route::get('leed/{id}', \App\Livewire\Cms2\Leed\Item::class)->name('leed.item');
 //        Route::get('/leed/{id}', \App\Livewire\Cms2\ClientsInfo::class)->name('clients.info');
 //});
 
