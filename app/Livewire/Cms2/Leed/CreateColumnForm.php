@@ -8,6 +8,8 @@ use Livewire\Component;
 class CreateColumnForm extends Component
 {
     public $name;
+    public $board_id;
+
 
     public function save()
     {
@@ -15,12 +17,15 @@ class CreateColumnForm extends Component
             'name' => 'required|min:3',
         ]);
 
-        LeedColumn::create([
+        $in = [
             'name' => $this->name,
-        ]);
+            'board_id' => $this->board_id,
+        ];
+        LeedColumn::create($in);
 
         $this->reset('name');
-        session()->flash('message', 'Column created successfully.');
+        $this->dispatch('refreshLeedBoardComponent');
+        session()->flash('message', 'Колонка создана.');
     }
 
     public function render()

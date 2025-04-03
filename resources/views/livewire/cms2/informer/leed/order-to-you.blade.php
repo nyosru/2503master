@@ -1,4 +1,4 @@
-<div title="Мои Задачи"
+<div title="Мои Задачи (поставлены другими пользователями)"
      class="
      flex-auto
      rounded

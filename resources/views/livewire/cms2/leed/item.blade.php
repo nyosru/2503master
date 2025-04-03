@@ -1,5 +1,4 @@
 <div>
-
     <style>
         body {
             /*overflow: hidden;*/
@@ -24,11 +23,10 @@
             {{--        <div class="p-2 flex-1 flex items-center">--}}
 
             <div class="inline">
-                <div class="w-[300px] flex flex-row space-x-1 items-center">
+                <div class="w-[250px] flex flex-row space-x-1 items-center">
 
                     <livewire:cms2.informer.leed.client wire:lazy :leed="$leed"/>
-                    <livewire:cms2.informer.leed.order wire:lazy :leed="$leed"/>
-
+                    {{--                    <livewire:cms2.informer.leed.order wire:lazy :leed="$leed"/>--}}
                     {{--твои горящие задачи--}}
                     <livewire:cms2.informer.leed.order-you :key="'leed.order-you'.$leed->id" wire:lazy :leed="$leed"/>
                     {{--горящие задачи от других--}}

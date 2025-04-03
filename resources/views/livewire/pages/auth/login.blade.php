@@ -77,5 +77,14 @@ new #[Layout('layouts.guest')] class extends Component {
                 </x-primary-button>
             </div>
         </form>
+
+{{--         href="https://oauth.telegram.org/auth?bot_id={{ env('TELEGRAM_BOT_TOKEN') }}&origin={{ env('APP_URL') }}&return_to={{ env('TELEGRAM_REDIRECT_URL' )}}"--}}
+        <a href="https://oauth.telegram.org/auth?bot_id={{ env('TELEGRAM_BOT_TOKEN') }}&origin={{ env('APP_URL') }}&return_to={{ env('TELEGRAM_REDIRECT_URL' )}}" >Войти через Telegram</a>
+{{--        https://oauth.telegram.org/auth?bot_id=1234567890&origin=https://mywebsite.com&return_to=https://mywebsite.com/auth/telegram/callback--}}
+
+        {{--        <a href="{{ url('/auth/telegram') }}" class="btn btn-primary">--}}
+{{--            Войти через Telegram--}}
+{{--        </a>--}}
+
     </div>
 </div>

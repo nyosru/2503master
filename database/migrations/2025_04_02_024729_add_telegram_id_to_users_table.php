@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('permissions', function (Blueprint $table) {
-            $table->integer('sort')->default(20);
-            $table->softDeletes();
-
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('telegram_id')->nullable()->unique();
+            $table->unsignedBigInteger('phone_number')->nullable()->unique();
         });
     }
 
@@ -23,9 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('permissions', function (Blueprint $table) {
-            $table->dropColumn('sort');
-            $table->dropSoftDeletes();
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('phone_number');
+            $table->dropColumn('telegram_id');
         });
     }
 };

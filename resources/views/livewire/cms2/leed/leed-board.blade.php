@@ -4,24 +4,29 @@
     {{--    <pre style="max-height: 150px; overflow: auto;" >{{ print_r($columns) }}</pre>--}}
     {{--</div>--}}
 
-{{--    @section('head-line-content')--}}
+    {{--    @section('head-line-content')--}}
     @if(1==2)
         <livewire:Cms2.App.Breadcrumb
             {{--                :menu="[['route'=>'leed','name'=>'Лиды'], [ 'link' => 'no', 'name'=> ( $leed->name ?? 'Лид' ) ] ]"--}}
-            :menu="[['route'=>'leed','name'=>'Обьекты'],
+            :menu="[
+            ['route'=>'leed','name'=>'Обьекты'] ,
              ]"
         />
-{{--    @endsection--}}
-@endif
+        {{--    @endsection--}}
+    @endif
     {{--шапка над доской--}}
     <div class="app-content-header"> <!--begin::Container-->
         <div class="container-fluid"> <!--begin::Row-->
             <div class="flex flex-row space-x-4">
                 @if(1==1)
                     <div>
-                        <livewire:Cms2.App.Breadcrumb :menu="[['route'=>'leed','name'=>'Лиды']]"/>
+                        <livewire:Cms2.App.Breadcrumb :menu="[
+                            ['route'=>'board','name'=>'Рабочие доски'],
+                            ['route'=>'leed','name'=>'Заказы'],
+                        ]"/>
                     </div>
                 @endif
+
                 <div>
 
                     <!-- Сообщение об успехе -->
@@ -74,270 +79,290 @@
                     {{--                    @endif--}}
                 </div>
 
-                <div>
-
-                </div>
+                {{--                <div сclass="flex-1 text-right">--}}
+                {{--                    @if(sizeof($user->boardUser) )--}}
+                {{--                        <a href="{{ route('board.select') }}" wire:navigate--}}
+                {{--                           class="text-blue-400 hover:underline"--}}
+                {{--                        >--}}
+                {{--                            выбрать другую доску--}}
+                {{--                        </a>--}}
+                {{--                    @endif--}}
+                {{--                </div>--}}
 
             </div> <!--end::Row-->
         </div> <!--end::Container-->
     </div> <!--end::App Content Header--> <!--begin::App Content-->
 
-{{--<pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>--}}
+    {{--<pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>--}}
 
 
-    {{--    @if( $columns && count($columns) > 0 )--}}
-    @if( 1 == 1 )
-        <div class="flex  xspace-x-1 relative">
-            @foreach($columns as $k => $column)
-                <div
-                    class="
-                p-1
-                relative
-                w-[250px]
-                bg-white border rounded relative"
 
-                    id="column-{{ $column->id }}"
+    @if(1==2)
+        <pre class="text-xs">{{ print_r($user->toArray()) }}</pre>
+    @endif
 
-                    {{--                    wire:sortable="updateOrder"--}}
-                    {{--                    wire:sortable-group="{{ $column->id }}"--}}
+    <livewire:cms2.leed.select-board-form :user="$user"/>
 
-                    ondragover="event.preventDefault()"
-                    ondrop="handleRecordDrop(event, {{ $column->id }})"
+    @if( 1==1 )
 
-                    {{--                    wire:sortable="updateColumn"--}}
-                    {{--                    wire:sortable-item="{{ $block->id }}"--}}
-                >
+        @if( 1 == 1 )
 
-                    {{--                заголовок столбца<br/>--}}
+            @if( $columns->isEmpty() )
+                Добавте первый столбец
+                <livewire:cms2.leed.create-column-form :board_id="$user->current_board_id" type="first"/>
+            @endif
+
+            <div class="flex  xspace-x-1 relative">
+                @foreach($columns as $k => $column)
                     <div
-                        {{--                        bg-gradient-to-br from-orange-100 to-white--}}
-                        class="flex w-full justify-between items-center
-                        mb-2 py-1
-                        sticky top-0
-                        bg-white
-                        rounded"
+                        class="
+p-1
+relative
+w-[250px]
+bg-white border rounded relative"
+
                         id="column-{{ $column->id }}"
 
-                        @if($column->can_move)
-                            @permission(
-                    'р.Лиды / двигать столбцы') draggable="true" @endpermission
-                    @endif
+                        {{--                    wire:sortable="updateOrder"--}}
+                        {{--                    wire:sortable-group="{{ $column->id }}"--}}
 
-                    ondragstart="handleColumnDragStart(event, {{ $column->id }})"
-                    ondragover="handleDragOver(event, {{ $column->id }})"
-                    ondrop="handleRecordDrop(event, {{ $column->id }})"
+                        ondragover="event.preventDefault()"
+                        ondrop="handleRecordDrop(event, {{ $column->id }})"
+
+                        {{--                    wire:sortable="updateColumn"--}}
+                        {{--                    wire:sortable-item="{{ $block->id }}"--}}
                     >
-                    <h3 class="font-bold w-full text-center pb-1 border-b border-b-gray-200 ">
 
-                        {{--                            кнопки--}}
-                        <span style="float:right;">
+                        {{--                заголовок столбца<br/>--}}
+                        <div
+                            {{--                        bg-gradient-to-br from-orange-100 to-white--}}
+                            class="flex w-full justify-between items-center
+    mb-2 py-1
+    sticky top-0
+    bg-white
+    rounded"
+                            id="column-{{ $column->id }}"
+
+                            @if($column->can_move)
+                                @permission(
+                        'р.Лиды / двигать столбцы') draggable="true" @endpermission
+                        @endif
+
+                        ondragstart="handleColumnDragStart(event, {{ $column->id }})"
+                        ondragover="handleDragOver(event, {{ $column->id }})"
+                        ondrop="handleRecordDrop(event, {{ $column->id }})"
+                        >
+                        <h3 class="font-bold w-full text-center pb-1 border-b border-b-gray-200 ">
+
+                            {{--                            кнопки--}}
+                            <span style="float:right;">
+
+        @permission('разработка')
+        @if( $column->can_delete == true && $column->records->isEmpty())
+                                    <button
+                                        class="text-black/50 hover:text-red-600"
+                                        wire:click="deleteColumn({{ $column->id }})"
+                                        wire:confirm="Вы уверены, что хотите удалить эту колонку?"
+                                        title="Удалить колонку"
+                                    >
+        х
+        </button>
+                                @endif
+        @endpermission
+
+         @permission('р.Лиды / добавить столбцы')
+        @if( !isset($visibleAddForms[$column->id]) || $visibleAddForms[$column->id] === false )
+                                    <button
+                                        class="text-green-500 hover:text-green-700"
+                                        wire:click="showAddForm({{ $column->id }})"
+                                        title="Добавить новый столбец справа"
+                                    >
+        +
+        </button>
+                                @endif
+        @endpermission
+
+        @permission('разработка')
+        <livewire:cms2.leed.column-config :key="$column->id" :column="$column"/>
+        @endpermission
+
+    </span>
+
+
+                            {{ $column->name }}
 
                             @permission('разработка')
-                            @if( $column->can_delete == true && $column->records->isEmpty())
-                                <button
-                                    class="text-black/50 hover:text-red-600"
-                                    wire:click="deleteColumn({{ $column->id }})"
-                                    wire:confirm="Вы уверены, что хотите удалить эту колонку?"
-                                    title="Удалить колонку"
-                                >
-                            х
-                            </button>
-                            @endif
-                            @endpermission
+                            <div style="font-weight: normal; line-height: 11px; font-size: 10px;">
+                                <br/>
+                                id {{$column->id ?? '-' }}
+                                userId {{$column->user_id ?? '-' }}
+                                Order {{$column->order ?? '-' }}
 
-                             @permission('р.Лиды / добавить столбцы')
-                            @if( !isset($visibleAddForms[$column->id]) || $visibleAddForms[$column->id] === false )
-                                <button
-                                    class="text-green-500 hover:text-green-700"
-                                    wire:click="showAddForm({{ $column->id }})"
-                                    title="Добавить новый столбец справа"
-                                >
-                            +
-                            </button>
-                            @endif
-                            @endpermission
-
-                            @permission('разработка')
-                            <livewire:cms2.leed.column-config :key="$column->id" :column="$column"/>
-                            @endpermission
-
-                        </span>
-
-
-                        {{ $column->name }}
-
-                        @permission('разработка')
-                        <div style="font-weight: normal; line-height: 11px; font-size: 10px;">
-                            <br/>
-                            id {{$column->id ?? '-' }}
-                            userId {{$column->user_id ?? '-' }}
-                            Order {{$column->order ?? '-' }}
-
-                            {!! $column->type_otkaz ? '<Br/>Тип Отказник' : '' !!}
-                        </div>
-                        @endpermission
-
-                    </h3>
-                </div>
-
-                {{--                форма добавления столюца--}}
-                @permission('р.Лиды / добавить столбцы')
-                @if($visibleAddForms[$column->id] ?? false)
-
-                    <div class="чmy-1 p-1 text-center rounded-xl bg-blue-200">
-
-                        <button class="float-right text-blue-600 text-sm" wire:click="hiddenAddForm()"
-                                title="Скрыть формы">
-                            x
-                        </button>
-
-                        <b>Добавить столбец справа</b>
-
-                        <form
-                            class="block"
-                            wire:submit="addColumn({{$column->id }})">
-                            <input class="w-full"
-                                   wire:model="addColumnName"
-                                   type="text" name="addColumnName" value="" placeholder="Название столбца"/>
-                            <input
-                                class="bg-blue-200 active:bg-blue-400 rounded px-4 py-2"
-                                type="submit" value="Добавить"/>
-                        </form>
-                    </div>
-                @endif
-                @endpermission
-
-                <ul class="space-y-1">
-
-
-                    @if($column->can_create)
-                        @permission('р.Лиды / добавить лида')
-                        <li>
-                            <livewire:Cms2.Leed.AddLeedFormSimple :column="$column"/>
-                        </li>
-                        @endpermission
-                    @endif
-
-
-                    @foreach($column->records as $record)
-
-                        {{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($record->toArray()) }}</pre>--}}
-
-                        {{-- инфа о лиде--}}
-                        @if(1==2)
-                            @permission('Полный//доступ')
-                            <div class="bg-yellow-400 p-1">
-
-                                user: {{ $record->user->id }}/{{ $record->user->name }}
-                                <a href="{{ route('leed.item',['id'=>$record->id]) }}" wire:navigate
-                                   class="text-blue-600 underline block hover:bg-orange-300 p-1"
-                                >
-                                    <b>
-                                        {{ $record->name }}
-                                    </b>
-                                </a>
-                                {{--                                                <br/>--}}
-
-
-                                @if( !empty($record->phone) )
-                                    {{--                                                <div class="text-sm">тел</div>--}}
-                                    {{ $record->phone }}
-                                    {{--                                                    <livewire:Informer.PhoneFormatter :phone="$record->phone" :key="'ph'.$record->id"  />--}}
-                                    <br/>
-                                @endif
-
-                                {{--                                            @if( !empty($record->telegram) )--}}
-                                {{--                                                Tg: {{ $record->telegram }}--}}
-                                {{--                                                <br/>--}}
-                                {{--                                            @endif--}}
-
-                                {{--                                            @if( !empty($record->whatsapp) )--}}
-                                {{--                                                WA: {{ $record->whatsapp }}--}}
-                                {{--                                                <br/>--}}
-                                {{--                                            @endif--}}
-
-                                @if( !empty($record->company) )
-                                    {{--                                                    <div class="text-sm">Компания</div>--}}
-                                    <img src="/icon/briefcase.svg" class="w-[18px] mr-1 inline"/>
-                                    {{ $record->company }}
-                                    <br/>
-                                @endif
-                                @if( !empty($record->comment) )
-                                    <div class="text-sm">
-                                        {{--                                                    <div class="text-sm">Компания</div>--}}
-                                        {{ $record->comment }}
-                                    </div>
-                                    {{--                                                <br/>--}}
-                                @endif
+                                {!! $column->type_otkaz ? '<Br/>Тип Отказник' : '' !!}
                             </div>
+                            @endpermission
+
+                        </h3>
+                    </div>
+
+                    {{--                форма добавления столюца--}}
+                    @permission('р.Лиды / добавить столбцы')
+                    @if($visibleAddForms[$column->id] ?? false)
+
+                        <div class="чmy-1 p-1 text-center rounded-xl bg-blue-200">
+
+                            <button class="float-right text-blue-600 text-sm" wire:click="hiddenAddForm()"
+                                    title="Скрыть формы">
+                                x
+                            </button>
+
+                            <b>Добавить столбец справа</b>
+
+                            <form
+                                class="block"
+                                wire:submit="addColumn({{$column->id }})">
+                                <input class="w-full"
+                                       wire:model="addColumnName"
+                                       type="text" name="addColumnName" value="" placeholder="Название столбца"/>
+                                <input
+                                    class="bg-blue-200 active:bg-blue-400 rounded px-4 py-2"
+                                    type="submit" value="Добавить"/>
+                            </form>
+                        </div>
+                    @endif
+                    @endpermission
+
+                    <ul class="space-y-1">
+
+
+                        @if($column->can_create)
+                            @permission('р.Лиды / добавить лида')
+                            <li>
+                                <livewire:Cms2.Leed.AddLeedFormSimple :column="$column"/>
+                            </li>
                             @endpermission
                         @endif
 
-                        {{--отказники--}}
-                        @if( $column->type_otkaz && !empty($record->otkaz_reason) )
 
-                            {{--передать договор подписанный--}}
-                        @elseif( $column->can_transfer && $record->user_id !== Auth::id() && !empty($record->client_id) && !empty($record->order_id) )
-                        @else
+                        @foreach($column->records as $record)
 
-                            {{--                            @if( )--}}
-                            {{--                            <li>{{ $record->user_id }} / {{ Auth::id() }}</li>--}}
+                            {{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($record->toArray()) }}</pre>--}}
 
-                            <li
-                                {{--                                wire:ignore.self--}}
-                                class="p-0 m-0"
-                                id="record-{{ $record->id }}"
+                            {{-- инфа о лиде--}}
+                            @if(1==2)
+                                @permission('Полный//доступ')
+                                <div class="bg-yellow-400 p-1">
 
-                                @if($column->can_transfer == true  && isset($record->transfers[0]) && $record->transfers[0]->status == 'новый' )
-                                @else
-                                    draggable="true"
-                                @endif
+                                    user: {{ $record->user->id }}/{{ $record->user->name }}
+                                    <a href="{{ route('leed.item',['id'=>$record->id]) }}" wire:navigate
+                                       class="text-blue-600 underline block hover:bg-orange-300 p-1"
+                                    >
+                                        <b>
+                                            {{ $record->name }}
+                                        </b>
+                                    </a>
+                                    {{--                                                <br/>--}}
 
-                                ondragstart="handleRecordDragStart(event, {{ $record->id }})"
-                                ondragover="event.preventDefault()"
-                                ondrop="handleRecordDrop(event, {{ $column->id }})"
-                            >
-                                @if(1==1)
-                                    <div
 
-                                        class="xp-2
-               bg-white/50
+                                    @if( !empty($record->phone) )
+                                        {{--                                                <div class="text-sm">тел</div>--}}
+                                        {{ $record->phone }}
+                                        {{--                                                    <livewire:Informer.PhoneFormatter :phone="$record->phone" :key="'ph'.$record->id"  />--}}
+                                        <br/>
+                                    @endif
+
+                                    {{--                                            @if( !empty($record->telegram) )--}}
+                                    {{--                                                Tg: {{ $record->telegram }}--}}
+                                    {{--                                                <br/>--}}
+                                    {{--                                            @endif--}}
+
+                                    {{--                                            @if( !empty($record->whatsapp) )--}}
+                                    {{--                                                WA: {{ $record->whatsapp }}--}}
+                                    {{--                                                <br/>--}}
+                                    {{--                                            @endif--}}
+
+                                    @if( !empty($record->company) )
+                                        {{--                                                    <div class="text-sm">Компания</div>--}}
+                                        <img src="/icon/briefcase.svg" class="w-[18px] mr-1 inline"/>
+                                        {{ $record->company }}
+                                        <br/>
+                                    @endif
+                                    @if( !empty($record->comment) )
+                                        <div class="text-sm">
+                                            {{--                                                    <div class="text-sm">Компания</div>--}}
+                                            {{ $record->comment }}
+                                        </div>
+                                        {{--                                                <br/>--}}
+                                    @endif
+                                </div>
+                                @endpermission
+                            @endif
+
+                            {{--отказники--}}
+                            @if( $column->type_otkaz && !empty($record->otkaz_reason) )
+
+                                {{--передать договор подписанный--}}
+                            @elseif( $column->can_transfer && $record->user_id !== Auth::id() && !empty($record->client_id) && !empty($record->order_id) )
+                            @else
+
+                                {{--                            @if( )--}}
+                                {{--                            <li>{{ $record->user_id }} / {{ Auth::id() }}</li>--}}
+
+                                <li
+                                    {{--                                wire:ignore.self--}}
+                                    class="p-0 m-0"
+                                    id="record-{{ $record->id }}"
+
+                                    @if($column->can_transfer == true  && isset($record->transfers[0]) && $record->transfers[0]->status == 'новый' )
+                                    @else
+                                        draggable="true"
+                                    @endif
+
+                                    ondragstart="handleRecordDragStart(event, {{ $record->id }})"
+                                    ondragover="event.preventDefault()"
+                                    ondrop="handleRecordDrop(event, {{ $column->id }})"
+                                >
+                                    @if(1==1)
+                                        <div
+
+                                            class="xp-2
+bg-white/50
 {{--               text-center--}}
-               hover:bg-gray-100
-               hover:shadow-lg transition-all border rounded cursor-pointer">
+hover:bg-gray-100
+hover:shadow-lg transition-all border rounded cursor-pointer">
 
 
-                                        {{--<pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($record->toArray(),true) }}</pre>--}}
+                                            {{--<pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($record->toArray(),true) }}</pre>--}}
 
-                                        <div class="py-2 text-center">
-                                            @if( !empty($record->name) )
-                                                <a href="{{ route('leed.item',['id'=>$record->id]) }}" wire:navigate
-                                                   class="text-blue-400 xblock xtext-center hover:underline p-1"
-                                                >
-                                                    {{--                                                        @if( !empty($record->phone) )--}}
-                                                    {{--                                                            {{$record->phone ?? '-'}} /--}}
-                                                    {{--                                                        @endif--}}
-                                                    {{ $record->name }}
-                                                </a>
-                                            @endif
+                                            <div class="py-2 text-center">
+                                                @if( !empty($record->name) )
+                                                    <a href="{{ route('leed.item',['id'=>$record->id]) }}" wire:navigate
+                                                       class="text-blue-400 xblock xtext-center hover:underline p-1"
+                                                    >
+                                                        {{--                                                        @if( !empty($record->phone) )--}}
+                                                        {{--                                                            {{$record->phone ?? '-'}} /--}}
+                                                        {{--                                                        @endif--}}
+                                                        {{ $record->name }}
+                                                    </a>
+                                                @endif
 
-                                            @if( !empty($record->order->price) )
-                                                <br/>
-                                                <span class="text-xl text-red-600 ">
+                                                @if( !empty($record->order->price) )
+                                                    <br/>
+                                                    <span class="text-xl text-red-600 ">
 {{--                                                    <svg class="h-4 w-4 text-gray-500 inline " fill="none" viewBox="0 0 24 24"--}}
-                                                    {{--                                                         stroke="currentColor">--}}
-                                                    {{--                                                        <path stroke-linecap="round" stroke-linejoin="round"--}}
-                                                    {{--                                                              stroke-width="2"--}}
-                                                    {{--                                                              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>--}}
-                                                    {{--                                                    </svg>--}}
-                                                    {{  number_format($record->order->price,0,'',' ') }} руб
-                                                </span>
-                                            @elseif( !empty($record->budget) )
-                                                <br/>
-                                                <span class="text-xl text-gray-400">
-                                                    {{  number_format($record->budget,0,'',' ') }} руб
-                                                </span>
-                                            @endif
+                                                        {{--                                                         stroke="currentColor">--}}
+                                                        {{--                                                        <path stroke-linecap="round" stroke-linejoin="round"--}}
+                                                        {{--                                                              stroke-width="2"--}}
+                                                        {{--                                                              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>--}}
+                                                        {{--                                                    </svg>--}}
+                                                        {{  number_format($record->order->price,0,'',' ') }} руб
+                            </span>
+                                                @elseif( !empty($record->budget) )
+                                                    <br/>
+                                                    <span class="text-xl text-gray-400">
+                                {{  number_format($record->budget,0,'',' ') }} руб
+                            </span>
+                                                @endif
 
 
 
@@ -347,108 +372,110 @@
 
 
 
-                                            {{--блок кнопок менеджер--}}
-                                            <div class="
+                                                {{--блок кнопок менеджер--}}
+                                                <div class="
 {{--                                            w-[255px]--}}
-                                            mx-2
+                        mx-2
 
 {{--                                            mx-auto--}}
 {{--inline--}}
-                                            mt-1 flex flex-row space-x-1 items-center">
+                        mt-1 flex flex-row space-x-1 items-center">
 
-                                                <livewire:cms2.informer.leed.client :key="'block-but1-'.$record->id"
-                                                                                    :leed="$record"/>
-                                                <livewire:cms2.informer.leed.order :key="'block-but2-'.$record->id"
-                                                                                   :leed="$record"/>
+                                                    <livewire:cms2.informer.leed.client :key="'block-but1-'.$record->id"
+                                                                                        :leed="$record"/>
+                                                    {{--                                                    <livewire:cms2.informer.leed.order :key="'block-but2-'.$record->id"--}}
+                                                    {{--                                                                                       :leed="$record"/>--}}
 
-                                                {{--твои горящие задачи--}}
-                                                <livewire:cms2.informer.leed.order-you :key="'block-but3-'.$record->id"
-                                                                                       :leed="$record"/>
-                                                {{--горящие задачи от других--}}
-                                                <livewire:cms2.informer.leed.order-to-you
-                                                    :key="'block-but4-'.$record->id"
-                                                    :leed="$record"/>
-                                                {{--кол-во комментариев и горит если есть непрочитанные другие--}}
-                                                <livewire:cms2.informer.leed.comment :key="'block-but5-'.$record->id"
-                                                                                     :leed="$record"/>
-                                                {{--передать лида--}}
-                                                {{--                                                            <livewire:cms2.leed.move :leed="$record"/>--}}
+                                                    {{--твои горящие задачи--}}
+                                                    <livewire:cms2.informer.leed.order-you
+                                                        :key="'block-but3-'.$record->id"
+                                                        :leed="$record"/>
+                                                    {{--горящие задачи от других--}}
+                                                    <livewire:cms2.informer.leed.order-to-you
+                                                        :key="'block-but4-'.$record->id"
+                                                        :leed="$record"/>
+                                                    {{--кол-во комментариев и горит если есть непрочитанные другие--}}
+                                                    <livewire:cms2.informer.leed.comment
+                                                        :key="'block-but5-'.$record->id"
+                                                        :leed="$record"/>
+                                                    {{--передать лида--}}
+                                                    {{--                                                            <livewire:cms2.leed.move :leed="$record"/>--}}
+
+                                                </div>
+
+                                                @if($column->type_otkaz == true )
+                                                    <livewire:cms2.leed.item-otkaz-reason-form :recordId="$record->id"
+                                                                                               :key="'rec'.$record->id"/>
+
+                                                @endif
+
+                                                @permission('р.Лиды / отправить лида с дог-ом')
+                                                @if($column->can_transfer == true )
+                                                    @if( empty($record->client_id) || empty($record->order_id) )
+                                                        @if( empty($record->client_id) )
+                                                            <div class="
+                                    text-gray-600
+                                    bg-gray-200 rounded border-gray-500 border p-1 my-1">Добавте
+                                                                клиента
+                                                            </div>
+                                                        @endif
+                                                        @if( empty($record->order_id) )
+                                                            <div class="
+                                    text-gray-600
+                                    bg-gray-200 rounded border-gray-500 border p-1 my-1
+{{--                                                        bg-yellow-200 p-1 my-1--}}
+                                    ">Добавте заказ
+                                                            </div>
+                                                        @endif
+                                                    @else
+                                                        <livewire:cms2.leed.item-transfer-form :lead="$record"
+                                                                                               :key="'rec_transfer_'.$record->id"/>
+                                                    @endif
+                                                @endif
+                                                @endpermission
+
+                                                @if(1==2)
+                                                    @permission('разработка')
+                                                    <div class="text-sm max-h-[200px] overflow-auto">
+                                                        <pre>{{ print_r($record->toArray(),1) }}</pre>
+                                                    </div>
+                                                    @endpermission
+                                                @endif
 
                                             </div>
 
-                                            @if($column->type_otkaz == true )
-                                                <livewire:cms2.leed.item-otkaz-reason-form :recordId="$record->id"
-                                                                                           :key="'rec'.$record->id"/>
+                                            {{--                                            @permission('р.Лиды / видеть все лиды')--}}
+                                            <div
+                                                class="text-left     @if( !empty($record->user->deleted_at) ) line-through @endif ">
+                                                @if( $user_id != $record->user_id )
 
-                                            @endif
+                                                    <span class="bg-gray-200 p-1 text-sm">
+           {{$record->user->name ?? '-'}}
+           ({{$record->user->roles[0]->name ?? '' }})
+       </span>
 
-                                            @permission('р.Лиды / отправить лида с дог-ом')
-                                            @if($column->can_transfer == true )
-                                                @if( empty($record->client_id) || empty($record->order_id) )
-                                                    @if( empty($record->client_id) )
-                                                        <div class="
-                                                        text-gray-600
-                                                        bg-gray-200 rounded border-gray-500 border p-1 my-1">Добавте
-                                                            клиента
-                                                        </div>
-                                                    @endif
-                                                    @if( empty($record->order_id) )
-                                                        <div class="
-                                                        text-gray-600
-                                                        bg-gray-200 rounded border-gray-500 border p-1 my-1
-{{--                                                        bg-yellow-200 p-1 my-1--}}
-                                                        ">Добавте заказ
-                                                        </div>
-                                                    @endif
                                                 @else
-                                                    <livewire:cms2.leed.item-transfer-form :lead="$record"
-                                                                                           :key="'rec_transfer_'.$record->id"/>
+
+                                                    {{--                                                <span class="bg-green-100 p-1 text-sm">--}}
+                                                    {{--                                                   ваш лид--}}
+                                                    {{--                                                </span>--}}
+
                                                 @endif
-                                            @endif
-                                            @endpermission
+                                            </div>
+                                        {{--                                            @endpermission--}}
 
-                                            @if(1==2)
-                                                @permission('разработка')
-                                                <div class="text-sm max-h-[200px] overflow-auto">
-                                                    <pre>{{ print_r($record->toArray(),1) }}</pre>
-                                                </div>
-                                                @endpermission
-                                            @endif
-
-                                        </div>
-
-                                        {{--                                            @permission('р.Лиды / видеть все лиды')--}}
-                                        <div
-                                            class="text-left     @if( !empty($record->user->deleted_at) ) line-through @endif ">
-                                            @if( $user_id != $record->user_id )
-
-                                                <span class="bg-gray-200 p-1 text-sm">
-                               {{$record->user->name ?? '-'}}
-                               ({{$record->user->roles[0]->name ?? '' }})
-                           </span>
-
-                                            @else
-
-                                                {{--                                                <span class="bg-green-100 p-1 text-sm">--}}
-                                                {{--                                                   ваш лид--}}
-                                                {{--                                                </span>--}}
-
-                                            @endif
-                                        </div>
-                                    {{--                                            @endpermission--}}
-
-                                @endif
+                                    @endif
 
 
-                            </li>
-                        @endif
+                                </li>
+                            @endif
 
-                        {{--                            <pre class="text-sm max-h-[200px] overflow-auto">{{print_r($record->toArray())}}</pre>--}}
+                            {{--                            <pre class="text-sm max-h-[200px] overflow-auto">{{print_r($record->toArray())}}</pre>--}}
 
-                    @endforeach
-                </ul>
-        </div>
-        @endforeach
+                        @endforeach
+                    </ul>
+            </div>
+            @endforeach
 </div>
 
 @else
@@ -585,6 +612,8 @@
      class="text-center rounded-xl bg-green-200 py-2">Перемещаю<br/>
     <img src="/icon/move.svg" class="mx-auto mt-2" style="height: 30px;" alt="" border="0"/>
 </div>
+
+@endif
 
 </div>
 

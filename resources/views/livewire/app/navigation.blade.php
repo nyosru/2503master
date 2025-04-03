@@ -27,6 +27,9 @@
             <!-- Settings Dropdown -->
             @if(auth()->user())
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+
+                <a href="{{ route('leed') }}" class="bg-blue-400 px-2 py-1 rounded">Работа с заказами</a>
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
@@ -63,8 +66,9 @@
             </div>
             @else
                 <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-3">
-                    <a href="{{ route('login') }}" >Вход</a>
-                    <a href="{{ route('register') }}" >Регистрация</a>
+                    <a href="https://oauth.telegram.org/auth?bot_id={{ env('TELEGRAM_BOT_TOKEN') }}&origin={{ env('APP_URL') }}&return_to={{ env('TELEGRAM_REDIRECT_URL' )}}" >Войти через Telegram</a>
+{{--                    <a href="{{ route('login') }}" >Вход</a>--}}
+{{--                    <a href="{{ route('register') }}" >Регистрация</a>--}}
                     </div>
 @endif
             <!-- Hamburger -->

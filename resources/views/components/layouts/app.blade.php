@@ -32,6 +32,7 @@
 
         <div class="flex flex-row space-x-5">
             @if (Route::is('tech*')
+|| Route::is('board*')
 || Route::is('leed*')
 || Route::is('clients*')
 || Route::is('order*')

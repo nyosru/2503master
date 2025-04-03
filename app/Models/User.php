@@ -25,6 +25,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'current_board_id',
+        'phone_number',
+        'telegram_id',
     ];
 
     /**
@@ -49,4 +52,23 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Связь с досками (многие ко многим)
+//    public function boards()
+//    {
+//        return $this->belongsToMany(Board::class)
+//            ->withPivot('role_id');
+//    }
+
+    public function boardUser()
+    {
+        return $this->hasMany(BoardUser::class);
+    }
+
+    // Связь с доской (current_board)
+    public function currentBoard()
+    {
+        return $this->belongsTo(Board::class, 'current_board_id');
+    }
+
 }

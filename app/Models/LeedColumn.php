@@ -13,6 +13,7 @@ class LeedColumn extends Model
     protected $fillable = [
         'name',
         'user_id',
+        'board_id',
         'order',
         // настройки
         'can_move',
@@ -33,5 +34,12 @@ class LeedColumn extends Model
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'column_role', 'column_id', 'role_id');
+    }
+
+
+    // Связь с доской
+    public function board()
+    {
+        return $this->belongsTo(Board::class);
     }
 }

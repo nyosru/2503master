@@ -1,4 +1,4 @@
-<div class="px-1 pt-5 text-[#c2c7d0]">
+<div class="px-1 pt-5 text-[#c2c7d0] w-[200px]">
 
 <div class="flex flex-col space-y-1">
     <ul>
@@ -31,7 +31,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M13 7a4 4 0 11-8 0 4 4 0 018 0zm-3 8a7 7 0 00-5.4 2.6A8 8 0 1016 9a7 7 0 00-6 6z"/>
                 </svg>
-                <span>Лиды</span>
+                <span>Заказы</span>
             </a>
         </li>
         @endpermission
@@ -55,6 +55,7 @@
         </li>
         @endpermission
 
+        @if(1==2)
         <!-- Усдуги -->
         @permission('р.Заказы')
         <li class="w-full">
@@ -71,6 +72,8 @@
             </a>
         </li>
         @endpermission
+
+        @endif
 
         <!-- Усдуги -->
 {{--        @permission('р.Услуги')--}}
@@ -303,6 +306,24 @@
                 {{--                </svg>--}}
                 <img src="/icon/gear.svg" class="w-[18px]"/>
                 <span>Тех. отдел</span>
+            </a>
+        </li>
+        @endpermission
+
+
+        @permission('р.Доски')
+        <li class="w-full">
+            <a href="{{ route('board') }}"
+               wire:navigate
+               class="flex items-center space-x-2 px-4 py-2 xtext-gray-700 rounded
+                hover:bg-orange-200 hover:text-gray-700
+                {{ Request::is('board*') ? 'bg-orange-300 text-gray-700 ' : '' }}"
+            >
+                {{--                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">--}}
+                {{--                    <path d="M10 11a4 4 0 100-8 4 4 0 000 8zm-7 8a7 7 0 1114 0H3z"/>--}}
+                {{--                </svg>--}}
+                <img src="/icon/gear.svg" class="w-[18px]"/>
+                <span>Доски</span>
             </a>
         </li>
         @endpermission

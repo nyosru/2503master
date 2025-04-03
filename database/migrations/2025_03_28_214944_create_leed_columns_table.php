@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('leed_columns', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // varchar(255) NOT NULL
+            $table->unsignedBigInteger('board_id');
             $table->boolean('can_move')->default(true); // tinyint(1) NOT NULL DEFAULT 1
             $table->boolean('can_delete')->default(true); // tinyint(1) NOT NULL DEFAULT 1
             $table->unsignedInteger('order')->default(0); // int(10) UNSIGNED NOT NULL DEFAULT 0
@@ -22,7 +23,18 @@ return new class extends Migration
             $table->boolean('can_create')->default(false); // tinyint(1) NOT NULL DEFAULT 0
             $table->softDeletes(); // Добавляет столбец `deleted_at` для мягкого удаления
             $table->timestamps();
+
+
+            // Внешние ключи
+            $table->foreign('board_id')
+                ->references('id')
+                ->on('boards')
+//                ->onDelete('cascade')
+            ;
+
         });
+
+
     }
 
     /**

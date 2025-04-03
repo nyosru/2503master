@@ -22,6 +22,7 @@ class LeedBoard extends Component
         // перетаскивание строк
         'updateColumnOrder' => 'updateColumnOrder',
         'loadColumns' => 'loadColumns',
+        'setCurentBoard' => 'setCurentBoard',
 //        'changeVisibleCreateOrderForm' => 'changeVisibleCreateOrderForm',
 //        'render' => 'render',
 
@@ -51,6 +52,8 @@ class LeedBoard extends Component
 
     public $reason = '';
     public $user_id;
+    public $user;
+    public $current_board = '';
 
     // ttckb прислали клиента к лиду (создали клиента)
     #[Url]
@@ -64,6 +67,10 @@ class LeedBoard extends Component
     public $showModalCreateOrder = [];
 
 
+    public function setCurentBoard($id){
+//        dd( 'setCurentBoard'.$id);
+        $this->current_board = $id;
+    }
     public function changeVisibleCreateOrderForm($id)
     {
         $this->showModalCreateOrder[$id] = (isset($this->showModalCreateOrder[$id]) && $this->showModalCreateOrder[$id] === true) ? false : true;
@@ -72,6 +79,11 @@ class LeedBoard extends Component
     public function mount()
     {
         $this->user_id = Auth::id();
+        $this->user = User::with([
+            'boardUser',
+            'boardUser.board',
+            'boardUser.role',
+        ])->findOrFail($this->user_id);
 
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
@@ -102,6 +114,7 @@ class LeedBoard extends Component
 //        $this->loadColumns();
 //        $this->resetForm();
     }
+
 
 
 
@@ -192,6 +205,35 @@ class LeedBoard extends Component
 //    }
 
 
+    public function getCurrentBoard()
+    {
+
+        if( empty($this->user) ) {
+            $user_id = Auth::id();
+            $this->user = User::with([
+//                'roles'
+                'boardUser',
+                'boardUser.board',
+                'boardUser.role',
+            ])->findOrFail($user_id);
+//            dd($user->toArray());
+
+            if( sizeof($this->user->boardUser) == 1){
+                $this->current_board = $this->user->boardUser[0]->id;
+            }
+
+//        foreach ($this->user->boardUser as $boardUser) {
+////            $this->current_board = $boardUser->board;
+//        }
+
+        }
+
+
+
+
+    }
+
+
     public function createColumnsForUser()
     {
         if (env('APP_ENV', 'x') == 'local') {
@@ -230,10 +272,24 @@ class LeedBoard extends Component
 
         $user_id = Auth::id();
 
+
+
+
 //        $user = User::with('roles.columns')->find($user_id);
         try {
-            $user = User::with('roles')->findOrFail($user_id);
-            $roleId = $user->roles[0]->id;
+
+            if( empty($this->user) ) {
+                $this->user = User::with([
+//                'roles'
+                    'boardUser',
+                    'boardUser.board',
+                    'boardUser.role',
+                ])->findOrFail($user_id);
+//            dd($user->toArray());
+            }
+
+            $roleId = $this->user->roles[0]->id ?? '';
+
 //        dd($user->toArray());
 //        dd(
 //            [
@@ -417,15 +473,19 @@ class LeedBoard extends Component
             'addColumnName' => 'required|string|max:255',
         ]);
 
-        $user_id = Auth::id();
+$user_id = Auth::id();
+$user = User::find($user_id);
 
-        // Создаем новый столбец
-        LeedColumn::create([
-            'name' => $this->addColumnName,
-//            'user_id' => $user_id,
-            'order' => ($column->order + 1),
-            'can_move' => true
-        ]);
+// Создаем новый столбец
+LeedColumn::create([
+    'name' => $this->addColumnName,
+//    'user_id' => $user_id,
+    'order' => ($column->order + 1),
+    'board_id' => $user->current_board_id,
+    'can_move' => true
+]);
+
+
 
         // Пересчитываем порядок для всех столбцов пользователя
         $this->reorderColumns($user_id);
@@ -606,6 +666,7 @@ class LeedBoard extends Component
 
     public function render()
     {
+        $this->getCurrentBoard();
         \Log::info('рендер leed-board');
 //        Debugbar::addMessage('Пример сообщения', 'debug');
         $this->loadColumns();
