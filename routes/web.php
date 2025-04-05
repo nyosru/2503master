@@ -14,6 +14,14 @@ use Nyos\Msg;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 
+
+require __DIR__ . '/api.php';
+
+//Route::middleware('api')
+//    ->prefix('api')
+//    ->group(base_path('routes/api.php'));
+
+
 Route::get('/a/{id}', function ($id) {
     // Находим пользователя по ID
     $user = User::findOrFail($id);
@@ -336,5 +344,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-require __DIR__ . '/telega.php';
 require __DIR__ . '/auth.php';
