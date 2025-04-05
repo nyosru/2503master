@@ -143,6 +143,28 @@ Route::get('/setWebhook', function () {
     return $response ? 'Webhook установлен' : 'Ошибка установки вебхука';
 });
 
+
+Route::post('/webhook', function () {
+    $update = json_decode(file_get_contents('php://input'), true);
+
+    if (isset($update['message'])) {
+        $message = $update['message'];
+        $text = $message['text'];
+        $chatId = $message['chat']['id'];
+
+        // Обработка сообщения
+        Telegram::sendMessage([
+            'chat_id' => $chatId,
+            'text' => "Вы написали: $text"
+        ]);
+    }
+
+    showMeTelegaMsg();
+
+    return response('ok', 200);
+});
+
+
 //Route::post('/webhook', function () {
 Route::any('/webhook', function () {
 
