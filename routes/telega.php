@@ -182,7 +182,7 @@ Route::post('/webhook/tele2', function () {
     showMeTelegaMsg();
 
     return response('ok', 200);
-});
+})->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
 
 
 //Route::post('/webhook', function () {
@@ -208,7 +208,7 @@ Route::any('/webhook', function () {
     return response('ok', 200);
 //    return response()->json(['ok'], 200);
 
-})->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);;
+})->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
 
 
 
