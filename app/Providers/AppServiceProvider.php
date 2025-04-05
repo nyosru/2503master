@@ -14,6 +14,7 @@ use App\Observers\LeedRecordOrderObserver;
 use App\Observers\OrderObserver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,6 +33,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
+        Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
+            $event->extendSocialite('telegram', \SocialiteProviders\Telegram\Provider::class);
+        });
 
         // в лог о перемещении из столбца в столбец
         LeedRecord::observe(LeedRecordObserver::class);

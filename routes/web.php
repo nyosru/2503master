@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Nyos\Msg;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 
 Route::get('/a/{id}', function ($id) {
@@ -53,146 +54,15 @@ Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
 });
 
 
-
-Route::get('/auth/telegram/callback', function (Request $request) {
-    return view('auth-telegram.callback1');
-});
-
-
-
-
-function checkTelegramAuthorization($data) {
-    $botToken = env('TELEGRAM_BOT_TOKEN');
-
-    if (!isset($data['hash']) || empty($botToken)) {
-        return false;
-    }
-
-    $check_hash = $data['hash'];
-    unset($data['hash']);
-    $data_check_arr = [];
-    foreach ($data as $key => $value) {
-        $data_check_arr[] = $key . '=' . $value;
-    }
-    sort($data_check_arr);
-    $data_check_string = implode("\n", $data_check_arr);
-    $secret_key = hash('sha256', $botToken, true);
-    $hash = hash_hmac('sha256', $data_check_string, $secret_key);
-
-
-    Msg::sendTelegramm('проверка телеги'
-        .PHP_EOL.$botToken
-        .PHP_EOL.$hash
-        .PHP_EOL.$check_hash
-
-        ,null,1);
-
-    if (strcmp($hash, $check_hash) !== 0) {
-        throw new Exception('Data is NOT from Telegram');
-    }
-    if ((time() - $data['auth_date']) > 86400) {
-        throw new Exception('Data is outdated');
-    }
-    return $data;
-}
-
-function verifyTelegramAuth(array $data): bool
-{
-    $botToken = env('TELEGRAM_BOT_TOKEN');
-
-    if (!isset($data['hash']) || empty($botToken)) {
-        return false;
-    }
-
-    $hash = $data['hash'];
-    unset($data['hash']); // Убираем хеш перед вычислением
-
-    sort($data); // Сортируем ключи по алфавиту
-    $dataCheckString = [];
-    foreach ($data as $key => $value) {
-        $dataCheckString[] = $key . '=' . $value;
-//            $dataCheckString[] = "{$key}={$value}";
-    }
-    $dataCheckString = implode("\n", $dataCheckString); // Объединяем строки
-
-    // 🔑 Формируем секретный ключ
-    $secretKey = hash_hmac('sha256', $botToken, 'WebAppData', true);
-
-    // 🔐 Вычисляем ожидаемый hash
-    $expectedHash = hash_hmac('sha256', $dataCheckString, $secretKey);
-
-
-    Msg::sendTelegramm('проверка телеги'
-        .PHP_EOL.$botToken
-        .PHP_EOL.$hash
-        .PHP_EOL.$expectedHash
-
-        .PHP_EOL.'📌 auth_date: '
-        .PHP_EOL.'received: ' . ( $data['auth_date'] ?? '❌ Нет auth_date' )
-        .PHP_EOL.'current_time: ' . time()
-        .PHP_EOL.'time_diff: ' . ( isset($data['auth_date']) ? time() - $data['auth_date'] : '❌' )
-
-        ,null,1);
-
-    return hash_equals($expectedHash, $hash);
-}
-
-
-Route::post('/auth/telegram/callback2', function (Request $request) {
-
-    $jsonData = $request->input('tgAuthResult'); // Получаем строку
-    $data = json_decode(base64_decode($jsonData), true); // Декодируем данные
-//dd($data);
-    if (!$data) {
-        return response()->json(['error' => 'Ошибка при разборе данных'], 400);
-    }
-
-//    // Проверяем подпись Telegram
-//    $hash = $data['hash'];
-//    unset($data['hash']);
-//    $dataCheckString = '';
-//    foreach ($data as $key => $value) {
-//        $dataCheckString .= $key . '=' . $value . "\n";
-//    }
-//    $secretKey = hash('sha256', env('TELEGRAM_BOT_TOKEN'), true);
-//    $expectedHash = hash_hmac('sha256', $dataCheckString, $secretKey);
-//    if (!hash_equals($expectedHash, $hash)) {
-//        return response()->json(['error' => 'Неверная подпись'], 400);
-////        return response()->json(['error' => 'Неверная подпись'], 400);
-//    }
-    // Проверка подписи (hash)
-//    if (!verifyTelegramAuth($data)) {
-//        return response()->json(['error' => 'Неверная подпись Telegram'], 400);
-//    }
-try {
-    $ee = checkTelegramAuthorization($data);
-}catch (Exception $e) {
-    return response()->json(['error' => 'Неверная подпись Telegram'], 400);
-}
-
-    Log::info('Telegram login data:', $data); // Логируем для проверки
-
-    // Делаем проверку (можно добавить проверку подписи Telegram)
-    $user = \App\Models\User::updateOrCreate(
-        ['telegram_id' => $data['id']],
-        [
-            'email' => $data['id'].'@telegram.ru',
-            'password' => bcrypt($data['id']),
-            'name' => $data['first_name'] . ' ' . ($data['last_name'] ?? ''),
-            'username' => $data['username'] ?? null,
-            'avatar' => $data['photo_url'] ?? null,
-        ]
-    );
-
-    // Авторизуем пользователя
-    Auth::login($user);
-
-    return response()->json(['message' => 'Успешный вход!', 'user' => $user]);
-
-//    $telegramData = $request->all(); // Получаем данные от Telegram
-//    // Проверка данных и аутентификация пользователя
-//    dd($telegramData);
-});
+//// Авторизуем пользователя
+//Auth::login($user);
+//
+//return response()->json(['message' => 'Успешный вход!', 'user' => $user]);
+//
+////    $telegramData = $request->all(); // Получаем данные от Telegram
+////    // Проверка данных и аутентификация пользователя
+////    dd($telegramData);
+//});
 
 //Route::get('/auth/telegram', function () {
 //    return Socialite::driver('telegram')->redirect();
@@ -214,18 +84,6 @@ try {
 //
 //    return redirect('/dashboard'); // Перенаправление после входа
 //});
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Route::get('', \App\Livewire\Index::class)->name('index');
@@ -478,4 +336,5 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+require __DIR__ . '/telega.php';
 require __DIR__ . '/auth.php';

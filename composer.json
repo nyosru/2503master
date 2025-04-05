@@ -9,6 +9,7 @@
         "php": "^8.2",
         "darkaonline/l5-swagger": "^9.0",
         "intervention/image": "^3.11",
+        "irazasyed/telegram-bot-sdk": "^3.15",
         "laravel/framework": "^11.31",
         "laravel/socialite": "^5.19",
         "laravel/tinker": "^2.9",

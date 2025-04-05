@@ -67,10 +67,12 @@ class LeedBoard extends Component
     public $showModalCreateOrder = [];
 
 
-    public function setCurentBoard($id){
+    public function setCurentBoard($id)
+    {
 //        dd( 'setCurentBoard'.$id);
         $this->current_board = $id;
     }
+
     public function changeVisibleCreateOrderForm($id)
     {
         $this->showModalCreateOrder[$id] = (isset($this->showModalCreateOrder[$id]) && $this->showModalCreateOrder[$id] === true) ? false : true;
@@ -208,7 +210,7 @@ class LeedBoard extends Component
     public function getCurrentBoard()
     {
 
-        if( empty($this->user) ) {
+        if (empty($this->user)) {
             $user_id = Auth::id();
             $this->user = User::with([
 //                'roles'
@@ -218,7 +220,7 @@ class LeedBoard extends Component
             ])->findOrFail($user_id);
 //            dd($user->toArray());
 
-            if( sizeof($this->user->boardUser) == 1){
+            if (sizeof($this->user->boardUser) == 1) {
                 $this->current_board = $this->user->boardUser[0]->id;
             }
 
@@ -227,8 +229,6 @@ class LeedBoard extends Component
 //        }
 
         }
-
-
 
 
     }
@@ -273,12 +273,10 @@ class LeedBoard extends Component
         $user_id = Auth::id();
 
 
-
-
 //        $user = User::with('roles.columns')->find($user_id);
         try {
 
-            if( empty($this->user) ) {
+            if (empty($this->user)) {
                 $this->user = User::with([
 //                'roles'
                     'boardUser',
@@ -473,18 +471,17 @@ class LeedBoard extends Component
             'addColumnName' => 'required|string|max:255',
         ]);
 
-$user_id = Auth::id();
-$user = User::find($user_id);
+        $user_id = Auth::id();
+        $user = User::find($user_id);
 
 // Создаем новый столбец
-LeedColumn::create([
-    'name' => $this->addColumnName,
+        LeedColumn::create([
+            'name' => $this->addColumnName,
 //    'user_id' => $user_id,
-    'order' => ($column->order + 1),
-    'board_id' => $user->current_board_id,
-    'can_move' => true
-]);
-
+            'order' => ($column->order + 1),
+            'board_id' => $user->current_board_id,
+            'can_move' => true
+        ]);
 
 
         // Пересчитываем порядок для всех столбцов пользователя

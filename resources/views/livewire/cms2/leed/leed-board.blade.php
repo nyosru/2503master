@@ -1,5 +1,4 @@
 <div class="flex flex-col xspace-y-4">
-
     {{--<div>--}}
     {{--    <pre style="max-height: 150px; overflow: auto;" >{{ print_r($columns) }}</pre>--}}
     {{--</div>--}}
@@ -104,12 +103,11 @@
     <livewire:cms2.leed.select-board-form :user="$user"/>
 
     @if( 1==1 )
-
         @if( 1 == 1 )
 
             @if( $columns->isEmpty() )
                 Добавте первый столбец
-                <livewire:cms2.leed.create-column-form :board_id="$user->current_board_id" type="first"/>
+                <livewire:cms2.leed.create-column-form :user="$user" :board_id="$user->current_board_id" type="first"/>
             @endif
 
             <div class="flex  xspace-x-1 relative">
@@ -137,15 +135,14 @@ bg-white border rounded relative"
                         <div
                             {{--                        bg-gradient-to-br from-orange-100 to-white--}}
                             class="flex w-full justify-between items-center
-    mb-2 py-1
-    sticky top-0
-    bg-white
-    rounded"
+                                mb-2 py-1
+                                sticky top-0
+                                bg-white
+                                rounded"
                             id="column-{{ $column->id }}"
 
                             @if($column->can_move)
-                                @permission(
-                        'р.Лиды / двигать столбцы') draggable="true" @endpermission
+                                @permission('р.Лиды / двигать столбцы') draggable="true" @endpermission
                         @endif
 
                         ondragstart="handleColumnDragStart(event, {{ $column->id }})"

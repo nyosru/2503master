@@ -2,12 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Board;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BoardController extends Controller
 {
+
+    public static function CreateBoard( $user_id, $new_board_name = null){
+
+        $user = User::with('boardUser')->select('id')->findOrFail($user_id);
+
+//        dd($user->toArray());
+
+        Board::create(['name' => ( $new_board_name ?? 'Новая доска '.date('ymdHis') ) ]);
+
+//        $user->boardUser()->create([
+//            'board_id' => $user->board()->create([
+//                'name' => $new_board_name ?? 'Новая доска '.date('ymdHis'),
+////                'color' => '#000000',
+//            ])->id,
+//        ]);
+
+        dd($user->toArray());
+
+    }
 
     public static function getCurrentBoard($user_id, $new_board_id = null)
     {
