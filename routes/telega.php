@@ -143,7 +143,9 @@ Route::get('/setWebhook', function () {
 
 //Route::post('/webhook', function () {
 Route::any('/webhook', function () {
+
     showMeTelegaMsg();
+
     $update = Telegram::getWebhookUpdate();
 
     // Обработка входящего сообщения
@@ -159,7 +161,9 @@ Route::any('/webhook', function () {
         ]);
     }
 
-    return response('ok', 200);
+//    return response('ok', 200);
+    return response()->json(['ok'], 200);
+
 })->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);;
 
 
