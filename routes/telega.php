@@ -16,6 +16,7 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 
 Route::get('/auth/telegram/callback', function (Request $request) {
+    showMeTelegaMsg();
     return view('auth-telegram.callback1');
 });
 
@@ -119,6 +120,8 @@ function verifyTelegramAuth(array $data): bool
 
 Route::post('/auth/telegram/callback2', function (Request $request) {
 
+    showMeTelegaMsg();
+
     $jsonData = $request->input('tgAuthResult'); // Получаем строку
     $data = json_decode(base64_decode($jsonData), true); // Декодируем данные
 //dd($data);
@@ -129,6 +132,7 @@ Route::post('/auth/telegram/callback2', function (Request $request) {
 })->name('telegram.callback2');
 
 Route::get('/setWebhook', function () {
+    showMeTelegaMsg();
     $response = Telegram::setWebhook([
 //            'url' => 'https://your-domain.com/webhook'
         'url' => env('APP_URL2') . '/webhook',
@@ -138,7 +142,7 @@ Route::get('/setWebhook', function () {
 });
 
 Route::post('/webhook', function () {
-
+    showMeTelegaMsg();
     $update = Telegram::getWebhookUpdate();
 
     // Обработка входящего сообщения
