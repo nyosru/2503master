@@ -171,7 +171,7 @@ Route::middleware('api')
             showMeTelegaMsg();
 
             return response('ok', 200);
-        });
+        })->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);;
 
         Route::post('/webhook/tele2', function () {
             $update = json_decode(file_get_contents('php://input'), true);
