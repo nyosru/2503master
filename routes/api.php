@@ -146,7 +146,7 @@ Route::middleware('api')
             showMeTelegaMsg();
             $response = Telegram::setWebhook([
 //            'url' => 'https://your-domain.com/webhook'
-                'url' => env('APP_URL2') . '/webhook',
+                'url' => env('APP_URL2') . '/api/webhook',
             ]);
 
             return $response ? 'Webhook установлен' : 'Ошибка установки вебхука';
