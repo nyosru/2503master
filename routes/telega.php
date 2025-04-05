@@ -160,7 +160,7 @@ Route::any('/webhook', function () {
     }
 
     return response('ok', 200);
-});
+})->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);;
 
 
 
