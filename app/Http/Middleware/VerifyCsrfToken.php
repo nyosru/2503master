@@ -11,6 +11,7 @@ class VerifyCsrfToken extends Middleware
 {
     protected $except = [
         '/webhook', // Путь вашего вебхука
+        '/webhook/tele2', // Путь вашего вебхука
         '/webhook/*', // Путь вашего вебхука
         '/setWebhook', // Путь вашего вебхука
         '/auth/telegram/callback2', // Путь вашего вебхука
