@@ -141,7 +141,8 @@ Route::get('/setWebhook', function () {
     return $response ? 'Webhook установлен' : 'Ошибка установки вебхука';
 });
 
-Route::post('/webhook', function () {
+//Route::post('/webhook', function () {
+Route::any('/webhook', function () {
     showMeTelegaMsg();
     $update = Telegram::getWebhookUpdate();
 
