@@ -117,8 +117,7 @@ function verifyTelegramAuth(array $data): bool
 
 Route::middleware('api')
     ->prefix('api')
-    ->group(function () {
-
+    ->group( function () {
 
         Route::get('/auth1111/telegram/callback', function (Request $request) {
             showMeTelegaMsg();
