@@ -15,11 +15,6 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 
 
-Route::get('/auth/telegram/callback', function (Request $request) {
-    showMeTelegaMsg();
-    return view('auth-telegram.callback1');
-});
-
 
 function checkTelegramAuthorization($data)
 {
@@ -118,6 +113,13 @@ function verifyTelegramAuth(array $data): bool
     return hash_equals($expectedHash, $hash);
 }
 
+
+
+Route::get('/auth/telegram/callback', function (Request $request) {
+    showMeTelegaMsg();
+    return view('auth-telegram.callback1');
+});
+
 Route::post('/auth/telegram/callback2', function (Request $request) {
 
     showMeTelegaMsg();
@@ -161,8 +163,8 @@ Route::any('/webhook', function () {
         ]);
     }
 
-//    return response('ok', 200);
-    return response()->json(['ok'], 200);
+    return response('ok', 200);
+//    return response()->json(['ok'], 200);
 
 })->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);;
 
