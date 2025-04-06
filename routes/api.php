@@ -27,10 +27,12 @@ Route::post('/webhook1', function () {
 
         $l = '';
         foreach ($update as $k => $v) {
-            $l .= $k . ': ' . $v . "\n";
+            $l .= PHP_EOL
+                .PHP_EOL
+                .$k . ': ' . $v . PHP_EOL ;
             if (is_array($v)) {
                 foreach ($v as $k2 => $v2) {
-                    $l .= '     ' . $k2 . ': ' . $v2 . "\n";
+                    $l .= '     ' . $k2 . ': ' . $v2 . PHP_EOL ;
                 }
             }
         }
