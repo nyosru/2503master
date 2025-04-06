@@ -97,6 +97,8 @@ Route::any('/webhook2', function () {
 
     $update = json_decode(file_get_contents('php://input'), true);
 
+    \App\Http\Controllers\TelegramController::inMessage($update);
+
     Log::info('Telegram Webhook:', $update);
 
     if (isset($update['message'])) {
