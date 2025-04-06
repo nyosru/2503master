@@ -23,14 +23,26 @@ Route::post('/webhook1', function () {
 
     Log::info('Telegram Webhook:', $update);
     $chatId = $update['message']['chat']['id'] ?? null;
-    if( !empty($chatId) ) {
+    if (!empty($chatId)) {
+
+        $l = '';
+        foreach ($update as $k => $v) {
+            $l .= $k . ': ' . $v . "\n";
+            if (is_array($v)) {
+                foreach ($v as $k2 => $v2) {
+                    $l .= '     ' . $k2 . ': ' . $v2 . "\n";
+                }
+            }
+        }
+
         Telegram::sendMessage([
             'chat_id' => $chatId,
             'text' => 'origin: '
                 . serialize($update)
-                .PHP_EOL
-                .PHP_EOL
-                . print_r($update)
+                . PHP_EOL
+                . PHP_EOL
+                . $l
+
         ]);
     }
 
@@ -46,8 +58,7 @@ Route::post('/webhook1', function () {
         ]);
 
 
-
-        if( $text == '11' ) {
+        if ($text == '11') {
 
 // Define the keyboard with the "Share Phone Number" button
             $keyboard = [
@@ -97,7 +108,7 @@ Route::any('/webhook2', function () {
         ]);
 
 
-        if( $text == '11' ) {
+        if ($text == '11') {
 
 // Define the keyboard with the "Share Phone Number" button
             $keyboard = [
