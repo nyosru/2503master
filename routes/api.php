@@ -26,18 +26,17 @@ Route::post('/webhook1', function () {
     if( !empty($chatId) ) {
         Telegram::sendMessage([
             'chat_id' => $chatId,
-            'text' => 'origin: ' . serialize($update)
+            'text' => 'origin: '
+                . serialize($update)
+                .PHP_EOL
+                .PHP_EOL
+                . print_r($update)
         ]);
     }
 
     if (isset($update['message'])) {
 
         $chatId = $update['message']['chat']['id'] ?? null;
-
-
-
-
-
         $text = $update['message']['text'] ?? '';
 
         // Пример: отправка сообщения обратно (нужна библиотека Telegram SDK)
