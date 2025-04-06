@@ -39,7 +39,7 @@ Route::post('/webhook1', function () {
 })->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 
-Route::post('/webhook2', function () {
+Route::any('/webhook2', function () {
 
     $update = json_decode(file_get_contents('php://input'), true);
 
