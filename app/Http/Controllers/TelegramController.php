@@ -20,12 +20,15 @@ class TelegramController extends Controller
             foreach ($update as $k => $v) {
                 $l .= PHP_EOL
                     .PHP_EOL
-                    .$k . ': ' . $v . PHP_EOL ;
+                    .$k . ': '
+                    . $v . PHP_EOL ;
+
 //                if (is_array($v)) {
 //                    foreach ($v as $k2 => $v2) {
 //                        $l .= '     ' . $k2 . ': ' . $v2 . PHP_EOL ;
 //                    }
 //                }
+
             }
 
             Telegram::sendMessage([
@@ -35,7 +38,6 @@ class TelegramController extends Controller
                     . PHP_EOL
                     . PHP_EOL
                     . $l
-
             ]);
         }
 
