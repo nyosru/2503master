@@ -52,11 +52,11 @@ Route::any('/webhook2', function () {
         // Пример: отправка сообщения обратно (нужна библиотека Telegram SDK)
         Telegram::sendMessage([
             'chat_id' => $chatId,
-            'text' => "Вы написали: $text"
+            'text' => "Вы написали ++ : $text"
         ]);
 
 
-        if( $text == '11' ) {
+//        if( $text == '11' ) {
 
 // Define the keyboard with the "Share Phone Number" button
             $keyboard = [
@@ -79,7 +79,7 @@ Route::any('/webhook2', function () {
                 'reply_markup' => json_encode($keyboard)
             ]);
 
-        }
+//        }
 
     }
 
