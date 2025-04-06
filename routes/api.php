@@ -30,8 +30,37 @@ Route::post('/webhook1', function () {
         // Пример: отправка сообщения обратно (нужна библиотека Telegram SDK)
         Telegram::sendMessage([
             'chat_id' => $chatId,
-            'text' => "Вы написали: $text"
+            'text' => "Вы написали --: $text"
         ]);
+
+
+
+        if( $text == '11' ) {
+
+// Define the keyboard with the "Share Phone Number" button
+            $keyboard = [
+                'keyboard' => [
+                    [
+                        [
+                            'text' => 'Share Phone Number',
+                            'request_contact' => true
+                        ]
+                    ]
+                ],
+                'resize_keyboard' => true,
+                'one_time_keyboard' => true
+            ];
+
+// Send the message with the keyboard
+            Telegram::sendMessage([
+                'chat_id' => $chatId,
+                'text' => 'Поделитесь вашим номером телефона:',
+                'reply_markup' => json_encode($keyboard)
+            ]);
+
+        }
+
+
     }
 
     return response('ok', 200);
@@ -56,7 +85,7 @@ Route::any('/webhook2', function () {
         ]);
 
 
-//        if( $text == '11' ) {
+        if( $text == '11' ) {
 
 // Define the keyboard with the "Share Phone Number" button
             $keyboard = [
@@ -79,7 +108,7 @@ Route::any('/webhook2', function () {
                 'reply_markup' => json_encode($keyboard)
             ]);
 
-//        }
+        }
 
     }
 
