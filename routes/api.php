@@ -54,6 +54,33 @@ Route::any('/webhook2', function () {
             'chat_id' => $chatId,
             'text' => "Вы написали: $text"
         ]);
+
+
+        if( $text == '11' ) {
+
+// Define the keyboard with the "Share Phone Number" button
+            $keyboard = [
+                'keyboard' => [
+                    [
+                        [
+                            'text' => 'Share Phone Number',
+                            'request_contact' => true
+                        ]
+                    ]
+                ],
+                'resize_keyboard' => true,
+                'one_time_keyboard' => true
+            ];
+
+// Send the message with the keyboard
+            Telegram::sendMessage([
+                'chat_id' => $chatId,
+                'text' => 'Поделитесь вашим номером телефона:',
+                'reply_markup' => json_encode($keyboard)
+            ]);
+
+        }
+
     }
 
     return response('ok', 200);
