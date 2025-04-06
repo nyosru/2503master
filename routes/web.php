@@ -15,7 +15,7 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 
 
-require __DIR__ . '/api.php';
+//require __DIR__ . '/api.php';
 
 //Route::middleware('api')
 //    ->prefix('api')

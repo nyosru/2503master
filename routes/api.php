@@ -17,53 +17,49 @@ use Nyos\Msg;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 
-Route::middleware('api')
-    ->group(function () {
+Route::post('/webhook1', function () {
 
-        Route::post('/webhook1', function () {
+    $update = json_decode(file_get_contents('php://input'), true);
 
-            $update = json_decode(file_get_contents('php://input'), true);
+    Log::info('Telegram Webhook:', $update);
 
-            Log::info('Telegram Webhook:', $update);
+    if (isset($update['message'])) {
+        $chatId = $update['message']['chat']['id'] ?? null;
+        $text = $update['message']['text'] ?? '';
 
-            if (isset($update['message'])) {
-                $chatId = $update['message']['chat']['id'] ?? null;
-                $text = $update['message']['text'] ?? '';
+        // Пример: отправка сообщения обратно (нужна библиотека Telegram SDK)
+        Telegram::sendMessage([
+            'chat_id' => $chatId,
+            'text' => "Вы написали: $text"
+        ]);
+    }
 
-                // Пример: отправка сообщения обратно (нужна библиотека Telegram SDK)
-                Telegram::sendMessage([
-                    'chat_id' => $chatId,
-                    'text' => "Вы написали: $text"
-                ]);
-            }
+    return response('ok', 200);
 
-            return response('ok', 200);
-
-        })->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+});
 
 
-        Route::any('/webhook2', function () {
+Route::any('/webhook2', function () {
 
-            $update = json_decode(file_get_contents('php://input'), true);
+    $update = json_decode(file_get_contents('php://input'), true);
 
-            Log::info('Telegram Webhook:', $update);
+    Log::info('Telegram Webhook:', $update);
 
-            if (isset($update['message'])) {
-                $chatId = $update['message']['chat']['id'] ?? null;
-                $text = $update['message']['text'] ?? '';
+    if (isset($update['message'])) {
+        $chatId = $update['message']['chat']['id'] ?? null;
+        $text = $update['message']['text'] ?? '';
 
-                // Пример: отправка сообщения обратно (нужна библиотека Telegram SDK)
-                Telegram::sendMessage([
-                    'chat_id' => $chatId,
-                    'text' => "Вы написали: $text"
-                ]);
-            }
+        // Пример: отправка сообщения обратно (нужна библиотека Telegram SDK)
+        Telegram::sendMessage([
+            'chat_id' => $chatId,
+            'text' => "Вы написали: $text"
+        ]);
+    }
 
-            return response('ok', 200);
+    return response('ok', 200);
 
-        })->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+})->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
-    });
 
 function checkTelegramAuthorization($data)
 {
