@@ -12,6 +12,7 @@ class TelegramController extends Controller
     public static function inMessage($update){
 
         Log::info('Telegram Webhook:', $update);
+
         $chatId = $update['message']['chat']['id'] ?? null;
         if (!empty($chatId)) {
 
@@ -20,11 +21,11 @@ class TelegramController extends Controller
                 $l .= PHP_EOL
                     .PHP_EOL
                     .$k . ': ' . $v . PHP_EOL ;
-                if (is_array($v)) {
-                    foreach ($v as $k2 => $v2) {
-                        $l .= '     ' . $k2 . ': ' . $v2 . PHP_EOL ;
-                    }
-                }
+//                if (is_array($v)) {
+//                    foreach ($v as $k2 => $v2) {
+//                        $l .= '     ' . $k2 . ': ' . $v2 . PHP_EOL ;
+//                    }
+//                }
             }
 
             Telegram::sendMessage([
