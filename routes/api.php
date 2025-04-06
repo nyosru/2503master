@@ -34,7 +34,7 @@ Route::post('/webhook1', function () {
     }
 
     return response('ok', 200);
-});
+})->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 
 function checkTelegramAuthorization($data)
