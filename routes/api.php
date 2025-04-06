@@ -18,6 +18,7 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 
 Route::post('/webhook1', function () {
+
     $update = json_decode(file_get_contents('php://input'), true);
 
     Log::info('Telegram Webhook:', $update);
@@ -34,6 +35,29 @@ Route::post('/webhook1', function () {
     }
 
     return response('ok', 200);
+
+})->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+
+
+Route::post('/webhook2', function () {
+
+    $update = json_decode(file_get_contents('php://input'), true);
+
+    Log::info('Telegram Webhook:', $update);
+
+    if (isset($update['message'])) {
+        $chatId = $update['message']['chat']['id'] ?? null;
+        $text = $update['message']['text'] ?? '';
+
+        // Пример: отправка сообщения обратно (нужна библиотека Telegram SDK)
+         Telegram::sendMessage([
+             'chat_id' => $chatId,
+             'text' => "Вы написали: $text"
+         ]);
+    }
+
+    return response('ok', 200);
+
 })->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 

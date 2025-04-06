@@ -10,6 +10,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
 class VerifyCsrfToken extends Middleware
 {
     protected $except = [
+        'webhook1', // Путь вашего вебхука
+        'webhook2', // Путь вашего вебхука
         'api/webhook', // Путь вашего вебхука
         'api/webhook/tele2', // Путь вашего вебхука
         'api/webhook/*', // Путь вашего вебхука
