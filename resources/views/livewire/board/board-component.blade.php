@@ -89,7 +89,6 @@
                                 @endif
 
                             </div>
-
 {{--                            <pre class="text-xs">{{ print_r($bu->toArray()) }}</pre>--}}
 
                         @endforeach

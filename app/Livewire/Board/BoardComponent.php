@@ -12,7 +12,6 @@ class BoardComponent extends Component
 {
     use WithPagination;
 
-
 //    #[On('user-added')]
     public function render()
     {
