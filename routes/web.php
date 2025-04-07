@@ -14,7 +14,6 @@ use Nyos\Msg;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 
-
 //require __DIR__ . '/api.php';
 
 //Route::middleware('api')
@@ -62,11 +61,6 @@ Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
 });
 
 
-
-
-
-
-
 //// Авторизуем пользователя
 
 Route::post('/auth/telegram/callback777', function (Request $request) {
@@ -100,7 +94,9 @@ Route::post('/auth/telegram/callback777', function (Request $request) {
     return response()->json(['data' => $data['id']], 200);
 //    return response()->json(['data' => $data], 200);
 
-})->name('telegram.callback2.web');
+})
+    ->name('telegram.callback2.web')
+    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 
 //Auth::login($user);

@@ -22,5 +22,6 @@ class VerifyCsrfToken extends Middleware
         'api/auth/telegram/callback2', // Путь вашего вебхука
         'auth/telegram/callback', // Путь вашего вебхука
         'api/auth/telegram/callback', // Путь вашего вебхука
+        'auth/telegram/callback777', // Путь вашего вебхука
     ];
 }
