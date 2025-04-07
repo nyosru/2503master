@@ -209,7 +209,7 @@ function checkTelegramAuthorization($data)
     return $data;
 }
 
-function showMeTelegaMsg( $msg = '')
+function showMeTelegaMsg($msg = '')
 {
     $update = json_decode(file_get_contents('php://input'), true);
 
@@ -220,9 +220,9 @@ function showMeTelegaMsg( $msg = '')
         . PHP_EOL
         . 'Файл: ' . ($caller['file'] ?? 'x')
         . PHP_EOL
-        . 'Строка: ' . ($caller['line']?? 'x')
+        . 'Строка: ' . ($caller['line'] ?? 'x')
         . PHP_EOL
-        . 'fn: ' . ($caller['function']?? 'x')
+        . 'fn: ' . ($caller['function'] ?? 'x')
         . PHP_EOL
         . 'msg: ' . ($msg ?? 'x')
         . PHP_EOL
@@ -311,8 +311,10 @@ Route::post('/auth/telegram/callback2', function (Request $request) {
 // Авторизуем пользователя
     Auth::login($user);
 
+    return redirect('/');
 
     return response()->json(['data' => $data], 200);
+
 })->name('telegram.callback2');
 
 
