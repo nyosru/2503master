@@ -123,7 +123,7 @@ class TelegramController extends Controller
 
 
         if (isset($update['message']['contact'])) {
-
+            $this->getRequestPhone($update);
         }
 
 
