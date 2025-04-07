@@ -311,9 +311,9 @@ Route::post('/auth/telegram/callback2', function (Request $request) {
 // Авторизуем пользователя
     Auth::login($user);
 
-    return redirect('/');
-
-    return response()->json(['data' => $data], 200);
+//    return redirect('/');
+    return response()->json(['data' => $data['id']], 200);
+//    return response()->json(['data' => $data], 200);
 
 })->name('telegram.callback2');
 
