@@ -97,7 +97,7 @@ Route::post('/auth/telegram/callback777', function (Request $request) {
     Auth::login($user);
 
 //    return redirect('/');
-    return response()->json(['data' => $data, 'user' => $user->toArray() ], 200);
+    return response()->json(['data' => $data, 'user_id' => $user->id ], 200);
 //    return response()->json(['data' => $data['id']], 200);
 //    return response()->json(['data' => $data], 200);
 

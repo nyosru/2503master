@@ -10,8 +10,8 @@ csrf_token: {{ csrf_token() }}
 
     if (hashData) {
         // Отправляем данные на сервер через AJAX (Fetch API)
-        fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/api/auth/telegram/callback2', {
-        // fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/auth/telegram/callback777', {
+        // fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/api/auth/telegram/callback2', {
+        fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/auth/telegram/callback777', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -23,8 +23,8 @@ csrf_token: {{ csrf_token() }}
             .then(data => {
                 console.log('Ответ сервера:', data);
 
-                if (data.id) {
-                    window.location.href = `/a/${data.id}`; // Используем шаблонные строки
+                if (data.user_id) {
+                    window.location.href = `/a/${data.user_id}`; // Используем шаблонные строки
                 } else {
                     console.error('ID не получен в ответе');
                 }
