@@ -77,6 +77,7 @@
                     {{--                    {!! Socialite::driver('telegram')->getButton() !!}--}}
                     {{--                    7777--}}
                     <a href="https://oauth.telegram.org/auth?bot_id={{ env('TELEGRAM_BOT_TOKEN') }}&origin={{ env('APP_URL2') }}&return_to={{ env('TELEGRAM_REDIRECT_URL' )}}"
+
                        class="
                        hover:bg-blue-400
                        bg-blue-300 text-white
