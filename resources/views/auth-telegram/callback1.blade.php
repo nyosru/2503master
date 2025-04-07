@@ -1,13 +1,14 @@
 <html>
+<head></head>
 <body>
 пару секунд ..
-<script>
+<script type="text/javascript">
     // Извлекаем данные из URL (фрагмент после #)
     const hashData = window.location.hash.substring(14); // Убираем "#tgAuthResult="
 
     if (hashData) {
         // Отправляем данные на сервер через AJAX (Fetch API)
-        fetch('https://процессмастер.рф/api/auth/telegram/callback2', {
+        fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/api/auth/telegram/callback2', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -19,7 +20,7 @@
             .then(data => {
                 console.log('Ответ сервера:', data);
                 // Перенаправляем на страницу "/"
-                window.location.href = 'https://процессмастер.рф/';
+                window.location.href = 'https://xn--80ajb0aifhffacm9b.xn--p1ai/';
             })
             // .then(data => {
             //     console.log('Ответ сервера:', data)
