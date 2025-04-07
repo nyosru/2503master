@@ -122,6 +122,7 @@ class TelegramController extends Controller
 //    \App\Http\Controllers\TelegramController::inMessage($update);
 
 
+        // если отправили телеф номер, то получить его и сохранить в бд
         if (isset($update['message']['contact'])) {
             $this->getRequestPhone($update);
         }
@@ -140,7 +141,7 @@ class TelegramController extends Controller
                 'text' => "Вы написали ++ : $text"
             ]);
 
-
+// показ кнопки "отправить контакт"
             if (
                 $text == '11'
                 || $text == '/start'
@@ -164,11 +165,14 @@ class TelegramController extends Controller
         $firstName = $contact['first_name'];
         $userId = $contact['user_id'];
 
+        $user_status = UserController::setPhoneNumberFromTelegaId($userId,$phoneNumber);
+
         Msg::sendTelegramm('получены данные'
             . PHP_EOL . $firstName
             . PHP_EOL . $phoneNumber
             . PHP_EOL . $userId
-            . PHP_EOL . 'chat_id:'.$update['message']['chat']['id']
+            . PHP_EOL . 'chat_id:' . $update['message']['chat']['id']
+            . PHP_EOL . '$user_status:' . serialize($user_status)
             , null, 1);
 
         // Сохранение номера в базе данных или выполнение другой логики
