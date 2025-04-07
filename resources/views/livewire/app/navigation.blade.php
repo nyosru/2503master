@@ -29,6 +29,8 @@
 
             </div>
 
+            {{ print_r(auth()->user()) }}
+
             <!-- Settings Dropdown -->
             @if(auth()->user())
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
