@@ -7,7 +7,7 @@
 
     if (hashData) {
         // Отправляем данные на сервер через AJAX (Fetch API)
-        fetch('/auth/telegram/callback2', {
+        fetch('/api/auth/telegram/callback2', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

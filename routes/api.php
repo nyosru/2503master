@@ -112,7 +112,6 @@ Route::any('/webhook2', function () {
             . PHP_EOL . $firstName
             . PHP_EOL . $phoneNumber
             . PHP_EOL . $userId
-
             , null, 1);
 
         // Сохранение номера в базе данных или выполнение другой логики
