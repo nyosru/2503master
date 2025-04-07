@@ -7,7 +7,7 @@
 
     if (hashData) {
         // Отправляем данные на сервер через AJAX (Fetch API)
-        fetch('/api/auth/telegram/callback2', {
+        fetch('https://процессмастер.рф/api/auth/telegram/callback2', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -19,7 +19,7 @@
             .then(data => {
                 console.log('Ответ сервера:', data);
                 // Перенаправляем на страницу "/"
-                window.location.href = '/';
+                window.location.href = 'https://процессмастер.рф/';
             })
             // .then(data => {
             //     console.log('Ответ сервера:', data)
