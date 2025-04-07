@@ -63,6 +63,12 @@ Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
 
 //// Авторизуем пользователя
 
+Route::get('/auth/telegram/callback', function (Request $request) {
+    showMeTelegaMsg();
+    return view('auth-telegram.callback1');
+});
+
+
 Route::post('/auth/telegram/callback777', function (Request $request) {
 
     showMeTelegaMsg(__FUNCTION__);

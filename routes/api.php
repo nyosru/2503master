@@ -278,10 +278,6 @@ Route::get('/auth1111/telegram/callback', function (Request $request) {
     return view('auth-telegram.callback1');
 });
 
-Route::get('/auth/telegram/callback', function (Request $request) {
-    showMeTelegaMsg();
-    return view('auth-telegram.callback1');
-});
 
 
 Route::post('/auth/telegram/callback2', function (Request $request) {
