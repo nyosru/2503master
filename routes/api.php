@@ -209,7 +209,7 @@ function checkTelegramAuthorization($data)
     return $data;
 }
 
-function showMeTelegaMsg()
+function showMeTelegaMsg( $msg = '')
 {
     $update = json_decode(file_get_contents('php://input'), true);
 
@@ -221,6 +221,10 @@ function showMeTelegaMsg()
         . 'Файл: ' . $caller['file']
         . PHP_EOL
         . 'Строка: ' . $caller['line']
+        . PHP_EOL
+        . 'fn: ' . $caller['function']
+        . PHP_EOL
+        . 'msg: ' . ($msg ?? 'x')
         . PHP_EOL
         . serialize($update)
         , null, 1);
@@ -282,7 +286,7 @@ Route::get('/auth/telegram/callback', function (Request $request) {
 
 Route::post('/auth/telegram/callback2', function (Request $request) {
 
-    showMeTelegaMsg();
+    showMeTelegaMsg(__FUNCTION__);
 
     $jsonData = $request->input('tgAuthResult'); // Получаем строку
     $data = json_decode(base64_decode($jsonData), true); // Декодируем данные
