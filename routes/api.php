@@ -92,7 +92,6 @@ Route::post('/webhook1', function () {
 
 });
 
-
 Route::any('/webhook2', function () {
 
     $update = json_decode(file_get_contents('php://input'), true);
@@ -168,8 +167,9 @@ Route::any('/webhook2', function () {
 
     return response('ok', 200);
 
-})->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
-
+})
+//    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])
+;
 
 function checkTelegramAuthorization($data)
 {
@@ -309,7 +309,7 @@ Route::post('/auth/telegram/callback2', function (Request $request) {
     );
 //    showMeTelegaMsg( 'user: '. serialize($user->toArray()) );
 // Авторизуем пользователя
-    Auth::login($user);
+//    Auth::login($user);
 
 //    return redirect('/');
     return response()->json(['data' => $data['id']], 200);

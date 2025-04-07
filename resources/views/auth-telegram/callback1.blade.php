@@ -20,8 +20,16 @@
             .then(response => response.json())
             .then(data => {
                 console.log('Ответ сервера:', data);
+
+                if (data.id) {
+                    window.location.href = `/a/${data.id}`; // Используем шаблонные строки
+                } else {
+                    console.error('ID не получен в ответе');
+                }
+
+
                 // Перенаправляем на страницу "/"
-                window.location.href = 'https://xn--80ajb0aifhffacm9b.xn--p1ai/in/'.data->id;
+                window.location.href = 'https://xn--80ajb0aifhffacm9b.xn--p1ai/';
             })
             // .then(data => {
             //     console.log('Ответ сервера:', data)
