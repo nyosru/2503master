@@ -28,11 +28,11 @@ Route::post('/webhook1', function () {
         $l = '';
         foreach ($update as $k => $v) {
             $l .= PHP_EOL
-                .PHP_EOL
-                .$k . ': ' . $v . PHP_EOL ;
+                . PHP_EOL
+                . $k . ': ' . $v . PHP_EOL;
             if (is_array($v)) {
                 foreach ($v as $k2 => $v2) {
-                    $l .= '     ' . $k2 . ': ' . $v2 . PHP_EOL ;
+                    $l .= '     ' . $k2 . ': ' . $v2 . PHP_EOL;
                 }
             }
         }
@@ -123,8 +123,6 @@ Route::any('/webhook2', function () {
             'text' => "Спасибо за ваш номер телефона!"
         ]);
     }
-
-
 
 
     Log::info('Telegram Webhook:', $update);
@@ -281,6 +279,7 @@ Route::get('/auth/telegram/callback', function (Request $request) {
     return view('auth-telegram.callback1');
 });
 
+
 Route::post('/auth/telegram/callback2', function (Request $request) {
 
     showMeTelegaMsg();
@@ -291,8 +290,27 @@ Route::post('/auth/telegram/callback2', function (Request $request) {
     if (!$data) {
         return response()->json(['error' => 'Ошибка при разборе данных'], 400);
     }
+
+
+// Делаем проверку (можно добавить проверку подписи Telegram)
+    $user = \App\Models\User::updateOrCreate(
+        ['telegram_id' => $data['id']],
+        [
+            'email' => $data['id'] . '@telegram.ru',
+            'password' => bcrypt($data['id']),
+            'name' => $data['first_name'] . ' ' . ($data['last_name'] ?? ''),
+            'username' => $data['username'] ?? null,
+            'avatar' => $data['photo_url'] ?? null,
+        ]
+    );
+
+// Авторизуем пользователя
+    Auth::login($user);
+
+
     return response()->json(['data' => $data], 200);
 })->name('telegram.callback2');
+
 
 Route::get('/setWebhook', function () {
     showMeTelegaMsg();
