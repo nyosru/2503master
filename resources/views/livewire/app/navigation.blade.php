@@ -29,7 +29,7 @@
 
             </div>
 
-            {{ print_r(auth()->user()) }}
+{{--            {{ print_r(auth()->user(), true) }}--}}
 
             <!-- Settings Dropdown -->
             @if(auth()->user())
