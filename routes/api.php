@@ -218,11 +218,11 @@ function showMeTelegaMsg( $msg = '')
 
     Msg::sendTelegramm('телега тест №' . __LINE__
         . PHP_EOL
-        . 'Файл: ' . $caller['file']
+        . 'Файл: ' . ($caller['file'] ?? 'x')
         . PHP_EOL
-        . 'Строка: ' . $caller['line']
+        . 'Строка: ' . ($caller['line']?? 'x')
         . PHP_EOL
-        . 'fn: ' . $caller['function']
+        . 'fn: ' . ($caller['function']?? 'x')
         . PHP_EOL
         . 'msg: ' . ($msg ?? 'x')
         . PHP_EOL
