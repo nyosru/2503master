@@ -17,6 +17,7 @@ class BoardComponent extends Component
     {
 //        $boards = Board::with('users')->paginate(10); // Загрузка связанных пользователей
 //        $boards = Board::with('user')->paginate(10); // Загрузка связанных пользователей
+        try {
         $boards = Board::with([
             'columns',
             'boardUsers' => function ($query) {
@@ -29,6 +30,9 @@ class BoardComponent extends Component
         ])->paginate(10); // Загрузка связанных пользователей
         $users = \App\Models\User::all();
         $roles = Role::all(); // Получаем все роли
+            } catch (\Exception $e) {
+            dd($e);
+        }
         return view('livewire.board.board-component', compact('boards', 'users', 'roles'));
 //        return view('livewire.board.board-component', compact('users', 'roles'));
     }
