@@ -165,14 +165,14 @@ class TelegramController extends Controller
         $firstName = $contact['first_name'];
         $userId = $contact['user_id'];
 
-        $user_status = UserController::setPhoneNumberFromTelegaId($userId,$phoneNumber);
+        UserController::setPhoneNumberFromTelegaId($userId,$phoneNumber);
 
         Msg::sendTelegramm('получены данные'
             . PHP_EOL . $firstName
             . PHP_EOL . $phoneNumber
             . PHP_EOL . $userId
             . PHP_EOL . 'chat_id:' . $update['message']['chat']['id']
-            . PHP_EOL . '$user_status:' . serialize($user_status)
+//            . PHP_EOL . '$user_status:' . serialize($user_status->id ?? '')
             , null, 1);
 
         // Сохранение номера в базе данных или выполнение другой логики
