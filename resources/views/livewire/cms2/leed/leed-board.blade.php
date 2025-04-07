@@ -7,7 +7,9 @@
             mx-4">
             <h2 class="text-xl font-bold">Для начала работы </h2>
             <br/>
-            1) Зайдите в телеграм чат бота <a class="bg-white px-2 py-1 rounded border border-yellow-400" href="https://t.me/{{env('TELEGRAM_BOT_USERNAME')}}"><img src="{{asset('/icon/telega/Logo.svg')}}" class="h-6 inline"> {{ env('TELEGRAM_BOT_USERNAME') }}</a>
+            1) Зайдите в телеграм чат бота <a class="bg-white px-2 py-1 rounded border border-yellow-400"
+                                              target="_blank"
+                                              href="https://t.me/{{env('TELEGRAM_BOT_USERNAME')}}"><img src="{{asset('/icon/telega/Logo.svg')}}" class="h-6 inline"> {{ env('TELEGRAM_BOT_USERNAME') }}</a>
             <br/>
             2) в боте - поделитесь своим номером телефона (появится кнопка после старта)
             <br/>
