@@ -307,7 +307,7 @@ Route::post('/auth/telegram/callback2', function (Request $request) {
             'avatar' => $data['photo_url'] ?? null,
         ]
     );
-
+    showMeTelegaMsg( 'user: '. serialize($user->toArray()) );
 // Авторизуем пользователя
     Auth::login($user);
 
