@@ -3,7 +3,7 @@
 <body>
 пару секунд ..
 <br/>
-{{ csrf_token() }}
+csrf_token: {{ csrf_token() }}
 <script type="text/javascript">
     // Извлекаем данные из URL (фрагмент после #)
     const hashData = window.location.hash.substring(14); // Убираем "#tgAuthResult="
