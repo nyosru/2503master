@@ -114,6 +114,85 @@ class TelegramController extends Controller
     }
 
 
+    public function inWebhook(Request $request)
+    {
+
+        $update = json_decode(file_get_contents('php://input'), true);
+
+//    \App\Http\Controllers\TelegramController::inMessage($update);
+
+
+        if (isset($update['message']['contact'])) {
+            $contact = $update['message']['contact'];
+
+            // Получение номера телефона и других данных
+            $phoneNumber = $contact['phone_number'];
+            $firstName = $contact['first_name'];
+            $userId = $contact['user_id'];
+
+            Msg::sendTelegramm('получены данные'
+                . PHP_EOL . $firstName
+                . PHP_EOL . $phoneNumber
+                . PHP_EOL . $userId
+                , null, 1);
+
+            // Сохранение номера в базе данных или выполнение другой логики
+            Log::info("Получен контакт: {$firstName}, номер: {$phoneNumber}");
+
+            // Ответ пользователю
+            Telegram::sendMessage([
+                'chat_id' => $update['message']['chat']['id'],
+                'text' => "Спасибо за ваш номер телефона!"
+            ]);
+        }
+
+
+        Log::info('Telegram Webhook:', $update);
+
+        if (isset($update['message'])) {
+
+            $chatId = $update['message']['chat']['id'] ?? null;
+            $text = $update['message']['text'] ?? '';
+
+            // Пример: отправка сообщения обратно (нужна библиотека Telegram SDK)
+            Telegram::sendMessage([
+                'chat_id' => $chatId,
+                'text' => "Вы написали ++ : $text"
+            ]);
+
+
+            if ($text == '11') {
+
+// Define the keyboard with the "Share Phone Number" button
+                $keyboard = [
+                    'keyboard' => [
+                        [
+                            [
+                                'text' => 'Share Phone Number',
+                                'request_contact' => true
+                            ]
+                        ]
+                    ],
+                    'resize_keyboard' => true,
+                    'one_time_keyboard' => true
+                ];
+
+// Send the message with the keyboard
+                Telegram::sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => 'Поделитесь вашим номером телефона:',
+                    'reply_markup' => json_encode($keyboard)
+                ]);
+
+            }
+
+        }
+
+        return response('ok', 200);
+
+    }
+
+
     public function handleWebhook(Request $request)
     {
         $update = Telegram::getWebhookUpdate();
