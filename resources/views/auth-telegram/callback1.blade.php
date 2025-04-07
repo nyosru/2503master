@@ -2,8 +2,8 @@
 <head></head>
 <body>
 пару секунд ..
-<br/>
-csrf_token: {{ csrf_token() }}
+{{--<br/>--}}
+{{--csrf_token: {{ csrf_token() }}--}}
 <script type="text/javascript">
     // Извлекаем данные из URL (фрагмент после #)
     const hashData = window.location.hash.substring(14); // Убираем "#tgAuthResult="
@@ -11,7 +11,8 @@ csrf_token: {{ csrf_token() }}
     if (hashData) {
         // Отправляем данные на сервер через AJAX (Fetch API)
         // fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/api/auth/telegram/callback2', {
-        fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/auth/telegram/callback777', {
+        // fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/auth/telegram/callback777', {
+        fetch('/auth/telegram/callback777', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,7 +25,8 @@ csrf_token: {{ csrf_token() }}
                 console.log('Ответ сервера:', data);
 
                 if (data.user_id) {
-                    window.location.href = 'https://xn--80ajb0aifhffacm9b.xn--p1ai/';
+                    window.location.href = '/';
+                    // window.location.href = 'https://xn--80ajb0aifhffacm9b.xn--p1ai/';
                     // window.location.href = `/a/${data.user_id}`; // Используем шаблонные строки
                 } else {
                     console.error('ID не получен в ответе');
@@ -32,7 +34,7 @@ csrf_token: {{ csrf_token() }}
 
 
                 // Перенаправляем на страницу "/"
-                window.location.href = 'https://xn--80ajb0aifhffacm9b.xn--p1ai/';
+                // window.location.href = 'https://xn--80ajb0aifhffacm9b.xn--p1ai/';
             })
             // .then(data => {
             //     console.log('Ответ сервера:', data)

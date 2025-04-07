@@ -209,28 +209,6 @@ function checkTelegramAuthorization($data)
     return $data;
 }
 
-function showMeTelegaMsg($msg = '')
-{
-    $update = json_decode(file_get_contents('php://input'), true);
-
-    $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-    $caller = $backtrace[0];
-
-    Msg::sendTelegramm('телега тест №' . __LINE__
-        . PHP_EOL
-        . 'Файл: ' . ($caller['file'] ?? 'x')
-        . PHP_EOL
-        . 'Строка: ' . ($caller['line'] ?? 'x')
-        . PHP_EOL
-        . 'fn: ' . ($caller['function'] ?? 'x')
-        . PHP_EOL
-        . 'msg: ' . ($msg ?? 'x')
-        . PHP_EOL
-        . serialize($update)
-        , null, 1);
-}
-
-
 function verifyTelegramAuth(array $data): bool
 {
     $botToken = env('TELEGRAM_BOT_TOKEN');

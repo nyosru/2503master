@@ -1,15 +1,16 @@
 <?php
 
+use App\Http\Controllers\TelegramController;
 use App\Livewire\Cms2\Client;
 use App\Livewire\Cms2\Order;
 use App\Models\User;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
 use Nyos\Msg;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
@@ -63,47 +64,50 @@ Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
 
 //// Авторизуем пользователя
 
-Route::get('/auth/telegram/callback', function (Request $request) {
-    showMeTelegaMsg();
-    return view('auth-telegram.callback1');
-});
+Route::get('/auth/telegram/callback', [TelegramController::class, 'callbackStart']);
+Route::post('/auth/telegram/callback777', [TelegramController::class, 'callback']);
+
+//Route::get('/auth/telegram/callback', function (Request $request) {
+//    showMeTelegaMsg();
+//    return view('auth-telegram.callback1');
+//});
 
 
-Route::post('/auth/telegram/callback777', function (Request $request) {
-
-    showMeTelegaMsg(__FUNCTION__);
-
-    $jsonData = $request->input('tgAuthResult'); // Получаем строку
-    $data = json_decode(base64_decode($jsonData), true); // Декодируем данные
-//dd($data);
-    if (!$data) {
-        return response()->json(['error' => 'Ошибка при разборе данных'], 400);
-    }
-
-
-// Делаем проверку (можно добавить проверку подписи Telegram)
-    $user = \App\Models\User::updateOrCreate(
-        ['telegram_id' => $data['id']],
-        [
-            'email' => $data['id'] . '@telegram.ru',
-            'password' => bcrypt($data['id']),
-            'name' => $data['first_name'] . ' ' . ($data['last_name'] ?? ''),
-            'username' => $data['username'] ?? null,
-            'avatar' => $data['photo_url'] ?? null,
-        ]
-    );
-//    showMeTelegaMsg( 'user: '. serialize($user->toArray()) );
-// Авторизуем пользователя
-    Auth::login($user);
-
-//    return redirect('/');
-    return response()->json(['data' => $data, 'user_id' => $user->id ], 200);
-//    return response()->json(['data' => $data['id']], 200);
-//    return response()->json(['data' => $data], 200);
-
-})
-    ->name('telegram.callback2.web')
-    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+//Route::post('/auth/telegram/callback777', function (Request $request) {
+//
+//    showMeTelegaMsg(__FUNCTION__);
+//
+//    $jsonData = $request->input('tgAuthResult'); // Получаем строку
+//    $data = json_decode(base64_decode($jsonData), true); // Декодируем данные
+////dd($data);
+//    if (!$data) {
+//        return response()->json(['error' => 'Ошибка при разборе данных'], 400);
+//    }
+//
+//
+//// Делаем проверку (можно добавить проверку подписи Telegram)
+//    $user = \App\Models\User::updateOrCreate(
+//        ['telegram_id' => $data['id']],
+//        [
+//            'email' => $data['id'] . '@telegram.ru',
+//            'password' => bcrypt($data['id']),
+//            'name' => $data['first_name'] . ' ' . ($data['last_name'] ?? ''),
+//            'username' => $data['username'] ?? null,
+//            'avatar' => $data['photo_url'] ?? null,
+//        ]
+//    );
+////    showMeTelegaMsg( 'user: '. serialize($user->toArray()) );
+//// Авторизуем пользователя
+//    Auth::login($user);
+//
+////    return redirect('/');
+//    return response()->json(['data' => $data, 'user_id' => $user->id ], 200);
+////    return response()->json(['data' => $data['id']], 200);
+////    return response()->json(['data' => $data], 200);
+//
+//})
+//    ->name('telegram.callback2.web')
+//    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 
 //Auth::login($user);

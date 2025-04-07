@@ -5,11 +5,80 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Nyos\Msg;
 
 
 class TelegramController extends Controller
 {
-    public static function inMessage($update){
+
+
+    public static function showMeTelegaMsg($msg = '')
+    {
+        $update = json_decode(file_get_contents('php://input'), true);
+
+        $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $caller = $backtrace[0];
+
+        Msg::sendTelegramm('телега тест №' . __LINE__
+            . PHP_EOL
+            . 'Файл: ' . ($caller['file'] ?? 'x')
+            . PHP_EOL
+            . 'Строка: ' . ($caller['line'] ?? 'x')
+            . PHP_EOL
+            . 'fn: ' . ($caller['function'] ?? 'x')
+            . PHP_EOL
+            . 'msg: ' . ($msg ?? 'x')
+            . PHP_EOL
+            . serialize($update)
+            , null, 1);
+    }
+
+
+    public function callbackStart(request $request)
+    {
+        self::showMeTelegaMsg();
+        return view('auth-telegram.callback1');
+    }
+
+    public function callback(request $request)
+    {
+
+        self::showMeTelegaMsg(__FUNCTION__);
+
+        $jsonData = $request->input('tgAuthResult'); // Получаем строку
+        $data = json_decode(base64_decode($jsonData), true); // Декодируем данные
+//dd($data);
+        if (!$data) {
+            return response()->json(['error' => 'Ошибка при разборе данных'], 400);
+        }
+
+
+// Делаем проверку (можно добавить проверку подписи Telegram)
+        $user = \App\Models\User::updateOrCreate(
+            ['telegram_id' => $data['id']],
+            [
+                'email' => $data['id'] . '@telegram.ru',
+                'password' => bcrypt($data['id']),
+                'name' => $data['first_name'] . ' ' . ($data['last_name'] ?? ''),
+                'username' => $data['username'] ?? null,
+                'avatar' => $data['photo_url'] ?? null,
+            ]
+        );
+//    showMeTelegaMsg( 'user: '. serialize($user->toArray()) );
+// Авторизуем пользователя
+        Auth::login($user);
+
+//    return redirect('/');
+        return response()->json(['data' => $data, 'user_id' => $user->id], 200);
+//    return response()->json(['data' => $data['id']], 200);
+//    return response()->json(['data' => $data], 200);
+
+    }
+
+
+    public static function inMessage($update)
+    {
 
         Log::info('Telegram Webhook:', $update);
 
@@ -19,9 +88,9 @@ class TelegramController extends Controller
             $l = '';
             foreach ($update as $k => $v) {
                 $l .= PHP_EOL
-                    .PHP_EOL
-                    .$k . ': '
-                    . $v . PHP_EOL ;
+                    . PHP_EOL
+                    . $k . ': '
+                    . $v . PHP_EOL;
 
 //                if (is_array($v)) {
 //                    foreach ($v as $k2 => $v2) {
@@ -43,7 +112,6 @@ class TelegramController extends Controller
 
 
     }
-
 
 
     public function handleWebhook(Request $request)

@@ -7,7 +7,7 @@
     <title>{{ config('app.name', 'ПроцессМастер.рф') }}</title>
 
     <link rel="icon" href="/favicons/favicon.ico"> <!-- 32×32 -->
-{{--    <link rel="icon" href="images/favicons/icon.svg" type="image/svg+xml">--}}
+    {{--    <link rel="icon" href="images/favicons/icon.svg" type="image/svg+xml">--}}
     <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png">  <!-- 180×180 -->
     <link rel="manifest" href="/favicons/site.webmanifest">
 
@@ -48,7 +48,6 @@
                     @endif
                 </div>
             </div>
-
         </header>
 
         <main class="min-h-[550px]
@@ -57,7 +56,10 @@
             space-y-5
             lg:space-y-10
             ">
-
+{{--            <div class="w-full py-3 text-center">--}}
+{{--                Система для ведения бизнес процессов и проектов: лиды, клиенты, производства, работы, услуги, фотоотчёты--}}
+{{--                и многое другое.--}}
+{{--            </div>--}}
             <div class="w-full bg-yellow-300 py-3 text-center">
                 <span class="text-lg font-bold">
                 Демо версия, посмотреть, покликать
@@ -65,8 +67,8 @@
                     </span>
                 <br/>
                 каждые 2 часа все изменения сбрасываются на тестовый набор (шаги,пользователи,комментарии)
-{{--                <button class="bg-blue-300 rounded px-3 py-1">Производство, посмотреть!</button>--}}
-{{--                <button class="bg-blue-300 rounded px-3 py-1">Услуги, посмотреть!</button>--}}
+                {{--                <button class="bg-blue-300 rounded px-3 py-1">Производство, посмотреть!</button>--}}
+                {{--                <button class="bg-blue-300 rounded px-3 py-1">Услуги, посмотреть!</button>--}}
             </div>
 
             {{--            <div class="w-full flex flex-row--}}
@@ -144,7 +146,8 @@
                     border-l-[10px] border-yellow-300
                     p-2">
                         <img src="/icon/time-date.png" class="w-[50px] m-2 float-left"/>
-                        До 1 сентября 2025г идёт этап настройки приложения и бизнес процессов, присоединяйтесь, ваша фиксированная <span class="bg-yellow-300 p-1 rounded">скидка 50%</span> навсегда
+                        До 1 сентября 2025г идёт этап настройки приложения и бизнес процессов, присоединяйтесь, ваша
+                        фиксированная <span class="bg-yellow-300 p-1 rounded">скидка 50%</span> навсегда
                     </div>
                 </div>
                 <div class="w-full lg:w-1/2">
@@ -167,32 +170,42 @@
         </main>
 
         <footer class="mx-auto container ">
-        <div class="flex flex-col space-y-3  ">
-        <div class="flex flex-col space-y-3 sm:space-y-0 sm:flex-row">
-            <div class="w-full sm:w-1/2 text-center">&copy; Все права защищены {{ date('Y') }}</div>
-            <div class="w-full sm:w-1/2 text-center">Создание сервиса <a href="https://php-cat.com"
-                                                                         class="text-blue-600 hover:underline"
-                                                                         target="_blank">php-cat.com</a></div>
-        </div>
+            <div class="flex flex-col space-y-3  ">
+                <div class="flex flex-col space-y-3 sm:space-y-0 sm:flex-row">
+                    <div class="w-full sm:w-1/2 text-center">&copy; Все права защищены {{ date('Y') }}</div>
+                    <div class="w-full sm:w-1/2 text-center">Создание сервиса <a href="https://php-cat.com"
+                                                                                 class="text-blue-600 hover:underline"
+                                                                                 target="_blank">php-cat.com</a></div>
+                </div>
         </footer>
     </div>
 </div>
 <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+<script type="text/javascript">
+    (function (m, e, t, r, i, k, a) {
+        m[i] = m[i] || function () {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        m[i].l = 1 * new Date();
+        for (var j = 0; j < document.scripts.length; j++) {
+            if (document.scripts[j].src === r) {
+                return;
+            }
+        }
+        k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+    })
     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
     ym(100568272, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        webvisor:true
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+        webvisor: true
     });
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/100568272" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<noscript>
+    <div><img src="https://mc.yandex.ru/watch/100568272" style="position:absolute; left:-9999px;" alt=""/></div>
+</noscript>
 <!-- /Yandex.Metrika counter -->
 </body>
 </html>
