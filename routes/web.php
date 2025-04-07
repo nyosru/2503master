@@ -62,7 +62,47 @@ Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
 });
 
 
+
+
+
+
+
 //// Авторизуем пользователя
+
+Route::post('/auth/telegram/callback777', function (Request $request) {
+
+    showMeTelegaMsg(__FUNCTION__);
+
+    $jsonData = $request->input('tgAuthResult'); // Получаем строку
+    $data = json_decode(base64_decode($jsonData), true); // Декодируем данные
+//dd($data);
+    if (!$data) {
+        return response()->json(['error' => 'Ошибка при разборе данных'], 400);
+    }
+
+
+// Делаем проверку (можно добавить проверку подписи Telegram)
+    $user = \App\Models\User::updateOrCreate(
+        ['telegram_id' => $data['id']],
+        [
+            'email' => $data['id'] . '@telegram.ru',
+            'password' => bcrypt($data['id']),
+            'name' => $data['first_name'] . ' ' . ($data['last_name'] ?? ''),
+            'username' => $data['username'] ?? null,
+            'avatar' => $data['photo_url'] ?? null,
+        ]
+    );
+//    showMeTelegaMsg( 'user: '. serialize($user->toArray()) );
+// Авторизуем пользователя
+    Auth::login($user);
+
+//    return redirect('/');
+    return response()->json(['data' => $data['id']], 200);
+//    return response()->json(['data' => $data], 200);
+
+})->name('telegram.callback2.web');
+
+
 //Auth::login($user);
 //
 //return response()->json(['message' => 'Успешный вход!', 'user' => $user]);
