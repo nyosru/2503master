@@ -309,7 +309,7 @@ Route::post('/auth/telegram/callback2', function (Request $request) {
     );
     showMeTelegaMsg( 'user: '. serialize($user->toArray()) );
 // Авторизуем пользователя
-    Auth::login($user->id);
+    Auth::login($user['id']);
 
 
     return response()->json(['data' => $data], 200);
