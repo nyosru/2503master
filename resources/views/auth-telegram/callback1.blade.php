@@ -8,8 +8,8 @@
 
     if (hashData) {
         // Отправляем данные на сервер через AJAX (Fetch API)
-        // fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/api/auth/telegram/callback2', {
-        fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/auth/telegram/callback777', {
+        fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/api/auth/telegram/callback2', {
+        // fetch('https://xn--80ajb0aifhffacm9b.xn--p1ai/auth/telegram/callback777', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -21,7 +21,7 @@
             .then(data => {
                 console.log('Ответ сервера:', data);
                 // Перенаправляем на страницу "/"
-                window.location.href = 'https://xn--80ajb0aifhffacm9b.xn--p1ai/';
+                window.location.href = 'https://xn--80ajb0aifhffacm9b.xn--p1ai/in/'.data->id;
             })
             // .then(data => {
             //     console.log('Ответ сервера:', data)
