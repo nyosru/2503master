@@ -24,7 +24,8 @@ csrf_token: {{ csrf_token() }}
                 console.log('Ответ сервера:', data);
 
                 if (data.user_id) {
-                    window.location.href = `/a/${data.user_id}`; // Используем шаблонные строки
+                    window.location.href = 'https://xn--80ajb0aifhffacm9b.xn--p1ai/';
+                    // window.location.href = `/a/${data.user_id}`; // Используем шаблонные строки
                 } else {
                     console.error('ID не получен в ответе');
                 }
