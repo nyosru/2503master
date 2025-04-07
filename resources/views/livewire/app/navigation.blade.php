@@ -80,7 +80,7 @@
 
                        class="
                        hover:bg-blue-400
-                       bg-blue-300 text-white
+                       bg-blue-300 text-black
                        font-bold px-4 pt-1 pb-2 rounded-xl"
                     >Войти <sup>через Telegram</sup></a>
                     {{--                    <a href="{{ route('login') }}" >Вход</a>--}}
