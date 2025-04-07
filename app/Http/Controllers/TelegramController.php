@@ -161,34 +161,43 @@ class TelegramController extends Controller
             ]);
 
 
-            if ($text == '11') {
-
-// Define the keyboard with the "Share Phone Number" button
-                $keyboard = [
-                    'keyboard' => [
-                        [
-                            [
-                                'text' => 'Share Phone Number',
-                                'request_contact' => true
-                            ]
-                        ]
-                    ],
-                    'resize_keyboard' => true,
-                    'one_time_keyboard' => true
-                ];
-
-// Send the message with the keyboard
-                Telegram::sendMessage([
-                    'chat_id' => $chatId,
-                    'text' => 'Поделитесь вашим номером телефона:',
-                    'reply_markup' => json_encode($keyboard)
-                ]);
-
+            if (
+                $text == '11'
+                || $text == '/start'
+            ) {
+                $this->sendRequestPhone($chatId);
             }
 
         }
 
         return response('ok', 200);
+
+    }
+
+
+    public function sendRequestPhone($chatId)
+    {
+
+// Define the keyboard with the "Share Phone Number" button
+        $keyboard = [
+            'keyboard' => [
+                [
+                    [
+                        'text' => 'Share Phone Number',
+                        'request_contact' => true
+                    ]
+                ]
+            ],
+            'resize_keyboard' => true,
+            'one_time_keyboard' => true
+        ];
+
+// Send the message with the keyboard
+        Telegram::sendMessage([
+            'chat_id' => $chatId,
+            'text' => 'Поделитесь вашим номером телефона:',
+            'reply_markup' => json_encode($keyboard)
+        ]);
 
     }
 

@@ -94,11 +94,8 @@ Route::post('/webhook1', function () {
 Route::post('/webhook2', [\App\Http\Controllers\TelegramController::class,'inWebhook']);
 
 //Route::any('/webhook2', function () {
-//
 //    $update = json_decode(file_get_contents('php://input'), true);
-//
 ////    \App\Http\Controllers\TelegramController::inMessage($update);
-//
 //
 //    if (isset($update['message']['contact'])) {
 //        $contact = $update['message']['contact'];
