@@ -123,27 +123,7 @@ class TelegramController extends Controller
 
 
         if (isset($update['message']['contact'])) {
-            $contact = $update['message']['contact'];
 
-            // Получение номера телефона и других данных
-            $phoneNumber = $contact['phone_number'];
-            $firstName = $contact['first_name'];
-            $userId = $contact['user_id'];
-
-            Msg::sendTelegramm('получены данные'
-                . PHP_EOL . $firstName
-                . PHP_EOL . $phoneNumber
-                . PHP_EOL . $userId
-                , null, 1);
-
-            // Сохранение номера в базе данных или выполнение другой логики
-            Log::info("Получен контакт: {$firstName}, номер: {$phoneNumber}");
-
-            // Ответ пользователю
-            Telegram::sendMessage([
-                'chat_id' => $update['message']['chat']['id'],
-                'text' => "Спасибо за ваш номер телефона!"
-            ]);
         }
 
 
@@ -171,6 +151,34 @@ class TelegramController extends Controller
         }
 
         return response('ok', 200);
+
+    }
+
+
+    public function getRequestPhone($update)
+    {
+        $contact = $update['message']['contact'];
+
+        // Получение номера телефона и других данных
+        $phoneNumber = $contact['phone_number'];
+        $firstName = $contact['first_name'];
+        $userId = $contact['user_id'];
+
+        Msg::sendTelegramm('получены данные'
+            . PHP_EOL . $firstName
+            . PHP_EOL . $phoneNumber
+            . PHP_EOL . $userId
+            . PHP_EOL . 'chat_id:'.$update['message']['chat']['id']
+            , null, 1);
+
+        // Сохранение номера в базе данных или выполнение другой логики
+        Log::info("Получен контакт: {$firstName}, номер: {$phoneNumber}");
+
+        // Ответ пользователю
+        Telegram::sendMessage([
+            'chat_id' => $update['message']['chat']['id'],
+            'text' => "Спасибо за ваш номер телефона!"
+        ]);
 
     }
 
