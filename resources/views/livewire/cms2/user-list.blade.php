@@ -47,8 +47,8 @@
         {{--        @endcan--}}
 
         <style>
-            .table-permission thead tr th:nt (n\2){
-                background-color: rgba(0,0,0,0.3);
+            .table-permission thead tr th:nt (n\2) {
+                background-color: rgba(0, 0, 0, 0.3);
             }
         </style>
 
@@ -57,7 +57,10 @@
             <tr>
                 <th>ID</th>
                 <th>Имя</th>
-                <th>Почта</th>
+                <th>Почта
+                    <Br/>
+                    Телефон
+                </th>
                 <th>Роль</th>
                 @permission('р.Пользователи / Изменять роли')
                 <th>Изменить роль</th>
@@ -98,7 +101,19 @@
                         @endif
 
                     </td>
-                    <td>{{ $user->email }}</td>
+                    <td>
+                        @if (!empty($user->email))
+                            {{ $user->email }}
+                        @else
+                            -
+                        @endif
+                        <br/>
+                        @if (!empty($user->phone_number))
+                            {{ $user->phone_number }}
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td>
 
                         {{ $user->roles[0]->name ?? '-'}}
@@ -124,7 +139,6 @@
                         @endif
                     </td>
                     @endpermission
-
 
 
                 </tr>
