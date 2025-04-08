@@ -143,10 +143,7 @@ Route::post('/auth/telegram/callback777', [TelegramController::class, 'callback'
 
 Route::get('', \App\Livewire\Index::class)->name('index');
 
-// Маршрут для НЕ авторизованного пользователя
-Route::middleware(['guest'])->group(function () {
-//    Route::get('', \App\Livewire\Index::class)->name('index');
-});
+
 
 //Route::get('/download/{model}/{id}/{secret}',[ \App\Http\Controllers\FileController::class,'downloadFile'])->name('download.rename');
 
@@ -390,5 +387,14 @@ Route::middleware(['auth'])->group(function () {
 //});
 });
 
+// Маршрут для НЕ авторизованного пользователя
+Route::middleware(['guest'])->group(function () {
+//    Route::get('', \App\Livewire\Index::class)->name('index');
+    //
+    Route::fallback(function () {
+        return redirect('/');
+    });
+});
 
-require __DIR__ . '/auth.php';
+
+//require __DIR__ . '/auth.php';
