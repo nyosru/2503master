@@ -15,6 +15,12 @@ class Board extends Model
         'is_paid',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+
     // Связь с пользователями (многие ко многим)
     public function users()
     {
