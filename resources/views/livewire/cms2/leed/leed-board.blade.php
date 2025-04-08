@@ -117,7 +117,7 @@
                 </div> <!--end::Container-->
             </div> <!--end::App Content Header--> <!--begin::App Content-->
 
-            <pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>
+{{--            <pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>--}}
 
             @if(1==2)
                 <pre class="text-xs">{{ print_r($user->toArray()) }}</pre>
