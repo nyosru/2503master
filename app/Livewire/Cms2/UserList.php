@@ -82,7 +82,7 @@ class UserList extends Component
 
     public function load(){
         //        $this->users = User::with('roles','staff')->get();
-        $this->users = User::withTrashed()->with('roles')->get();
+        $this->users = User::withTrashed()->with(['roles','currentBoard','boardUser'])->get();
 //        $this->users = User::all();
         $this->roles = Role::all();
 //        $this->stafs = \App\Models\Staff::select('id','name','phone')->orderBy('name')->get();

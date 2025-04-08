@@ -61,6 +61,7 @@
                     <Br/>
                     Телефон
                 </th>
+                <th>Текущая доска</th>
                 <th>Роль</th>
                 @permission('р.Пользователи / Изменять роли')
                 <th>Изменить роль</th>
@@ -73,9 +74,6 @@
                 <tr class="bg-white hover:bg-gray-200">
                     <td>{{ $user->id }}</td>
                     <td class=" @if($user->deleted_at) line-through @endif ">{{ $user->name }}
-                        {{--                    <pre class="text-sm max-h-[200px] overflow-auto">{{ print_r($user->toArray()) }}</pre>--}}
-
-
 
                         @if($user->deleted_at)
                             @permission('р.Пользователи / восстановить')
@@ -100,6 +98,8 @@
                             @endpermission
                         @endif
 
+{{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($user->toArray()) }}</pre>--}}
+
                     </td>
                     <td>
                         @if (!empty($user->email))
@@ -115,9 +115,10 @@
                         @endif
                     </td>
                     <td>
-
+                        {{ $user->currentBoard->name ?? '-' }} <sup>{{ $user->currentBoard->id ?? '-' }}</sup>
+                    </td>
+                    <td>
                         {{ $user->roles[0]->name ?? '-'}}
-
                     </td>
 
                     @permission('р.Пользователи / Изменять роли')

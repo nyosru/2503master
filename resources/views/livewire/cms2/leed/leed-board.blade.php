@@ -1,5 +1,8 @@
 <div>
 
+{{--    {{$user->currentBoard->name}}<br/>--}}
+{{--    {{$user->currentBoard->id}}<br/>--}}
+
     @if( empty(auth()->user()->phone_number) )
 
         <div class="block p-3 text-left bg-gradient-to-br from-yellow-200 to-yellow-100
@@ -22,7 +25,7 @@
 
         <div class="flex flex-col xspace-y-4">
             {{--<div>--}}
-            {{--    <pre style="max-height: 150px; overflow: auto;" >{{ print_r($columns) }}</pre>--}}
+{{--                <pre style="max-height: 150px; overflow: auto;" >{{ print_r($columns) }}</pre>--}}
             {{--</div>--}}
 
             {{--    @section('head-line-content')--}}
@@ -114,9 +117,7 @@
                 </div> <!--end::Container-->
             </div> <!--end::App Content Header--> <!--begin::App Content-->
 
-            {{--<pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>--}}
-
-
+            <pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>
 
             @if(1==2)
                 <pre class="text-xs">{{ print_r($user->toArray()) }}</pre>

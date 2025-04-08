@@ -18,13 +18,13 @@ class CreateColumnForm extends Component
             'name' => 'required|min:3',
         ]);
 
-        if( empty($this->user->board_user) ){
+//        if( empty($this->user->board_user) ){
+//
+////            BoardController::CreateBoard($this->user->id);
+////            dd(__LINE__, __FILE__);
+//        }
 
-            BoardController::CreateBoard($this->user->id);
-            dd(__LINE__, __FILE__);
-        }
-
-        dd(__LINE__, __FILE__);
+//        dd($this->board_id, __LINE__, __FILE__);
 
         $in = [
             'name' => $this->name,
