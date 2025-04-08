@@ -95,8 +95,12 @@
                     </div>
                 </td>
                 <td class="px-6 py-4">
+                    @if($board->created_at)
                     {{ $board->created_at->format('Y-m-d') }}
                     <sup>{{ $board->created_at->format('H:i') }}</sup>
+                    @else
+                        <span>Дата не указана</span>
+                    @endif
                 </td>
                 <td class="px-6 py-4">
                     <button
