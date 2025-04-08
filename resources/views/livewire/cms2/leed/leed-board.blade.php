@@ -1,7 +1,7 @@
 <div>
 
-{{--    {{$user->currentBoard->name}}<br/>--}}
-{{--    {{$user->currentBoard->id}}<br/>--}}
+    {{$user->currentBoard->name}}<br/>
+    {{$user->currentBoard->id}}<br/>
 
     @if( empty(auth()->user()->phone_number) )
 
