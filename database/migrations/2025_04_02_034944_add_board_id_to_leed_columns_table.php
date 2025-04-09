@@ -14,14 +14,14 @@ return new class extends Migration
 
             Schema::table('leed_columns', function (Blueprint $table) {
 
-//            $table->unsignedBigInteger('board_id');
+            $table->unsignedBigInteger('board_id');
 
-            // Внешние ключи
-            $table->foreign('board_id')
-                ->references('id')
-                ->on('boards')
-                ->onDelete('cascade')
-            ;
+//            // Внешние ключи
+//            $table->foreign('board_id')
+//                ->references('id')
+//                ->on('boards')
+//                ->onDelete('cascade')
+//            ;
 
         });
 
