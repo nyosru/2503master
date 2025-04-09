@@ -51,7 +51,7 @@
                         @if(1==1)
                             <div>
                                 <livewire:Cms2.App.Breadcrumb :menu="[
-                            ['route'=>'board','name'=>'Рабочие доски ('.$user->currentBoard->name.')'],
+                            ['route'=>'board','name'=>'Рабочие доски ('.( $user->currentBoard->name ?? 'x' ).')'],
                             ['route'=>'leed','name'=>'Заказы'],
                         ]"/>
                             </div>
