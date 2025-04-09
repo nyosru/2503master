@@ -1,11 +1,6 @@
 <div>
 
-
-    name {{$user->currentBoard->name ?? 'x' }}<br/>
-    id {{$user->currentBoard->id ?? 'x' }}<br/>
-
-
-@if( empty(auth()->user()->phone_number) )
+    @if( empty(auth()->user()->phone_number) )
 
         <div class="block p-3 text-left bg-gradient-to-br from-yellow-200 to-yellow-100
 {{--            w-full --}}
@@ -28,6 +23,9 @@
         {{--        @if( empty(auth()->user()->phone_number) )--}}
     @else
 
+        name {{$user->currentBoard->name ?? 'x' }}<br/>
+        id {{$user->currentBoard->id ?? 'x' }}<br/>
+
 
         <div class="flex flex-col xspace-y-4">
             {{--<div>--}}
@@ -38,9 +36,7 @@
             @if(1==2)
                 <livewire:Cms2.App.Breadcrumb
                     {{--                :menu="[['route'=>'leed','name'=>'Лиды'], [ 'link' => 'no', 'name'=> ( $leed->name ?? 'Лид' ) ] ]"--}}
-                    :menu="[
-                        ['route'=>'leed','name'=>'Обьекты'] ,
-                          ]"
+                    :menu="[            ['route'=>'leed','name'=>'Обьекты'] ,             ]"
                 />
                 {{--    @endsection--}}
             @endif
@@ -51,7 +47,7 @@
                         @if(1==1)
                             <div>
                                 <livewire:Cms2.App.Breadcrumb :menu="[
-                            ['route'=>'board','name'=>'Рабочие доски ('.$user->currentBoard->name.')'],
+                            ['route'=>'board','name'=>'Рабочие доски'],
                             ['route'=>'leed','name'=>'Заказы'],
                         ]"/>
                             </div>
@@ -123,25 +119,14 @@
                 </div> <!--end::Container-->
             </div> <!--end::App Content Header--> <!--begin::App Content-->
 
-{{--            columns--}}
-{{--                        <pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>--}}
+            {{--            <pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>--}}
+            @if(1==2)
+                <pre class="text-xs">{{ print_r($user->toArray()) }}</pre>
+            @endif
 
             <livewire:cms2.leed.select-board-form :user="$user"/>
 
-            @if( empty($user->current_board_id) )
-
-                <span class="w-[350px] text-center text-xl font-bold text-gray-400 p-2">Не выбрана рабочая доска</span>
-
-            @else
-
-
-
-                @if (session()->has('boardAdded'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mb-4 rounded">
-                        {{ session('boardAdded') }}
-                    </div>
-                @endif
-
+            @if( !empty($user->current_board_id) )
 
                 @if( 1==1 )
 
@@ -178,23 +163,21 @@ bg-white border rounded relative"
                                     <div
                                         {{--                        bg-gradient-to-br from-orange-100 to-white--}}
                                         class="flex w-full justify-between items-center
-                                            mb-2 py-1
-                                            sticky top-0
-                                            bg-white
-                                            rounded"
+                                mb-2 py-1
+                                sticky top-0
+                                bg-white
+                                rounded"
                                         id="column-{{ $column->id }}"
-
-                                        ondragstart="handleColumnDragStart(event, {{ $column->id }})"
-                                        ondragover="handleDragOver(event, {{ $column->id }})"
-                                        ondrop="handleRecordDrop(event, {{ $column->id }})"
 
                                         @if($column->can_move)
                                             @permission(
                                     'р.Лиды / двигать столбцы') draggable="true" @endpermission
                                     @endif
 
+                                    ondragstart="handleColumnDragStart(event, {{ $column->id }})"
+                                    ondragover="handleDragOver(event, {{ $column->id }})"
+                                    ondrop="handleRecordDrop(event, {{ $column->id }})"
                                     >
-
                                     <h3 class="font-bold w-full text-center pb-1 border-b border-b-gray-200 ">
 
                                         {{--                            кнопки--}}

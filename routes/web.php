@@ -142,6 +142,7 @@ Route::post('/auth/telegram/callback777', [TelegramController::class, 'callback'
 
 
 Route::get('', \App\Livewire\Index::class)->name('index');
+Route::get('', \App\Livewire\Index::class)->name('login');
 
 
 

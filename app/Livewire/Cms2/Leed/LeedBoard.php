@@ -80,6 +80,7 @@ class LeedBoard extends Component
 
     public function mount()
     {
+
         $this->user_id = Auth::id();
         $this->user = User::with([
             'boardUser',
@@ -93,6 +94,7 @@ class LeedBoard extends Component
 
         // если прислали нового клиента в лид, добавляем
         if (!empty($this->return_leed) && !empty($this->client_to_leed)) {
+
             $add_result = LeedController::addNewClientToLeed($this->return_leed, $this->client_to_leed);
             \Log::debug('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__, $add_result]);
             if ($add_result) {
@@ -219,20 +221,34 @@ class LeedBoard extends Component
                 'boardUser.role',
             ])->findOrFail($user_id);
 //            dd($user->toArray());
+//            dd(__LINE__);
 
-            if (sizeof($this->user->boardUser) == 1) {
-                $this->current_board = $this->user->boardUser[0]->id;
-            }
+        } else {
+////            dd(__LINE__);
+////            if( empty($this->user->current_board_id) ){
+//                $user2 = User::with([
+////                'roles'
+//                    'boardUser',
+//])->findOrFail($this->user->id);
+//                dd($user2->toArray());
+////            }
+//
+//            dd($this->user->toArray());
+        }
+
+        if (sizeof($this->user->boardUser) == 1) {
+            $this->current_board = $this->user->boardUser[0]->id;
+//                dd($this->current_board );
+
+            $this->user->current_board_id = $this->current_board;
+            $this->user->save();
+        }
 
 //        foreach ($this->user->boardUser as $boardUser) {
 ////            $this->current_board = $boardUser->board;
 //        }
 
-        }
-
-
     }
-
 
     public function createColumnsForUser()
     {
@@ -257,14 +273,16 @@ class LeedBoard extends Component
         $this->loadColumns();
     }
 
-    public function loadColumns2()
+    public
+    function loadColumns2()
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('leed-board ' . __FUNCTION__);
         }
     }
 
-    public function loadColumns()
+    public
+    function loadColumns()
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
@@ -318,6 +336,7 @@ class LeedBoard extends Component
 // Получаем все столбцы, связанные с указанной ролью
 
             $this->columns = LeedColumn::orderBy('order', 'asc')
+
                 ->with([
 //                    'records' => function ($query) use ($user, $user_id) {
 //                        if (
@@ -390,7 +409,9 @@ class LeedBoard extends Component
 //                })
                 ->get();
 
-            $this->columns = LeedColumn::orderBy('order', 'asc')->get();
+            $this->columns = LeedColumn::orderBy('order', 'asc')
+                ->where('board_id', $this->user->current_board_id)
+                ->get();
 
 //// Вывод результата
 //        if ($columns->isNotEmpty()) {
@@ -400,7 +421,6 @@ class LeedBoard extends Component
 //        } else {
 //            echo "Нет столбцов, связанных с ролью.";
 //        }
-
 
 //        $columns = Role::with('columns')
 //            ->find($roleId)
@@ -434,7 +454,8 @@ class LeedBoard extends Component
     }
 
 
-    public function hiddenAddForm()
+    public
+    function hiddenAddForm()
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
@@ -446,7 +467,8 @@ class LeedBoard extends Component
         }
     }
 
-    public function showAddForm(int $columnId)
+    public
+    function showAddForm(int $columnId)
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__], $columnId ?? '$columnId-');
@@ -461,7 +483,8 @@ class LeedBoard extends Component
         }
     }
 
-    public function addColumn(LeedColumn $column)
+    public
+    function addColumn(LeedColumn $column)
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
@@ -497,7 +520,8 @@ class LeedBoard extends Component
     }
 
 
-    public function deleteColumn(int $columnId)
+    public
+    function deleteColumn(int $columnId)
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
@@ -549,7 +573,8 @@ class LeedBoard extends Component
 
 
 //    перенос строк
-    public function reorderRecordInColumn($sourceRecordId, $targetColumnId)
+    public
+    function reorderRecordInColumn($sourceRecordId, $targetColumnId)
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
@@ -558,7 +583,8 @@ class LeedBoard extends Component
         dd([$sourceRecordId, $targetColumnId]);
     }
 
-    public function moveRecordBetweenColumns($sourceRecordId, $targetRecordId)
+    public
+    function moveRecordBetweenColumns($sourceRecordId, $targetRecordId)
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
@@ -567,6 +593,7 @@ class LeedBoard extends Component
         echo $sourceRecordId, $targetRecordId;
 //        dd([$sourceRecordId, $targetRecordId]);
     }
+
 //
 //    public function updateRecordColumn($recordId, $targetColumnId)
 //    {
@@ -590,7 +617,8 @@ class LeedBoard extends Component
      * @param $newColumnId
      * @return void
      */
-    public function updateRecordColumn($recordId, $newColumnId)
+    public
+    function updateRecordColumn($recordId, $newColumnId)
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('updateRecordColumn', [$recordId, $newColumnId]);
@@ -618,7 +646,8 @@ class LeedBoard extends Component
      *
      * @return void
      */
-    protected function reorderColumns()
+    protected
+    function reorderColumns()
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('fn ' . __FUNCTION__, ['#' . __LINE__ . ' ' . __FILE__]);
@@ -638,7 +667,8 @@ class LeedBoard extends Component
         }
     }
 
-    public function updateColumnOrder($draggedColumnId, $targetColumnId)
+    public
+    function updateColumnOrder($draggedColumnId, $targetColumnId)
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('fn updateColumnOrder(' . $draggedColumnId . ', ' . $targetColumnId . ')');
@@ -661,7 +691,8 @@ class LeedBoard extends Component
     }
 
 
-    public function render()
+    public
+    function render()
     {
         $this->getCurrentBoard();
         \Log::info('рендер leed-board');
