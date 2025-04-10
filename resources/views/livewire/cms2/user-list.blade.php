@@ -124,6 +124,8 @@
                     @permission('р.Пользователи / Изменять роли')
                     <td>
 
+                        <livewire:tech.user-board-role-set-form :user="$user" />
+
                         @if($user->deleted_at)
                         @else
 

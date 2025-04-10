@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Cms2;
 
+use App\Http\Controllers\UserController;
 use App\Models\Role;
 use App\Models\User;
 use Livewire\Component;
@@ -43,6 +44,7 @@ class UserList extends Component
     }
     public function updateRole($userId, $roleId)
     {
+//        UserController::updateRole($userId, $roleId);
         $user = User::find($userId);
 
         if ($user && Role::find($roleId)) {
@@ -82,7 +84,20 @@ class UserList extends Component
 
     public function load(){
         //        $this->users = User::with('roles','staff')->get();
-        $this->users = User::withTrashed()->with(['roles','currentBoard','boardUser'])->get();
+        $this->users = User::withTrashed()->with([
+//            'roles',
+            'currentBoard',
+            'boardUser' => function ($query) {
+            $query->with([
+                'board' => function ($query) {
+                    $query->select('name', 'id');
+                },
+                'role' => function ($query) {
+                    $query->select('name', 'id');
+                }
+            ]);
+            }
+        ])->get();
 //        $this->users = User::all();
         $this->roles = Role::all();
 //        $this->stafs = \App\Models\Staff::select('id','name','phone')->orderBy('name')->get();

@@ -54,7 +54,6 @@
                 </div>
 
                 <div class="p-2 w-1/4 text-center items-middle">
-
                     тестовая версию доски<br/>
 {{--                    самозанятый - сам всё делаешь, делаешь отметки и ведёшь свои заказы/обьекты/лиды--}}
                     <a href="{{ route('go-to-test.sz') }}" class="bg-blue-300 rounded px-3 py-1">Посмотреть</a>
