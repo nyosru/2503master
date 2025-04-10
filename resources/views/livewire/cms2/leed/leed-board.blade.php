@@ -225,7 +225,8 @@ bg-white border rounded relative"
                                             @endif
         @endpermission
 
-        @permission('разработка')
+{{--        @permission('разработка')--}}
+        @permission('р.Лиды / конфиг столбцов')
         <livewire:cms2.leed.column-config :key="$column->id" :column="$column"/>
         @endpermission
 
