@@ -8,8 +8,11 @@
     </button>
 
     @if ($modal_show)
+        @teleport('body')
         <!-- Всплывающее окно -->
-        <div class="bg-black/50 flex items-center justify-center" style="z-index: 100; margin: 0; position: fixed; top: 0; bottom: 0; left: 0; right: 0;">
+{{--        <div class="bg-black/50 flex items-center justify-center" style="z-index: 100; margin: 0; position: fixed; top: 0; bottom: 0; left: 0; right: 0;">--}}
+{{--            <div class="bg-white p-6 rounded-lg shadow-lg w-1/2 md:w-1/3">--}}
+        <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div class="bg-white p-6 rounded-lg shadow-lg w-1/2 md:w-1/3">
                 <h2 class="text-lg font-bold mb-4">Настройки столбца</h2>
                 <form wire:submit.prevent="saveColumnConfig">
@@ -48,5 +51,6 @@
                 </form>
             </div>
         </div>
+        @endteleport
     @endif
 </div>
