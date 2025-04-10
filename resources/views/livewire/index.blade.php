@@ -29,6 +29,7 @@
             {{--            <div class="w-full p-2 text-xl text-center font-bold">--}}
             {{--                варианты использования процесс мастер--}}
             {{--            </div>--}}
+
             <div class="p-2 w-full flex flex-row hover:bg-yellow-200">
                 <div class="w-3/4 flex items-top
                 flex-col md:flex-row
@@ -52,8 +53,11 @@
                     </div>
                 </div>
 
-                <div class="p-2 w-1/4">
-                    <a href="{{ route('go-to-test.sz') }}" class="bg-blue-300 rounded px-3 py-1">Войти</a>
+                <div class="p-2 w-1/4 text-center items-middle">
+
+                    тестовая версию доски<br/>
+{{--                    самозанятый - сам всё делаешь, делаешь отметки и ведёшь свои заказы/обьекты/лиды--}}
+                    <a href="{{ route('go-to-test.sz') }}" class="bg-blue-300 rounded px-3 py-1">Посмотреть</a>
                     <br/>
                     {{--                    <a href="{{ route('go-to-test.manager') }}" class="bg-blue-300 rounded px-3 py-1">Войти как--}}
                     {{--                        работник</a>--}}
