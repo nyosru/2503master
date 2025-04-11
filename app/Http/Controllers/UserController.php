@@ -58,10 +58,10 @@ class UserController extends Controller
 
     public static function setCurentBoard($userId, $boardId)
     {
-        $user = User::find($userId);
-        $user->current_board_id = $boardId;
-        $user->save();
-
+//        $user = User::find($userId);
+//        $user->current_board_id = $boardId;
+//        $user->save();
+        User::where('id', $userId)->update(['current_board_id' => $boardId]);
     }
 
     public static function setPhoneNumberFromTelegaId($user_telega_id, $phone_number): void

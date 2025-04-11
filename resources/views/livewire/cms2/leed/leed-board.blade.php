@@ -1,8 +1,8 @@
 <div>
 
 
-    name {{$user->currentBoard->name ?? 'x' }}<br/>
-    id {{$user->currentBoard->id ?? 'x' }}<br/>
+{{--    name {{$user->currentBoard->name ?? 'x' }}<br/>--}}
+{{--    id {{$user->currentBoard->id ?? 'x' }}<br/>--}}
 
 
 @if( empty(auth()->user()->phone_number) )
@@ -34,8 +34,8 @@
             {{--                <pre style="max-height: 150px; overflow: auto;" >{{ print_r($columns) }}</pre>--}}
             {{--</div>--}}
 
-            {{--    @section('head-line-content')--}}
             @if(1==2)
+                {{--    @section('head-line-content')--}}
                 <livewire:Cms2.App.Breadcrumb
                     {{--                :menu="[['route'=>'leed','name'=>'Лиды'], [ 'link' => 'no', 'name'=> ( $leed->name ?? 'Лид' ) ] ]"--}}
                     :menu="[
@@ -44,6 +44,7 @@
                 />
                 {{--    @endsection--}}
             @endif
+
             {{--шапка над доской--}}
             <div class="app-content-header"> <!--begin::Container-->
                 <div class="container-fluid"> <!--begin::Row-->
@@ -51,8 +52,13 @@
                         @if(1==1)
                             <div>
                                 <livewire:Cms2.App.Breadcrumb :menu="[
-                            ['route'=>'board','name'=>'Рабочие доски ('.( $user->currentBoard->name ?? 'x' ).')'],
-                            ['route'=>'leed','name'=>'Заказы'],
+                                    ['route'=>'leed.list','name'=>'Рабочие доски'],
+                                    [
+                                        'route'=>'leed',
+                                        'route-var'=>['board_id'=>$user->currentBoard->id ?? ''],
+                                        'name'=>( $user->currentBoard->name ?? 'x' )
+                                    ],
+{{--                            ['route'=>'leed','name'=>'Заказы'],--}}
                         ]"/>
                             </div>
                         @endif
@@ -126,7 +132,9 @@
 {{--            columns--}}
 {{--                        <pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>--}}
 
+            @if(1==2)
             <livewire:cms2.leed.select-board-form :user="$user"/>
+            @endif
 
             @if( empty($user->current_board_id) )
 
@@ -381,7 +389,10 @@ hover:shadow-lg transition-all border rounded cursor-pointer">
 
                                                         <div class="py-2 text-center">
                                                             @if( !empty($record->name) )
-                                                                <a href="{{ route('leed.item',['id'=>$record->id]) }}"
+                                                                <a href="{{ route('leed.item',[
+    'board_id'=>$record->board_id ?? 0,
+    'id'=>$record->id
+    ]) }}"
                                                                    wire:navigate
                                                                    class="text-blue-400 xblock xtext-center hover:underline p-1"
                                                                 >

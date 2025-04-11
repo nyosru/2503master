@@ -164,8 +164,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('board/select', \App\Livewire\Cms2\Leed\SelectBoardForm::class)->name('board.select');
 
 //Route::middleware('check.permission:р.Лиды')->group(function () {
-    Route::get('leed', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leed');
-    Route::get('leed/{id}', \App\Livewire\Cms2\Leed\Item::class)->name('leed.item');
+
+    Route::get('leed', \App\Livewire\Cms2\Leed\LeedBoardList::class)->name('leed.list');
+
+    //  чел переходит в доску, проверяем и назначаем права и переадресовываем на доску
+    Route::get('leed/goto/{board_id}/{role_id}', [\App\Http\Controllers\BoardController::class,'goto'])->name('leed.goto');
+
+    Route::get('leed/{board_id}', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leed');
+
+    Route::get('leed/{board_id}/{id}', \App\Livewire\Cms2\Leed\Item::class)->name('leed.item');
+
 //        Route::get('/leed/{id}', \App\Livewire\Cms2\ClientsInfo::class)->name('clients.info');
 //});
 

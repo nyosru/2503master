@@ -35,7 +35,7 @@
             @if(auth()->user())
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
 
-                    <a href="{{ route('leed') }}" class="bg-blue-400 px-2 py-1 rounded">Работа с заказами</a>
+                    <a href="{{ route('leed.list') }}" class="bg-blue-400 px-2 py-1 rounded">Работа с заказами</a>
 
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">

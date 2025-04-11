@@ -3,6 +3,7 @@
 namespace App\Livewire\Cms2\Leed;
 
 use App\Http\Controllers\LeedController;
+use App\Http\Controllers\UserController;
 use App\Models\LeedColumn;
 use App\Models\LeedRecord;
 use App\Models\User;
@@ -65,6 +66,7 @@ class LeedBoard extends Component
 
 
     public $showModalCreateOrder = [];
+    public $board_id;
 
 
     public function setCurentBoard($id)
@@ -78,10 +80,16 @@ class LeedBoard extends Component
         $this->showModalCreateOrder[$id] = (isset($this->showModalCreateOrder[$id]) && $this->showModalCreateOrder[$id] === true) ? false : true;
     }
 
+
     public function mount()
     {
 
+//        dd($this->board_id);
+
         $this->user_id = Auth::id();
+
+        UserController::setCurentBoard($this->user_id, $this->board_id);
+
         $this->user = User::with([
             'boardUser',
             'boardUser.board',
@@ -336,7 +344,7 @@ class LeedBoard extends Component
 // Получаем все столбцы, связанные с указанной ролью
 
             $this->columns = LeedColumn::orderBy('order', 'asc')
-
+//                ->whereBoardId($this->board_id)
                 ->with([
 //                    'records' => function ($query) use ($user, $user_id) {
 //                        if (
@@ -410,7 +418,8 @@ class LeedBoard extends Component
                 ->get();
 
             $this->columns = LeedColumn::orderBy('order', 'asc')
-                ->where('board_id', $this->user->current_board_id)
+                ->whereBoardId($this->board_id)
+//                ->where('board_id', $this->user->current_board_id)
                 ->get();
 
 //// Вывод результата
