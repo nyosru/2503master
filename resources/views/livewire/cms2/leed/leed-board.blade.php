@@ -208,7 +208,7 @@ bg-white border rounded relative"
                                         {{--                            кнопки--}}
                                         <span style="float:right;">
 
-        @permission('разработка')
+        @permission('р.Лиды / удалить столбцы')
         @if( $column->can_delete == true && $column->records->isEmpty())
                                                 <button
                                                     class="text-black/50 hover:text-red-600"
