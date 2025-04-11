@@ -156,8 +156,8 @@
                     @if( 1 == 1 )
 
                         @if( $columns->isEmpty() )
-                            Добавте первый столбец
-                            <livewire:cms2.leed.create-column-form :user="$user" :board_id="$user->current_board_id"
+                            Добавте первый столбец {{ $board_id ?? 'x' }}
+                            <livewire:cms2.leed.create-column-form :user="$user" :board_id="$board_id"
                                                                    type="first"/>
                         @endif
 
