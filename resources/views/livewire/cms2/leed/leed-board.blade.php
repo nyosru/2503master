@@ -287,11 +287,10 @@ bg-white border rounded relative"
 
                                 <ul class="space-y-1">
 
-
                                     @if($column->can_create)
                                         @permission('р.Лиды / добавить лида')
                                         <li>
-                                            <livewire:Cms2.Leed.AddLeedFormSimple :column="$column"/>
+                                            <livewire:Cms2.Leed.AddLeedFormSimple :key="'add'.$column->id" :column="$column"/>
                                         </li>
                                         @endpermission
                                     @endif
@@ -386,11 +385,15 @@ hover:shadow-lg transition-all border rounded cursor-pointer">
 
 
                                                         {{--<pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($record->toArray(),true) }}</pre>--}}
+{{--                                                        <pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($column->toArray(),true) }}</pre>--}}
 
                                                         <div class="py-2 text-center">
+
+
+
                                                             @if( !empty($record->name) )
                                                                 <a href="{{ route('leed.item',[
-    'board_id'=>$record->board_id ?? 0,
+    'board_id'=>$column->board_id ,
     'id'=>$record->id
     ]) }}"
                                                                    wire:navigate

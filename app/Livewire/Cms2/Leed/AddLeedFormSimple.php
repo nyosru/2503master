@@ -26,6 +26,7 @@ class AddLeedFormSimple extends Component
     public $client_id;
     public $order_product_types_id;
     public $budget;
+//    public $board_id;
 
     public $order = [];
 
@@ -52,6 +53,7 @@ class AddLeedFormSimple extends Component
     // Метод для добавления записи
     public function addLeedRecordOrder()
     {
+//        dd(__LINE__);
         try {
             $e = $this->validate([
                 'order.name' => 'nullable|string|max:255',
@@ -129,7 +131,7 @@ class AddLeedFormSimple extends Component
 
         // Эмитируем событие на другой компонент
 //        $this->dispatch('refreshLeedBoardComponent');
-        return $this->redirectRoute('leed');
+        return $this->redirectRoute('leed',['board_id'=>$this->column->board_id]);
     }
 
     public function render()

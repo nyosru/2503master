@@ -35,9 +35,18 @@ class TelegramController extends Controller
     }
 
 
+    public function callbackOrigin(request $request){
+        dd($request->all());
+    }
+
+
     public function callbackStart(request $request)
     {
         self::showMeTelegaMsg();
+//dd($request->id);
+        if (!empty($request->id))
+            $this->callback($request);
+
         return view('auth-telegram.callback1');
     }
 
@@ -46,13 +55,16 @@ class TelegramController extends Controller
 
         self::showMeTelegaMsg(__FUNCTION__);
 
-        $jsonData = $request->input('tgAuthResult'); // Получаем строку
-        $data = json_decode(base64_decode($jsonData), true); // Декодируем данные
+        if (!empty($request->id)) {
+            $data = $request;
+        } else {
+            $jsonData = $request->input('tgAuthResult'); // Получаем строку
+            $data = json_decode(base64_decode($jsonData), true); // Декодируем данные
 //dd($data);
-        if (!$data) {
-            return response()->json(['error' => 'Ошибка при разборе данных'], 400);
+            if (!$data) {
+                return response()->json(['error' => 'Ошибка при разборе данных'], 400);
+            }
         }
-
 
 // Делаем проверку (можно добавить проверку подписи Telegram)
         $user = \App\Models\User::updateOrCreate(
@@ -69,7 +81,13 @@ class TelegramController extends Controller
 // Авторизуем пользователя
         Auth::login($user);
 
-//    return redirect('/');
+        dd(__LINE__);
+
+
+//        if (!empty($request->id)) {
+//            return redirect('/');
+//        }
+//    return redirect(route('leeds.index'));
         return response()->json(['data' => $data, 'user_id' => $user->id], 200);
 //    return response()->json(['data' => $data['id']], 200);
 //    return response()->json(['data' => $data], 200);
@@ -165,7 +183,7 @@ class TelegramController extends Controller
         $firstName = $contact['first_name'];
         $userId = $contact['user_id'];
 
-        UserController::setPhoneNumberFromTelegaId($userId,$phoneNumber);
+        UserController::setPhoneNumberFromTelegaId($userId, $phoneNumber);
 
         Msg::sendTelegramm('получены данные'
             . PHP_EOL . $firstName

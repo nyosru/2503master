@@ -11,7 +11,7 @@ use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Symfony\Component\Debug\Debug;
-
+use Illuminate\Support\Facades\Storage;
 
 class LeedCommentAdd extends Component
 {
@@ -94,7 +94,50 @@ class LeedCommentAdd extends Component
 
         $e = [];
         foreach ($this->fi as $file) {
-            $e[] =
+//            $e[] =
+
+//                try {
+//                    $bucket = env('AWS_BUCKET');
+//                    $exists = Storage::disk('s3')->exists(''); // Проверка корня бакета
+//
+//                    // Или проверить конкретный файл, если он есть
+//                    // $exists = Storage::disk('s3')->exists('some-file.txt');
+//
+//                    if ($exists) {
+//                        echo "Подключение к S3 успешно, бакет доступен.";
+//                    } else {
+//                        echo "Подключение к S3 успешно, но бакет пуст или файл не найден.";
+//                    }
+//                } catch (\Exception $e) {
+//                    echo "Ошибка подключения к S3: " . $e->getMessage();
+//                }
+
+//            // Загрузка файла в папку 'uploads' на S3
+////            $path = Storage::disk('s3')->put('uploads', $request->file('file'));
+//            $path = Storage::disk('s3')->put('uploads', $request->file('file'));
+//            // Получить публичную ссылку (если нужно)
+//            $url = Storage::disk('s3')->url($path);
+
+//            $path = $file->store('leed-comments', 's3');
+//            $path = $file->store('leed-comments', 's3');
+            $path = $file->store('', 's3');
+//            $path = Storage::disk('s3')->put('leed-comments', $file );
+            $url = Storage::disk('s3')->url($path);
+
+            if (Storage::disk('s3')->exists($path)) {
+                // Файл существует в S3 — загрузка успешна
+                $e = 'yes';
+            } else {
+                // Файл не найден — загрузка не удалась или файл удалён
+                $e = 'no';
+            }
+
+            try {
+                $files = Storage::disk('s3')->files('');
+            }catch (\Exception $exception){ $files = null; }
+
+            dd($path, $url, $e, $files);
+
             $path = $file->store('leed-comments', 'public');
             $f = [
                 'leed_record_comment_id' => $comment->id,
@@ -110,7 +153,10 @@ class LeedCommentAdd extends Component
         $this->message = '';
         $this->fi = [];
         session()->flash('message', 'Комментарий и файлы успешно добавлены!');
-        $this->redirectRoute('leed.item', ['id' => $this->leed_record_id, 'showTab' => 'comment']);
+
+        $this->redirectRoute('leed.item', ['id' => $this->leed_record_id,
+            'board_id' => 1,
+            'showTab' => 'comment']);
     }
 
     public function render()

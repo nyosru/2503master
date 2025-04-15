@@ -946,6 +946,10 @@ select {
   top: 0px;
 }
 
+.top-\[-10px\] {
+  top: -10px;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -1342,6 +1346,10 @@ select {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-\[26px\] {
+  height: 26px;
 }
 
 .max-h-32 {
@@ -2683,6 +2691,10 @@ select {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pt-10 {
+  padding-top: 2.5rem;
 }
 
 .text-left {

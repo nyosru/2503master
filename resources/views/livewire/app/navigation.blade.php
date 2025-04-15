@@ -1,10 +1,17 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }"
+     class="bg-white border-b border-gray-100
+     @guest() sticky top-0 @endguest
+     "
+
+>
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
+
+
                     {{--                    <a href="{{ route('index') }}" wire:navigate>--}}
                     {{--                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800"/>--}}
                     {{--                    </a>--}}
@@ -29,13 +36,13 @@
 
             </div>
 
-{{--            {{ print_r(auth()->user(), true) }}--}}
+            {{--            {{ print_r(auth()->user(), true) }}--}}
 
             <!-- Settings Dropdown -->
             @if(auth()->user())
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
 
-                    <a href="{{ route('leed.list') }}" class="bg-blue-400 px-2 py-1 rounded">Работа с заказами</a>
+{{--                    <a href="{{ route('leed.list') }}" class="bg-blue-400 px-2 py-1 rounded">Работа с заказами</a>--}}
 
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
@@ -73,22 +80,46 @@
                 </div>
             @else
                 <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-3">
+{{--                    333--}}
 
-                    {{--                    {!! Socialite::driver('telegram')->getButton() !!}--}}
+                    {!! Socialite::driver('telegram')->getButton() !!}
+
                     {{--                    7777--}}
-                    <a href="https://oauth.telegram.org/auth?bot_id={{ env('TELEGRAM_BOT_TOKEN') }}&origin={{ env('APP_URL2') }}&return_to={{ env('TELEGRAM_REDIRECT_URL' )}}"
+{{--                    <a href="https://oauth.telegram.org/auth?bot_id={{ env('TELEGRAM_BOT_TOKEN') }}&origin  ={{ env('APP_URL2') }}&return_to={{ env('TELEGRAM_REDIRECT_URL' )}}"--}}
+{{--                       class="--}}
+{{--                       hover:bg-blue-400--}}
+{{--                       bg-blue-300 text-black--}}
+{{--                       font-bold px-4 pt-1 pb-2 rounded-xl"--}}
+{{--                    >Войти <sup>через Telegram</sup></a>--}}
 
-                       class="
-                       hover:bg-blue-400
-                       bg-blue-300 text-black
-                       font-bold px-4 pt-1 pb-2 rounded-xl"
-                    >Войти <sup>через Telegram</sup></a>
                     {{--                    <a href="{{ route('login') }}" >Вход</a>--}}
                     {{--                    <a href="{{ route('register') }}" >Регистрация</a>--}}
                 </div>
             @endif
+
+
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
+                {{--                @guest()--}}
+                {{--22--}}
+                {{--                    {!! Socialite::driver('telegram')->getButton() !!}--}}
+                {{--                <br/>--}}
+                {{--                <br/>--}}
+
+                @if(1==2)
+                {{--                    11--}}
+                                    <a href="https://oauth.telegram.org/auth?bot_id={{ env('TELEGRAM_BOT_TOKEN') }}&origin={{ env('APP_URL2') }}&return_to={{ env('TELEGRAM_REDIRECT_URL' )}}"
+                                       class="bg-blue-300 px-2 py-1 rounded">Войти в ЛК</a>
+                {{--                @else--}}
+                <script async src="https://telegram.org/js/telegram-widget.js?22"
+                        {{--                        data-telegram-login="process_master_rf_bot" --}}
+                        data-telegram-login="{{ env('TELEGRAM_BOT_USERNAME') }}"
+                        data-size="small"
+                        data-auth-url="https://master.local/auth/telegram/callback"
+                    {{--                        data-request-access="write"--}}
+                ></script>
+                @endif
+
                 <button @click="open = ! open"
                         class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -99,6 +130,9 @@
                               stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
+
+                {{--                @endguest--}}
+
             </div>
         </div>
     </div>
@@ -114,32 +148,49 @@
             </div>
         @endif
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                @if(auth()->user())
+        <div class="pt-4 pb-1 border-t border-gray-200 text-right flex flex-col ">
+
+            @if(1==2)
+            <div class="w-full text-right h-[26px]">
+                <script async src="https://telegram.org/js/telegram-widget.js?22"
+                        {{--                        data-telegram-login="process_master_rf_bot" --}}
+                        data-telegram-login="{{ env('TELEGRAM_BOT_USERNAME') }}"
+                        data-size="small"
+                        data-auth-url="https://master.local/auth/telegram/callback"
+                    {{--                        data-request-access="write"--}}
+                ></script>
+            </div>
+            @endif
+
+            @if(auth()->user())
+                <div class="px-4">
                     <div class="font-medium text-base text-gray-800"
                          x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name"
                          x-on:profile-updated.window="name = $event.detail.name"></div>
-                    <div class="font-medium text-sm text-gray-500">{{ auth()->user()->email }}</div>
-                @endif
-            </div>
+                    {{--                    <div class="font-medium text-sm text-gray-500">{{ auth()->user()->email }}</div>--}}
+                </div>
+            @endif
 
-            <div class="mt-3 space-y-1">
-                @if(1==2)
+            {{--            <div class="mt-3 space-y-1">--}}
+            @if(1==2)
+                <div>
                     <x-responsive-nav-link :href="route('profile')" wire:navigate>
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
-                @endif
+                </div>
+            @endif
 
-                @if(auth()->user())
+            @if(auth()->user())
+                <div>
                     <!-- Authentication -->
                     <button wire:click="logout" class="w-full text-start">
                         <x-responsive-nav-link>
                             Выйти
                         </x-responsive-nav-link>
                     </button>
-                @endif
-            </div>
+                </div>
+            @endif
+            {{--            </div>--}}
         </div>
     </div>
 </nav>

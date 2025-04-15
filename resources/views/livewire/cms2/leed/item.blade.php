@@ -8,7 +8,7 @@
     {{--    <div class="flex flex-row bg-white border w-full rounded-md mb-2">--}}
     <div class="bg-white border w-full rounded-md mb-2 mt-[-15px] py-1 flex flex-row items-center">
         <div class="w-[500px] flex items-center">
-            <a href="{{ route('leed.item', ['id' => $leed->id ]) }}">
+            <a href="{{ route('leed.item', ['id' => $leed->id, 'board_id' => $leed->column->board_id ?? 0 ]) }}">
                 <div class="px-5 inline font-bold float-left mr-3">
                     <nobr>{{$leed->name}}</nobr>
                 </div>
@@ -16,7 +16,7 @@
             @section('head-line-content')
                 <livewire:Cms2.App.Breadcrumb
                     {{--                :menu="[['route'=>'leed','name'=>'Лиды'], [ 'link' => 'no', 'name'=> ( $leed->name ?? 'Лид' ) ] ]"--}}
-                    :menu="[['route'=>'leed','name'=>'Лиды'], [ 'link' => 'no', 'name'=> ( ($leed->name ?? '-') ) ] ]"
+                    :menu="[['route'=>'leed.list','name'=>'Лиды'], [ 'link' => 'no', 'name'=> ( ($leed->name ?? '-') ) ] ]"
                 />
             @endsection
             {{--        </div>--}}

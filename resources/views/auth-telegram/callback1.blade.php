@@ -25,7 +25,7 @@
                 console.log('Ответ сервера:', data);
 
                 if (data.user_id) {
-                    window.location.href = '/';
+                    window.location.href = '/board';
                     // window.location.href = 'https://xn--80ajb0aifhffacm9b.xn--p1ai/';
                     // window.location.href = `/a/${data.user_id}`; // Используем шаблонные строки
                 } else {
