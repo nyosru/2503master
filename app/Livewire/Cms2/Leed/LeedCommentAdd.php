@@ -120,28 +120,18 @@ class LeedCommentAdd extends Component
 
 //            $path = $file->store('leed-comments', 's3');
 //            $path = $file->store('leed-comments', 's3');
-            $path = $file->store('', 's3');
 //            $path = Storage::disk('s3')->put('leed-comments', $file );
-            $url = Storage::disk('s3')->url($path);
 
-            if (Storage::disk('s3')->exists($path)) {
-                // Файл существует в S3 — загрузка успешна
-                $e = 'yes';
-            } else {
-                // Файл не найден — загрузка не удалась или файл удалён
-                $e = 'no';
-            }
+            $path = $file->store('leed-comments', 's3beget');
+            $url = Storage::disk('s3beget')->url($path);
 
-            try {
-                $files = Storage::disk('s3')->files('');
-            }catch (\Exception $exception){ $files = null; }
+//            dd($path, $url, $e, $files ?? []);
+//            $path = $file->store('leed-comments', 'public');
 
-            dd($path, $url, $e, $files);
-
-            $path = $file->store('leed-comments', 'public');
             $f = [
                 'leed_record_comment_id' => $comment->id,
-                'path' => $path,
+//                'path' => $path,
+                'path' => $url,
                 'user_id' => Auth::id(),
                 'file_name' => $file->getClientOriginalName(), // Сохраняем оригинальное имя файла
             ];
