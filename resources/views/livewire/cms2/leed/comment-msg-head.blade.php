@@ -91,15 +91,8 @@
 
                                 @foreach ($comment->files as $f)
                                     @if(empty($f->mini))
-
                                         <a
-                                            {{--                                            @if( strpos($f->path,'.pdf') )--}}
-                                            {{--                                                --}}{{--                                            href="{{ route('read.file',['file' => 'storage/' . $f->path , 'type' => 'pdf']) }}"--}}
-                                            {{--                                                href="{{ route('read.file',['file' =>  'app/public/'.$f->path , 'type' => 'pdf']) }}"--}}
-                                            {{--                                            @else--}}
-                                            href="{{ asset('storage/' . $f->path) }}"
-                                            {{--                                            @endif--}}
-
+                                            href="{{ strpos($f->path,'https://') !== false ? $f->path : asset('storage/' . $f->path)  }}"
                                             target="_blank"
                                             class="
 {{--                                           text-sm --}}
@@ -109,6 +102,8 @@
                                         >
                                             @if( pathinfo($f->path, PATHINFO_EXTENSION) == 'pdf' )
                                                 <img src="/icon/file/pdf.png" class="w-[32px] inline" alt="" border=""/>
+                                            @elseif( pathinfo($f->path, PATHINFO_EXTENSION) == 'jpg' )
+                                                <img src="/icon/file/jpg.svg" class="w-[32px] inline" alt="" border=""/>
                                             @elseif( pathinfo($f->path, PATHINFO_EXTENSION) == 'zip' )
                                                 <img src="/icon/file/zip.png" class="w-[32px] inline" alt="" border=""/>
                                             @elseif( pathinfo($f->path, PATHINFO_EXTENSION) == 'mp4' )

@@ -33,6 +33,13 @@ class Item extends Component
             'user' => function ($query) {
                 $query->withTrashed();
             },
+            'column' => function ($query) {
+                $query->with([
+                    'board' => function ($query) {
+                        $query->select('id','name');
+                    }
+                ]);
+            },
             'supplier' =>  function ($query) {
                 $query->withTrashed();
             },

@@ -442,22 +442,22 @@ hover:shadow-lg transition-all border rounded cursor-pointer">
                         mt-1 flex flex-row space-x-1 items-center">
 
                                                                 <livewire:cms2.informer.leed.client
-                                                                    :key="'block-but1-'.$record->id"
+                                                                    :key="'block-'.$column->id.'-but1-'.$record->id"
                                                                     :leed="$record"/>
                                                                 {{--                                                    <livewire:cms2.informer.leed.order :key="'block-but2-'.$record->id"--}}
                                                                 {{--                                                                                       :leed="$record"/>--}}
 
                                                                 {{--твои горящие задачи--}}
                                                                 <livewire:cms2.informer.leed.order-you
-                                                                    :key="'block-but3-'.$record->id"
+                                                                    :key="'block-'.$column->id.'-but3-'.$record->id"
                                                                     :leed="$record"/>
                                                                 {{--горящие задачи от других--}}
                                                                 <livewire:cms2.informer.leed.order-to-you
-                                                                    :key="'block-but4-'.$record->id"
+                                                                    :key="'block-'.$column->id.'-but4-'.$record->id"
                                                                     :leed="$record"/>
                                                                 {{--кол-во комментариев и горит если есть непрочитанные другие--}}
                                                                 <livewire:cms2.informer.leed.comment
-                                                                    :key="'block-but5-'.$record->id"
+                                                                    :key="'block-'.$column->id.'-but5-'.$record->id"
                                                                     :leed="$record"/>
                                                                 {{--передать лида--}}
                                                                 {{--                                                            <livewire:cms2.leed.move :leed="$record"/>--}}
