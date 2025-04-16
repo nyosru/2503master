@@ -64,9 +64,12 @@ Route::get('/auth/telegram/callback', function () {
 
 // Делаем проверку (можно добавить проверку подписи Telegram)
     $user = \App\Models\User::updateOrCreate(
-        ['telegram_id' => $data['id']],
         [
             'email' => $data['id'] . '@telegram.ru',
+            'telegram_id' => $data['id']
+        ],
+        [
+
             'password' => bcrypt($data['id']),
             'name' => $data['first_name'] . ' ' . ($data['last_name'] ?? ''),
             'username' => $data['username'] ?? null,
