@@ -63,19 +63,23 @@ Route::get('/auth/telegram/callback', function () {
     // Логика для создания или обновления пользователя в вашей базе данных
 
 // Делаем проверку (можно добавить проверку подписи Telegram)
-    $user = \App\Models\User::updateOrCreate(
-        [
-            'email' => $data['id'] . '@telegram.ru',
-            'telegram_id' => $data['id']
-        ],
-        [
+    try {
+        $user = \App\Models\User::whereEmail($data['id'] . '@telegram.ru')->firstOrFail();
+    } catch (\Exception $e) {
+        $user = \App\Models\User::updateOrCreate(
+            [
+                'email' => $data['id'] . '@telegram.ru',
+                'telegram_id' => $data['id']
+            ],
+            [
 
-            'password' => bcrypt($data['id']),
-            'name' => $data['first_name'] . ' ' . ($data['last_name'] ?? ''),
-            'username' => $data['username'] ?? null,
-            'avatar' => $data['photo_url'] ?? null,
-        ]
-    );
+                'password' => bcrypt($data['id']),
+                'name' => $data['first_name'] . ' ' . ($data['last_name'] ?? ''),
+                'username' => $data['username'] ?? null,
+                'avatar' => $data['photo_url'] ?? null,
+            ]
+        );
+    }
 //    showMeTelegaMsg( 'user: '. serialize($user->toArray()) );
 // Авторизуем пользователя
     Auth::login($user);
