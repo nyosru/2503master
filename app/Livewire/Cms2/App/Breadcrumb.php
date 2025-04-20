@@ -13,6 +13,11 @@ class Breadcrumb extends Component
     #[Url]
     public $board_id = '';
 
+    public function mount($board_id){
+        foreach($this->menu as $m ){
+            $m['route-var']['board_id'] = $board_id;
+        }
+    }
     public function render()
     {
         return view('livewire.cms2.app.breadcrumb');
