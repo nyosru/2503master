@@ -16,6 +16,11 @@
             {{ session('messageBU') }}
         </div>
     @endif
+    @if (session()->has('deleteOkMessage'))
+        <div class="bg-yellow-300 border border-green-400 border-3 text-green-700 px-4 py-3 mb-4 rounded">
+            {{ session('deleteOkMessage') }}
+        </div>
+    @endif
     @if (session()->has('errorBU'))
         <div class="bg-red-100 border border-red-400 text-black-700 px-4 py-3 mb-4 rounded">
             {{ session('errorBU') }}

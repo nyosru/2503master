@@ -39,8 +39,8 @@ class BoardComponent extends Component
 
     public function delete($boardId)
     {
-        Board::whereId($boardId)->remove();
-        session()->flash('message', 'Доска удалена!');
+        Board::whereId($boardId)->delete();
+        session()->flash('deleteOkMessage', 'Доска удалена!');
     }
 
     public function deleteBoardUser($id)
