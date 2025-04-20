@@ -11,8 +11,10 @@
         @if( isset($m['link']) && $m['link'] == 'no' )
             <span class="breadcrumb-item active xme-2" aria-current="page">
             @else
+                    wire:navigate href="{{ route($m['route'], ( $m['route-var'] ?? [] ) ) }}"
+
                     <span class="hover:bg-orange-200 px-1 breadcrumb-item xme-2"><a
-                            wire:navigate href="{{ route($m['route'], ( $m['route-var'] ?? [] ) ) }}"
+{{--                            wire:navigate href="{{ route($m['route'], ( $m['route-var'] ?? [] ) ) }}"--}}
                         >
                 @endif
 
