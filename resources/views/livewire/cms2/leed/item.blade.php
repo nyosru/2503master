@@ -14,6 +14,7 @@
 
         <div class="flex-1">
             <livewire:Cms2.App.Breadcrumb
+                :board_id="$leed->column->board_id"
                 {{--                :menu="[['route'=>'leed','name'=>'Лиды'], [ 'link' => 'no', 'name'=> ( $leed->name ?? 'Лид' ) ] ]"--}}
                 :menu="[
 

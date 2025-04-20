@@ -9,8 +9,6 @@ class Breadcrumb extends Component
 {
 
     public $menu = [];
-
-    #[Url]
     public $board_id = '';
 
     public function mount(){
