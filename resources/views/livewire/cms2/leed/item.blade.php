@@ -59,12 +59,16 @@
                 <livewire:cms2.informer.leed.order-to-you :key="'order-to-you'.$leed->id" wire:lazy :leed="$leed"/>
                 {{--кол-во комментариев и горит если есть непрочитанные другие--}}
                 <livewire:cms2.informer.leed.comment :key="'leed.comment'.$leed->id" wire:lazy :leed="$leed"/>
+
                 {{--передать лида--}}
-                <livewire:cms2.leed.move :leed="$leed"/>
-                {{--            </div>--}}
-                {{--            <b>{{ $leed->name }} тел: {{ $leed->phone }}</b>--}}
-                {{--        </div>--}}
-                {{--        <div class="p-2 flex-1">--}}
+                @if( $leed->user_id == Auth()->user()->id )
+                    <livewire:cms2.leed.move :leed="$leed" :board_id="$leed->column->board->id"/>
+                @endif
+
+                    {{--            </div>--}}
+                    {{--            <b>{{ $leed->name }} тел: {{ $leed->phone }}</b>--}}
+                    {{--        </div>--}}
+                    {{--        <div class="p-2 flex-1">--}}
             </div>
         </div>
 
@@ -72,8 +76,15 @@
     </div>
 
 
-{{--    <pre class="text-xs">{{ print_r($leed->toArray()) }}</pre>--}}
-{{--    <pre class="text-xs">{{ print_r($column->toArray()) }}</pre>--}}
+    {{--    <pre class="text-xs">{{ print_r($leed->user_id) }}</pre>--}}
+    {{--    <br/>--}}
+    {{--    ++{{ Auth()->user()->id }}--}}
+    {{--    <br/>--}}
+    {{--    <pre class="text-xs">{{ print_r($leed->toArray()) }}</pre>--}}
+    {{--    <pre class="text-xs">{{ print_r($column->toArray()) }}</pre>--}}
+    @if (session()->has('moveMessage'))
+        <span class="bg-green-500 text-white p-3 rounded">{{ session()->get('moveMessage') }}</span>
+    @endif
 
 
     <div class="flex flex-col sm:flex-row w-full space-x-2">
@@ -100,8 +111,8 @@
                 <div class="p-2 text-lg border-b ">
                     {{--                    <div class="inline float-right">1 2 3</div>--}}
                     <span class="font-bold">
-                           История действий
-                        </span>
+           История действий
+        </span>
                 </div>
 
                 <livewire:cms2.leed.item-log :leed_record_id="$leed->id" wire:lazy/>

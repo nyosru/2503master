@@ -65,7 +65,8 @@
                                 class="
 
 {{--                            inline-block --}}
-                            bg-gray-100
+@if( !empty($bu->deleted_at) ) bg-red-100 @else bg-green-100 @endif
+
 {{--                            rounded-full--}}
                             px-3 py-1 text-sm
                             font-semibold text-gray-700
@@ -80,10 +81,12 @@
 
                                 @if( !empty($bu->deleted_at) )
                                     <button class="bg-green-100 hover:bg-green-400 p-1 rounded"
-                                            wire:confirm="Восстановить ?" wire:click="restoreBoardUser({{$bu->id}})">вкл
+{{--                                            wire:confirm="Восстановить ?" --}}
+                                            wire:click="restoreBoardUser({{$bu->id}})">вкл
                                     </button>
                                 @else
-                                    <button class="bg-red-100 hover:bg-red-400 p-1 rounded" wire:confirm="Удалить ?"
+                                    <button class="bg-red-100 hover:bg-red-400 p-1 rounded"
+{{--                                            wire:confirm="Удалить ?"--}}
                                             wire:click="deleteBoardUser({{$bu->id}})">выкл
                                     </button>
                                 @endif

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Board;
+use App\Models\BoardUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BoardController extends Controller
 {
@@ -56,7 +58,52 @@ class BoardController extends Controller
 
     }
 
-    public static function getCurrentBoard($user_id, $new_board_id = null)
+    /**
+     * получаем список связей пользоатель доска
+     * @param $board_id
+     * @param $user_id
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getBoardUser($board_id = null, $user_id = null, $type = 'mini')
+    {
+        $return = BoardUser::with([
+            'board' => function ($query) use ($board_id, $user_id, $type) {
+                $query->withTrashed();
+                if ($type == 'mini') {
+                    $query->select('id', 'name', 'deleted_at');
+                }
+            },
+            'user' => function ($query) use ($board_id, $user_id, $type) {
+                $query->withTrashed();
+                if (!empty($user_id)) {
+                    $query->whereId($user_id);
+                }
+                if ($type == 'mini') {
+                    $query->select('id', 'name', 'phone_number', 'deleted_at');
+                }
+            },
+//            'role' => function ($query)  use ($board_id,$user_id,$type) {
+//                $query->withTrashed();
+//                if( $type == 'mini' ){$query->select('id','name','deleted_at');}
+//            },
+        ])
+            ->where(function ($query) use ($board_id) {
+                if (!empty($board_id)) {
+                    $query->whereBoardId($board_id);
+                }
+            })
+
+//            ->distinct('user_id')
+//            ->pluck('user_id')
+//            ->groupBy('user_id')
+//            ->select('board_users.*', DB::raw('MIN(board_users.id) as id'))
+
+            ->get();
+        return $return;
+    }
+
+    public
+    static function getCurrentBoard($user_id, $new_board_id = null)
     {
 
         $user = User::with([

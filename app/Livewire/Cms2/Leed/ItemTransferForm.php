@@ -4,6 +4,7 @@ namespace App\Livewire\Cms2\Leed;
 
 use App\Http\Controllers\ColumnController;
 use App\Http\Controllers\RecordController;
+use App\Models\BoardUser;
 use App\Models\LeadTransfer;
 use App\Models\LeadUserAssignment;
 use App\Models\User;
@@ -46,12 +47,15 @@ class ItemTransferForm extends Component
     public function render()
     {
         $user_id = Auth::id();
+
         $users = User::where('id', '!=', $user_id)
             ->with(
                 'roles',
             )
             ->get();
-        return view('livewire.cms2.leed.item-transfer-form', ['users' => $users]);
+        return view('livewire.cms2.leed.item-transfer-form', [
+            'users' => $users
+        ]);
     }
 
 }

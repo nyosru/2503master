@@ -4,6 +4,8 @@
 {{--    name {{$user->currentBoard->name ?? 'x' }}<br/>--}}
 {{--    id {{$user->currentBoard->id ?? 'x' }}<br/>--}}
 
+{{--    <pre class="text-xs">{{ print_R($user->toArray()) }}</pre>--}}
+{{--    <pre class="text-xs">{{ print_R($user->roles[0]['name'],true) }}</pre>--}}
 
 @if( empty(auth()->user()->phone_number) )
 
@@ -56,8 +58,9 @@
                                     [
                                         'route'=>'leed',
                                         'route-var'=>['board_id'=>$user->currentBoard->id ?? ''],
-                                        'name'=>( $user->currentBoard->name ?? 'x' )
+                                        'name'=>( $user->currentBoard->name ?? 'x' ).( $user->roles[0]['name'] ? ' <sup>'.$user->roles[0]['name'].'</sup>' : '-' )
                                     ],
+
 {{--                            ['route'=>'leed','name'=>'Заказы'],--}}
                         ]"/>
                             </div>

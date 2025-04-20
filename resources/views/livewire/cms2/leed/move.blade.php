@@ -1,5 +1,7 @@
 <span>
 {{--    <a href="#" wire:click="openModal" class="text-blue-500 hover:underline">передать лида</a>--}}
+{{--        <pre class="text-xs">{{ print_r($move_variants->toArray(),true) }}</pre>--}}
+
     <a
         title="Передать лида"
         href="#" wire:click.prevent="openModal" class="text-blue-500 hover:underline"><img src="/icon/arrow-right.png"
@@ -17,9 +19,17 @@
                     <select wire:model="selectedUser" id="user"
                             class="mt-1 block w-full rounded border-gray-300 shadow-sm">
                         <option value="">выберите</option>
-                        @foreach($users as $user)
+{{--                        @foreach($users as $user)--}}
+                        @foreach($move_variants as $m)
+                            @if( $m->user_id != Auth::user()->id )
                             <option
-                                value="{{ $user->id }}">{{ $user->name }} ({{ $user->roles[0]->name ?? '' }})</option>
+                                value="{{ $m->user_id }}">
+                                {{ $m->user->name }}
+                                {{ $m->user->phone_number ?? '-' }}
+{{--                                <pre>{{ $m->user_id }}</pre>--}}
+{{--                                ({{ $m->role->name ?? '' }})--}}
+                            </option>
+                            @endif
                         @endforeach
                     </select>
 {{--                    <pre>{{ print_r($users->toArray()) }}</pre>--}}

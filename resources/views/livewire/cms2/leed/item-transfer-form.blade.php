@@ -1,11 +1,9 @@
 <div class="mt-2 mx-2">
 
     @if (session()->has('transferRecordMessage'))
-
         <div class="mt-2 bg-green-500 p-2">{{ session('transferRecordMessage') }}</div>
 
     @else
-
         <form wire:submit.prevent="transferLead">
 
 {{--            <pre class="text-xs">{{ print_r($users->toArray()) }}</pre>--}}
