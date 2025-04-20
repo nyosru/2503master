@@ -13,6 +13,9 @@
         {{--        <div class="flex items-center">--}}
 
         <div class="flex-1">
+
+            <pre class="text-xs" >{{ print_r($leed) }}</pre>
+
             <livewire:Cms2.App.Breadcrumb
                 :board_id="$leed->column->board_id"
                 {{--                :menu="[['route'=>'leed','name'=>'Лиды'], [ 'link' => 'no', 'name'=> ( $leed->name ?? 'Лид' ) ] ]"--}}
