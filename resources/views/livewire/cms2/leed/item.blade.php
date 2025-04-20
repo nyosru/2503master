@@ -14,7 +14,9 @@
 
         <div class="flex-1">
 
+            111
             <pre class="text-xs" >{{ print_r($leed) }}</pre>
+222
 
             <livewire:Cms2.App.Breadcrumb
                 :board_id="$leed->column->board_id"
