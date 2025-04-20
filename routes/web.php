@@ -72,7 +72,6 @@ Route::get('/auth/telegram/callback', function () {
                 'telegram_id' => $data['id']
             ],
             [
-
                 'password' => bcrypt($data['id']),
                 'name' => $data['first_name'] . ' ' . ($data['last_name'] ?? ''),
                 'username' => $data['username'] ?? null,
