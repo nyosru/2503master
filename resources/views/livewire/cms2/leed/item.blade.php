@@ -15,7 +15,7 @@
         <div class="flex-1">
 
             111
-            <pre class="text-xs" >{{ print_r($leed) }}</pre>
+            <pre class="text-xs" >{{ print_r($leed,true) }}</pre>
 222
 
             <livewire:Cms2.App.Breadcrumb
