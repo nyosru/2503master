@@ -12,8 +12,12 @@ class Breadcrumb extends Component
     public $board_id = '';
 
     public function mount(){
-        foreach($this->menu as $m ){
-            $m['route-var']['board_id'] = $this->board_id;
+        foreach($this->menu as $k => $m ){
+
+            if( !isset($this->menu[$k]['route-var']) )
+                $this->menu[$k]['route-var'] = [];
+
+            $this->menu[$k]['route-var']['board_id'] = $this->board_id ?? 0;
         }
     }
     public function render()
