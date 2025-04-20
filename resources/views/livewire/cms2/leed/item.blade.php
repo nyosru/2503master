@@ -21,7 +21,7 @@
                                     ['route'=>'leed.list','name'=>'Рабочие доски'],
                                     [
                                         'route'=>'leed',
-                                        'route-var'=>['board_id'=>$leed->column->board->id ?? ''],
+                                        'route-var'=>['board_id'=>$leed->column->board->id ?? 0],
                                         'name'=>( $leed->column->board->name ?? 'x' )
                                     ],
 
