@@ -105,6 +105,6 @@ class LeedRecordComment extends Component
 
     public function render()
     {
-        return view('livewire.cms2.leed.leed-record-comment');
+        return view('livewire.cms2.leed.leed-record-comment2504');
     }
 }

@@ -151,6 +151,7 @@ class LeedCommentAdd extends Component
 
     public function render()
     {
-        return view('livewire.cms2.leed.leed-comment-add');
+//        return view('livewire.cms2.leed.leed-comment-add');
+        return view('livewire.cms2.leed.leed-comment-add2504');
     }
 }
