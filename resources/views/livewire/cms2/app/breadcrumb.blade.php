@@ -4,7 +4,7 @@
     {{--    <span class="breadcrumb-item"><a href="/" class="hover:bg-orange-200 px-1" wire:navigate>Marudi</a></span>--}}
     {{--    <li class="breadcrumb-item"><a wire:navigate href="{{ route('clients') }}">Клиенты</a></li>--}}
 
-    <pre class="text-xs"> {{ print_r($menu) }}</pre>
+{{--    <pre class="text-xs"> {{ print_r($menu) }}</pre>--}}
 
     @foreach( $menu as $k => $m )
         @if($k > 0) / @endif
