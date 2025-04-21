@@ -1,9 +1,9 @@
 <div
     {{--    class="h-[100px]"--}}
-    x-data="{ uploading: false, progress: 0 , fileCount: 0 }"
-    x-on:livewire-upload-start="uploading = true"
-    x-on:livewire-upload-finish="uploading = false; progress = 0;"
-    x-on:livewire-upload-progress="progress = $event.detail.progress"
+{{--    x-data="{ uploading: false, progress: 0 , fileCount: 0 }"--}}
+{{--    x-on:livewire-upload-start="uploading = true"--}}
+{{--    x-on:livewire-upload-finish="uploading = false; progress = 0;"--}}
+{{--    x-on:livewire-upload-progress="progress = $event.detail.progress"--}}
 >
 
     {{--    добавить комент--}}
@@ -159,10 +159,10 @@
                 <div class="w-[100px] text-center xpt-3
 ">
                     <button type="submit"
-                            x-show="!uploading"
+{{--                            x-show="!uploading"--}}
                             class="bg-blue-500 text-white px-3 py-1 rounded-md">Добавить
                     </button>
-                    <span x-show="uploading" class="text-gray-500">Загрузка...</span>
+{{--                    <span x-show="uploading" class="text-gray-500">Загрузка...</span>--}}
                 </div>
                 {{--                </div>--}}
 
