@@ -53,7 +53,9 @@
                     <div class="flex flex-row space-x-4">
                         @if(1==1)
                             <div>
-                                <livewire:Cms2.App.Breadcrumb :menu="[
+                                <livewire:Cms2.App.Breadcrumb
+                                    :board_id="$leed->column->board_id"
+                                    :menu="[
                                     ['route'=>'leed.list','name'=>'Рабочие доски'],
                                     [
                                         'route'=>'leed',

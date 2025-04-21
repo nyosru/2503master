@@ -18,6 +18,7 @@ class Breadcrumb extends Component
                 $this->menu[$k]['route-var'] = [];
 
             $this->menu[$k]['route-var']['board_id'] = $this->board_id ?? 0;
+
         }
     }
     public function render()

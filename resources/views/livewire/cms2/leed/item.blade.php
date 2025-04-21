@@ -14,11 +14,11 @@
 
         <div class="flex-1">
 
-            <div>
-            111
-            <pre class="text-xs" >{{ print_r($leed,true) }}</pre>
-222
-            </div>
+{{--            <div>--}}
+{{--            111--}}
+{{--            <pre class="text-xs" >{{ print_r($leed,true) }}</pre>--}}
+{{--222--}}
+{{--            </div>--}}
 
             <livewire:Cms2.App.Breadcrumb
                 :board_id="$leed->column->board_id"
