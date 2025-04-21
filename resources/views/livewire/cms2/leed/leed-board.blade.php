@@ -54,7 +54,7 @@
                         @if(1==1)
                             <div>
                                 <livewire:Cms2.App.Breadcrumb
-                                    :board_id="$leed->column->board_id"
+                                    :board_id="$board_id"
                                     :menu="[
                                     ['route'=>'leed.list','name'=>'Рабочие доски'],
                                     [
