@@ -21,6 +21,11 @@ class LeedCommentAdd extends Component
 
     public $message;
     public $fi = [];
+    #[Validate([
+        'files' => ['array'],
+        'files.*' => ['file', 'max:102400'],
+    ])]
+    public $files = [];
     public $parentCommentId;
     public $users;
     public $addressed_to_user_id;
@@ -56,20 +61,21 @@ class LeedCommentAdd extends Component
             ->get();
     }
 
-    protected $rules = [
-////        'message' => 'required|string|min:1|max:255',
-//        'message' => 'required|string|min:1',
-        'message' => 'nullable|string',
-////        'files.*' => 'file|mimes:jpeg,png,pdf,docx,txt|max:10240', // можно добавить любые разрешенные форматы файлов
-//        'files.*' => 'file|max:1000240', // можно добавить любые разрешенные форматы файлов
-//        'fi.*' => 'file|max:1000240',
-        'fi.*' => 'file',
-        // можно добавить любые разрешенные форматы файлов
-    ];
+//    protected $rules = [
+////////        'message' => 'required|string|min:1|max:255',
+//////        'message' => 'required|string|min:1',
+//        'message' => 'nullable|string',
+////////        'files.*' => 'file|mimes:jpeg,png,pdf,docx,txt|max:10240', // можно добавить любые разрешенные форматы файлов
+////        'files.*' => 'file|max:1000240', // можно добавить любые разрешенные форматы файлов
+//        'files.*' => 'nullable|file', // можно добавить любые разрешенные форматы файлов
+//////        'fi.*' => 'file|max:1000240',
+////        'fi.*' => 'file',
+////        // можно добавить любые разрешенные форматы файлов
+//    ];
 
     public function addComment()
     {
-        $this->validate();
+//        $this->validate();
 
         // Создаем новый комментарий
         $comment = \App\Models\LeedRecordComment::create([
@@ -151,7 +157,7 @@ class LeedCommentAdd extends Component
 
     public function render()
     {
-//        return view('livewire.cms2.leed.leed-comment-add');
-        return view('livewire.cms2.leed.leed-comment-add2504');
+        return view('livewire.cms2.leed.leed-comment-add');
+//        return view('livewire.cms2.leed.leed-comment-add2504');
     }
 }
