@@ -1,5 +1,5 @@
 <div>
-    <div class="h-[95px] overflow-y-auto p-2">
+    <div class="h-[300px] overflow-y-auto p-2">
         @foreach($items as $c )
             <div class=" hover:bg-gray-200 p-1 text-sm" style="border-bottom: solid #efefef 1px;">
                 <span class="text-black/50 float-right">

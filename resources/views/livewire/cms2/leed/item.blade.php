@@ -14,11 +14,11 @@
 
         <div class="flex-1">
 
-{{--            <div>--}}
-{{--            111--}}
-{{--            <pre class="text-xs" >{{ print_r($leed,true) }}</pre>--}}
-{{--222--}}
-{{--            </div>--}}
+            {{--            <div>--}}
+            {{--            111--}}
+            {{--            <pre class="text-xs" >{{ print_r($leed,true) }}</pre>--}}
+            {{--222--}}
+            {{--            </div>--}}
 
             <livewire:Cms2.App.Breadcrumb
                 :board_id="$leed->column->board_id"
@@ -74,10 +74,10 @@
                     <livewire:cms2.leed.move :leed="$leed" :board_id="$leed->column->board->id"/>
                 @endif
 
-                    {{--            </div>--}}
-                    {{--            <b>{{ $leed->name }} тел: {{ $leed->phone }}</b>--}}
-                    {{--        </div>--}}
-                    {{--        <div class="p-2 flex-1">--}}
+                {{--            </div>--}}
+                {{--            <b>{{ $leed->name }} тел: {{ $leed->phone }}</b>--}}
+                {{--        </div>--}}
+                {{--        <div class="p-2 flex-1">--}}
             </div>
         </div>
 
@@ -131,7 +131,7 @@
 
         <div class="flex flex-col w-full md:w-1/3 space-y-2">
             {{--задачи--}}
-            <div class="bg-white border-2 border-gray-400  h-[800px] w-full rounded-md">
+            <div class="bg-white border-2 border-gray-400  h-[700px] w-full rounded-md">
                 <livewire:cms2.leed.item-order :leed_record_id="$leed->id" wire:lazy/>
             </div>
         </div>

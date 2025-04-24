@@ -4,6 +4,7 @@ namespace App\Livewire\Cms2\Leed;
 
 
 use App\Http\Controllers\LeedChangeUserController;
+use App\Models\BoardFieldSetting;
 use App\Models\ClientSupplier;
 use App\Models\Client;
 use App\Models\Order;
@@ -27,6 +28,15 @@ class AddLeedFormSimple extends Component
     public $order_product_types_id;
     public $budget;
 //    public $board_id;
+//[0] => name
+    public $platform;
+    public $base_number;
+//[3] => budget
+    public $link;
+    public $customer;
+    public $submit_before;
+    public $payment_due_date;
+
 
     public $order = [];
 
@@ -40,7 +50,7 @@ class AddLeedFormSimple extends Component
     public function orderChildInputUpdated($val)
     {
         $this->order[$val['name']] = $val['value'];
-        Log::info('order',$this->order);
+        Log::info('order', $this->order);
     }
 
 
@@ -69,12 +79,28 @@ class AddLeedFormSimple extends Component
 //                'comment' => 'nullable|string|max:1000',
 //                'client_supplier_id' => 'nullable|exists:client_suppliers,id', // Валидация для поля client_supplier_id
             ]);
-            dd( $e );
+            dd($e);
             Order::all();
         } catch (\Exception $ex) {
             dd($ex->getMessage());
         }
     }
+
+
+// Вспомогательный метод для получения отсортированных полей
+    private function getAllowedFields()
+    {
+        $boardId = $this->column->board_id;
+        $fields = BoardFieldSetting::where('board_id', $boardId)
+            ->where('is_enabled', true)
+            ->orderBy('sort_order', 'desc')
+            ->get()
+            ->pluck('field_name') // Возвращаем только имена полей
+            ->toArray();
+
+        return $fields; // Массив разрешенных имен полей
+    }
+
 
     public function addLeedRecord()
     {
@@ -94,20 +120,41 @@ class AddLeedFormSimple extends Component
 
         $user_id = Auth::id();
 
-        // Создание новой записи в базе данных
-        $leadRecord = LeedRecord::create([
-            'name' => $this->name,
-            'phone' => $this->phone,
-//            'company' => $this->company,
-            'fio' => $this->fio,
-            'comment' => $this->comment,
+        $in = [
+            'name' => $this->name ?? '',
+//    'phone' => $this->phone,
+////            'company' => $this->company,
+//    'fio' => $this->fio,
+//    'comment' => $this->comment,
             'leed_column_id' => $this->column->id,
-            // источник
-            'client_supplier_id' => $this->client_supplier_id,
-            'budget' => $this->budget,
-            'order_product_types_id' => $this->order_product_types_id,
+//    // источник
+//    'client_supplier_id' => $this->client_supplier_id,
+//    'budget' => $this->budget,
+//    'order_product_types_id' => $this->order_product_types_id,
             'user_id' => $user_id,
-        ]);
+        ];
+
+        $polya = $this->getAllowedFields();
+        //dd($polya);
+
+        foreach ($polya as $v) {
+            if ($this->$v)
+                $in[$v] = $this->$v; //dd($this->$v
+        }
+
+//        dd($in);
+
+//        [0] => name
+//    [1] => platform
+//    [2] => base_number
+//    [3] => budget
+//    [4] => link
+//    [5] => customer
+//    [6] => submit_before
+//    [7] => payment_due_date
+
+        // Создание новой записи в базе данных
+        $leadRecord = LeedRecord::create($in);
 
         $us = User::find($user_id);
 //        dd([$us,$this->leed->toArray()]);
@@ -131,7 +178,7 @@ class AddLeedFormSimple extends Component
 
         // Эмитируем событие на другой компонент
 //        $this->dispatch('refreshLeedBoardComponent');
-        return $this->redirectRoute('leed',['board_id'=>$this->column->board_id]);
+        return $this->redirectRoute('leed', ['board_id' => $this->column->board_id]);
     }
 
     public function render()
@@ -139,12 +186,16 @@ class AddLeedFormSimple extends Component
         // Получаем список поставщиков из модели ClientSupplier
         $suppliers = ClientSupplier::all();
         $clients = Client::orderBy('name_f')->get();
-        $types = OrderProductType::orderBy('order','asc')->get();
+        $types = OrderProductType::orderBy('order', 'asc')->get();
+
+        // 1. Получаем разрешенные поля из конфига
+        $allowedFields = $this->getAllowedFields();
 
         return view('livewire.cms2.leed.add-leed-form-simple', [
             'suppliers' => $suppliers,
             'clients' => $clients,
             'types' => $types,
+            'allowedFields' => $allowedFields, // Передаем в шаблон
         ]);
     }
 }

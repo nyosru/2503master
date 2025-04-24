@@ -22,25 +22,26 @@
 
 
         <div class="flex flex-col">
-        <div class="flex items-center py-2 border-b border-gray-200 font-bold bg-gray-200">
-            <div class="flex-1 pl-2">
-                Доска
-            </div>
-            <div class="w-1/4 text-center">
-                Ячейка 1
-            </div>
-            <div class="w-1/4 text-center">
-                Ячейка 2
-            </div>
-            <div class="w-1/4 text-center">
-                Ячейка 3
-            </div>
-        </div>
+{{--        <div class="flex items-center py-2 border-b border-gray-200 font-bold bg-gray-200">--}}
+{{--            <div class="flex-1 pl-2">--}}
+{{--                Доска--}}
+{{--            </div>--}}
+{{--            <div class="w-1/4 text-center">--}}
+{{--                Ваша Роль (войти)--}}
+{{--            </div>--}}
+{{--            <div class="w-1/4 text-center">--}}
+{{--                ---}}
+{{--            </div>--}}
+{{--            <div class="w-1/4 text-center">--}}
+{{--                ---}}
+{{--            </div>--}}
+{{--        </div>--}}
         @foreach ($boards as $index => $board)
-            <div class="flex items-center py-2 border-b border-gray-200 hover:bg-white
+            <div class="flex items-center py-5 border-b border-gray-200 hover:bg-white
              {{ $index % 2 != 0 ? 'bg-gray-200' : '' }}
             ">
-                <div class="flex-1 pl-2">
+                <div class="text-lg font-bold
+                 flex-1 pl-2">
 {{--                    <a href="{{ route('leed',['board_id'=>$board->id]) }}"--}}
 {{--                       class="text-blue-700 hover:underline"--}}
 {{--                    >--}}
@@ -52,14 +53,22 @@
                     @if(!empty($board->boardUsers) )
                         @foreach($board->boardUsers as $ba )
 {{--                        {{$board->boardUsers[0]['role']['name']}}--}}
-                        {{$ba['role']['name']}}
                             <a href="{{ route('leed.goto',[
                                 'board_id'=>$board->id,
                                 'role_id'=>$ba->role->id
                                 ]) }}"
-                               class="text-blue-700 hover:underline"
-                            >войти</a>
-                        <Br/>
+                               class="text-blue-700
+{{--                               hover:underline--}}
+                               bg-blue-100
+                               hover:bg-blue-200
+                               m-1 py-1 px-2
+                               border border-bottom-3 border-black
+                               rounded"
+                            >
+                            {{$ba['role']['name']}}
+{{--                            войти--}}
+                            </a>
+{{--                        <Br/>--}}
                         @endforeach
                     @endif
 {{--                  Ячейка 1--}}

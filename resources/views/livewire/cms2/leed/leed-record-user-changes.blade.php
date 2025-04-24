@@ -4,7 +4,7 @@
         <span class="font-bold">Ответсвенный за лид</span>
     </div>
 
-    <div class="w-full text-sm h-[95px] overflow-auto flex flex-col space-y-1">
+    <div class="w-full text-sm max-h-[300px] overflow-auto flex flex-col space-y-1">
         {{--                    <pre>{{ print_r($leed->toArray()) }}</pre>--}}
 
         @if( $leed->userChanges  )

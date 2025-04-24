@@ -1,13 +1,13 @@
 <div>
 
 
-{{--    name {{$user->currentBoard->name ?? 'x' }}<br/>--}}
-{{--    id {{$user->currentBoard->id ?? 'x' }}<br/>--}}
+    {{--    name {{$user->currentBoard->name ?? 'x' }}<br/>--}}
+    {{--    id {{$user->currentBoard->id ?? 'x' }}<br/>--}}
 
-{{--    <pre class="text-xs">{{ print_R($user->toArray()) }}</pre>--}}
-{{--    <pre class="text-xs">{{ print_R($user->roles[0]['name'],true) }}</pre>--}}
+    {{--    <pre class="text-xs">{{ print_R($user->toArray()) }}</pre>--}}
+    {{--    <pre class="text-xs">{{ print_R($user->roles[0]['name'],true) }}</pre>--}}
 
-@if( empty(auth()->user()->phone_number) )
+    @if( empty(auth()->user()->phone_number) )
 
         <div class="block p-3 text-left bg-gradient-to-br from-yellow-200 to-yellow-100
 {{--            w-full --}}
@@ -30,7 +30,6 @@
         {{--        @if( empty(auth()->user()->phone_number) )--}}
     @else
 
-
         <div class="flex flex-col xspace-y-4">
             {{--<div>--}}
             {{--                <pre style="max-height: 150px; overflow: auto;" >{{ print_r($columns) }}</pre>--}}
@@ -50,9 +49,9 @@
             {{--шапка над доской--}}
             <div class="app-content-header"> <!--begin::Container-->
                 <div class="container-fluid"> <!--begin::Row-->
-                    <div class="flex flex-row space-x-4">
+                    <div class="flex flex-row space-x-4 w-full">
                         @if(1==1)
-                            <div>
+                            <div class="flex-1">
                                 <livewire:Cms2.App.Breadcrumb
                                     :board_id="$board_id"
                                     :menu="[
@@ -68,7 +67,13 @@
                             </div>
                         @endif
 
-                        <div>
+                        <div class="flex-1">
+
+                            <span class="float-right">
+                                @permission('р.Лиды / доска конфиг')
+                                <a href="{{ route('board.config',['board'=>$board_id ]) }}">конфиг доски</a>
+                                @endpermission
+                            </span>
 
                             <!-- Сообщение об успехе -->
                             @if (session()->has('message'))
@@ -134,11 +139,11 @@
                 </div> <!--end::Container-->
             </div> <!--end::App Content Header--> <!--begin::App Content-->
 
-{{--            columns--}}
-{{--                        <pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>--}}
+            {{--            columns--}}
+            {{--                        <pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>--}}
 
             @if(1==2)
-            <livewire:cms2.leed.select-board-form :user="$user"/>
+                <livewire:cms2.leed.select-board-form :user="$user"/>
             @endif
 
             @if( empty($user->current_board_id) )
@@ -295,7 +300,8 @@ bg-white border rounded relative"
                                     @if($column->can_create)
                                         @permission('р.Лиды / добавить лида')
                                         <li>
-                                            <livewire:Cms2.Leed.AddLeedFormSimple :key="'add'.$column->id" :column="$column"/>
+                                            <livewire:Cms2.Leed.AddLeedFormSimple :key="'add'.$column->id"
+                                                                                  :column="$column"/>
                                         </li>
                                         @endpermission
                                     @endif
@@ -390,10 +396,9 @@ hover:shadow-lg transition-all border rounded cursor-pointer">
 
 
                                                         {{--<pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($record->toArray(),true) }}</pre>--}}
-{{--                                                        <pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($column->toArray(),true) }}</pre>--}}
+                                                        {{--                                                        <pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($column->toArray(),true) }}</pre>--}}
 
                                                         <div class="py-2 text-center">
-
 
 
                                                             @if( !empty($record->name) )

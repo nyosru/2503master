@@ -10,6 +10,7 @@ use Livewire\Component;
 
 class LeedRecordInfoForm extends Component
 {
+    public $board_id;
     public $leed;
     public $isEditing = true;
 

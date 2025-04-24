@@ -37,6 +37,13 @@ class Item extends Component
                 $query->with([
                     'board' => function ($query) {
                         $query->select('id','name');
+                        $query->with([
+                            'fieldSettings'=> function ($q2) {
+                                $q2->orderBy('sort_order','DESC');
+                                $q2->whereIsEnabled(true);
+                                $q2->select('board_id','field_name','is_enabled','show_on_start');
+                            }
+                        ]);
                     }
                 ]);
             },

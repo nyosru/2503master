@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Board extends Model
@@ -55,5 +56,13 @@ class Board extends Model
         return $this->hasMany(LeedColumn::class);
     }
 
+    /**
+     * конфиг полей для показа в лидах
+     * @return HasMany
+     */
+    public function fieldSettings(): HasMany
+    {
+        return $this->hasMany(BoardFieldSetting::class);
+    }
 
 }

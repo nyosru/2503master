@@ -1,6 +1,8 @@
 <div class="xinline flex flex-col xw-[90%] px-2 xfloat-right"
     {{--     style="z-index: 50;"--}}
 >
+
+
     <div class="text-center">
         <!-- Кнопка для открытия модального окна -->
         <button wire:click="toggleForm" class="xw-full xbg-blue-400 py-0 px-4 rounded-xl" title="Добавить Лид">
@@ -23,11 +25,12 @@
     <!-- Модальное окно -->
     @if ($isFormVisible)
         <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-        style="z-index: 100"
+             style="z-index: 100"
         >
 
             <form wire:submit.prevent="addLeedRecord">
                 <div class="flex flex-col bg-white rounded-lg overflow-hidden shadow-lg xp-3 w-[400px]">
+
                     <div class="bg-gray-200 mb-2 shadow">
                         <a href="#" title="закрыть" wire:click.prevent="$set('isFormVisible', false)"
                            class="py-2 pr-4 float-right">x
@@ -35,72 +38,122 @@
                         <h2 class="text-lg font-semibold px-3 py-1">Новый Лид</h2>
                     </div>
 
-                    <div class="w-full px-3 ">
-                        <label for="name" class="block text-gray-700 text-sm">
-                            Название
-                        </label>
-                        <input type="text" wire:model="name" id="name"
-                               class="block mb-2 p-2 border rounded w-full">
+                    <div class="w-full px-3 max-h-[70vh] overflow-auto" id="add-leed-form-simple">
 
-                        <label for="fio" class="block text-gray-700 text-sm">
-                            ФИО
-                        </label>
-                        <input type="text" wire:model="fio" id="fio"
-                               class="block mb-2 p-2 border rounded w-full">
+{{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($allowedFields) }}</pre>--}}
 
-                        <label for="phone" class="block text-gray-700 text-sm">
-                            Телефон
-                        </label>
-                        <input type="text" wire:model="phone" id="phone"
-                               class="block mb-2 p-2 border rounded w-full">
-                        {{--                    <input type="text" wire:model="telegram" placeholder="Телеграм" class="block mb-2 p-2 border rounded w-full">--}}
-                        {{--                    <input type="text" wire:model="whatsapp" placeholder="WhatsApp" class="block mb-2 p-2 border rounded w-full">--}}
+                        @foreach($allowedFields as $field)
 
+                            <label for="{{ $field }}" class="block text-gray-700 text-sm">
+                                @if( $field == 'name' )
+                                    Название
+                                @elseif( $field == 'platform')
+                                    Платформа
+                                @elseif( $field == 'base_number')
+                                    Номер тендера
+                                @elseif( $field == 'budget')
+                                    Цена
+                                @elseif( $field == 'link')
+                                    Ссылка
+                                @elseif( $field == 'customer')
+                                    Заказчик
+                                @elseif( $field == 'submit_before')
+                                    отправить до
+                                @elseif( $field == 'payment_due_date')
+                                    оплата после
+                                @else
+                                    {{$field}}
+                                @endif
+                            </label>
 
-                        <label class="block text-gray-700 text-sm">
-                            Изделие:
+                            <input
+{{--                                @if( $field == 'name' || $field == 'platform'|| $field == 'link'|| $field == 'customer')--}}
+{{--                                    type="text"--}}
+                                @if( $field == 'base_number' ||  $field == 'budget')
+                                    type="number"
+                                @elseif( $field == 'submit_before' || $field == 'payment_due_date')
+                                    type="date"
+                                @else
+                                    type="text"
+                                @endif
+                                wire:model="{{ $field }}" id="{{ $field }}"
+                                class="block mb-2 p-2 border rounded w-full">
 
+                        @endforeach
 
-                            <select wire:model="order_product_types_id" class="block mb-2 p-2 border rounded w-full">
-                                <option value="" selected>---</option>
-                                @foreach ($types as $t)
-                                    <option value="{{ $t->id }}">{{ $t->name }}</option>
-                                @endforeach
-                            </select>
-                        </label>
+                        @if(1==2)
+                            <br/>                        -----------
+                            <br/>                        -----------
+                            <br/>                        -----------
+                            <br/>                        -----------
 
-                        {{--                        <label class="block text-gray-700 text-sm">--}}
-                        {{--                            Компания--}}
-                        {{--                            <input type="text" wire:model="company" id="company" placeholder="Компания"--}}
-                        {{--                                   class="block mb-2 p-2 border rounded w-full">--}}
-                        {{--                        </label>--}}
-
-                        <label class="block text-gray-700 text-sm">
-                            Бюджет
-                            <input type="number" wire:model="budget" id="budget" placeholder=""
+                            <label for="name" class="block text-gray-700 text-sm">
+                                Название
+                            </label>
+                            <input type="text" wire:model="name" id="name"
                                    class="block mb-2 p-2 border rounded w-full">
-                        </label>
 
-                        <!-- Выпадающий список для выбора поставщика -->
+                            <label for="fio" class="block text-gray-700 text-sm">
+                                ФИО
+                            </label>
+                            <input type="text" wire:model="fio" id="fio"
+                                   class="block mb-2 p-2 border rounded w-full">
 
-                        <label for="comment" class="block text-gray-700 text-sm">
-                            Источник:
-                            <select wire:model="client_supplier_id" class="block mb-2 p-2 border rounded w-full">
-                                <option value="" selected>-- нет --</option>
-                                @foreach ($suppliers as $supplier)
-                                    <option
-                                        value="{{ $supplier->id }}">{{ $supplier->title }} {{ $supplier->name ?? '' }} {{ $supplier->phone ?? '' }}</option>
-                                @endforeach
-                            </select>
-                        </label>
+                            <label for="phone" class="block text-gray-700 text-sm">
+                                Телефон
+                            </label>
+                            <input type="text" wire:model="phone" id="phone"
+                                   class="block mb-2 p-2 border rounded w-full">
+                            {{--                    <input type="text" wire:model="telegram" placeholder="Телеграм" class="block mb-2 p-2 border rounded w-full">--}}
+                            {{--                    <input type="text" wire:model="whatsapp" placeholder="WhatsApp" class="block mb-2 p-2 border rounded w-full">--}}
 
-                        <label for="comment" class="block text-gray-700 text-sm">
-                            Комментарий
-                        </label>
 
-                        <textarea wire:model="comment" id="comment"
-                                  class="block mb-2 p-2 border rounded w-full"></textarea>
+                            <label class="block text-gray-700 text-sm">
+                                Изделие:
 
+
+                                <select wire:model="order_product_types_id"
+                                        class="block mb-2 p-2 border rounded w-full">
+                                    <option value="" selected>---</option>
+                                    @foreach ($types as $t)
+                                        <option value="{{ $t->id }}">{{ $t->name }}</option>
+                                    @endforeach
+                                </select>
+                            </label>
+
+                            {{--                        <label class="block text-gray-700 text-sm">--}}
+                            {{--                            Компания--}}
+                            {{--                            <input type="text" wire:model="company" id="company" placeholder="Компания"--}}
+                            {{--                                   class="block mb-2 p-2 border rounded w-full">--}}
+                            {{--                        </label>--}}
+
+                            <label class="block text-gray-700 text-sm">
+                                Бюджет
+                                <input type="number" wire:model="budget" id="budget" placeholder=""
+                                       class="block mb-2 p-2 border rounded w-full">
+                            </label>
+
+                            <!-- Выпадающий список для выбора поставщика -->
+
+                            <label for="comment" class="block text-gray-700 text-sm">
+                                Источник:
+                                <select wire:model="client_supplier_id" class="block mb-2 p-2 border rounded w-full">
+                                    <option value="" selected>-- нет --</option>
+                                    @foreach ($suppliers as $supplier)
+                                        <option
+                                            value="{{ $supplier->id }}">{{ $supplier->title }} {{ $supplier->name ?? '' }} {{ $supplier->phone ?? '' }}</option>
+                                    @endforeach
+                                </select>
+                            </label>
+
+                            <label for="comment" class="block text-gray-700 text-sm">
+                                Комментарий
+                            </label>
+
+                            <textarea wire:model="comment" id="comment"
+                                      class="block mb-2 p-2 border rounded w-full"></textarea>
+
+                        @endif
 
                     </div>
                     @if(1==2)

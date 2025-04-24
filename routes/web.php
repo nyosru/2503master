@@ -137,6 +137,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('leed/{board_id}', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leed');
 
+    Route::get('leed/{board}/config', \App\Livewire\Board\ConfigComponent::class)->name('board.config');
+
     Route::get('leed/{board_id}/{id}', \App\Livewire\Cms2\Leed\Item::class)->name('leed.item');
 
 //        Route::get('/leed/{id}', \App\Livewire\Cms2\ClientsInfo::class)->name('clients.info');

@@ -4,55 +4,64 @@
         <span class="font-bold">Лид</span>
     </div>
 
-    {{--    <pre>{{ print_r($leed) }}</pre>--}}
+{{--        <pre class="text-xs">{{ print_r($leed->toArray()) }}</pre>--}}
 
     <form wire:submit="saveChanges">
 
         <div class="px-2">
             <div class="flex flex-col pt-2">
-                @foreach(['name', 'fio', 'phone','order_product_types_id','budget', 'client_supplier_id',
-                    //'company',
-                    'comment'] as $key)
+
+{{--                <pre class="text-xs">{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>--}}
+
+
+
+{{--                @foreach(['name', 'fio', 'phone','order_product_types_id','budget', 'client_supplier_id',--}}
+{{--                    //'company',--}}
+{{--                    'comment'] as $key)--}}
+                @foreach( $leed->column->board->fieldSettings as $key)
+{{--                    @if(!$key->is_enabled)--}}
+{{--                        @continue--}}
+{{--                        @endif--}}
                     {{--                    @if($leed->{$key} !== null)--}}
                     <div class="py-1">
-                        <label for="{{ $key }}" class="block text-sm font-medium text-gray-700">
-                            @if($key === 'name')
+                        <label for="{{ $key->field_name }}" class="block text-sm font-medium text-gray-700">
+                            @if($key->field_name === 'name')
                                 Название
 {{--                                <sup>(техническое для себя)</sup>--}}
-                            @elseif($key === 'comment')
+                            @elseif($key->field_name === 'comment')
                                 Комментарий
-                            @elseif($key === 'company')
+                            @elseif($key->field_name === 'company')
                                 Компания
-                            @elseif($key === 'budget')
+                            @elseif($key->field_name === 'budget')
                                 Бюджет
-                            @elseif($key === 'fio')
+                            @elseif($key->field_name === 'fio')
                                 ФИО
-                            @elseif($key === 'phone')
+                            @elseif($key->field_name === 'phone')
                                 Тел
-                            @elseif($key === 'client_supplier_id')
+                            @elseif($key->field_name === 'client_supplier_id')
                                 Источник лида
-                            @elseif($key === 'client_supplier_id')
+                            @elseif($key->field_name === 'client_supplier_id')
                                 Источник лида
-                            @elseif($key === 'order_product_types_id')
+                            @elseif($key->field_name === 'order_product_types_id')
                                 Тип изделия
                             @else
-                                {{ ucfirst($key) }}
+                                {{ ucfirst($key->field_name) }}
                             @endif
                         </label>
 
                         @if($isEditing)
-                            @if($key === 'comment')
+                            @if($key->field_name === 'comment')
                                 <textarea wire:model="{{ $key }}" id="{{ $key }}"
                                           class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
                                           rows="3"></textarea>
-                            @elseif($key === 'client_supplier_id')
+                            @elseif($key->field_name === 'client_supplier_id')
                                 <select class="rounded w-full" wire:model="{{ $key }}">
                                     <option value="">--</option>
                                     @foreach( $suppliers as $s )
                                         <option value="{{ $s->id }}">{{ $s->title }}</option>
                                     @endforeach
                                 </select>
-                            @elseif($key === 'order_product_types_id')
+                            @elseif($key->field_name === 'order_product_types_id')
                                 <select class="rounded w-full" wire:model="{{ $key }}">
                                     <option value="">--</option>
                                     @foreach( $types as $s )
@@ -60,13 +69,13 @@
                                     @endforeach
                                 </select>
                             @else
-                                <input type="text" wire:model="{{ $key }}" id="{{ $key }}"
+                                <input type="text" wire:model="{{ $key->field_name }}" id="{{ $key->field_name }}"
                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md">
                             @endif
                         @else
-                            <p class="mt-1">{{ $leed->{$key} }}</p>
+                            <p class="mt-1">{{ $leed->{$key->field_name} }}</p>
                         @endif
-                        @error($key)
+                        @error($key->field_name)
                         <div class="mt-2 text-sm text-red-500">{{ $message }}</div>
                         @enderror
                     </div>
@@ -105,6 +114,7 @@
                 @endif
 
             @endif
+
         </div>
 
         <div class="text-right py-3 bg-gray-200 px-2">
