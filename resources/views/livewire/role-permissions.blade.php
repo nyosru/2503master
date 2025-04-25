@@ -105,7 +105,8 @@
                             <div class="flex justify-between items-center"
                                 {{--                                 style="z-index: 500;"--}}
                             >
-                                <span>{{ $role->name }}</span>
+{{--                                <pre>{{ print_r( $role->toArray() ) }}</pre>--}}
+                                <span>{{ $role->name }} <sup title="доска: {{ $role->board_id }}">д:{{ $role->board_id }}</sup></span>
                                 @can('р.Права доступа / CRUD роли')
                                     <button
                                         wire:click="confirmDelete({{ $role->id }})"
@@ -148,7 +149,9 @@
     </div>
 
 {{--    @can('р.Права доступа / CRUD роли')--}}
-        <livewire:role-permissions-manager/>
+        <livewire:role-permissions-manager
+{{--            :board_id="$board_id" --}}
+        />
 {{--    @endcan--}}
 
     <!-- Добавляем компонент подтверждения -->

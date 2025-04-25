@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('board_field_settings', function (Blueprint $table) {
             $table->unsignedTinyInteger('sort_order')->nullable()->default(0)->comment('Порядок сортировки');
+            $table->string('name')->nullable()->comment('Название поля');
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('board_field_settings', function (Blueprint $table) {
             $table->dropColumn('sort_order');
+            $table->dropColumn('name');
         });
     }
 };

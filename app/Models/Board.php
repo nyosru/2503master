@@ -65,4 +65,10 @@ class Board extends Model
         return $this->hasMany(BoardFieldSetting::class);
     }
 
+
+    public function roles(): HasMany
+    {
+        return $this->hasMany(Role::class);
+    }
+
 }

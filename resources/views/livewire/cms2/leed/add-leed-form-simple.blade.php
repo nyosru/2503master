@@ -44,39 +44,51 @@
 
                         @foreach($allowedFields as $field)
 
-                            <label for="{{ $field }}" class="block text-gray-700 text-sm">
-                                @if( $field == 'name' )
+                            <label for="{{ $field['field_name'] }}" class="block text-gray-700 text-sm">
+                                @if( $field['field_name'] == 'name' )
                                     Название
-                                @elseif( $field == 'platform')
+                                @elseif( $field['field_name'] == 'fio' || $field['field_name'] == 'fio2')
+                                    ФИО
+                                @elseif( $field['field_name'] == 'platform')
                                     Платформа
-                                @elseif( $field == 'base_number')
-                                    Номер тендера
-                                @elseif( $field == 'budget')
+                                @elseif( $field['field_name'] == 'base_number')
+                                    Номер
+                                @elseif( $field['field_name'] == 'budget')
                                     Цена
-                                @elseif( $field == 'link')
+                                @elseif( $field['field_name'] == 'link')
                                     Ссылка
-                                @elseif( $field == 'customer')
+                                @elseif( $field['field_name'] == 'customer')
                                     Заказчик
-                                @elseif( $field == 'submit_before')
+                                @elseif( $field['field_name'] == 'submit_before')
                                     отправить до
-                                @elseif( $field == 'payment_due_date')
+                                @elseif( $field['field_name'] == 'pay_day_every_year')
+                                    Оплата каждый год
+                                @elseif( $field['field_name'] == 'date_start')
+                                    Дата старта
+                                @elseif( $field['field_name'] == 'pay_day_every_month')
+                                    День оплаты, каждый месяц
+                                @elseif( $field['field_name'] == 'payment_due_date')
                                     оплата после
                                 @else
-                                    {{$field}}
+                                    {{$field['field_name']}}
                                 @endif
                             </label>
 
                             <input
 {{--                                @if( $field == 'name' || $field == 'platform'|| $field == 'link'|| $field == 'customer')--}}
 {{--                                    type="text"--}}
-                                @if( $field == 'base_number' ||  $field == 'budget')
+                                @if( $field['field_name'] == 'base_number' ||  $field['field_name'] == 'budget'||  $field['field_name'] == 'price')
                                     type="number"
-                                @elseif( $field == 'submit_before' || $field == 'payment_due_date')
+                                @elseif( $field['field_name'] == 'pay_day_every_month' )
+                                    type="number" min="1" max="31"
+                                @elseif( $field['field_name'] == 'submit_before' || $field['field_name'] == 'payment_due_date'
+                                || $field['field_name'] =='date_start'
+                                || $field['field_name'] =='pay_day_every_year' )
                                     type="date"
                                 @else
                                     type="text"
                                 @endif
-                                wire:model="{{ $field }}" id="{{ $field }}"
+                                wire:model="{{ $field['field_name'] }}" id="{{ $field['field_name'] }}"
                                 class="block mb-2 p-2 border rounded w-full">
 
                         @endforeach

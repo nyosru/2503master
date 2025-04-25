@@ -24,6 +24,14 @@ class AddLeedFormSimple extends Component
     public $isFormVisible = false; // Состояние для отображения/скрытия формы
     public $name, $phone, $telegram, $whatsapp, $fio, $comment; // Переменные для формы
     public $client_supplier_id; // Переменная для ID поставщика
+
+    public $fio2;
+    public $phone2;
+    public $cooperativ;
+    public $price;
+    public $date_start;
+
+
     public $client_id;
     public $order_product_types_id;
     public $budget;
@@ -34,8 +42,12 @@ class AddLeedFormSimple extends Component
 //[3] => budget
     public $link;
     public $customer;
+
     public $submit_before;
     public $payment_due_date;
+
+    public $pay_day_every_year;
+    public $pay_day_every_month;
 
 
     public $order = [];
@@ -95,8 +107,9 @@ class AddLeedFormSimple extends Component
             ->where('is_enabled', true)
             ->orderBy('sort_order', 'desc')
             ->get()
-            ->pluck('field_name') // Возвращаем только имена полей
-            ->toArray();
+//            ->pluck('field_name') // Возвращаем только имена полей
+//            ->toArray()
+        ;
 
         return $fields; // Массив разрешенных имен полей
     }
@@ -121,7 +134,7 @@ class AddLeedFormSimple extends Component
         $user_id = Auth::id();
 
         $in = [
-            'name' => $this->name ?? '',
+//            'name' => $this->name ?? '',
 //    'phone' => $this->phone,
 ////            'company' => $this->company,
 //    'fio' => $this->fio,
@@ -138,8 +151,9 @@ class AddLeedFormSimple extends Component
         //dd($polya);
 
         foreach ($polya as $v) {
-            if ($this->$v)
-                $in[$v] = $this->$v; //dd($this->$v
+//            dd($v);
+//            if ( isset($this->{$v['field_name']} ))
+                $in[$v['field_name']] = $this->{$v['field_name']}; //dd($this->$v
         }
 
 //        dd($in);
@@ -167,7 +181,16 @@ class AddLeedFormSimple extends Component
         ]);
 
         // Очистка полей после добавления
-        $this->reset(['name', 'phone', 'telegram', 'whatsapp', 'fio', 'comment', 'client_supplier_id']);
+        $this->reset([
+            'name', 'phone',
+            'telegram', 'whatsapp', 'fio', 'comment', 'client_supplier_id',
+    'fio2',
+    'phone2',
+    'cooperativ',
+    'price',
+    'date_start',
+
+        ]);
 
 
         // Закрыть форму после добавления

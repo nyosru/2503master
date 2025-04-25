@@ -18,20 +18,37 @@ class BoardController extends Controller
     public static function getPolyaConfig()
     {
         self::$polya_config[] = ['pole' => 'name', 'name' => 'Название'];
-        self::$polya_config[] = ['pole' => 'phone', 'name' => 'Телефон'];
-        self::$polya_config[] = ['pole' => 'telegram', 'name' => 'Телеграм id'];
-        self::$polya_config[] = ['pole' => 'whatsapp', 'name' => 'WatsApp id'];
         self::$polya_config[] = ['pole' => 'company', 'name' => 'Компания'];
-        self::$polya_config[] = ['pole' => 'comment', 'name' => 'Коомментарий'];
-        self::$polya_config[] = ['pole' => 'budget', 'name' => 'Бюджет'];
-        self::$polya_config[] = ['pole' => 'order_product_types_id', 'name' => 'тип продукта'];
-        self::$polya_config[] = ['pole' => 'fio', 'name' => 'ФИО'];
+
+        self::$polya_config[] = ['pole' => 'cooperativ', 'name' => 'Кооператив'];
+
         self::$polya_config[] = ['pole' => 'platform', 'name' => 'Платформа'];
         self::$polya_config[] = ['pole' => 'link', 'name' => 'Ссылка'];
-        self::$polya_config[] = ['pole' => 'base_number', 'name' => 'номер'];
-        self::$polya_config[] = ['pole' => 'customer', 'name' => ''];
-        self::$polya_config[] = ['pole' => 'payment_due_date', 'name' => 'дата после оплаты'];
+
+        self::$polya_config[] = ['pole' => 'base_number', 'name' => 'Номер'];
+
+        self::$polya_config[] = ['pole' => 'fio', 'name' => 'ФИО'];
+        self::$polya_config[] = ['pole' => 'phone', 'name' => 'Телефон'];
+
+        self::$polya_config[] = ['pole' => 'fio2', 'name' => 'ФИО2'];
+        self::$polya_config[] = ['pole' => 'phone2', 'name' => 'Телефон2'];
+
+        self::$polya_config[] = ['pole' => 'telegram', 'name' => 'Телеграм id'];
+        self::$polya_config[] = ['pole' => 'whatsapp', 'name' => 'WatsApp id'];
+
+        self::$polya_config[] = ['pole' => 'date_start', 'name' => 'Дата старта'];
+        self::$polya_config[] = ['pole' => 'comment', 'name' => 'Комментарий'];
+
+        self::$polya_config[] = ['pole' => 'budget', 'name' => 'Бюджет'];
+        self::$polya_config[] = ['pole' => 'price', 'name' => 'Цена'];
+
+        self::$polya_config[] = ['pole' => 'order_product_types_id', 'name' => 'Тип продукта'];
+        self::$polya_config[] = ['pole' => 'customer', 'name' => 'Пользователь'];
+        self::$polya_config[] = ['pole' => 'payment_due_date', 'name' => 'Дата после оплаты'];
         self::$polya_config[] = ['pole' => 'submit_before', 'name' => 'Подать до'];
+
+        self::$polya_config[] = ['pole' => 'pay_day_every_year', 'name' => 'Оплата ежегодно'];
+        self::$polya_config[] = ['pole' => 'pay_day_every_month', 'name' => 'Оплата ежемесячно'];
 
         return self::$polya_config;
 

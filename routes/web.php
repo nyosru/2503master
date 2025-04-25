@@ -154,6 +154,7 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('/roles', \App\Livewire\RolePermissions::class)
                 ->name('role_permission');
+
             Route::middleware('check.permission:тех.Управление столбцами')->group(function () {
                 Route::get('adm_role_column', \App\Livewire\RoleColumnAccess::class)->name('adm_role_column');
             });

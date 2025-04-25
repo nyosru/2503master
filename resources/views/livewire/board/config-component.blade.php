@@ -20,13 +20,15 @@
                         ]"/>
     </div>
 
+    <livewire:board.field-settings :boardId="$board->id" />
+
+
 {{--    <pre class="text-xs">{{ print_r($board) }}</pre>--}}
 {{--    <pre class="text-xs">{{ print_r($cfg_polya) }}</pre>--}}
 {{--    $cfg_polya_data--}}
 {{--    <pre class="text-xs">{{ print_r($cfg_polya_data->toArray()) }}</pre>--}}
 
 
-    <livewire:board.field-settings :boardId="$board->id" />
 
 {{--<hr>--}}
 {{--<hr>--}}

@@ -33,7 +33,7 @@
             <tbody>
             @foreach($settings as $field )
                 {{--            <livewire:field-settings-item :field="$field" />--}}
-                {{--        <pre>{{ print_r($field,1) }}</pre>--}}
+{{--                        <pre>{{ print_r($field,1) }}</pre>--}}
 
                 @if(1==1)
                     <livewire:board.field-settings-item

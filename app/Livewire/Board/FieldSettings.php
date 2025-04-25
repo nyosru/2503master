@@ -30,7 +30,8 @@ class FieldSettings extends Component
 
 //        $polyaConfig = BoardController::getPolyaConfig();
         $availableFields = BoardController::getPolyaConfig();
-        $bfs = BoardFieldSetting::all();
+        $bfs = BoardFieldSetting::whereBoardId($this->boardId)
+            ->orderBy('sort_order','DESC')->get();
 
 
         foreach ($availableFields as $a) {

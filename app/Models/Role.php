@@ -18,8 +18,14 @@ class Role extends SpatieRole
      */
     protected $fillable = [
         'name',
-        'guard_name'
+        'guard_name',
+        'board_id'
     ];
+
+    public function board()
+    {
+        return $this->belongsTo(Board::class);
+    }
 
 
     /**

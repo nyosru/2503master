@@ -20,8 +20,18 @@ class RolePermissions extends Component
     public function mount()
     {
         // Загружаем роли и разрешения
-        $this->roles = Role::whereNull('deleted_at')->with('permissions')->get();
-        $this->permissions = Permission::orderBy('sort','asc')->get();
+        $board_id = '';
+        $this->roles = Role::whereNull('deleted_at')
+            ->
+            where(function ($query) use ($board_id) {
+                if (!empty($board_id)) {
+                    $query->whereBoardId($board_id);
+                }
+            })
+            ->
+            with(['permissions'])->get();
+
+        $this->permissions = Permission::orderBy('sort', 'asc')->get();
 
         // Формируем массив для отметки галочек
         foreach ($this->roles as $role) {
