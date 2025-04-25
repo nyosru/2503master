@@ -11,7 +11,7 @@
         <div class="px-2">
             <div class="flex flex-col pt-2">
 
-                <pre class="text-xs">{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>
+{{--                <pre class="text-xs">{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>--}}
 
 
 
