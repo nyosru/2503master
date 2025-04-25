@@ -69,9 +69,11 @@
 
                         <div class="flex-1">
 
-                            <span class="float-right">
+                            <span class="float-right pr-5">
                                 @permission('р.Лиды / доска конфиг')
-                                <a href="{{ route('board.config',['board'=>$board_id ]) }}">конфиг доски</a>
+                                <a href="{{ route('board.config',['board'=>$board_id ]) }}"
+                                class="hover:text-gray-600 text-white"
+                                >⚙️ конфиг доски</a>
                                 @endpermission
                             </span>
 
