@@ -11,7 +11,7 @@
         <div class="px-2">
             <div class="flex flex-col pt-2">
 
-{{--                <pre class="text-xs">{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>--}}
+                <pre class="text-xs">{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>
 
 
 
@@ -32,6 +32,15 @@
                                 Комментарий
                             @elseif($key->field_name === 'company')
                                 Компания
+
+                            @elseif($key->field_name === 'price')
+                                Цена
+                            @elseif($key->field_name === 'platform')
+                                Платформа
+                            @elseif($key->field_name === 'submit_before')
+                                Оплата после доставки (дней)
+                            @elseif($key->field_name === 'base_number')
+                                Номер
                             @elseif($key->field_name === 'budget')
                                 Бюджет
                             @elseif($key->field_name === 'fio')
