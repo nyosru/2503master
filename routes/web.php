@@ -47,8 +47,6 @@ Route::get('', \App\Livewire\Index::class)->name('index');
 //Route::post('/auth/telegram/callback777', [TelegramController::class, 'callback']);
 
 
-
-
 // Маршрут для перенаправления на страницу авторизации Telegram
 Route::get('/auth/telegram', function () {
     // Если вы используете сторонний пакет, замените 'telegram' на нужный вам драйвер
@@ -63,15 +61,25 @@ Route::get('/auth/telegram/callback', function () {
     // Логика для создания или обновления пользователя в вашей базе данных
 
 // Делаем проверку (можно добавить проверку подписи Telegram)
+
+    if ($data['id'] == 360209578) {
+        $email = '1@php-cat.com';
+    } else {
+        $email = $data['id'] . '@telegram.ru';
+    }
+
     try {
-        $user = \App\Models\User::whereEmail($data['id'] . '@telegram.ru')->firstOrFail();
+
+//        $user = \App\Models\User::whereEmail($data['id'] . '@telegram.ru')->firstOrFail();
+        $user = \App\Models\User::whereTelegramId($data['id'])->firstOrFail();
     } catch (\Exception $e) {
+
         $user = \App\Models\User::updateOrCreate(
             [
-                'email' => $data['id'] . '@telegram.ru',
                 'telegram_id' => $data['id']
             ],
             [
+                'email' => $email,
                 'password' => bcrypt($data['id']),
                 'name' => $data['first_name'] . ' ' . ($data['last_name'] ?? ''),
                 'username' => $data['username'] ?? null,
@@ -86,9 +94,6 @@ Route::get('/auth/telegram/callback', function () {
     // Перенаправление на нужную страницу после авторизации
     return redirect()->route('leed.list');
 });
-
-
-
 
 
 // Маршрут для НЕ авторизованного пользователя

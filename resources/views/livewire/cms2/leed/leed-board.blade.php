@@ -4,7 +4,7 @@
     {{--    name {{$user->currentBoard->name ?? 'x' }}<br/>--}}
     {{--    id {{$user->currentBoard->id ?? 'x' }}<br/>--}}
 
-    {{--    <pre class="text-xs">{{ print_R($user->toArray()) }}</pre>--}}
+{{--        <pre class="text-xs">{{ print_R($user->toArray()) }}</pre>--}}
     {{--    <pre class="text-xs">{{ print_R($user->roles[0]['name'],true) }}</pre>--}}
 
     @if( empty(auth()->user()->phone_number) )
