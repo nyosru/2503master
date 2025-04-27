@@ -2,6 +2,20 @@
 
     <div class="p-2 text-lg border-b">
         <span class="font-bold">Лид</span>
+
+        @if (session()->has('messageItemInfo'))
+            <span
+                x-data="{ show: true }"
+                x-init="setTimeout(() => show = false, 3000)"
+                x-show="show"
+                x-transition
+                title="{{ session('messageItemInfo') }}" class="bg-green-300 p-1">
+                {{ session('messageItemInfo') }}
+            </span>
+        @endif
+
+
+
     </div>
 
 {{--        <pre class="text-xs">{{ print_r($leed->toArray()) }}</pre>--}}
@@ -14,7 +28,7 @@
 {{--                <pre class="text-xs">{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>--}}
 
 
-<pre>{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>
+{{--<pre>{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>--}}
 
 {{--                @foreach(['name', 'fio', 'phone','order_product_types_id','budget', 'client_supplier_id',--}}
 {{--                    //'company',--}}
@@ -55,7 +69,8 @@
                             @elseif($key->field_name === 'order_product_types_id')
                                 Тип изделия
                             @else
-                                {{ ucfirst($key->field_name) }}
+{{--                                {{ ucfirst($key->field_name) }}--}}
+                                {{ $key->field_name }}
                             @endif
                         </label>
 
@@ -79,15 +94,23 @@
                                     @endforeach
                                 </select>
                             @else
-                                <input type="text" wire:model="{{ $key->field_name }}" id="{{ $key->field_name }}"
+                                <input type="text"
+                                       wire:model="{{ $key->field_name }}"
+                                       id="{{ $key->field_name }}"
+                                       :value="$leed->{$key->field_name}"
                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md">
                             @endif
                         @else
                             <p class="mt-1">{{ $leed->{$key->field_name} }}</p>
                         @endif
+
                         @error($key->field_name)
                         <div class="mt-2 text-sm text-red-500">{{ $message }}</div>
                         @enderror
+
+{{--                        {{$key->field_name}}: {{ ${$key->field_name} ?? 'x' }}<br/>--}}
+{{--                        {{$key->field_name}}: {{ $leed->{$key->field_name} ?? 'x' }}<br/>--}}
+
                     </div>
                     {{--                    @endif--}}
                 @endforeach
@@ -130,15 +153,14 @@
         <div class="text-right py-3 bg-gray-200 px-2">
 
             @if (session()->has('messageItemInfo'))
-{{--                <span class="bg-green-100 text-green-800 p-2 rounded mb-4">--}}
-{{--                        {{ session('messageItemInfo') }}--}}
-                <small title="{{ session('messageItemInfo') }}" class="bg-green-300 p-1">
+                <small
+                    x-data="{ show: true }"
+                    x-init="setTimeout(() => show = false, 3000)"
+                    x-show="show"
+                    x-transition
+                    title="{{ session('messageItemInfo') }}" class="bg-green-300 p-1">
                     {{ session('messageItemInfo') }}
-{{--                <svg--}}
-
-{{--                        class="inline h-6 w-6 text-blue-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 11 12 14 20 6" />  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>--}}
                 </small>
-{{--                    </span>--}}
             @endif
 
             <button type="submit" class="bg-blue-500 text-white py-1 px-3 rounded">Сохранить</button>
