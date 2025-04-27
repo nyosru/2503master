@@ -4,15 +4,17 @@
             space-y-5
             lg:space-y-10
             ">
-
+@if( strpos($_SERVER['HTTP_HOST'], '.local') !== false )
     <div>
-    <a href="/a/1" >войти как админ</a>
+        <a href="/a/1" >войти как админ</a>
         <br/>
-    <a href="/a/2" >войти как руль</a>
+        <a href="/a/2" >войти как руль</a>
         <br/>
-    <a href="/a/3" >войти как мен</a>
+        <a href="/a/3" >войти как мен</a>
         <br/>
     </div>
+@endif
+
     <div class="w-full" x-data="{ showButtons: true }">
 
         <div class="w-full bg-yellow-300 py-3 text-center">
