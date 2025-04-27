@@ -24,6 +24,7 @@ class RolesTableSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'Менеджер',
+                'board_id' => 1,
                 'guard_name' => 'web',
                 'created_at' => '2025-03-30 14:44:09',
                 'updated_at' => '2025-03-30 14:44:09',
@@ -32,6 +33,7 @@ class RolesTableSeeder extends Seeder
             [
                 'id' => 2,
                 'name' => 'Руководитель',
+                'board_id' => 1,
                 'guard_name' => 'web',
                 'created_at' => '2025-03-30 14:44:21',
                 'updated_at' => '2025-03-30 14:44:21',
@@ -40,6 +42,7 @@ class RolesTableSeeder extends Seeder
             [
                 'id' => 3,
                 'name' => 'Тех.поддержка',
+                'board_id' => 1,
                 'guard_name' => 'web',
                 'created_at' => '2025-03-30 14:45:00',
                 'updated_at' => '2025-03-30 14:45:00',
@@ -48,6 +51,7 @@ class RolesTableSeeder extends Seeder
             [
                 'id' => 4,
                 'name' => 'Доставщик',
+                'board_id' => 1,
                 'guard_name' => 'web',
                 'created_at' => '2025-03-30 14:45:51',
                 'updated_at' => '2025-03-30 14:45:51',

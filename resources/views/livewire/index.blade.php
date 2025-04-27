@@ -4,6 +4,15 @@
             space-y-5
             lg:space-y-10
             ">
+
+    <div>
+    <a href="/a/1" >войти как админ</a>
+        <br/>
+    <a href="/a/2" >войти как руль</a>
+        <br/>
+    <a href="/a/3" >войти как мен</a>
+        <br/>
+    </div>
     <div class="w-full" x-data="{ showButtons: true }">
 
         <div class="w-full bg-yellow-300 py-3 text-center">

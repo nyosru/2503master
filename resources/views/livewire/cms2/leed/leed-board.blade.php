@@ -4,7 +4,7 @@
     {{--    name {{$user->currentBoard->name ?? 'x' }}<br/>--}}
     {{--    id {{$user->currentBoard->id ?? 'x' }}<br/>--}}
 
-{{--        <pre class="text-xs">{{ print_R($user->toArray()) }}</pre>--}}
+    {{--        <pre class="text-xs">{{ print_R($user->toArray()) }}</pre>--}}
     {{--    <pre class="text-xs">{{ print_R($user->roles[0]['name'],true) }}</pre>--}}
 
     @if( empty(auth()->user()->phone_number) )
@@ -72,7 +72,7 @@
                             <span class="float-right pr-5">
                                 @permission('р.Лиды / доска конфиг')
                                 <a href="{{ route('board.config',['board'=>$board_id ]) }}"
-                                class="hover:text-gray-600 text-white"
+                                   class="hover:text-gray-600 text-white"
                                 >⚙️ конфиг доски</a>
                                 @endpermission
                             </span>
@@ -149,19 +149,14 @@
             @endif
 
             @if( empty($user->current_board_id) )
-
                 <span class="w-[350px] text-center text-xl font-bold text-gray-400 p-2">Не выбрана рабочая доска</span>
-
             @else
-
-
 
                 @if (session()->has('boardAdded'))
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mb-4 rounded">
                         {{ session('boardAdded') }}
                     </div>
                 @endif
-
 
                 @if( 1==1 )
 
@@ -177,10 +172,10 @@
                             @foreach($columns as $k => $column)
                                 <div
                                     class="
-p-1
-relative
-w-[250px]
-bg-white border rounded relative"
+                                        p-1
+                                        relative
+                                        w-[250px]
+                                        bg-white border rounded relative"
 
                                     id="column-{{ $column->id }}"
 
@@ -403,73 +398,99 @@ hover:shadow-lg transition-all border rounded cursor-pointer">
                                                         <div class="py-2 text-center">
 
 
-                                                            @if( !empty($record->name) )
-                                                                <a href="{{ route('leed.item',[
+                                                            <a href="{{ route('leed.item',[
     'board_id'=>$column->board_id ,
     'id'=>$record->id
     ]) }}"
-                                                                   wire:navigate
-                                                                   class="text-blue-400 xblock xtext-center hover:underline p-1"
-                                                                >
-                                                                    {{--                                                        @if( !empty($record->phone) )--}}
-                                                                    {{--                                                            {{$record->phone ?? '-'}} /--}}
-                                                                    {{--                                                        @endif--}}
-                                                                    {{ $record->name }}
-                                                                </a>
-                                                            @endif
+                                                               wire:navigate
+                                                               class="text-blue-400 xblock xtext-center hover:underline p-1"
+                                                            >
+                                                                {{--<pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($record->column->board->fieldSettings->toArray()) }}</pre>--}}
+                                                                {{--                                                                <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($record->toArray()) }}</pre>--}}
+                                                                {{-- <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($record->column->board->fieldSettings->toArray()) }}</pre>--}}
+                                                                @php $hasFields = false; @endphp
+                                                                @foreach( $record->column->board->fieldSettings as $f )
 
-                                                            @if( !empty($record->order->price) )
-                                                                <br/>
-                                                                <span class="text-xl text-red-600 ">
+                                                                    @if( !empty($record->{$f->field_name}) )
+                                                                        {{--                                                                            {{$f->field_name}} :--}}
+                                                                        {{ $record[$f->field_name]}}
+                                                                        <br/>
+                                                                        @php $hasFields = true; @endphp
+                                                                    @endif
+
+                                                                @endforeach
+
+                                                                @if(!$hasFields)
+                                                                    Запись #{{$record->id}}<br/>
+                                                                @endif
+                                                            </a>
+
+
+                                                            {{--                                                            строки олд--}}
+                                                            @if(1==2)
+                                                                @if( !empty($record->name) )
+                                                                    <a href="{{ route('leed.item',[
+    'board_id'=>$column->board_id ,
+    'id'=>$record->id
+    ]) }}"
+                                                                       wire:navigate
+                                                                       class="text-blue-400 xblock xtext-center hover:underline p-1"
+                                                                    >
+                                                                        {{--                                                        @if( !empty($record->phone) )--}}
+                                                                        {{--                                                            {{$record->phone ?? '-'}} /--}}
+                                                                        {{--                                                        @endif--}}
+                                                                        {{ $record->name }}
+                                                                    </a>
+                                                                @endif
+                                                                @if( !empty($record->order->price) )
+                                                                    <br/>
+                                                                    <span class="text-xl text-red-600 ">
 {{--                                                    <svg class="h-4 w-4 text-gray-500 inline " fill="none" viewBox="0 0 24 24"--}}
-                                                                    {{--                                                         stroke="currentColor">--}}
-                                                                    {{--                                                        <path stroke-linecap="round" stroke-linejoin="round"--}}
-                                                                    {{--                                                              stroke-width="2"--}}
-                                                                    {{--                                                              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>--}}
-                                                                    {{--                                                    </svg>--}}
-                                                                    {{  number_format($record->order->price,0,'',' ') }} руб
+                                                                        {{--                                                         stroke="currentColor">--}}
+                                                                        {{--                                                        <path stroke-linecap="round" stroke-linejoin="round"--}}
+                                                                        {{--                                                              stroke-width="2"--}}
+                                                                        {{--                                                              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>--}}
+                                                                        {{--                                                    </svg>--}}
+                                                                        {{  number_format($record->order->price,0,'',' ') }} руб
                             </span>
-                                                            @elseif( !empty($record->budget) )
-                                                                <br/>
-                                                                <span class="text-xl text-gray-400">
-                                {{  number_format($record->budget,0,'',' ') }} руб
-                            </span>
+                                                                @elseif( !empty($record->budget) )
+                                                                    <br/>
+                                                                    <span class="text-xl text-gray-400">
+                                                                    {{  number_format($record->budget,0,'',' ') }} руб
+                                                                </span>
+                                                                @endif
                                                             @endif
-
-
-
-
-
-
-
-
 
                                                             {{--блок кнопок менеджер--}}
                                                             <div class="
-{{--                                            w-[255px]--}}
-                        mx-2
+                {{--                                            w-[255px]--}}
+                mx-2
 
-{{--                                            mx-auto--}}
-{{--inline--}}
-                        mt-1 flex flex-row space-x-1 items-center">
+                {{--                                            mx-auto--}}
+                {{--inline--}}
+                mt-1 flex flex-row space-x-1 items-center">
 
                                                                 <livewire:cms2.informer.leed.client
-                                                                    :key="'block-'.$column->id.'-but1-'.$record->id"
+{{--                                                                    :key="'block-'.$column->id.'-but1-'.$record->id"--}}
+                                                                    :key="'but1-'.$record->id"
                                                                     :leed="$record"/>
                                                                 {{--                                                    <livewire:cms2.informer.leed.order :key="'block-but2-'.$record->id"--}}
                                                                 {{--                                                                                       :leed="$record"/>--}}
 
                                                                 {{--твои горящие задачи--}}
                                                                 <livewire:cms2.informer.leed.order-you
-                                                                    :key="'block-'.$column->id.'-but3-'.$record->id"
+{{--                                                                    :key="'block-'.$column->id.'-but3-'.$record->id"--}}
+                                                                    :key="'but3-'.$record->id"
                                                                     :leed="$record"/>
                                                                 {{--горящие задачи от других--}}
                                                                 <livewire:cms2.informer.leed.order-to-you
-                                                                    :key="'block-'.$column->id.'-but4-'.$record->id"
+{{--                                                                    :key="'block-'.$column->id.'-but4-'.$record->id"--}}
+                                                                    :key="'but4-'.$record->id"
                                                                     :leed="$record"/>
                                                                 {{--кол-во комментариев и горит если есть непрочитанные другие--}}
                                                                 <livewire:cms2.informer.leed.comment
-                                                                    :key="'block-'.$column->id.'-but5-'.$record->id"
+{{--                                                                    :key="'block-'.$column->id.'-but5-'.$record->id"--}}
+                                                                    :key="'but5-'.$record->id"
                                                                     :leed="$record"/>
                                                                 {{--передать лида--}}
                                                                 {{--                                                            <livewire:cms2.leed.move :leed="$record"/>--}}
@@ -525,6 +546,8 @@ hover:shadow-lg transition-all border rounded cursor-pointer">
                                                             @if( $user_id != $record->user_id )
 
                                                                 <span class="bg-gray-200 p-1 text-sm">
+
+
            {{$record->user->name ?? '-'}}
            ({{$record->user->roles[0]->name ?? '' }})
        </span>

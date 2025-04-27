@@ -56,6 +56,8 @@ class BoardController extends Controller
 
     public static function goto($board_id, $role_id)
     {
+//        dd($board_id, $role_id);
+
         $user = Auth::user();
 
         $boards = Board::whereHas('boardUsers', function ($query) use ($user, $role_id, $board_id) {
@@ -71,6 +73,7 @@ class BoardController extends Controller
         }
 
         UserController::setCurentBoard($user->id, $board_id);
+//        UserController::setCurentBoard($user->id, $boards->id);
         UserController::updateRole($user->id, $role_id);
 
         return redirect()->route('leed', ['board_id' => $board_id]);

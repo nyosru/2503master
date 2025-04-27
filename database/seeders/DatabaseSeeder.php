@@ -24,21 +24,31 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Сергей Поддержка',
             'email' => '1@php-cat.com',
+            'telegram_id' => '360209578',
+            'phone_number' => '8999',
             'password' => Hash::make('123123123'), // Не храните пароли в открытом виде
         ]);
         User::factory()->create([
             'name' => 'Тест Руководитель',
             'email' => 'test.ruk@php-cat.com',
-            'password' => Hash::make('password'), // Не храните пароли в открытом виде
+            'telegram_id' => '36021',
+            'phone_number' => '89991',
+            'password' => Hash::make('password1212'), // Не храните пароли в открытом виде
         ]);
         User::factory()->create([
             'name' => 'Тест Пользователь',
             'email' => 'test.user@php-cat.com',
-            'password' => Hash::make('password'), // Не храните пароли в открытом виде
+            'telegram_id' => '36020957822',
+            'phone_number' => '899922',
+            'password' => Hash::make('password1212'), // Не храните пароли в открытом виде
         ]);
 
         $this->call(BoardsTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(PermissionsTableSeeder::class);
+        $this->call(RoleHasPermissionsSeeder::class);
+        $this->call(BoardUsersSeeder::class);
+        $this->call(LeedColumnsSeeder::class);
+
     }
 }

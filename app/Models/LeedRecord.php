@@ -11,11 +11,11 @@ class LeedRecord extends Model
 
     protected $fillable = [
         'name' ,
-        'phone' ,
-//        'telegram' ,
-//        'whatsapp' ,
-//        'company' ,
-        'fio' ,
+
+        'telegram' ,
+        'whatsapp' ,
+        'company' ,
+
         'comment' ,
 //        'content',
         'client_id',
@@ -27,6 +27,26 @@ class LeedRecord extends Model
         'otkaz_reason',
         'leed_id',
         'budget',
+
+        'phone' ,
+        'fio' ,
+
+
+        'fio2',
+        'phone2',
+        'cooperativ',
+        'price',
+        'date_start',
+
+        'platform',
+        'base_number',
+        'link',
+        'submit_before',
+        'payment_due_date',
+        'pay_day_every_year',
+        'pay_day_every_month',
+
+
     ];
 
     public function column()

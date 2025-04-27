@@ -38,8 +38,8 @@ class LeedRecordInfoForm extends Component
         $this->client_supplier_id = $this->leed->client_supplier_id;
         $this->order_product_types_id = $this->leed->order_product_types_id;
 
-        $this->suppliers = ClientSupplier::select('id','title')->get();
-        $this->types = OrderProductType::select('id','name')->orderBy('order','asc')->get();
+        $this->suppliers = ClientSupplier::select('id', 'title')->get();
+        $this->types = OrderProductType::select('id', 'name')->orderBy('order', 'asc')->get();
 
     }
 
@@ -50,32 +50,61 @@ class LeedRecordInfoForm extends Component
         ]);
     }
 
-    protected $rules = [
-        'name' => 'nullable|string|max:255',
-        'phone' => 'nullable|string|max:50',
-//        'company' => 'nullable|string|max:255',
-        'fio' => 'nullable|string|max:255',
-        'budget' => 'nullable|integer',
-        'comment' => 'nullable|string|max:1000',
-        'client_supplier_id' => 'nullable|integer',
-        'order_product_types_id' => 'nullable|integer',
-    ];
+//    protected $rules = [
+//        'name' => 'nullable|string|max:255',
+//        'phone' => 'nullable|string|max:50',
+////        'company' => 'nullable|string|max:255',
+//        'fio' => 'nullable|string|max:255',
+//        'budget' => 'nullable|integer',
+//        'comment' => 'nullable|string|max:1000',
+//        'client_supplier_id' => 'nullable|integer',
+//        'order_product_types_id' => 'nullable|integer',
+//
+////        'name',
+////        'phone',
+//        'telegram' => 'nullable|string',
+//        'whatsapp' => 'nullable|string',
+////        'fio',
+////        'comment',
+////        'client_supplier_id',
+//        'fio2' => 'nullable|string',
+//        'phone2' => 'nullable|integer',
+//        'cooperativ' => 'nullable|string',
+//        'price' => 'nullable|integer',
+//        'date_start' => 'nullable|date',
+//
+//    ];
 
     public function saveChanges()
     {
-        $ee = $this->validate();
-//dd($ee);
-        $this->leed->name = $ee['name'];
-        $this->leed->phone = $ee['phone'];
-//        $this->leed->company = $ee['company'];
-        $this->leed->fio = $ee['fio'];
-        $this->leed->comment = $ee['comment'];
-        $this->leed->budget = $ee['budget'];
-        $this->leed->client_supplier_id  = $ee['client_supplier_id'];
-        $this->leed->order_product_types_id  = $ee['order_product_types_id'];
+
+//        $ee = $this->validate();
+
+        foreach ($ee as $k => $v) {
+            if ($this->leed->{$k} != $v) {
+                $this->leed->{$k} = $v;
+            }
+        }
+
+        //dd($ee
+
+        dd([$ee, $this->leed->toArray()]);
+
+//        $this->leed->name = $ee['name'];
+//        $this->leed->phone = $ee['phone'];
+////        $this->leed->company = $ee['company'];
+//        $this->leed->fio = $ee['fio'];
+//        $this->leed->comment = $ee['comment'];
+//        $this->leed->budget = $ee['budget'];
+//        $this->leed->client_supplier_id = $ee['client_supplier_id'];
+//        $this->leed->order_product_types_id = $ee['order_product_types_id'];
+
 
         $this->leed->save();
         session()->flash('messageItemInfo', 'Сохранено');
-        $this->redirectRoute('leed.item', $this->leed);
+
+//        $this->redirectRoute('leed.item', [ 'board_id' => $this->board_id, 'id' => $this->leed->id);
+        return redirect()->route('leed.item', ['board_id' => $this->board_id, 'id' => $this->leed->id]);
+
     }
 }

@@ -14,6 +14,7 @@
 {{--                <pre class="text-xs">{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>--}}
 
 
+<pre>{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>
 
 {{--                @foreach(['name', 'fio', 'phone','order_product_types_id','budget', 'client_supplier_id',--}}
 {{--                    //'company',--}}
@@ -131,11 +132,12 @@
             @if (session()->has('messageItemInfo'))
 {{--                <span class="bg-green-100 text-green-800 p-2 rounded mb-4">--}}
 {{--                        {{ session('messageItemInfo') }}--}}
-                <abbr title="{{ session('messageItemInfo') }}" >
-                <svg
+                <small title="{{ session('messageItemInfo') }}" class="bg-green-300 p-1">
+                    {{ session('messageItemInfo') }}
+{{--                <svg--}}
 
-                        class="inline h-6 w-6 text-blue-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 11 12 14 20 6" />  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
-                </abbr>
+{{--                        class="inline h-6 w-6 text-blue-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 11 12 14 20 6" />  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>--}}
+                </small>
 {{--                    </span>--}}
             @endif
 

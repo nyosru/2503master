@@ -23,6 +23,7 @@ class AddLeedFormSimple extends Component
     public $column;
     public $isFormVisible = false; // Состояние для отображения/скрытия формы
     public $name, $phone, $telegram, $whatsapp, $fio, $comment; // Переменные для формы
+    public $company; // Переменные для формы
     public $client_supplier_id; // Переменная для ID поставщика
 
     public $fio2;
@@ -123,12 +124,29 @@ class AddLeedFormSimple extends Component
             'name' => 'nullable|string|max:255',
             'fio' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
-//            'telegram' => 'nullable|string|max:255',
-//            'whatsapp' => 'nullable|string|max:255',
-//            'company' => 'nullable|string|max:255',
+            'telegram' => 'nullable|string|max:255',
+            'whatsapp' => 'nullable|string|max:255',
+            'company' => 'nullable|string|max:255',
             'comment' => 'nullable|string|max:1000',
             'client_supplier_id' => 'nullable|exists:client_suppliers,id', // Валидация для поля client_supplier_id
             'order_product_types_id' => 'nullable|exists:order_product_types,id',
+
+
+'fio2' => 'nullable|string|max:255',
+'phone2' => 'nullable|integer',
+'cooperativ' => 'nullable|string|max:255',
+'price' => 'nullable|integer' ,
+'date_start' => 'nullable|date',
+'budget' =>  'nullable|integer',
+'platform' => 'nullable|string|max:255',
+'base_number' => 'nullable|string|max:255',
+'link' => 'nullable|string|max:255',
+'submit_before' =>  'nullable|integer',
+'payment_due_date' => 'nullable|date',
+'pay_day_every_year' => 'nullable|date',
+'pay_day_every_month' =>  'nullable|integer',
+
+
         ]);
 
         $user_id = Auth::id();

@@ -244,13 +244,13 @@ class LeedBoard extends Component
 //            dd($this->user->toArray());
         }
 
-        if (sizeof($this->user->boardUser) == 1) {
-            $this->current_board = $this->user->boardUser[0]->id;
-//                dd($this->current_board );
 
-            $this->user->current_board_id = $this->current_board;
-            $this->user->save();
-        }
+//        if (sizeof($this->user->boardUser) == 1) {
+//            $this->current_board = $this->user->boardUser[0]->id;
+////                dd($this->current_board );
+//            $this->user->current_board_id = $this->current_board;
+//            $this->user->save();
+//        }
 
 //        foreach ($this->user->boardUser as $boardUser) {
 ////            $this->current_board = $boardUser->board;
@@ -342,10 +342,10 @@ class LeedBoard extends Component
             }
 
 // Получаем все столбцы, связанные с указанной ролью
-
-            $this->columns = LeedColumn::orderBy('order', 'asc')
+            if (1 == 2) {
+                $this->columns = LeedColumn::orderBy('order', 'asc')
 //                ->whereBoardId($this->board_id)
-                ->with([
+                    ->with([
 //                    'records' => function ($query) use ($user, $user_id) {
 //                        if (
 //                            !$user->hasAnyPermission('Полный//доступ', 'р.Лиды / видеть все лиды')
@@ -409,17 +409,40 @@ class LeedBoard extends Component
 //                        $query->select(['id']); // Выбираем только нужные поля
 //                    },
 
-                ])
+                    ])
 //                ->whereHas('roles', function ($query) use ($user, $roleId) {
 //                    if (!$user->hasPermissionTo('Полный//доступ')) {
 //                        $query->where('roles.id', $roleId);
 //                    }
 //                })
-                ->get();
-
+                    ->get();
+            }
             $this->columns = LeedColumn::orderBy('order', 'asc')
                 ->whereBoardId($this->board_id)
 //                ->where('board_id', $this->user->current_board_id)
+                ->with(['records' => function ($query) {
+                    $query->with([
+                        'column' => function ($query) {
+
+                        $query->select(['id','board_id']);
+                        $query->with([
+                                'board' => function ($query) {
+                                    $query->select(['id']);
+                                    $query->with([
+                                        'fieldSettings' => function ($query) {
+                                            $query->select(['id',
+                                                'field_name',
+                                                'board_id'
+                                            ]);
+                                            $query->whereShowOnStart(true);
+                                            $query->orderBy('sort_order', 'desc');
+                                        }
+                                    ]);
+                                }
+                            ]);
+                        }
+                    ]);
+                }])
                 ->get();
 
 //// Вывод результата
@@ -640,9 +663,15 @@ class LeedBoard extends Component
             $record->save();
 
 //            $this->loadColumns();
-            return $this->redirectRoute('leed');
+
+            $col = LeedColumn::whereId($newColumnId)->select(['id','board_id'])->first();
+//dd($col->toArray());
+            return $this->redirectRoute('leed',['board_id'=>$col->board_id]);
+
         } catch (\Exception $ex) {
             if (env('APP_ENV', 'x') == 'local') {
+//                \Log::error('fn updateRecordColumn', [$ex->getMessage()]);
+//                \Log::error('fn updateRecordColumn', [$ex]);
                 \Log::error('fn updateRecordColumn', ['line' => __LINE__, $recordId, $newColumnId]);
             }
         }
