@@ -51,6 +51,14 @@ class AddLeedFormSimple extends Component
     public $pay_day_every_month;
 
 
+    public $email;
+    public $obj_tender;
+    public $zakazchick;
+    public $post_day_ot;
+    public $post_day_do;
+    public $mesto_dostavki;
+
+
     public $order = [];
 
     protected $listeners = ['orderInputUpdated' => 'orderChildInputUpdated'];
@@ -132,20 +140,27 @@ class AddLeedFormSimple extends Component
             'order_product_types_id' => 'nullable|exists:order_product_types,id',
 
 
-'fio2' => 'nullable|string|max:255',
-'phone2' => 'nullable|integer',
-'cooperativ' => 'nullable|string|max:255',
-'price' => 'nullable|integer' ,
-'date_start' => 'nullable|date',
-'budget' =>  'nullable|integer',
-'platform' => 'nullable|string|max:255',
-'base_number' => 'nullable|string|max:255',
-'link' => 'nullable|string|max:255',
-'submit_before' =>  'nullable|integer',
-'payment_due_date' => 'nullable|date',
-'pay_day_every_year' => 'nullable|date',
-'pay_day_every_month' =>  'nullable|integer',
+            'fio2' => 'nullable|string|max:255',
+            'phone2' => 'nullable|integer',
+            'cooperativ' => 'nullable|string|max:255',
+            'price' => 'nullable|integer',
+            'date_start' => 'nullable|date',
+            'budget' => 'nullable|integer',
+            'platform' => 'nullable|string|max:255',
+            'base_number' => 'nullable|string|max:255',
+            'link' => 'nullable|string|max:255',
+            'submit_before' => 'nullable|integer',
+            'payment_due_date' => 'nullable|date',
+            'pay_day_every_year' => 'nullable|date',
+            'pay_day_every_month' => 'nullable|integer',
 
+
+            'email' => 'nullable|string',
+            'obj_tender' => 'nullable|string',
+            'zakazchick' => 'nullable|string',
+            'post_day_ot' => 'nullable|integer',
+            'post_day_do' => 'nullable|integer',
+            'mesto_dostavki' => 'nullable|string',
 
         ]);
 
@@ -171,7 +186,7 @@ class AddLeedFormSimple extends Component
         foreach ($polya as $v) {
 //            dd($v);
 //            if ( isset($this->{$v['field_name']} ))
-                $in[$v['field_name']] = $this->{$v['field_name']}; //dd($this->$v
+            $in[$v['field_name']] = $this->{$v['field_name']}; //dd($this->$v
         }
 
 //        dd($in);
@@ -202,11 +217,18 @@ class AddLeedFormSimple extends Component
         $this->reset([
             'name', 'phone',
             'telegram', 'whatsapp', 'fio', 'comment', 'client_supplier_id',
-    'fio2',
-    'phone2',
-    'cooperativ',
-    'price',
-    'date_start',
+            'fio2',
+            'phone2',
+            'cooperativ',
+            'price',
+            'date_start',
+
+            'email',
+            'obj_tender',
+            'zakazchick',
+            'post_day_ot' ,
+            'post_day_do' ,
+            'mesto_dostavki' ,
 
         ]);
 

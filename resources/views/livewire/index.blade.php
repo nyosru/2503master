@@ -4,6 +4,7 @@
             space-y-5
             lg:space-y-10
             ">
+
 @if( strpos($_SERVER['HTTP_HOST'], '.local') !== false )
     <div>
         <a href="/a/1" >войти как админ</a>

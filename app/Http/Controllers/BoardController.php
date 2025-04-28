@@ -50,6 +50,22 @@ class BoardController extends Controller
         self::$polya_config[] = ['pole' => 'pay_day_every_year', 'name' => 'Оплата ежегодно'];
         self::$polya_config[] = ['pole' => 'pay_day_every_month', 'name' => 'Оплата ежемесячно'];
 
+
+        self::$polya_config[] = ['pole' => 'pay_day_every_month', 'name' => 'Оплата ежемесячно'];
+
+//2. эл.почта заказчика
+        self::$polya_config[] = ['pole' => 'email', 'name' => 'E-mail заказчика'];
+//3. название переделать в предмет тендера
+        self::$polya_config[] = ['pole' => 'obj_tender', 'name' => 'предмет тендера'];
+//4. Заказчик
+        self::$polya_config[] = ['pole' => 'zakazchick', 'name' => 'Заказчик'];
+//5.  срок поставки от и до (45-60 дней)
+        self::$polya_config[] = ['pole' => 'post_day_ot', 'name' => 'срок поставки от']; // , 'name' => 'Цена'];
+        self::$polya_config[] = ['pole' => 'post_day_do', 'name' => 'срок поставки до']; // , 'name' => 'Цена'];
+//6. место поставки
+        self::$polya_config[] = ['pole' => 'mesto_dostavki', 'name' => 'место поставки'];
+
+
         return self::$polya_config;
 
     }
