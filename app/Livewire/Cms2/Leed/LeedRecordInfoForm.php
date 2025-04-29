@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Cms2\Leed;
 
+use App\Http\Controllers\BoardController;
 use App\Models\ClientSupplier;
 use App\Models\Cms1\Clients;
 use App\Models\LeedRecord;
@@ -36,6 +37,22 @@ class LeedRecordInfoForm extends Component
     public $link;
 
 
+    public $platform;
+
+    public $customer;
+    public $payment_due_date;
+    public $submit_before;
+
+    public $pay_day_every_year;
+    public $pay_day_every_month;
+    public $email;
+    public $obj_tender;
+
+    public $zakazchick;
+    public $post_day_ot;
+    public $post_day_do;
+    public $mesto_dostavki;
+
 
     public function mount(LeedRecord $leed)
     {
@@ -68,41 +85,42 @@ class LeedRecordInfoForm extends Component
             'leed' => $this->leed,
         ]);
     }
-
-    protected $rules = [
-
-        'name' => 'nullable|string|max:255',
-        'phone' => 'nullable|string|max:50',
-//        'company' => 'nullable|string|max:255',
-        'fio' => 'nullable|string|max:255',
-        'client_supplier_id' => 'nullable|integer',
-        'order_product_types_id' => 'nullable|integer',
-
-//        'name',
-//        'phone',
-        'telegram' => 'nullable|string',
-        'whatsapp' => 'nullable|string',
-//        'fio',
-//        'comment',
-//        'client_supplier_id',
-        'fio2' => 'nullable|string',
-        'phone2' => 'nullable|integer',
-        'cooperativ' => 'nullable|string',
-
-        'link' => 'nullable|string',
-        'base_number' => 'nullable|integer',
-
-        'price' => 'nullable|integer',
-        'date_start' => 'nullable|date',
-        'budget' => 'nullable|integer',
-        'comment' => 'nullable|string|max:1000',
-
-    ];
+//
+//    protected $rules = [
+//
+//        'name' => 'nullable|string|max:255',
+//        'phone' => 'nullable|string|max:50',
+////        'company' => 'nullable|string|max:255',
+//        'fio' => 'nullable|string|max:255',
+//        'client_supplier_id' => 'nullable|integer',
+//        'order_product_types_id' => 'nullable|integer',
+//
+////        'name',
+////        'phone',
+//        'telegram' => 'nullable|string',
+//        'whatsapp' => 'nullable|string',
+////        'fio',
+////        'comment',
+////        'client_supplier_id',
+//        'fio2' => 'nullable|string',
+//        'phone2' => 'nullable|integer',
+//        'cooperativ' => 'nullable|string',
+//
+//        'link' => 'nullable|string',
+//        'base_number' => 'nullable|integer',
+//
+//        'price' => 'nullable|integer',
+//        'date_start' => 'nullable|date',
+//        'budget' => 'nullable|integer',
+//        'comment' => 'nullable|string|max:1000',
+//
+//    ];
 
     public function saveChanges()
     {
 
-        $ee = $this->validate();
+        $rules = BoardController::getRules();
+        $ee = $this->validate($rules);
 
         foreach ($ee as $k => $v) {
             if ($this->leed->{$k} != $v) {

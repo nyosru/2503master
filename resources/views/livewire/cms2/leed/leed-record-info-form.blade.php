@@ -39,7 +39,9 @@
 {{--                        @endif--}}
                     {{--                    @if($leed->{$key} !== null)--}}
                     <div class="py-1">
-                        <label for="{{ $key->field_name }}" class="block text-sm font-medium text-gray-700">
+                        <label for="{{ $key->field_name }}"
+                               title="{{ $key->field_name }}"
+                               class="block text-sm font-medium text-gray-700">
                             @if($key->field_name === 'name')
                                 Название
 {{--                                <sup>(техническое для себя)</sup>--}}
@@ -76,27 +78,34 @@
 
                         @if($isEditing)
                             @if($key->field_name === 'comment')
-                                <textarea wire:model="{{ $key }}" id="{{ $key }}"
+                                <textarea wire:model="{{ $key->field_name }}" id="{{ $key }}"
                                           class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
                                           rows="3"></textarea>
                             @elseif($key->field_name === 'client_supplier_id')
-                                <select class="rounded w-full" wire:model="{{ $key }}">
+                                <select class="rounded w-full" wire:model="{{ $key->field_name }}">
                                     <option value="">--</option>
                                     @foreach( $suppliers as $s )
                                         <option value="{{ $s->id }}">{{ $s->title }}</option>
                                     @endforeach
                                 </select>
                             @elseif($key->field_name === 'order_product_types_id')
-                                <select class="rounded w-full" wire:model="{{ $key }}">
+                                <select class="rounded w-full" wire:model="{{ $key->field_name }}">
                                     <option value="">--</option>
                                     @foreach( $types as $s )
                                         <option value="{{ $s->id }}">{{ $s->name }}</option>
                                     @endforeach
                                 </select>
                             @else
-                                <input type="text"
+                                <input
                                        wire:model="{{ $key->field_name }}"
                                        id="{{ $key->field_name }}"
+
+                                       @if( !empty($key->type) && $key->type === 'number' )
+                                           type="number"
+                                       @else
+                                           type="text"
+                                       @endif
+
                                        :value="$leed->{$key->field_name}"
                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md">
                             @endif

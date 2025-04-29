@@ -128,13 +128,7 @@ class AddLeedFormSimple extends Component
     public function addLeedRecord()
     {
 //        $this->addLeedRecordOrder($this->order);
-
-        $a = BoardController::getPolyaConfig();
-
-        $rules = [];
-        foreach ($a as $k => $v) {
-            $rules[$v['pole']] = $v['validate'];
-        }
+        $rules = BoardController::getRules();
 
         $this->validate($rules);
 //        $this->validate([
