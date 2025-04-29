@@ -42,7 +42,9 @@ class BoardController extends Controller
         self::$polya_config[] = ['pole' => 'telegram', 'name' => 'Телеграм id', 'rule' => 'nullable|string|max:255' ];
         self::$polya_config[] = ['pole' => 'whatsapp', 'name' => 'WatsApp id', 'rule' => 'nullable|string|max:255' ];
 
-        self::$polya_config[] = ['pole' => 'date_start', 'name' => 'Дата старта', 'rule' => 'nullable|date' ];
+        self::$polya_config[] = ['pole' => 'date_start', 'name' => 'Дата старта',
+            'type' => 'date',
+            'rule' => 'nullable|date' ];
         self::$polya_config[] = ['pole' => 'comment', 'name' => 'Комментарий', 'rule' => 'nullable|string|max:1000' ];
 
         self::$polya_config[] = ['pole' => 'budget', 'name' => 'Бюджет', 'rule' => 'nullable|integer' ];
@@ -54,7 +56,9 @@ class BoardController extends Controller
         self::$polya_config[] = ['pole' => 'payment_due_date', 'name' => 'Дата после оплаты', 'rule' => 'nullable|date' ];
         self::$polya_config[] = ['pole' => 'submit_before', 'name' => 'Подать до', 'rule' => 'nullable|integer' ];
 
-        self::$polya_config[] = ['pole' => 'pay_day_every_year', 'name' => 'Оплата ежегодно', 'rule' => 'nullable|date' ];
+        self::$polya_config[] = ['pole' => 'pay_day_every_year', 'name' => 'Оплата ежегодно',
+            'type' => 'date',
+            'rule' => 'nullable|date' ];
         self::$polya_config[] = ['pole' => 'pay_day_every_month', 'name' => 'Оплата ежемесячно', 'rule' => 'nullable|integer' ];
 
 //2. эл.почта заказчика
@@ -64,8 +68,12 @@ class BoardController extends Controller
 //4. Заказчик
         self::$polya_config[] = ['pole' => 'zakazchick', 'name' => 'Заказчик', 'rule' => 'nullable|string' ];
 //5.  срок поставки от и до (45-60 дней)
-        self::$polya_config[] = ['pole' => 'post_day_ot', 'name' => 'срок поставки от', 'rule' => 'nullable|integer' ]; // , 'name' => 'Цена', 'rule' => '' ];
-        self::$polya_config[] = ['pole' => 'post_day_do', 'name' => 'срок поставки до', 'rule' => 'nullable|integer' ]; // , 'name' => 'Цена', 'rule' => '' ];
+        self::$polya_config[] = ['pole' => 'post_day_ot', 'name' => 'срок поставки от',
+            'type' => 'number',
+            'rule' => 'nullable|integer' ]; // , 'name' => 'Цена', 'rule' => '' ];
+        self::$polya_config[] = ['pole' => 'post_day_do', 'name' => 'срок поставки до',
+            'type' => 'number',
+            'rule' => 'nullable|integer' ]; // , 'name' => 'Цена', 'rule' => '' ];
 //6. место поставки
         self::$polya_config[] = ['pole' => 'mesto_dostavki', 'name' => 'место поставки', 'rule' => 'nullable|string' ];
 

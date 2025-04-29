@@ -40,7 +40,7 @@
 
                     <div class="w-full px-3 max-h-[70vh] overflow-auto" id="add-leed-form-simple">
 
-{{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($allowedFields) }}</pre>--}}
+                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($allowedFields) }}</pre>
 
                         @foreach($allowedFields as $field)
 
@@ -75,8 +75,9 @@
                             </label>
 
                             <input
-{{--                                @if( $field == 'name' || $field == 'platform'|| $field == 'link'|| $field == 'customer')--}}
-{{--                                    type="text"--}}
+                                {{--                                @if( $field == 'name' || $field == 'platform'|| $field == 'link'|| $field == 'customer')--}}
+                                {{--                                    type="text"--}}
+                                {{--                                @if( $field['type'] == 'base_number' ||  $field['field_name'] == 'budget'||  $field['field_name'] == 'price')--}}
                                 @if( $field['field_name'] == 'base_number' ||  $field['field_name'] == 'budget'||  $field['field_name'] == 'price')
                                     type="number"
                                 @elseif( $field['field_name'] == 'pay_day_every_month' )
@@ -88,169 +89,18 @@
                                 @else
                                     type="text"
                                 @endif
+
                                 wire:model="{{ $field['field_name'] }}" id="{{ $field['field_name'] }}"
                                 class="block mb-2 p-2 border rounded w-full">
 
+
+                            @error($field['field_name'])
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+
                         @endforeach
 
-                        @if(1==2)
-                            <br/>                        -----------
-                            <br/>                        -----------
-                            <br/>                        -----------
-                            <br/>                        -----------
-
-                            <label for="name" class="block text-gray-700 text-sm">
-                                Название
-                            </label>
-                            <input type="text" wire:model="name" id="name"
-                                   class="block mb-2 p-2 border rounded w-full">
-
-                            <label for="fio" class="block text-gray-700 text-sm">
-                                ФИО
-                            </label>
-                            <input type="text" wire:model="fio" id="fio"
-                                   class="block mb-2 p-2 border rounded w-full">
-
-                            <label for="phone" class="block text-gray-700 text-sm">
-                                Телефон
-                            </label>
-                            <input type="text" wire:model="phone" id="phone"
-                                   class="block mb-2 p-2 border rounded w-full">
-                            {{--                    <input type="text" wire:model="telegram" placeholder="Телеграм" class="block mb-2 p-2 border rounded w-full">--}}
-                            {{--                    <input type="text" wire:model="whatsapp" placeholder="WhatsApp" class="block mb-2 p-2 border rounded w-full">--}}
-
-
-                            <label class="block text-gray-700 text-sm">
-                                Изделие:
-
-
-                                <select wire:model="order_product_types_id"
-                                        class="block mb-2 p-2 border rounded w-full">
-                                    <option value="" selected>---</option>
-                                    @foreach ($types as $t)
-                                        <option value="{{ $t->id }}">{{ $t->name }}</option>
-                                    @endforeach
-                                </select>
-                            </label>
-
-                            {{--                        <label class="block text-gray-700 text-sm">--}}
-                            {{--                            Компания--}}
-                            {{--                            <input type="text" wire:model="company" id="company" placeholder="Компания"--}}
-                            {{--                                   class="block mb-2 p-2 border rounded w-full">--}}
-                            {{--                        </label>--}}
-
-                            <label class="block text-gray-700 text-sm">
-                                Бюджет
-                                <input type="number" wire:model="budget" id="budget" placeholder=""
-                                       class="block mb-2 p-2 border rounded w-full">
-                            </label>
-
-                            <!-- Выпадающий список для выбора поставщика -->
-
-                            <label for="comment" class="block text-gray-700 text-sm">
-                                Источник:
-                                <select wire:model="client_supplier_id" class="block mb-2 p-2 border rounded w-full">
-                                    <option value="" selected>-- нет --</option>
-                                    @foreach ($suppliers as $supplier)
-                                        <option
-                                            value="{{ $supplier->id }}">{{ $supplier->title }} {{ $supplier->name ?? '' }} {{ $supplier->phone ?? '' }}</option>
-                                    @endforeach
-                                </select>
-                            </label>
-
-                            <label for="comment" class="block text-gray-700 text-sm">
-                                Комментарий
-                            </label>
-
-                            <textarea wire:model="comment" id="comment"
-                                      class="block mb-2 p-2 border rounded w-full"></textarea>
-
-                        @endif
-
                     </div>
-                    @if(1==2)
-                        <div class="w-1/3">
-
-                            <div class="bg-cyan-100 px-2 py-1 " style="max-height: 50vh; overflow: auto;">
-
-                                <label for="client_id" class="block text-gray-700 bg-cyan-300 shadow-md px-3 my-3">
-                                    <b>Клиент</b> <span class="text-sm">Создать / Выбрать -> ФИО (юр.лицо)</span>
-                                </label>
-
-                                <select wire:model.live="client_id" id="client_id"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    {{--                            <option value="yes">Физическое лицо</option>--}}
-                                    {{--                            <option value="no">Юридическое лицо</option>--}}
-                                    <option value="">Выберите клиента</option>
-                                    <option value="add">+ Создать клиента</option>
-                                    <option value="" disabled>--- текущие клиенты ---</option>
-                                    @foreach( $clients as $i )
-                                        <option value="{{ $i->id }}">
-                                            @if(empty($i->name_f))
-                                                {{ $i->name_f ?? '-'}} {{ $i->name_i ?? '-' }} {{ $i->name_o ?? '-' }}
-                                            @else
-                                                {{ $i->name_f }} {{ !empty($i->name_i) ? mb_substr($i->name_i,0,1).'.':'' }}{{ !empty($i->name_o) ? mb_substr($i->name_o,0,1).'.' : '' }}
-                                            @endif
-                                            @if( !empty($i->ur_name) || !empty($i->name_company) )
-                                                (
-                                                @if( empty($i->name_company) && !empty($i->ur_name) )
-                                                    {{$i->ur_name}}
-                                                @elseif( !empty($i->name_company) && empty($i->ur_name) )
-                                                    {{$i->name_company}}
-                                                @elseif( strlen($i->name_company) != 0 && strlen($i->ur_name) > strlen($i->name_company) )
-                                                    {{$i->name_company}}
-                                                @else
-                                                    {{$i->ur_name}}
-                                                @endif
-                                                )
-                                            @endif
-                                        </option>
-                                    @endforeach
-                                </select>
-                                {{--                        client_id: {{ $client_id }}--}}
-
-                                @if( !empty($client_id) )
-                                    @if( $client_id == 'add' )
-                                        <div class="bg-cyan-300 px-3 shadow-md my-3">
-                                            Создать клиента
-                                        </div>
-                                        {{--                                        добавить клиента--}}
-
-                                        <livewire:cms2.order.add-form-simple
-
-
-                                            {{--                                            :client_id="$client_id"--}}
-                                            {{--                                            :key="$client_id"--}}
-                                        />
-                                    @else
-                                        {{--                                        <div class="px-2">--}}
-                                        <livewire:cms2.informer.for-add-leed-client-info-mini
-                                            :client_id="$client_id"
-                                            :key="$client_id"/>
-                                    @endif
-                                @endif
-                            </div>
-
-                        </div>
-                        <div class="xxw-screen-[20%] w-1/3">
-
-                            <div class="bg-yellow-200 px-2 py-1">
-                                <div class="bg-yellow-300 shadow-md px-3 my-3">
-                                    Заказ
-                                </div>
-                                <div style="max-height: 40vh; overflow: auto;">
-                                    {{--                                    order                                    <br/>--}}
-                                    {{--                                    <pre>{{ print_r($order) }}</pre>--}}
-                                    <livewire:cms2.order.add-form-simple
-                                        typeDispatch="creat_leed_mini"
-                                    />
-                                </div>
-                            </div>
-
-                        </div>
-                    @endif
-
-                    {{--                    </div>--}}
 
                     <div class="flex justify-center py-3 bg-gray-100">
                         {{--                        <button type="button" wire:click="$set('isFormVisible', false)"--}}
@@ -258,7 +108,6 @@
                         {{--                        </button>--}}
                         <button type="submit" class="bg-blue-400 py-2 px-4 rounded-xl">Добавить</button>
                     </div>
-
 
                 </div>
             </form>
