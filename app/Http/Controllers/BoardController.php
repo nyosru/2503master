@@ -17,53 +17,52 @@ class BoardController extends Controller
 
     public static function getPolyaConfig()
     {
-        self::$polya_config[] = ['pole' => 'name', 'name' => 'Название'];
-        self::$polya_config[] = ['pole' => 'company', 'name' => 'Компания'];
 
-        self::$polya_config[] = ['pole' => 'cooperativ', 'name' => 'Кооператив'];
+        self::$polya_config[] = ['pole' => 'name', 'name' => 'Название', 'validate' => 'nullable|string|max:255' ];
+        self::$polya_config[] = ['pole' => 'company', 'name' => 'Компания', 'validate' => 'nullable|string|max:255' ];
 
-        self::$polya_config[] = ['pole' => 'platform', 'name' => 'Платформа'];
-        self::$polya_config[] = ['pole' => 'link', 'name' => 'Ссылка'];
+        self::$polya_config[] = ['pole' => 'cooperativ', 'name' => 'Кооператив', 'validate' => 'nullable|string|max:255' ];
 
-        self::$polya_config[] = ['pole' => 'base_number', 'name' => 'Номер'];
+        self::$polya_config[] = ['pole' => 'platform', 'name' => 'Платформа', 'validate' => 'nullable|string|max:255' ];
+        self::$polya_config[] = ['pole' => 'link', 'name' => 'Ссылка', 'validate' => 'nullable|string' ];
 
-        self::$polya_config[] = ['pole' => 'fio', 'name' => 'ФИО'];
-        self::$polya_config[] = ['pole' => 'phone', 'name' => 'Телефон'];
+        self::$polya_config[] = ['pole' => 'base_number', 'name' => 'Номер', 'validate' => 'nullable|string|max:255' ];
 
-        self::$polya_config[] = ['pole' => 'fio2', 'name' => 'ФИО2'];
-        self::$polya_config[] = ['pole' => 'phone2', 'name' => 'Телефон2'];
+        self::$polya_config[] = ['pole' => 'fio', 'name' => 'ФИО', 'validate' => 'nullable|string|max:255' ];
+        self::$polya_config[] = ['pole' => 'phone', 'name' => 'Телефон', 'validate' => 'nullable|string|max:20' ];
 
-        self::$polya_config[] = ['pole' => 'telegram', 'name' => 'Телеграм id'];
-        self::$polya_config[] = ['pole' => 'whatsapp', 'name' => 'WatsApp id'];
+        self::$polya_config[] = ['pole' => 'fio2', 'name' => 'ФИО2', 'validate' => 'nullable|string|max:255' ];
+        self::$polya_config[] = ['pole' => 'phone2', 'name' => 'Телефон2', 'validate' => 'nullable|integer' ];
 
-        self::$polya_config[] = ['pole' => 'date_start', 'name' => 'Дата старта'];
-        self::$polya_config[] = ['pole' => 'comment', 'name' => 'Комментарий'];
+        self::$polya_config[] = ['pole' => 'telegram', 'name' => 'Телеграм id', 'validate' => 'nullable|string|max:255' ];
+        self::$polya_config[] = ['pole' => 'whatsapp', 'name' => 'WatsApp id', 'validate' => 'nullable|string|max:255' ];
 
-        self::$polya_config[] = ['pole' => 'budget', 'name' => 'Бюджет'];
-        self::$polya_config[] = ['pole' => 'price', 'name' => 'Цена'];
+        self::$polya_config[] = ['pole' => 'date_start', 'name' => 'Дата старта', 'validate' => 'nullable|date' ];
+        self::$polya_config[] = ['pole' => 'comment', 'name' => 'Комментарий', 'validate' => 'nullable|string|max:1000' ];
 
-        self::$polya_config[] = ['pole' => 'order_product_types_id', 'name' => 'Тип продукта'];
-        self::$polya_config[] = ['pole' => 'customer', 'name' => 'Пользователь'];
-        self::$polya_config[] = ['pole' => 'payment_due_date', 'name' => 'Дата после оплаты'];
-        self::$polya_config[] = ['pole' => 'submit_before', 'name' => 'Подать до'];
+        self::$polya_config[] = ['pole' => 'budget', 'name' => 'Бюджет', 'validate' => 'nullable|integer' ];
+        self::$polya_config[] = ['pole' => 'price', 'name' => 'Цена', 'validate' => 'nullable|integer' ];
 
-        self::$polya_config[] = ['pole' => 'pay_day_every_year', 'name' => 'Оплата ежегодно'];
-        self::$polya_config[] = ['pole' => 'pay_day_every_month', 'name' => 'Оплата ежемесячно'];
+        self::$polya_config[] = ['pole' => 'order_product_types_id', 'name' => 'Тип продукта', 'validate' => 'nullable|exists:order_product_types,id' ];
 
+        self::$polya_config[] = ['pole' => 'customer', 'name' => 'Пользователь', 'validate' => 'nullable|string' ];
+        self::$polya_config[] = ['pole' => 'payment_due_date', 'name' => 'Дата после оплаты', 'validate' => 'nullable|date' ];
+        self::$polya_config[] = ['pole' => 'submit_before', 'name' => 'Подать до', 'validate' => 'nullable|integer' ];
 
-        self::$polya_config[] = ['pole' => 'pay_day_every_month', 'name' => 'Оплата ежемесячно'];
+        self::$polya_config[] = ['pole' => 'pay_day_every_year', 'name' => 'Оплата ежегодно', 'validate' => 'nullable|date' ];
+        self::$polya_config[] = ['pole' => 'pay_day_every_month', 'name' => 'Оплата ежемесячно', 'validate' => 'nullable|integer' ];
 
 //2. эл.почта заказчика
-        self::$polya_config[] = ['pole' => 'email', 'name' => 'E-mail заказчика'];
+        self::$polya_config[] = ['pole' => 'email', 'name' => 'E-mail заказчика', 'validate' => 'nullable|string' ];
 //3. название переделать в предмет тендера
-        self::$polya_config[] = ['pole' => 'obj_tender', 'name' => 'предмет тендера'];
+        self::$polya_config[] = ['pole' => 'obj_tender', 'name' => 'предмет тендера', 'validate' => 'nullable|string' ];
 //4. Заказчик
-        self::$polya_config[] = ['pole' => 'zakazchick', 'name' => 'Заказчик'];
+        self::$polya_config[] = ['pole' => 'zakazchick', 'name' => 'Заказчик', 'validate' => 'nullable|string' ];
 //5.  срок поставки от и до (45-60 дней)
-        self::$polya_config[] = ['pole' => 'post_day_ot', 'name' => 'срок поставки от']; // , 'name' => 'Цена'];
-        self::$polya_config[] = ['pole' => 'post_day_do', 'name' => 'срок поставки до']; // , 'name' => 'Цена'];
+        self::$polya_config[] = ['pole' => 'post_day_ot', 'name' => 'срок поставки от', 'validate' => 'nullable|integer' ]; // , 'name' => 'Цена', 'validate' => '' ];
+        self::$polya_config[] = ['pole' => 'post_day_do', 'name' => 'срок поставки до', 'validate' => 'nullable|integer' ]; // , 'name' => 'Цена', 'validate' => '' ];
 //6. место поставки
-        self::$polya_config[] = ['pole' => 'mesto_dostavki', 'name' => 'место поставки'];
+        self::$polya_config[] = ['pole' => 'mesto_dostavki', 'name' => 'место поставки', 'validate' => 'nullable|string' ];
 
 
         return self::$polya_config;

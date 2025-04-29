@@ -3,6 +3,7 @@
 namespace App\Livewire\Cms2\Leed;
 
 
+use App\Http\Controllers\BoardController;
 use App\Http\Controllers\LeedChangeUserController;
 use App\Models\BoardFieldSetting;
 use App\Models\ClientSupplier;
@@ -128,41 +129,49 @@ class AddLeedFormSimple extends Component
     {
 //        $this->addLeedRecordOrder($this->order);
 
-        $this->validate([
-            'name' => 'nullable|string|max:255',
-            'fio' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'telegram' => 'nullable|string|max:255',
-            'whatsapp' => 'nullable|string|max:255',
-            'company' => 'nullable|string|max:255',
-            'comment' => 'nullable|string|max:1000',
-            'client_supplier_id' => 'nullable|exists:client_suppliers,id', // Валидация для поля client_supplier_id
-            'order_product_types_id' => 'nullable|exists:order_product_types,id',
+        $a = BoardController::getPolyaConfig();
 
+        $rules = [];
+        foreach ($a as $k => $v) {
+            $rules[$v['pole']] = $v['validate'];
+        }
 
-            'fio2' => 'nullable|string|max:255',
-            'phone2' => 'nullable|integer',
-            'cooperativ' => 'nullable|string|max:255',
-            'price' => 'nullable|integer',
-            'date_start' => 'nullable|date',
-            'budget' => 'nullable|integer',
-            'platform' => 'nullable|string|max:255',
-            'base_number' => 'nullable|string|max:255',
-            'link' => 'nullable|string|max:255',
-            'submit_before' => 'nullable|integer',
-            'payment_due_date' => 'nullable|date',
-            'pay_day_every_year' => 'nullable|date',
-            'pay_day_every_month' => 'nullable|integer',
-
-
-            'email' => 'nullable|string',
-            'obj_tender' => 'nullable|string',
-            'zakazchick' => 'nullable|string',
-            'post_day_ot' => 'nullable|integer',
-            'post_day_do' => 'nullable|integer',
-            'mesto_dostavki' => 'nullable|string',
-
-        ]);
+        $this->validate($rules);
+//        $this->validate([
+//            'name' => 'nullable|string|max:255',
+//            'fio' => 'nullable|string|max:255',
+//            'phone' => 'nullable|string|max:20',
+//            'telegram' => 'nullable|string|max:255',
+//            'whatsapp' => 'nullable|string|max:255',
+//            'company' => 'nullable|string|max:255',
+//            'comment' => 'nullable|string|max:1000',
+//            'client_supplier_id' => 'nullable|exists:client_suppliers,id', // Валидация для поля client_supplier_id
+//            'order_product_types_id' => 'nullable|exists:order_product_types,id',
+//
+//
+//            'fio2' => 'nullable|string|max:255',
+//            'phone2' => 'nullable|integer',
+//            'cooperativ' => 'nullable|string|max:255',
+//            'price' => 'nullable|integer',
+//            'date_start' => 'nullable|date',
+//            'budget' => 'nullable|integer',
+//            'platform' => 'nullable|string|max:255',
+//            'base_number' => 'nullable|string|max:255',
+//            'link' => 'nullable|string|max:255',
+//            'submit_before' => 'nullable|integer',
+//            'payment_due_date' => 'nullable|date',
+//            'pay_day_every_year' => 'nullable|date',
+//            'pay_day_every_month' => 'nullable|integer',
+//
+//
+//            'email' => 'nullable|string',
+//            'obj_tender' => 'nullable|string',
+//            'zakazchick' => 'nullable|string',
+//            'post_day_ot' => 'nullable|integer',
+//            'post_day_do' => 'nullable|integer',
+//            'mesto_dostavki' => 'nullable|string',
+//
+//        ]);
 
         $user_id = Auth::id();
 
@@ -226,9 +235,9 @@ class AddLeedFormSimple extends Component
             'email',
             'obj_tender',
             'zakazchick',
-            'post_day_ot' ,
-            'post_day_do' ,
-            'mesto_dostavki' ,
+            'post_day_ot',
+            'post_day_do',
+            'mesto_dostavki',
 
         ]);
 
