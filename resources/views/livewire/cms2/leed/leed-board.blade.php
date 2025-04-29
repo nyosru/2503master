@@ -48,7 +48,8 @@
 
             {{--шапка над доской--}}
             <div class="app-content-header"> <!--begin::Container-->
-                <div class="container-fluid"> <!--begin::Row-->
+{{--                <div class="container-fluid"> <!--begin::Row-->--}}
+                <div class="container"> <!--begin::Row-->
                     <div class="flex flex-row space-x-4 w-full">
                         @if(1==1)
                             <div class="flex-1">
