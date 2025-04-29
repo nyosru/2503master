@@ -288,6 +288,7 @@
                                                 class="bg-blue-200 active:bg-blue-400 rounded px-4 py-2"
                                                 type="submit" value="Добавить"/>
                                         </form>
+
                                     </div>
                                 @endif
                                 @endpermission
@@ -409,6 +410,9 @@ hover:shadow-lg transition-all border rounded cursor-pointer">
                                                                 {{--                                                                <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($record->toArray()) }}</pre>--}}
                                                                 {{-- <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($record->column->board->fieldSettings->toArray()) }}</pre>--}}
                                                                 @php $hasFields = false; @endphp
+
+                                                                <pre class="text-xs max-h-[200px] overflow-auto" >{{ print_r($record->column->board->fieldSettings->toArray()) }}</pre>
+
                                                                 @foreach( $record->column->board->fieldSettings as $f )
 
                                                                     @if( !empty($record->{$f->field_name}) )
