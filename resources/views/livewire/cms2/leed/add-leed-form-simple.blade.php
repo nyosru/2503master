@@ -93,7 +93,6 @@
                                 wire:model="{{ $field['field_name'] }}" id="{{ $field['field_name'] }}"
                                 class="block mb-2 p-2 border rounded w-full">
 
-
                             @error($field['field_name'])
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
