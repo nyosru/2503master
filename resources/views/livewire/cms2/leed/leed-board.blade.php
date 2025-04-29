@@ -412,10 +412,14 @@ hover:shadow-lg transition-all border rounded cursor-pointer">
                                                                 @php $hasFields = false; @endphp
 
                                                                 <pre class="text-xs max-h-[200px] overflow-auto" >{{ print_r($record->column->board->fieldSettings->toArray()) }}</pre>
+                                                                <br/>
+                                                                $record
+                                                                <br/>
+                                                                <pre class="text-xs max-h-[200px] overflow-auto" >{{ print_r($record->toArray()) }}</pre>
 
                                                                 @foreach( $record->column->board->fieldSettings as $f )
 
-                                                                    @if( !empty($record->{$f->field_name}) )
+                                                                    @if( !empty($record[$f->field_name]) )
                                                                         {{--                                                                            {{$f->field_name}} :--}}
                                                                         {{ $record[$f->field_name]}}
                                                                         <br/>

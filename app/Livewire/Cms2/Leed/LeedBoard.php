@@ -417,6 +417,7 @@ class LeedBoard extends Component
 //                })
                     ->get();
             }
+
             $this->columns = LeedColumn::orderBy('order', 'asc')
                 ->whereBoardId($this->board_id)
 //                ->where('board_id', $this->user->current_board_id)
