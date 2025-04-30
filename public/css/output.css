@@ -1637,6 +1637,10 @@ select {
   width: 100%;
 }
 
+.w-\[97\%\] {
+  width: 97%;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
