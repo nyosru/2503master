@@ -37,7 +37,7 @@ class BoardController extends Controller
         self::$polya_config[] = ['pole' => 'phone', 'name' => 'Телефон', 'rule' => 'nullable|string|max:20' ];
 
         self::$polya_config[] = ['pole' => 'fio2', 'name' => 'ФИО2', 'rule' => 'nullable|string|max:255' ];
-        self::$polya_config[] = ['pole' => 'phone2', 'name' => 'Телефон2', 'rule' => 'nullable|integer' ];
+        self::$polya_config[] = ['pole' => 'phone2', 'name' => 'Телефон2', 'rule' => 'nullable|string' ];
 
         self::$polya_config[] = ['pole' => 'telegram', 'name' => 'Телеграм id', 'rule' => 'nullable|string|max:255' ];
         self::$polya_config[] = ['pole' => 'whatsapp', 'name' => 'WatsApp id', 'rule' => 'nullable|string|max:255' ];
