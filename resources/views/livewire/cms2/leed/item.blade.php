@@ -96,7 +96,7 @@
     @endif
 
 
-    <div class="flex flex-col sm:flex-row w-full space-x-2 pr-2">
+    <div class="flex flex-col sm:flex-row w-full space-x-2 pr-4">
 
         {{--инфа о лиде--}}
         <div class="flex flex-col w-full md:w-1/3 space-y-2">
