@@ -7,7 +7,7 @@
 
 
     {{--    <div class="flex flex-row bg-white border w-full rounded-md mb-2">--}}
-    <div class="bg-white border w-full rounded-md mb-2 mt-[-15px] py-1 mr-2
+    <div class="bg-white border w-full rounded-md mb-2 mt-[-15px] py-1
     flex flex-row items-center
     ">
         {{--        <div class="flex items-center">--}}
@@ -96,7 +96,7 @@
     @endif
 
 
-    <div class="flex flex-col sm:flex-row w-full space-x-2">
+    <div class="flex flex-col sm:flex-row w-full space-x-2 pr-2">
 
         {{--инфа о лиде--}}
         <div class="flex flex-col w-full md:w-1/3 space-y-2">
