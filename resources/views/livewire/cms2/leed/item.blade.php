@@ -95,7 +95,7 @@
         <span class="bg-green-500 text-white p-3 rounded">{{ session()->get('moveMessage') }}</span>
     @endif
 
-111
+
     <div class="flex flex-col sm:flex-row w-full space-x-2 ">
 
         {{--инфа о лиде--}}
