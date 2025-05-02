@@ -9,6 +9,7 @@ class ColumnConfig extends Component
 {
 
     public $column; // Храним объект столбца
+    public $name_new; // Храним объект столбца
 
     public $settings = []; // Массив для хранения параметров
     public $modal_show = false; // ID текущего столбца для открытия модального окна
@@ -36,6 +37,7 @@ class ColumnConfig extends Component
     {
 //        $this->column = $column;
         $this->settings = [
+            'name' => $column->name,
             'can_move' => $column->can_move,
             'can_delete' => $column->can_delete,
             'type_otkaz' => $column->type_otkaz,
