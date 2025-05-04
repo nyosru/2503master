@@ -522,13 +522,23 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
                                                                 {{--                                                            <livewire:cms2.leed.move :leed="$record"/>--}}
 
                                                                 @iF($record->notifications_count > 0)
+
                                                                     <div
                                                                         title="Есть уведомления в этой записи: {{ $record->notifications_count }}"
 {{--                                                                        style="position:absolute; top:0; right:0;"--}}
                                                                     >
+                                                                        <a href="{{ route('leed.item',[
+    'board_id'=>$column->board_id ,
+    'id'=>$record->id
+    ]) }}"
+                                                                           wire:navigate
+                                                                           class="text-blue-400 xblock xtext-center hover:underline p-1"
+                                                                        >
                                                                         {{--                                                                {{ $record->notifications_count  }}--}}
                                                                         <svg class="h-6 w-6 text-red-200"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="13" r="7" />  <polyline points="12 10 12 13 14 13" />  <line x1="7" y1="4" x2="4.25" y2="6" />  <line x1="17" y1="4" x2="19.75" y2="6" /></svg>
+                                                                        </a>
                                                                     </div>
+
                                                                 @endif
 
                                                             </div>
