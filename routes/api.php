@@ -81,7 +81,7 @@ Route::post('/webhook1', function () {
 // Send the message with the keyboard
             Telegram::sendMessage([
                 'chat_id' => $chatId,
-                'text' => 'Поделитесь вашим номером телефона:',
+                'text' => 'Поделитесь вашим номером телефона'.PHP_EOL.'кнопка ниже ↓↓↓ (Share Phone Number)',
                 'reply_markup' => json_encode($keyboard)
             ]);
 
