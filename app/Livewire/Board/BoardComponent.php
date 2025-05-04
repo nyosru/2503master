@@ -7,12 +7,20 @@ use App\Models\BoardUser;
 use App\Models\Role;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\On;
 
 class BoardComponent extends Component
 {
     use WithPagination;
 
-//    #[On('user-added')]
+    #[On('user-added')]
+    public function refreshBoardUsers()
+    {
+        $this->resetPage(); // Сброс пагинации (если нужно)
+        $this->render();    // Полная перерисовка
+    }
+
+//    #[On('user-added')]ы
     public function render()
     {
 //        $boards = Board::with('users')->paginate(10); // Загрузка связанных пользователей

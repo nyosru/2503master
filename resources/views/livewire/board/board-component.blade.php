@@ -61,7 +61,8 @@
                 </td>
 
                 <td class="px-6 py-4">
-                    <livewire:board.add-user-form :board_id="$board->id"/>
+
+                    <livewire:board.add-user-form :key="'board'.$board->id" :board_id="$board->id"/>
 
                     <div class=" max-h-[150px]
                             overflow-auto">

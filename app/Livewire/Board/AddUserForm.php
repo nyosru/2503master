@@ -42,11 +42,14 @@ class AddUserForm extends Component
         $this->reset(['board_id', 'user_id', 'role_id']);
 
         // Уведомление об успешном добавлении
-        session()->flash('message', 'Запись успешно добавлена!');
+        session()->flash('message'.$this->board_id, 'Запись успешно добавлена!');
 
         // Отправка события с параметром postId
 //        $this->dispatch('user-added', boardId: $this->board_id);
-        return redirect()->route('board');
+        $this->dispatch('user-added');
+//        return redirect()->route('board');
+        // Отправляем событие в JS, чтобы скрыть форму
+        $this->dispatch('form-saved');
     }
 
     public function render()

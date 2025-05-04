@@ -53,21 +53,23 @@ Route::post('/webhook1', function () {
         $chatId = $update['message']['chat']['id'] ?? null;
         $text = $update['message']['text'] ?? '';
 
+        $us = User::find($chatId);
+        $phone = $us->phone_number;
+
         // Пример: отправка сообщения обратно (нужна библиотека Telegram SDK)
         Telegram::sendMessage([
             'chat_id' => $chatId,
             'text' => "Вы написали --: $text"
         ]);
 
-
-        if ($text == '11') {
+        if ( empty($phone) || $text == '11') {
 
 // Define the keyboard with the "Share Phone Number" button
             $keyboard = [
                 'keyboard' => [
                     [
                         [
-                            'text' => 'Share Phone Number',
+                            'text' => 'Отправить свой номер телефона',
                             'request_contact' => true
                         ]
                     ]

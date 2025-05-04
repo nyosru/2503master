@@ -1,4 +1,6 @@
-<div x-data="{ isFormVisible: false }">
+<div x-data="{ isFormVisible: false }"
+     @form-saved.window="isFormVisible = false"
+>
 
     <button
         x-on:click="isFormVisible = !isFormVisible"
@@ -8,9 +10,15 @@
     </button>
 
     <!-- Уведомление об успешном добавлении -->
-    @if (session()->has('message'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mb-4 rounded">
-            {{ session('message') }}
+    @if (session()->has('message'.$board_id))
+        <div
+            class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mb-4 rounded"
+            x-data="{ show: true }"
+            x-init="setTimeout(() => show = false, 3000)"
+            x-show="show"
+            x-transition
+        >
+            {{ session('message'.$board_id) }}
         </div>
     @endif
 
