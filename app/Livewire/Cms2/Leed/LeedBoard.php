@@ -422,6 +422,9 @@ class LeedBoard extends Component
                 ->whereBoardId($this->board_id)
 //                ->where('board_id', $this->user->current_board_id)
                 ->with(['records' => function ($query) {
+
+                    $query->withCount('notifications');
+
                     $query->with([
                         'column' => function ($query) {
 

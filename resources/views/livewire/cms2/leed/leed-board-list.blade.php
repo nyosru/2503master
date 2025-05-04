@@ -83,11 +83,28 @@
                 </div>
                 <div class="w-1/4 text-center">
                     {{--                    Ячейка 3--}}
+
+                    @permission('р.Доски / удалить')
+                    <a
+{{--                        href="{{ route('board.config.delete',['board'=>$board->id ]) }}"--}}
+                        wire:click="delete({{$board->id}})"
+                       class="font-bold text-red-500
+                       hover:underline
+                       cursor-pointer
+                       "
+                       title="удалить доску"
+                       wire:navigate
+                       wire:confirm="Удалить доску ?"
+                    >X</a>
+                    @endpermission
                     @permission('р.Лиды / доска конфиг')
                     <a href="{{ route('board.config',['board'=>$board->id ]) }}"
                        class="hover:text-gray-600 text-white"
-                    >⚙️ конфиг доски</a>
+                       title="конфиг доски"
+                       wire:navigate
+                    >⚙️</a>
                     @endpermission
+
                 </div>
             </div>
         @endforeach

@@ -118,4 +118,9 @@ class LeedRecord extends Model
         return $this->hasMany(LeedRecordUserChange::class);
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(LeedNotification::class, 'leed_id');
+    }
+
 }

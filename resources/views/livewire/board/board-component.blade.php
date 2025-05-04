@@ -111,17 +111,20 @@
                     @endif
                 </td>
                 <td class="px-6 py-4">
+                    @permission('р.Доски / удалить')
                     <button
                         wire:confirm="Удалить ?"
                         wire:click="delete({{ $board->id }})"
                         class="
 {{--                        bg-red-500 hover:bg-red-700 --}}
-                        text-red-200 hover:text-red-500
+                        text-red-300
+                        hover:text-red-500
                         hover:underline
                         font-bold py-2 px-4 rounded"
                     >
-                        Удалить
+                        X
                     </button>
+                    @endpermission
                 </td>
             </tr>
         @endforeach

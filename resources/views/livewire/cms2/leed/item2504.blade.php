@@ -95,7 +95,6 @@
         <span class="bg-green-500 text-white p-3 rounded">{{ session()->get('moveMessage') }}</span>
     @endif
 
-
     <div class="flex flex-col sm:flex-row w-full space-x-2 pr-3">
 
         {{--инфа о лиде--}}
@@ -104,7 +103,7 @@
             overflow-auto">
                 <livewire:cms2.leed.leed-record-info-form
                     :leed="$leed"
-                :board_id="$leed->column->board->id"
+                    :board_id="$leed->column->board->id"
                 />
             </div>
             {{--Ответсвенный за лид--}}
@@ -144,6 +143,31 @@
 
     </div>
 
+    {{--    строчка 2--}}
+
+    <div class="flex flex-col sm:flex-row w-full space-x-2 pr-3">
+
+        <div class="flex flex-col w-full md:w-1/3 space-y-2">
+            <div class="bg-white border-2 border-gray-400 w-full h-[645px] rounded-md
+            overflow-auto">
+            {{--оповещения--}}
+            <livewire:leed.notification-component
+{{--                :leed="$leed"--}}
+                :leed_id="$leed->id"
+                {{--                    :board_id="$leed->column->board->id"--}}
+            />
+        </div>
+        </div>
+        <div class="flex flex-col w-full md:w-1/3 space-y-2">
+{{--            2--}}
+        </div>
+    <div class="flex flex-col w-full md:w-1/3 space-y-2">
+{{--        3--}}
+        </div>
+    </div>
+
+    {{--    строчка 3--}}
+
     <div class="flex flex-col w-full space-y-2 my-5">
         <div class="flex flex-row space-x-5">
             {{--            <div class="w-1/2  px-5">--}}
@@ -159,7 +183,6 @@
             {{--            <div class="w-1/2 px-5">--}}
             <div class="bg-white border-2 border-gray-400 w-1/2 rounded-md">
                 {{--                ответственный за лид--}}
-
                 <livewire:cms2.leed.leed-record-user-changes :leed="$leed"/>
             </div>
         </div>

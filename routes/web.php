@@ -131,6 +131,10 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
+
+
+
+
     Route::get('board/select', \App\Livewire\Cms2\Leed\SelectBoardForm::class)->name('board.select');
 
 //Route::middleware('check.permission:р.Лиды')->group(function () {
@@ -144,13 +148,24 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('leed/{board}/config', \App\Livewire\Board\ConfigComponent::class)->name('board.config');
 
+
+    Route::get('leed/{board}/delete', [\App\Http\Controllers\BoardController::class, 'delete'])
+        ->name('board.config.delete')
+        ->middleware('check.permission:р.Доски / удалить')
+    ;
+
     Route::get('leed/{board_id}/{id}', \App\Livewire\Cms2\Leed\Item::class)->name('leed.item');
 
 //        Route::get('/leed/{id}', \App\Livewire\Cms2\ClientsInfo::class)->name('clients.info');
 //});
 
 
-    Route::get('board', \App\Livewire\Board\BoardComponent::class)->name('board');
+    Route::get('board', \App\Livewire\Board\BoardComponent::class)
+        ->name('board')
+        ->middleware('check.permission:р.Доски')
+    ;
+
+
 
     Route::middleware('check.permission:р.Техничка')->group(function () {
         Route::prefix('tech')->name('tech.')->group(function () {

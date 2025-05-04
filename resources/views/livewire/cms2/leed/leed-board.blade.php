@@ -48,7 +48,7 @@
 
             {{--шапка над доской--}}
             <div class="app-content-header"> <!--begin::Container-->
-{{--                <div class="container-fluid"> <!--begin::Row-->--}}
+                {{--                <div class="container-fluid"> <!--begin::Row-->--}}
                 <div class="container"> <!--begin::Row-->
                     <div class="flex flex-row space-x-4 w-full">
                         @if(1==1)
@@ -308,7 +308,7 @@
 
                                     @foreach($column->records as $record)
 
-                                        {{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($record->toArray()) }}</pre>--}}
+                                        {{--                                                                <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($record->toArray()) }}</pre>--}}
 
                                         {{-- инфа о лиде--}}
                                         @if(1==2)
@@ -384,6 +384,7 @@
                                                 ondragover="event.preventDefault()"
                                                 ondrop="handleRecordDrop(event, {{ $column->id }})"
                                             >
+
                                                 @if(1==1)
                                                     <div
 
@@ -391,8 +392,18 @@
 bg-white/50
 {{--               text-center--}}
 hover:bg-gray-100
-hover:shadow-lg transition-all border rounded cursor-pointer">
+hover:shadow-lg transition-all border rounded cursor-pointer relative">
 
+                                                        @if(1==2)
+                                                        {{--                                                        блок справа на верху каждого лида--}}
+                                                        @iF($record->notifications_count > 0)
+                                                            <div
+                                                                style="position:absolute; top:0; right:0;">
+{{--                                                                {{ $record->notifications_count  }}--}}
+                                                                <svg class="h-8 w-8 text-red-200"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="13" r="7" />  <polyline points="12 10 12 13 14 13" />  <line x1="7" y1="4" x2="4.25" y2="6" />  <line x1="17" y1="4" x2="19.75" y2="6" /></svg>
+                                                            </div>
+                                                        @endif
+                                                        @endif
 
                                                         {{--<pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($record->toArray(),true) }}</pre>--}}
                                                         {{--                                                        <pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($column->toArray(),true) }}</pre>--}}
@@ -483,10 +494,12 @@ hover:shadow-lg transition-all border rounded cursor-pointer">
                 {{--inline--}}
                 mt-1 flex flex-row space-x-1 items-center">
 
+                                                                @if(1==2)
                                                                 <livewire:cms2.informer.leed.client
                                                                     {{--                                                                    :key="'block-'.$column->id.'-but1-'.$record->id"--}}
                                                                     :key="'but1-'.$record->id"
                                                                     :leed="$record"/>
+                                                                @endif
                                                                 {{--                                                    <livewire:cms2.informer.leed.order :key="'block-but2-'.$record->id"--}}
                                                                 {{--                                                                                       :leed="$record"/>--}}
 
@@ -507,6 +520,16 @@ hover:shadow-lg transition-all border rounded cursor-pointer">
                                                                     :leed="$record"/>
                                                                 {{--передать лида--}}
                                                                 {{--                                                            <livewire:cms2.leed.move :leed="$record"/>--}}
+
+                                                                @iF($record->notifications_count > 0)
+                                                                    <div
+                                                                        title="Есть уведомления в этой записи: {{ $record->notifications_count }}"
+{{--                                                                        style="position:absolute; top:0; right:0;"--}}
+                                                                    >
+                                                                        {{--                                                                {{ $record->notifications_count  }}--}}
+                                                                        <svg class="h-6 w-6 text-red-200"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="13" r="7" />  <polyline points="12 10 12 13 14 13" />  <line x1="7" y1="4" x2="4.25" y2="6" />  <line x1="17" y1="4" x2="19.75" y2="6" /></svg>
+                                                                    </div>
+                                                                @endif
 
                                                             </div>
 

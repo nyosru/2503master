@@ -185,8 +185,13 @@ class BoardController extends Controller
         return $return;
     }
 
-    public
-    static function getCurrentBoard($user_id, $new_board_id = null)
+    public static function delete( Board $board )
+    {
+        $board->delete();
+        return redirect()->back();
+    }
+
+    public static function getCurrentBoard($user_id, $new_board_id = null)
     {
 
         $user = User::with([

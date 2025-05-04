@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Cms2\Leed;
 
+use App\Http\Controllers\BoardController;
 use App\Models\Board;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -26,6 +27,10 @@ class LeedBoardList extends Component
             }])
             ->get();
 
+    }
+    public function delete( Board $board)
+    {
+        BoardController::delete($board);
     }
     public function render()
     {
