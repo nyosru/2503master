@@ -53,7 +53,7 @@ Route::post('/webhook1', function () {
         $chatId = $update['message']['chat']['id'] ?? null;
         $text = $update['message']['text'] ?? '';
 
-        $us = User::find($chatId);
+        $us = User::whereId($chatId)->get()->first();
         $phone = $us->phone_number;
 
         // Пример: отправка сообщения обратно (нужна библиотека Telegram SDK)
