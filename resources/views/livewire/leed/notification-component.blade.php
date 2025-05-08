@@ -1,6 +1,4 @@
 <div>
-
-
     <div class="p-2 text-lg border-b">
 
         <button wire:click="showCreateForm"
