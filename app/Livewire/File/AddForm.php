@@ -133,7 +133,8 @@ class AddForm extends Component
 //            $path = $file->store('leed-comments', 's3');
 //            $path = Storage::disk('s3')->put('leed-comments', $file );
 
-            $path = $file->store('leed-comments', 's3beget');
+            $path = $file->store('leed-files', 's3beget');
+
             $url = Storage::disk('s3beget')->url($path);
 
 //            dd($path, $url, $e, $files ?? []);
@@ -147,6 +148,7 @@ class AddForm extends Component
 
                 'file_name' => $file->getClientOriginalName(), // Сохраняем оригинальное имя файла
                 'path' => $url,
+                's3_path' => $path,
 
                 'user_id' => Auth::id(),
             ];

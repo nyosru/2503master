@@ -11,10 +11,12 @@ class Manager extends Component
     public $board_id;
     public $files;
 
-    public function mount(){
+    public function mount()
+    {
     }
 
-    public function load(){
+    public function load()
+    {
         $this->files = FileUpload::whereLeedRecordId($this->leed->id)
             ->with([
                 'user' => function ($query) {

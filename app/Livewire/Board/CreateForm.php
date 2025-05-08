@@ -10,7 +10,9 @@ class CreateForm extends Component
 
     public $name;
     public $is_paid = false;
-
+    public $return_route = 'board';
+    public $show_payes = true;
+    public $show_form = false;
 
     public function save()
     {
@@ -37,7 +39,8 @@ class CreateForm extends Component
 //            'selectedUsers', 'userRoles',
             'is_paid']);
         session()->flash('message', 'Доска создана!');
-        return redirect()->route('board');
+//        return redirect()->route('board');
+        return redirect()->route( $this->return_route );
     }
 
 

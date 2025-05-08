@@ -15,7 +15,10 @@ class FileUpload extends Model
         'user_id',
         'name',
         'file_name',
+
         'path',
+        's3_path',
+
         'mini'
     ];
 

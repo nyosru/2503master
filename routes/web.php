@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\TelegramController;
 use App\Livewire\Cms2\Client;
 use App\Livewire\Cms2\Order;
@@ -38,6 +39,10 @@ Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
     })->name('sz');
 
 });
+
+
+
+
 
 
 Route::get('', \App\Livewire\Index::class)->name('index');
@@ -94,6 +99,9 @@ Route::get('/auth/telegram/callback', function () {
     // Перенаправление на нужную страницу после авторизации
     return redirect()->route('leed.list');
 });
+
+
+Route::get('/download/{id}/{file_name}', [DownloadController::class, 'download'])->name('download.file');
 
 
 // Маршрут для НЕ авторизованного пользователя

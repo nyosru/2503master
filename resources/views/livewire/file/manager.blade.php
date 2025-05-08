@@ -23,7 +23,11 @@
                     @if( !empty($f->name) )
                         {{ $f->name }}<br/>
                     @endif
-                    <a href="{{ $f->path }}" class="text-blue-500 underline">
+                    <a
+{{--                        href="{{ $f->path }}" --}}
+                        href="{{ route('download.file', [ 'id' => $f->id, 'file_name' => $f->file_name ]) }}"
+{{--                        target="_blank"--}}
+                        class="text-blue-500 underline">
                         {{ $f->file_name }}
                     </a>
 
