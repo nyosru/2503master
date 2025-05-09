@@ -5,7 +5,7 @@
                 <span class="text-black/50 float-right">
                     {{ date('d.m.Y H:i',strtotime($c->created_at)) }}
                     </span>
-                {{ $c->comment }}<br/>
+                {!! str_replace('/','<br/>',$c->comment) !!}<br/>
             </div>
         @endforeach
     </div>

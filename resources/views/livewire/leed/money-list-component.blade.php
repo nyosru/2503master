@@ -15,9 +15,15 @@
 
         <span class="font-bold flex items-center">
             Движение денег
-            @if(!empty($summa))
-            <span title="Текущий итог" class="pl-2 text-gray-400">{{ number_format($summa, 0) }}₽</span>
-                @endif
+{{--            @if(!empty($summa))--}}
+            <span title="Текущий итог" class="pl-2
+            @if($summa>0)
+            text-gray-400
+            @else
+            text-red-300
+            @endif
+            ">{{ number_format($summa, 0) }}₽</span>
+{{--                @endif--}}
             </span>
 
 
@@ -46,11 +52,11 @@
     </div>
 
     <div class="space-y-4">
-{{--        @if(session()->has('message'))--}}
-{{--            <div class="p-4 bg-green-100 text-green-700 rounded-lg">--}}
-{{--                {{ session('message') }}--}}
-{{--            </div>--}}
-{{--        @endif--}}
+        {{--        @if(session()->has('message'))--}}
+        {{--            <div class="p-4 bg-green-100 text-green-700 rounded-lg">--}}
+        {{--                {{ session('message') }}--}}
+        {{--            </div>--}}
+        {{--        @endif--}}
 
         <div class="divide-y divide-gray-200">
 
@@ -59,23 +65,36 @@
             @endif
 
             @forelse($payments as $payment)
-                <div class="px-2 py-4 flex justify-between items-center">
-                    <div class="flex-1">
+                <div class="px-2 py-4 flex flex-row justify-between items-center hover:bg-gray-100">
 
-                        <div class="float-right text-xs text-gray-400 mt-1">
-                            @if( !empty($payment->operation_date) )
-                                {{ \DateTime::createFromFormat('Y-m-d H:i:s', $payment->operation_date)->format('d.m.Y H:i') }}
-                            @endif
-                            ({{ $payment->user->name }})
-                        </div>
-
-{{--                        <div class="font-medium">{{ number_format($payment->amount, 2) }} ₽</div>--}}
+                    <div class="
+                    flex-1
+{{--                    w-[90px] --}}
+                    text-right">
                         <div class="font-medium">{{ number_format($payment->amount, 0) }} ₽</div>
+                    </div>
+                    <div class="flex-1 pl-2">
+
+                        {{--                        <div class="float-right text-xs text-gray-400 mt-1">--}}
+                        {{--                            @if( !empty($payment->operation_date) )--}}
+                        {{--                                {{ \DateTime::createFromFormat('Y-m-d H:i:s', $payment->operation_date)->format('d.m.Y H:i') }}--}}
+                        {{--                            @endif--}}
+                        {{--                            ({{ $payment->user->name }})--}}
+                        {{--                        </div>--}}
+
+                        {{--                        <div class="font-medium">{{ number_format($payment->amount, 2) }} ₽</div>--}}
 
                         @if($payment->comment)
-                            <div class="text-gray-600 text-sm">{{ $payment->comment }}</div>
+                            <div class="text-sm">{{ $payment->comment }}</div>
                         @endif
 
+                    </div>
+                    {{--                    <div class="w-[120px]">--}}
+                    <div class="flex-1 text-xs text-gray-600">
+                        @if( !empty($payment->operation_date) )
+                            {{ \DateTime::createFromFormat('Y-m-d H:i:s', $payment->operation_date)->format('d.m.Y H:i') }}<br/>
+                        @endif
+                        {{ $payment->user->name }}
                     </div>
                     <button
                         wire:confirm="Удалить эту запись?"

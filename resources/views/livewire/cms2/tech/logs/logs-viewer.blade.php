@@ -93,7 +93,7 @@
                         {{ $log->user->name }}
                         <sup>{{ $log->user_id }}</sup>
                     </td>
-                    <td class="border p-2">{{ $log->comment }}</td>
+                    <td class="border p-2">{{ str_replace('/','<br/>',$log->comment) }}</td>
                     <td class="border p-2">{{ $log->order_id ?? '—' }}</td>
                     <td class="border p-2">{{ $log->leed_record_id ?? '—' }}</td>
                     <td class="border p-2">{{ $log->created_at }}</td>

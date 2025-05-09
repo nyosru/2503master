@@ -95,31 +95,24 @@
         <span class="bg-green-500 text-white p-3 rounded">{{ session()->get('moveMessage') }}</span>
     @endif
 
-    <div class="
-        {{--    flex flex-col sm:flex-row w-full space-x-2 pr-3--}}
-        grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4
-        pr-2
-    ">
+    <div class="flex flex-col sm:flex-row w-full space-x-2 pr-3">
 
-        <div>
-            {{--инфа о лиде--}}
-            {{--        <div class="flex flex-col w-full md:w-1/3 space-y-2">--}}
-            {{--            <div class="bg-white border-2 border-gray-400 w-full h-[645px] rounded-md--}}
-            {{--            overflow-auto">--}}
-            <livewire:cms2.leed.leed-record-info-form
-                :leed="$leed"
-                :board_id="$leed->column->board->id"
-            />
-            {{--            </div>--}}
+        {{--инфа о лиде--}}
+        <div class="flex flex-col w-full md:w-1/3 space-y-2">
+            <div class="bg-white border-2 border-gray-400 w-full h-[645px] rounded-md
+            overflow-auto">
+                <livewire:cms2.leed.leed-record-info-form
+                    :leed="$leed"
+                    :board_id="$leed->column->board->id"
+                />
+            </div>
             {{--Ответсвенный за лид--}}
             {{--            <div class="bg-white border-2 border-gray-400  h-[145px] w-full rounded-md">--}}
             {{--                <livewire:cms2.leed.leed-record-user-changes :leed="$leed"/>--}}
             {{--            </div>--}}
         </div>
 
-        <div class="
-{{--        flex flex-col w-full md:w-1/3 space-y-2--}}
-        ">
+        <div class="flex flex-col w-full md:w-1/3 space-y-2">
             {{--комментарии--}}
             <div class="bg-white border-2 border-gray-400  h-[645px] w-full rounded-md">
                 <livewire:cms2.leed.leed-record-comment :leed_record_id="$leed->id" wire:lazy/>
@@ -131,9 +124,7 @@
             {{--            </div>--}}
         </div>
 
-        <div class="
-{{--        flex flex-col w-full md:w-1/3 space-y-2--}}
-        ">
+        <div class="flex flex-col w-full md:w-1/3 space-y-2">
 
             <div class="bg-white border-2 border-gray-400  h-[700px] w-full rounded-md">
                 <livewire:file.manager :leed="$leed"
@@ -150,10 +141,13 @@
 
         </div>
 
+    </div>
 
-        <div class="
-{{--        flex flex-col w-full md:w-1/3 space-y-2--}}
-        ">
+    {{--    строчка 2--}}
+
+    <div class="flex flex-col sm:flex-row w-full space-x-2 pr-3">
+
+        <div class="flex flex-col w-full md:w-1/3 space-y-2">
             <div class="bg-white border-2 border-gray-400 w-full h-[645px] rounded-md
             overflow-auto">
                 {{--оповещения--}}
@@ -164,9 +158,7 @@
                 />
             </div>
         </div>
-        <div class="
-{{--        flex flex-col w-full md:w-1/3 space-y-2--}}
-        ">
+        <div class="flex flex-col w-full md:w-1/3 space-y-2">
             <div class="bg-white border-2 border-gray-400 w-full h-[645px] rounded-md
             overflow-auto">
 
@@ -175,24 +167,17 @@
 
             </div>
         </div>
-{{--        <div class="--}}
-{{--        flex flex-col w-full md:w-1/3 space-y-2--}}
-{{--        ">--}}
-{{--            --}}{{--        3--}}
-{{--        </div>--}}
-        {{--    </div>--}}
+        <div class="flex flex-col w-full md:w-1/3 space-y-2">
+            {{--        3--}}
+        </div>
+    </div>
 
-        {{--    строчка 3--}}
+    {{--    строчка 3--}}
 
-        {{--    <div class="flex flex-col w-full space-y-2 my-5">--}}
-        {{--        <div class="--}}
-        {{--        flex flex-row space-x-5--}}
-        {{--        ">--}}
-        {{--            --}}{{--            <div class="w-1/2  px-5">--}}
-        <div>
-            <div class="bg-white border-2 border-gray-400
-{{--            w-1/2 --}}
-            rounded-md">
+    <div class="flex flex-col w-full space-y-2 my-5">
+        <div class="flex flex-row space-x-5">
+            {{--            <div class="w-1/2  px-5">--}}
+            <div class="bg-white border-2 border-gray-400 w-1/2 rounded-md">
 
                 <div class="p-2 text-lg border-b ">
                     {{--                    <div class="inline float-right">1 2 3</div>--}}
@@ -201,16 +186,15 @@
                 <livewire:cms2.leed.item-log :leed_record_id="$leed->id" wire:lazy/>
 
             </div>
-        </div>
-        {{--            <div class="w-1/2 px-5">--}}
-        <div>
-            <div class="bg-white border-2 border-gray-400
-{{--            w-1/2 --}}
-            rounded-md">
+            {{--            <div class="w-1/2 px-5">--}}
+            <div class="bg-white border-2 border-gray-400 w-1/2 rounded-md">
                 {{--                ответственный за лид--}}
                 <livewire:cms2.leed.leed-record-user-changes :leed="$leed"/>
             </div>
         </div>
+
+    </div>
+    <div>
 
     </div>
 </div>

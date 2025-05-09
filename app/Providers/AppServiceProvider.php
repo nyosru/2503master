@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Models\LeedCommentFile;
+use App\Models\LeedMoneyMovement;
 use App\Models\LeedRecord;
 use App\Models\LeedRecordComment;
 use App\Models\LeedRecordOrder;
 use App\Models\Order;
 use App\Observers\LeedCommentFileObserver;
+use App\Observers\LeedMoneyMovementObserver;
 use App\Observers\LeedRecordCommentObserver;
 use App\Observers\LeedRecordObserver;
 use App\Observers\LeedRecordOrderObserver;
@@ -45,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
         LeedCommentFile::observe(LeedCommentFileObserver::class);
 
         Order::observe(OrderObserver::class);
+        LeedMoneyMovement::observe(LeedMoneyMovementObserver::class);
 
 
         // проверка разрешений
