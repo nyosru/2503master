@@ -20,28 +20,30 @@ class LeedRecordCommentObserver
     public function created(LeedRecordComment $i): void
     {
         try {
-            Logs2Controller::add('Лид / комментарий создан / ' . $i->comment, [
+            Logs2Controller::add('Лид + комментарий создан / ' . $i->comment, [
                 'leed_record_id' => $i->leed_record_id,
 //                'type' => 'tech'
             ]);
 
-            try {
-                if ($i->leed->user_id !== $i->user_id && !empty($i->leed->user->staff->telegram_chat_id) ) {
-                    Telegram::sendMessage([
+            if (1 == 2) {
+                try {
+                    if ($i->leed->user_id !== $i->user_id && !empty($i->leed->user->staff->telegram_chat_id)) {
+                        Telegram::sendMessage([
 //                        'chat_id' => env('TELEGRAM_CHAT_ID'), // ID чата, куда будут отправляться сообщения
-                        'chat_id' => $i->leed->user->staff->telegram_chat_id, // ID чата, куда будут отправляться сообщения
-                        'text' => ' Лид/новый комментарий'
-                            . PHP_EOL . 'Лид: ' . (($i->leed) ? $i->leed->name : 'xx' . $i->leed_record_id)
-                            .PHP_EOL.' https://cms2.dev.marudi.store/leed/'.$i->leed_record_id
+                            'chat_id' => $i->leed->user->staff->telegram_chat_id, // ID чата, куда будут отправляться сообщения
+                            'text' => ' Лид + новый комментарий'
+                                . PHP_EOL . 'Лид: ' . (($i->leed) ? $i->leed->name : 'xx' . $i->leed_record_id)
+                                . PHP_EOL . ' https://cms2.dev.marudi.store/leed/' . $i->leed_record_id
 //                            . PHP_EOL . 'Автор: ' . (($i->user->staff) ? $i->user->staff->name : 'xx')
-                            . PHP_EOL . 'Автор: ' . ( $i->user->name ?? 'xx' )
-                            . PHP_EOL . 'Комментарий:' . $i->comment,
+                                . PHP_EOL . 'Автор: ' . ($i->user->name ?? 'xx')
+                                . PHP_EOL . 'Комментарий:' . $i->comment,
 //                    'parse_mode' => 'Markdown',
-                    ]);
+                        ]);
+                    }
+                } catch (\Exception $e) {
+                    // Обработка ошибок
+                    \Log::error($e->getMessage());
                 }
-            } catch (\Exception $e) {
-                // Обработка ошибок
-                \Log::error($e->getMessage());
             }
         } catch (\Exception $ex) {
 //            dd($ex);
