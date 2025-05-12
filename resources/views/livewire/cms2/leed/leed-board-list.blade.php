@@ -45,7 +45,7 @@
             />
         @else
 
-        <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($boards) }}</pre>
+{{--        <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($boards) }}</pre>--}}
 
             @foreach ($boards as $index => $board)
 

@@ -164,10 +164,12 @@
                 />
             </div>
         </div>
+
+        @permission( 'р.Деньги')
         <div class="
 {{--        flex flex-col w-full md:w-1/3 space-y-2--}}
         ">
-            <div class="bg-white border-2 border-gray-400 w-full h-[645px] rounded-md
+            <div class="bg-white border-2 border-gray-400 w-full max-h-[645px] rounded-md
             overflow-auto">
 
                 <livewire:leed.money-list-component :leedRecordId="$leed->id"/>
@@ -175,7 +177,9 @@
 
             </div>
         </div>
-{{--        <div class="--}}
+        @endpermission
+
+        {{--        <div class="--}}
 {{--        flex flex-col w-full md:w-1/3 space-y-2--}}
 {{--        ">--}}
 {{--            --}}{{--        3--}}

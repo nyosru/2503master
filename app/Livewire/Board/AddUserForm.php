@@ -54,10 +54,13 @@ class AddUserForm extends Component
 
     public function render()
     {
+        $roles = \App\Models\Role::where('board_id', $this->board_id)->get();
+//        dd(\App\Models\Role::all());
+
         return view('livewire.board.add-user-form', [
             'boards' => \App\Models\Board::all(),
             'users' => \App\Models\User::all(),
-            'roles' => \App\Models\Role::all(),
+            'roles' => $roles,
         ]);
     }
 }

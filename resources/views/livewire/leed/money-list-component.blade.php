@@ -1,6 +1,7 @@
 <div>
     <div class="p-2 text-lg border-b">
 
+        @permission( 'р.Деньги / добавлять записи')
         <button wire:click="showCreateForm"
                 class=" float-right
                     w-[40px]
@@ -12,6 +13,7 @@
                     "
                 title="Добавить">+
         </button>
+        @endpermission
 
         <span class="font-bold flex items-center">
             Движение денег
@@ -52,6 +54,7 @@
     </div>
 
     <div class="space-y-4">
+
         {{--        @if(session()->has('message'))--}}
         {{--            <div class="p-4 bg-green-100 text-green-700 rounded-lg">--}}
         {{--                {{ session('message') }}--}}
@@ -60,12 +63,19 @@
 
         <div class="divide-y divide-gray-200">
 
+            @permission( 'р.Деньги / добавлять записи')
             @if($showForm)
                 <livewire:leed.money-form :leedRecordId="$leed_record_id"/>
             @endif
+            @endpermission
 
+
+            @permission( 'р.Деньги / видеть записи')
             @forelse($payments as $payment)
-                <div class="px-2 py-4 flex flex-row justify-between items-center hover:bg-gray-100">
+{{--                <div>{{ print_r($payment->toArray()) }}</div>--}}
+                <div class="px-2 py-4 flex flex-row justify-between
+                @if($payment->deleted_at) line-through @endif
+                items-center hover:bg-gray-100">
 
                     <div class="
                     flex-1
@@ -96,6 +106,8 @@
                         @endif
                         {{ $payment->user->name }}
                     </div>
+                    @if(empty($payment->deleted_at))
+                    @permission( 'р.Деньги / удалять записи')
                     <button
                         wire:confirm="Удалить эту запись?"
                         wire:click="delete({{ $payment->id }})"
@@ -103,12 +115,15 @@
                     >
                         ✕
                     </button>
+                    @endpermission
+                     @endif
                 </div>
             @empty
                 <div class="py-4 text-gray-500">
                     Нет записей о платежах
                 </div>
             @endforelse
+            @endpermission
         </div>
 
         {{ $payments->links() }}

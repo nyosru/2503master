@@ -4,6 +4,7 @@ namespace App\Livewire\Leed;
 
 use App\Http\Controllers\LeedMoneyController;
 use App\Models\LeedMoneyMovement;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -19,7 +20,8 @@ class MoneyListComponent extends Component
 
     public $showForm = false;
 
-    public function payAdded(){
+    public function payAdded()
+    {
         session()->flash('moneyMessage', 'Платёж добавлен');
         $this->showForm = false;
     }
@@ -43,10 +45,15 @@ class MoneyListComponent extends Component
     public function render()
     {
         $summa = LeedMoneyController::getTotalAmount($this->leed_record_id);
-        $payments = LeedMoneyMovement::where('leed_record_id', $this->leed_record_id)
-            ->latest()
-            ->paginate(10);
+        $payments = LeedMoneyMovement::where('leed_record_id', $this->leed_record_id);
+        $user = Auth::user();
+        if ($user->hasPermissionTo('р.Деньги / видеть удалённые записи')) {
+            $payments = $payments->withTrashed();
+        }
 
-        return view('livewire.leed.money-list-component', compact('payments','summa'));
+        $payments = $payments->latest()->paginate(10);
+
+
+        return view('livewire.leed.money-list-component', compact('payments', 'summa'));
     }
 }
