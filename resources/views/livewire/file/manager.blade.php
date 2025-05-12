@@ -23,13 +23,25 @@
                     @if( !empty($f->name) )
                         {{ $f->name }}<br/>
                     @endif
+
+                    {{--                    <pre>{{ print_r($f) }}</pre>--}}
                     <a
-{{--                        href="{{ $f->path }}" --}}
-                        href="{{ route('download.file', [ 'id' => $f->id, 'file_name' => $f->file_name ]) }}"
-{{--                        target="_blank"--}}
-                        class="text-blue-500 underline">
+                        @php
+                            //                                $extension = pathinfo($f->file_name, PATHINFO_EXTENSION);
+                                                            $extension = strtolower(pathinfo($f->path, PATHINFO_EXTENSION));
+                            //                                $mime = mime_content_type($f->file_name);
+                        @endphp
+                        @if( $extension == 'jpg' )
+                            target="_blank"
+                        href="{{ $f->path }}"
+                        @else
+                            href="{{ route('download.file', [ 'id' => $f->id, 'file_name' => $f->file_name ]) }}"
+                        @endif
+                        class="text-blue-500 underline"
+                    >
                         {{ $f->file_name }}
                     </a>
+
 
                 </div>
                 {{--            {{ $f->path }}<br/>--}}
