@@ -150,7 +150,7 @@
 ">
                     <button type="submit"
                             x-show="!uploading"
-                            class="bg-blue-500 text-white px-3 py-1 rounded-md">Добавить
+                            class="bg-blue-500 text-white px-3 py-1 rounded-md">Отправить
                     </button>
                     <span x-show="uploading" class="text-gray-500">Загрузка...</span>
                 </div>
