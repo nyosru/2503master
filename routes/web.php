@@ -92,6 +92,7 @@ Route::get('/auth/telegram/callback', function () {
             ]
         );
     }
+
 //    showMeTelegaMsg( 'user: '. serialize($user->toArray()) );
 // Авторизуем пользователя
     Auth::login($user);
@@ -185,6 +186,10 @@ Route::middleware(['auth'])->group(function () {
 
             Route::middleware('check.permission:тех.Управление столбцами')->group(function () {
                 Route::get('adm_role_column', \App\Livewire\RoleColumnAccess::class)->name('adm_role_column');
+            });
+
+            Route::middleware('check.permission:тех.упр полями в лиде')->group(function () {
+                Route::get('order_requests_manager', \App\Livewire\Tech\OrderRequestsManager::class)->name('order_requests_manager');
             });
 
             // пользователи

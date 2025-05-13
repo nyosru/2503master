@@ -1,22 +1,29 @@
 <tr>
     <td>
-{{--        <pre>{{ print_r($field) }}</pre>--}}
+{{--        <pre>{{ print_r($field->toArray(), true) }}</pre>--}}
         <label for="field-{{ $field['pole'] }}">
         <h3 class="font-medium">{{ ( !empty($field['name']) ? $field['name'] : $field['pole'] ) }}</h3>
         </label>
+        <small>{{ $field['description'] ?? '' }}</small>
     </td>
-    <td>  <input
+    <td class="text-xs">
+        {{$field['number'] ? 'Число' : '' }}
+        {{$field['date'] ? 'Дата' : ''}}
+        {{$field['text'] ? 'Текст' : ''}}
+        {{$field['string'] ? 'Строка' : ''}}
+    </td>
+    <td class="text-center">  <input
             id="field-{{ $field['pole'] }}"
             type="checkbox"
             wire:model.live.debounce.300ms="is_enabled"
             class="checkbox"
         ></td>
-    <td><input
+    <td class="text-center"><input
             type="checkbox"
             wire:model.live.debounce.300ms="show_on_start"
             class="checkbox"
         ></td>
-    <td><input
+    <td class="text-center"><input
             type="number"
             min="0"
             max="99"

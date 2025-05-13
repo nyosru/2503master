@@ -17,6 +17,9 @@ class Index extends Component
 //        'Источники лида' => ['route' => 'tech.ClientSupplierManager', 'permission' => 'р.Поставщики лидов'],
         'Пользователи' => ['route' => 'tech.user_list', 'permission' => 'р.Пользователи'],
         'Путь заказа, доступы' => ['route' => 'tech.adm_role_column', 'permission' => 'тех.Управление столбцами'],
+
+        'Поля в заказе' => ['route' => 'tech.order_requests_manager', 'permission' => 'тех.упр полями в лиде'],
+
 //        'Заказ - Метки' => ['route' => 'order.label',
 //            'permission' => 'тех.метки в заказах'
 //        ],

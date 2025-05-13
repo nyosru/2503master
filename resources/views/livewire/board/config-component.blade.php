@@ -4,20 +4,21 @@
         <livewire:Cms2.App.Breadcrumb
             :board_id="$board->id"
             :menu="[
-                                    ['route'=>'leed.list','name'=>'Рабочие доски'],
-                                    [
-                                        'route'=>'leed',
-                                        'route-var'=>['board_id'=>$board->id ?? ''],
-                                        'name'=> $board->name
-{{--                                        'name'=>( $user->currentBoard->name ?? 'x' ).( $user->roles[0]['name'] ? ' <sup>'.$user->roles[0]['name'].'</sup>' : '-' )--}}
-                                    ],
-
-                            [
+                        ['route'=>'leed.list','name'=>'Рабочие доски'],
+                        [
                             'route'=>'leed',
-                            'name'=>'Конфигурация',
-                            'link'=>'no'
-                            ],
-                        ]"/>
+                            'route-var'=>['board_id'=>$board->id ?? ''],
+                            'name'=> $board->name
+    {{--                                        'name'=>( $user->currentBoard->name ?? 'x' ).( $user->roles[0]['name'] ? ' <sup>'.$user->roles[0]['name'].'</sup>' : '-' )--}}
+                        ],
+
+                        [
+                        'route'=>'leed',
+                        'name'=>'Конфигурация',
+                        'link'=>'no'
+                        ],
+
+                    ]"/>
     </div>
 
     <livewire:board.field-settings :boardId="$board->id" />
