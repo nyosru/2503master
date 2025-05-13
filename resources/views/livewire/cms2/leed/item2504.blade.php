@@ -61,8 +61,9 @@
             <div class="w-[250px] flex flex-row space-x-1 items-center">
 
                 @if(1==2)
-                <livewire:cms2.informer.leed.client wire:lazy :leed="$leed"/>
+                <livewire:cms2.informer.leed.client wire:lazy :leed="$leed" />
                 @endif
+
                 {{--                    <livewire:cms2.informer.leed.order wire:lazy :leed="$leed"/>--}}
                 {{--твои горящие задачи--}}
                 <livewire:cms2.informer.leed.order-you :key="'leed.order-you'.$leed->id" wire:lazy :leed="$leed"/>
@@ -159,7 +160,7 @@
         <div class="
 {{--        flex flex-col w-full md:w-1/3 space-y-2--}}
         ">
-            <div class="bg-white border-2 border-gray-400 w-full h-[645px] rounded-md
+            <div class="bg-white border-2 border-gray-400 w-full min-h-[200px] max-h-[645px] rounded-md
             overflow-auto">
                 {{--оповещения--}}
                 <livewire:leed.notification-component

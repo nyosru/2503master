@@ -1417,6 +1417,10 @@ select {
   min-height: 100vh;
 }
 
+.min-h-\[200px\] {
+  min-height: 200px;
+}
+
 .w-1\/12 {
   width: 8.333333%;
 }
