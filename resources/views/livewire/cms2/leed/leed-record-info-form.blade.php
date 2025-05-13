@@ -14,8 +14,6 @@
             </span>
         @endif
 
-
-
     </div>
 
 {{--        <pre class="text-xs">{{ print_r($leed->toArray()) }}</pre>--}}
@@ -23,7 +21,7 @@
     <form wire:submit="saveChanges">
 
         <div class="px-2">
-            <div class="flex flex-col pt-2">
+            <div class="flex flex-col pt-2 max-h-[550px] overflow-x-auto">
 
 {{--                <pre class="text-xs">{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>--}}
 
@@ -39,9 +37,20 @@
 {{--                        @endif--}}
                     {{--                    @if($leed->{$key} !== null)--}}
                     <div class="py-1">
+{{--                        <pre class="text-xs">{{ print_r($key->toArray()) }}</pre>--}}
+{{--                        <pre>{{ print_r($leed->{$key}) }}</pre>--}}
                         <label for="{{ $key->field_name }}"
-                               title="{{ $key->field_name }}"
+{{--                               title="{{ $key->field_name }}"--}}
+                               title="{{ $key->orderRequest->description }}"
                                class="block text-sm font-medium text-gray-700">
+
+                            @if( !empty($key->orderRequest->name) )
+                                {{ $key->orderRequest->name }}
+                            @else
+                                {{ $key->field_name }}
+                            @endif
+
+                            @if(1==2)
                             @if($key->field_name === 'name')
                                 Название
 {{--                                <sup>(техническое для себя)</sup>--}}
@@ -74,6 +83,8 @@
 {{--                                {{ ucfirst($key->field_name) }}--}}
                                 {{ $key->field_name }}
                             @endif
+                            @endif
+
                         </label>
 
                         @if($isEditing)

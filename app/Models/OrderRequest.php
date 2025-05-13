@@ -11,7 +11,7 @@ class OrderRequest extends Model
 
     protected $fillable = [
         'name',
-        'var',
+        'pole',
         'description',
         'number',
         'date',
@@ -20,4 +20,11 @@ class OrderRequest extends Model
         'nullable',
         'rules',
     ];
+
+    public function boardFieldSetting(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(BoardFieldSetting::class, 'pole', 'field_name');
+    }
+
+    
 }

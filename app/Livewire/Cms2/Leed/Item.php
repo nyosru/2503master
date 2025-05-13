@@ -25,7 +25,7 @@ class Item extends Component
     {
 
         if (!empty($showTab)) {
-            dd($showTab);
+//            dd($showTab);
             $this->changeShowTab($showTab);
         }
 
@@ -42,6 +42,7 @@ class Item extends Component
                                 $q2->orderBy('sort_order','DESC');
                                 $q2->whereIsEnabled(true);
                                 $q2->select('board_id','field_name','is_enabled','show_on_start');
+                                $q2->with(['orderRequest']);
                             }
                         ]);
                     }

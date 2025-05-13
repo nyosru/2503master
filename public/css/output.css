@@ -1389,6 +1389,14 @@ select {
   max-height: 500px;
 }
 
+.max-h-\[550px\] {
+  max-height: 550px;
+}
+
+.max-h-\[645px\] {
+  max-height: 645px;
+}
+
 .max-h-\[70vh\] {
   max-height: 70vh;
 }
@@ -3392,6 +3400,11 @@ select {
   background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
 }
 
+.hover\:bg-gray-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
+}
+
 .hover\:bg-gray-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity, 1));
@@ -3454,6 +3467,11 @@ select {
 .hover\:bg-yellow-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(254 240 138 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-yellow-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(234 179 8 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-zinc-300:hover {
@@ -3963,10 +3981,6 @@ select {
 
   .md\:basis-1\/4 {
     flex-basis: 25%;
-  }
-
-  .md\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .md\:grid-cols-2 {

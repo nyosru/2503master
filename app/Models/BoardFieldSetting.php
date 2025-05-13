@@ -28,4 +28,11 @@ class BoardFieldSetting extends Model
     {
         return $this->belongsTo(Board::class);
     }
+
+    public function orderRequest(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(OrderRequest::class, 'pole', 'field_name');
+    }
+
+
 }
