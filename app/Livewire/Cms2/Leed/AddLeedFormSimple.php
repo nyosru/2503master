@@ -164,4 +164,5 @@ class AddLeedFormSimple extends Component
             'allowedFields' => $allowedFields, // Передаем в шаблон
         ]);
     }
+
 }

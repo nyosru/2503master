@@ -40,7 +40,7 @@
 
                     <div class="w-full px-3 max-h-[70vh] overflow-auto" id="add-leed-form-simple">
 
-                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($allowedFields->toArray()) }}</pre>
+{{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($allowedFields->toArray()) }}</pre>--}}
 
                         @foreach($allowedFields as $field)
 
