@@ -46,6 +46,12 @@ class LeedRecord extends Model
         'pay_day_every_year',
         'pay_day_every_month',
 
+        'email',
+        'obj_tender',
+        'zakazchick',
+        'post_day_ot',
+        'post_day_do',
+        'mesto_dostavki',
 
     ];
 

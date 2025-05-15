@@ -60,8 +60,27 @@ class AddLeedFormSimple extends Component
     public $post_day_do;
     public $mesto_dostavki;
 
-
     public $order = [];
+
+//    public $fio2;
+//    public $phone2;
+//    public $date_start;
+//    public $price;
+//    public $pay_day_every_year;
+//    public $pay_day_every_month;
+//    public $email;
+//    public $obj_tender;
+//    public $zakazchick;
+//    public $post_day_ot;
+//    public $post_day_do;
+//    public $mesto_dostavki;
+
+
+
+
+
+
+
 
     protected $listeners = ['orderInputUpdated' => 'orderChildInputUpdated'];
 
@@ -119,6 +138,8 @@ class AddLeedFormSimple extends Component
         foreach ($polya as $v) {
             $in[$v['field_name']] = $this->{$v['field_name']}; //dd($this->$v
         }
+
+        dd($in);
 
         // Создание новой записи в базе данных
         $leadRecord = LeedRecord::create($in);
