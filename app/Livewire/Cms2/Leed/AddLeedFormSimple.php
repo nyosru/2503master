@@ -133,6 +133,13 @@ class AddLeedFormSimple extends Component
         ]);
 
         // Очистка полей после добавления
+        if ($in['leed_column_id']) {
+            unset($in['leed_column_id']);
+        }
+        if ($in['user_id']) {
+            unset($in['user_id']);
+        }
+
         $this->reset(array_keys($in));
 
         // Закрыть форму после добавления

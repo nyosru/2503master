@@ -1,7 +1,4 @@
-<div class="xinline flex flex-col xw-[90%] px-2 xfloat-right"
-    {{--     style="z-index: 50;"--}}
->
-
+<div class="xinline flex flex-col xw-[90%] px-2 xfloat-right">
 
     <div class="text-center">
         <!-- Кнопка для открытия модального окна -->
@@ -40,20 +37,17 @@
 
                     <div class="w-full px-3 max-h-[70vh] overflow-auto" id="add-leed-form-simple">
 
-{{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($allowedFields->toArray()) }}</pre>--}}
+                        {{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($allowedFields->toArray()) }}</pre>--}}
 
                         @foreach($allowedFields as $field)
 
                             <label for="{{ $field['field_name'] }}" class="block text-gray-700 text-sm">
                                 <abbr title="{{$field->orderRequest->description}}">
-                                {{$field->orderRequest->name}}
+                                    {{$field->orderRequest->name}}
                                 </abbr>
                             </label>
 
                             <input
-                                {{--                                @if( $field == 'name' || $field == 'platform'|| $field == 'link'|| $field == 'customer')--}}
-                                {{--                                    type="text"--}}
-                                {{--                                @if( $field['type'] == 'base_number' ||  $field['field_name'] == 'budget'||  $field['field_name'] == 'price')--}}
                                 @if( $field['field_name'] == 'base_number' ||  $field['field_name'] == 'budget'||  $field['field_name'] == 'price')
                                     type="number"
                                 @elseif( $field['field_name'] == 'pay_day_every_month' )
@@ -78,15 +72,12 @@
                     </div>
 
                     <div class="flex justify-center py-3 bg-gray-100">
-                        {{--                        <button type="button" wire:click="$set('isFormVisible', false)"--}}
-                        {{--                                class="bg-red-500 text-white px-4 py-2 rounded mr-2">Закрыть--}}
-                        {{--                        </button>--}}
                         <button type="submit" class="bg-blue-400 py-2 px-4 rounded-xl">Добавить</button>
                     </div>
 
                 </div>
             </form>
+
         </div>
-</div>
-@endif
+    @endif
 </div>
