@@ -48,7 +48,7 @@
         {{--            </div>--}}
         {{--        </div>--}}
 
-        @if(count($boards) == 0)
+        @if( sizeof($boards) == 0 )
             @if(1==2)
                 {{-- Здесь отображается ваша форма --}}
                 <p class="text-lg font-bold my-2">Добавте свою первую рабочую доску</p>
@@ -164,6 +164,9 @@
                     </div>
                 </div>
             @endforeach
+{{--1111--}}
+{{--            {{ $this->boards->links() }}--}}
+
         @endif
 
     </div>

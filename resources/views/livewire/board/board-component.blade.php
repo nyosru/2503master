@@ -145,4 +145,6 @@
         @endforeach
         </tbody>
     </table>
+
+    {{ $boards->links() }}
 </div>

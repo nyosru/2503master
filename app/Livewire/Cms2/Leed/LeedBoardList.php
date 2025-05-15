@@ -29,14 +29,16 @@ class LeedBoardList extends Component
             }
         ])->get();
 //dd($this->invite->toArray());
+
         // Retrieve boards associated with the user via boardUsers relationship
         $this->boards = Board::whereHas('boardUsers', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })
-            ->with(['boardUsers' => function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-                $query->with(['role']);
-            },
+            ->with([
+                'boardUsers' => function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                    $query->with(['role']);
+                },
                 'invitations' => function ($query) {
                     $query->with(['role']);
                 }
@@ -52,8 +54,6 @@ class LeedBoardList extends Component
 
     public function render()
     {
-
-
         // You can also use a separate query to retrieve boards associated with the use
         return view('livewire.cms2.leed.leed-board-list');
     }

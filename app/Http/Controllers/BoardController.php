@@ -90,7 +90,8 @@ class BoardController extends Controller
     {
         $rules = [];
         $e = self::getPolyaConfig();
-        foreach( $e as $k => $v ){
+//        dd($e);
+        foreach( $e as $v ){
             $rules[$v['pole']] = $v['rules'];
         }
         return $rules;

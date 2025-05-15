@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Log;
 
 class AddLeedFormSimple extends Component
 {
+
     public $column;
     public $isFormVisible = false; // Состояние для отображения/скрытия формы
     public $name, $phone, $telegram, $whatsapp, $fio, $comment; // Переменные для формы
@@ -82,39 +83,13 @@ class AddLeedFormSimple extends Component
         $this->isFormVisible = !$this->isFormVisible;
     }
 
-    // Метод для добавления записи
-    public function addLeedRecordOrder()
-    {
-//        dd(__LINE__);
-        try {
-            $e = $this->validate([
-                'order.name' => 'nullable|string|max:255',
-                'order.montag_date' => 'nullable|date',
-                'order.montag_adres' => 'nullable|string|max:255',
-                'order.amount_tech' => 'nullable|integer',
-                'order.amount_stone' => 'nullable|integer',
-//                'order.order_product_types_id' => 'nullable|exists:order_product_types,id',
-//                'phone' => 'nullable|string|max:20',
-//                'telegram' => 'nullable|string|max:255',
-//                'whatsapp' => 'nullable|string|max:255',
-//                'company' => 'nullable|string|max:255',
-//                'comment' => 'nullable|string|max:1000',
-//                'client_supplier_id' => 'nullable|exists:client_suppliers,id', // Валидация для поля client_supplier_id
-            ]);
-            dd($e);
-            Order::all();
-        } catch (\Exception $ex) {
-            dd($ex->getMessage());
-        }
-    }
-
-
 // Вспомогательный метод для получения отсортированных полей
     private function getAllowedFields()
     {
         $boardId = $this->column->board_id;
         $fields = BoardFieldSetting::where('board_id', $boardId)
             ->where('is_enabled', true)
+            ->with(['orderRequest'])
             ->orderBy('sort_order', 'desc')
             ->get()
 //            ->pluck('field_name') // Возвращаем только имена полей
@@ -127,87 +102,28 @@ class AddLeedFormSimple extends Component
 
     public function addLeedRecord()
     {
-//        $this->addLeedRecordOrder($this->order);
-        $rules = BoardController::getRules();
 
+        $rules = BoardController::getRules();
         $this->validate($rules);
-//        $this->validate([
-//            'name' => 'nullable|string|max:255',
-//            'fio' => 'nullable|string|max:255',
-//            'phone' => 'nullable|string|max:20',
-//            'telegram' => 'nullable|string|max:255',
-//            'whatsapp' => 'nullable|string|max:255',
-//            'company' => 'nullable|string|max:255',
-//            'comment' => 'nullable|string|max:1000',
-//            'client_supplier_id' => 'nullable|exists:client_suppliers,id', // Валидация для поля client_supplier_id
-//            'order_product_types_id' => 'nullable|exists:order_product_types,id',
-//
-//
-//            'fio2' => 'nullable|string|max:255',
-//            'phone2' => 'nullable|integer',
-//            'cooperativ' => 'nullable|string|max:255',
-//            'price' => 'nullable|integer',
-//            'date_start' => 'nullable|date',
-//            'budget' => 'nullable|integer',
-//            'platform' => 'nullable|string|max:255',
-//            'base_number' => 'nullable|string|max:255',
-//            'link' => 'nullable|string|max:255',
-//            'submit_before' => 'nullable|integer',
-//            'payment_due_date' => 'nullable|date',
-//            'pay_day_every_year' => 'nullable|date',
-//            'pay_day_every_month' => 'nullable|integer',
-//
-//
-//            'email' => 'nullable|string',
-//            'obj_tender' => 'nullable|string',
-//            'zakazchick' => 'nullable|string',
-//            'post_day_ot' => 'nullable|integer',
-//            'post_day_do' => 'nullable|integer',
-//            'mesto_dostavki' => 'nullable|string',
-//
-//        ]);
 
         $user_id = Auth::id();
 
         $in = [
-//            'name' => $this->name ?? '',
-//    'phone' => $this->phone,
-////            'company' => $this->company,
-//    'fio' => $this->fio,
-//    'comment' => $this->comment,
             'leed_column_id' => $this->column->id,
-//    // источник
-//    'client_supplier_id' => $this->client_supplier_id,
-//    'budget' => $this->budget,
-//    'order_product_types_id' => $this->order_product_types_id,
             'user_id' => $user_id,
         ];
 
         $polya = $this->getAllowedFields();
-        //dd($polya);
+//        dd($polya);
 
         foreach ($polya as $v) {
-//            dd($v);
-//            if ( isset($this->{$v['field_name']} ))
             $in[$v['field_name']] = $this->{$v['field_name']}; //dd($this->$v
         }
-
-//        dd($in);
-
-//        [0] => name
-//    [1] => platform
-//    [2] => base_number
-//    [3] => budget
-//    [4] => link
-//    [5] => customer
-//    [6] => submit_before
-//    [7] => payment_due_date
 
         // Создание новой записи в базе данных
         $leadRecord = LeedRecord::create($in);
 
         $us = User::find($user_id);
-//        dd([$us,$this->leed->toArray()]);
         LeedChangeUserController::changeUser($leadRecord, $us);
 
         // Добавление записи в LeadUserAssignment
@@ -217,24 +133,7 @@ class AddLeedFormSimple extends Component
         ]);
 
         // Очистка полей после добавления
-        $this->reset([
-            'name', 'phone',
-            'telegram', 'whatsapp', 'fio', 'comment', 'client_supplier_id',
-            'fio2',
-            'phone2',
-            'cooperativ',
-            'price',
-            'date_start',
-
-            'email',
-            'obj_tender',
-            'zakazchick',
-            'post_day_ot',
-            'post_day_do',
-            'mesto_dostavki',
-
-        ]);
-
+        $this->reset(array_keys($in));
 
         // Закрыть форму после добавления
         $this->isFormVisible = false;
@@ -244,6 +143,7 @@ class AddLeedFormSimple extends Component
 
         // Эмитируем событие на другой компонент
 //        $this->dispatch('refreshLeedBoardComponent');
+
         return $this->redirectRoute('leed', ['board_id' => $this->column->board_id]);
     }
 

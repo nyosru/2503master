@@ -40,38 +40,14 @@
 
                     <div class="w-full px-3 max-h-[70vh] overflow-auto" id="add-leed-form-simple">
 
-{{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($allowedFields) }}</pre>--}}
+                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($allowedFields->toArray()) }}</pre>
 
                         @foreach($allowedFields as $field)
 
                             <label for="{{ $field['field_name'] }}" class="block text-gray-700 text-sm">
-                                @if( $field['field_name'] == 'name' )
-                                    Название
-                                @elseif( $field['field_name'] == 'fio' || $field['field_name'] == 'fio2')
-                                    ФИО
-                                @elseif( $field['field_name'] == 'platform')
-                                    Платформа
-                                @elseif( $field['field_name'] == 'base_number')
-                                    Номер
-                                @elseif( $field['field_name'] == 'budget')
-                                    Цена
-                                @elseif( $field['field_name'] == 'link')
-                                    Ссылка
-                                @elseif( $field['field_name'] == 'customer')
-                                    Заказчик
-                                @elseif( $field['field_name'] == 'submit_before')
-                                    отправить до
-                                @elseif( $field['field_name'] == 'pay_day_every_year')
-                                    Оплата каждый год
-                                @elseif( $field['field_name'] == 'date_start')
-                                    Дата старта
-                                @elseif( $field['field_name'] == 'pay_day_every_month')
-                                    День оплаты, каждый месяц
-                                @elseif( $field['field_name'] == 'payment_due_date')
-                                    оплата после
-                                @else
-                                    {{$field['field_name']}}
-                                @endif
+                                <abbr title="{{$field->orderRequest->description}}">
+                                {{$field->orderRequest->name}}
+                                </abbr>
                             </label>
 
                             <input

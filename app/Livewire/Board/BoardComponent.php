@@ -20,30 +20,6 @@ class BoardComponent extends Component
         $this->render();    // Полная перерисовка
     }
 
-//    #[On('user-added')]ы
-    public function render()
-    {
-//        $boards = Board::with('users')->paginate(10); // Загрузка связанных пользователей
-//        $boards = Board::with('user')->paginate(10); // Загрузка связанных пользователей
-        try {
-        $boards = Board::with([
-            'columns',
-            'boardUsers' => function ($query) {
-                $query->withTrashed();
-                $query->with([
-                    'role',
-                    'user',
-                ]);
-            }
-        ])->paginate(10); // Загрузка связанных пользователей
-        $users = \App\Models\User::all();
-        $roles = Role::all(); // Получаем все роли
-            } catch (\Exception $e) {
-            dd($e);
-        }
-        return view('livewire.board.board-component', compact('boards', 'users', 'roles'));
-//        return view('livewire.board.board-component', compact('users', 'roles'));
-    }
 
     public function delete($boardId)
     {
@@ -89,5 +65,33 @@ class BoardComponent extends Component
         $board->update(['is_paid' => $status]);
         session()->flash('message', 'Статус оплаты обновлён!');
     }
+
+//    #[On('user-added')]ы
+    public function render()
+    {
+//        $boards = Board::with('users')->paginate(10); // Загрузка связанных пользователей
+//        $boards = Board::with('user')->paginate(10); // Загрузка связанных пользователей
+        try {
+        $boards = Board::with([
+            'columns',
+            'boardUsers' => function ($query) {
+                $query->withTrashed();
+                $query->with([
+                    'role',
+                    'user',
+                ]);
+            }
+        ])
+            ->paginate(10)
+        ; // Загрузка связанных пользователей
+        $users = \App\Models\User::all();
+        $roles = Role::all(); // Получаем все роли
+            } catch (\Exception $e) {
+            dd($e);
+        }
+        return view('livewire.board.board-component', compact('boards', 'users', 'roles'));
+//        return view('livewire.board.board-component', compact('users', 'roles'));
+    }
+
 }
 
