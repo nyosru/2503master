@@ -62,6 +62,20 @@
 
                 <td class="px-6 py-4">
 
+
+
+                    <livewire:board.invitations-form
+                        :board_id="$board->id" :show_select_board_id="false"
+                        key="{{ $board->id }}" />
+
+                    <livewire:board.invitations-list
+                        :board_id="$board->id"
+{{--                        :show_select_board_id="false"--}}
+                        key="invites{{ $board->id }}"
+                    />
+
+
+
                     <livewire:board.add-user-form :key="'board'.$board->id" :board_id="$board->id"/>
 
                     <div class=" max-h-[150px]

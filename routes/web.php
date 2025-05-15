@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\TelegramController;
 use App\Livewire\Cms2\Client;
 use App\Livewire\Cms2\Order;
@@ -144,8 +145,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::get('board/select', \App\Livewire\Cms2\Leed\SelectBoardForm::class)->name('board.select');
-
 //Route::middleware('check.permission:р.Лиды')->group(function () {
 
     Route::get('leed', \App\Livewire\Cms2\Leed\LeedBoardList::class)->name('leed.list');
@@ -168,11 +167,15 @@ Route::middleware(['auth'])->group(function () {
 //        Route::get('/leed/{id}', \App\Livewire\Cms2\ClientsInfo::class)->name('clients.info');
 //});
 
+    Route::group([ 'as' => 'board', 'prefix' => 'board'], function () {
+        Route::get('', \App\Livewire\Board\BoardComponent::class)
+            ->name('')
+            ->middleware('check.permission:р.Доски');
+        Route::get('select', \App\Livewire\Cms2\Leed\SelectBoardForm::class)->name('.select');
+//        Route::post('invitations', [InvitationController::class, 'store'])->name('.invitations.store');
+        Route::get('invitations/join/{id}', [InvitationController::class, 'join'])->name('.invitations.join');
+    });
 
-    Route::get('board', \App\Livewire\Board\BoardComponent::class)
-        ->name('board')
-        ->middleware('check.permission:р.Доски')
-    ;
 
 
 

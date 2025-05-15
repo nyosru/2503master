@@ -20,8 +20,19 @@
         </div>
     @endif
 
-
     <div class="flex flex-col">
+{{--123--}}
+
+        {{--            приглашения--}}
+        <livewire:board.invitations-list
+            :only_for_now_user="true"
+{{--            :board_id="$board->id"--}}
+            {{--                        :show_select_board_id="false"--}}
+{{--            key="invites{{ $board->id }}"--}}
+{{--    :only_for_phone=""--}}
+            key="invitesboards"
+        />
+
         {{--        <div class="flex items-center py-2 border-b border-gray-200 font-bold bg-gray-200">--}}
         {{--            <div class="flex-1 pl-2">--}}
         {{--                Доска--}}
@@ -36,24 +47,27 @@
         {{--                ---}}
         {{--            </div>--}}
         {{--        </div>--}}
+
         @if(count($boards) == 0)
-            {{-- Здесь отображается ваша форма --}}
-            <p>добавте свою первую рабочую доску</p>
-            <livewire:Board.CreateForm return_route="leed.list"
-                                       :show_payes="false"
-                                       :show_form="true"
-            />
+            @if(1==2)
+                {{-- Здесь отображается ваша форма --}}
+                <p class="text-lg font-bold my-2">Добавте свою первую рабочую доску</p>
+                <livewire:Board.CreateForm return_route="leed.list"
+                                           :show_payes="false"
+                                           :show_form="true"
+                />
+            @endif
         @else
 
-{{--        <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($boards) }}</pre>--}}
+            {{--        <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($boards) }}</pre>--}}
 
             @foreach ($boards as $index => $board)
 
-{{--                <br/>--}}
-{{--                <br/>--}}
-{{--        {{$index}} =>--}}
-{{--                <br/>--}}
-{{--                <br/>--}}
+                {{--                <br/>--}}
+                {{--                <br/>--}}
+                {{--        {{$index}} =>--}}
+                {{--                <br/>--}}
+                {{--                <br/>--}}
 
                 <div class="flex items-center py-5 border-b border-gray-200 hover:bg-white
              {{ $index % 2 != 0 ? 'bg-gray-200' : '' }}
@@ -66,7 +80,7 @@
                             {{--                    >--}}
                             {{ $board->name }}
                             {{--                    </a>--}}
-                            {{--                    <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($board->toArray()) }}</pre>--}}
+                            {{--                            <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($board->toArray()) }}</pre>--}}
                         </div>
                         {{--                <div class="w-1/4 text-center">--}}
                         <div class="ml-5">
@@ -95,9 +109,33 @@
 
                         </div>
                     </div>
-                    <div class="w-1/4 text-center">
+                    <div class="w-1/4 text-left">
                         {{--                    Ячейка 2--}}
-                        -
+                        {{--                        ---}}
+
+                        @permission('р.Доски / создавать приглашения')
+                        <h2 class="font-bold">Приглашения:</h2>
+                        <div class="ml-4">
+
+                            <livewire:board.invitations-form
+                                :board_id="$board->id" :show_select_board_id="false"
+                                key="{{ $board->id }}"/>
+
+                            {{--                        <p>Не принятые приглашения:--}}
+                            {{--                            <br/>--}}
+
+                            @foreach( $board->invitations as $i )
+
+                                {{--        <pre class="text-left text-xs">{{ print_r($i->toArray()) }}</pre>--}}
+
+                                {{$i->phone}} > {{ $i->role->name }}<br/>
+
+                            @endforeach
+
+                            {{--                        </p>--}}
+
+                        </div>
+                        @endpermission
                     </div>
                     <div class="w-1/4 text-center">
                         {{--                    Ячейка 3--}}

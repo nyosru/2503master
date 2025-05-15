@@ -71,4 +71,10 @@ class Board extends Model
         return $this->hasMany(Role::class);
     }
 
+    public function invitations(): HasMany
+    {
+        return $this->hasMany(Invitation::class);
+    }
+
+
 }

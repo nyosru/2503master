@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InvitationController;
 use Illuminate\Support\Facades\Route;
 
 use App\Livewire\Cms2\Client;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Nyos\Msg;
 use Telegram\Bot\Laravel\Facades\Telegram;
+
 
 
 Route::post('/webhook1', function () {
@@ -454,4 +456,3 @@ Route::post('/webhook/tele2', function () {
 
 
 //require __DIR__ . '/telega.php';
-
