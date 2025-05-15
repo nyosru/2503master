@@ -139,7 +139,7 @@ class AddLeedFormSimple extends Component
             $in[$v['field_name']] = $this->{$v['field_name']}; //dd($this->$v
         }
 
-        dd($in);
+//        dd($in);
 
         // Создание новой записи в базе данных
         $leadRecord = LeedRecord::create($in);
