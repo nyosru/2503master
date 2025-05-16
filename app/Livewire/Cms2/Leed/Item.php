@@ -65,6 +65,9 @@ class Item extends Component
 
     public function render()
     {
+
+//        dd($e->toArray());
+
 //        return view('livewire.cms2.leed.item');
         return view('livewire.cms2.leed.item2504');
     }

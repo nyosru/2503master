@@ -45,6 +45,7 @@ class FieldSettings extends Component
                 if ($b['field_name'] == $a['pole']) {
                     $p['is_enabled'] = (bool)$b->is_enabled;
                     $p['show_on_start'] = (bool)$b->show_on_start;
+                    $p['in_telega_msg'] = (bool)$b->in_telega_msg;
                     $p['sort_order'] = $b->sort_order;
                     break;
                 }

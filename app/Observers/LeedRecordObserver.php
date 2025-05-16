@@ -19,11 +19,11 @@ class LeedRecordObserver
     {
 
         try {
-            Logs2Controller::add('Лид создан',[
+            Logs2Controller::add('Лид создан', [
                 'leed_record_id' => $leedRecord->id,
                 'type' => 'tech'
             ]);
-        }catch (\Exception $ex ){
+        } catch (\Exception $ex) {
             dd($ex);
         }
 
@@ -43,7 +43,7 @@ class LeedRecordObserver
             $oldColumnId = $leedRecord->getOriginal('leed_column_id');
             $oldColumnName = LeedColumn::whereId($oldColumnId)->first()->name ?? '??';
 
-            Logs2Controller::add('Лид перемещён: '.$oldColumnName.' > '.$newColumnName,[
+            Logs2Controller::add('перемещён: ' . $oldColumnName . ' > ' . $newColumnName, [
                 'leed_record_id' => $leedRecord->id,
                 'type' => 'tech'
             ]);
@@ -51,38 +51,10 @@ class LeedRecordObserver
 
 
             try {
-                TelegramNotificationController::sendMessageToBoardUsers(11, 22);
-            }catch (\Exception $ex ){
-                Msg::sendTelegramm($ex->getMessage());
+                TelegramNotificationController::sendMessageToLeedUsers($leedRecord, $newColumn->board_id, 'Обьект перемещён:' . $oldColumnName . ' > ' . $newColumnName);
+            } catch (\Exception $ex) {
+                Msg::sendTelegramm('error:' . __FILE__ . ' ' . __LINE__ . '/' . $ex->getMessage());
             }
-
-
-//            $telega = new TelegramNotificationController();
-//            $telega->sendMessageToBoardUsers(
-//////                $newColumn->board_id,
-//                12,
-//////                'Обьект: '.$leedRecord->name.PHP_EOL.'Перемещён: '.$oldColumnName.' > '.$newColumnName
-//                '111'
-//            );
-
-//            Msg::sendTelegramm('Обьект: '.$leedRecord->name.PHP_EOL.'Перемещён: '.$oldColumnName.' > '.$newColumnName);
-
-//
-//            try {
-//                // Создание комментария
-//                Logs2::create([
-//                    'comment' => "Перемещён: {$oldColumnName} > {$newColumnName}",
-////                    'added_at' => now(),
-//                    'user_id' => Auth::id(),
-//                    'leed_record_id' => $leedRecord->id,
-//                    'type' => 'tech',
-//                    'created_at' => now(),
-//                ]);
-//
-//
-//            }catch (\Exception $ex ){
-//                dd($ex);
-//            }
 
         }
     }

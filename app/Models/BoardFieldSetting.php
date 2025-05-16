@@ -15,12 +15,14 @@ class BoardFieldSetting extends Model
         'field_name',
         'is_enabled',
         'show_on_start',
+        'in_telega_msg',
         'sort_order'
     ];
 
     protected $casts = [
         'is_enabled' => 'boolean',
         'show_on_start' => 'boolean',
+        'in_telega_msg' => 'boolean',
         'sort_order' => 'integer',
     ];
 

@@ -11,6 +11,7 @@ class FieldSettingsItem extends Component
 
     public $is_enabled;
     public $show_on_start;
+    public $in_telega_msg;
     public $sort_order;
     public $boardId;
 
@@ -21,6 +22,7 @@ class FieldSettingsItem extends Component
 
         $this->is_enabled = (bool)empty($this->field['is_enabled']) ? false : true;
         $this->show_on_start = (bool)empty($this->field['show_on_start']) ? false : true;
+        $this->in_telega_msg = (bool)empty($this->field['in_telega_msg']) ? false : true;
         $this->sort_order = $this->field['sort_order'] ?? 0;
 
 //        $this->is_enabled = (bool) $this->field['is_enabled'] ?? false;
@@ -42,6 +44,7 @@ class FieldSettingsItem extends Component
             [
                 'is_enabled' => $this->is_enabled,
                 'show_on_start' => $this->show_on_start,
+                'in_telega_msg' => $this->in_telega_msg,
                 'sort_order' => $this->sort_order ?? 0,
             ]
         );

@@ -24,6 +24,11 @@
             class="checkbox"
         ></td>
     <td class="text-center"><input
+            type="checkbox"
+            wire:model.live.debounce.300ms="in_telega_msg"
+            class="checkbox"
+        ></td>
+    <td class="text-center"><input
             type="number"
             min="0"
             max="99"
