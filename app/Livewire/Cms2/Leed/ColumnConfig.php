@@ -15,11 +15,16 @@ class ColumnConfig extends Component
     public $modal_show = false; // ID текущего столбца для открытия модального окна
 
     public $named = [
+
         'can_move' => 'Можно двигать',
         'can_delete' => 'Можно удалить',
+
         'type_otkaz' => 'Тип столбца - отказники',
         'can_create' => 'Можно создавать лида',
+
         'can_transfer' => 'Можно передать лида (договор подписан)',
+        'can_get' => 'Можно брать на себя лида (сразу в доске)',
+
 //        'can_accept_contract' => 'Принимает договор от менеджера',
         ];
     protected $rules = [
@@ -43,6 +48,7 @@ class ColumnConfig extends Component
             'type_otkaz' => $column->type_otkaz,
             'can_create' => $column->can_create,
             'can_transfer' => $column->can_transfer,
+            'can_get' => $column->can_get,
 //            'can_accept_contract' => $column->can_accept_contract,
         ];
     }

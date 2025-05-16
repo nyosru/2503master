@@ -20,7 +20,8 @@ class BoardController extends Controller
     {
 
         self::$polya_config = OrderRequest::get();
-//        dd(self::$polya_config);
+
+        //        dd(self::$polya_config);
 
 //        self::$polya_config[] = ['pole' => 'name', 'name' => 'Название'
 //            , 'rule' => 'nullable|string|max:255'

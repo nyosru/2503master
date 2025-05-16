@@ -23,6 +23,7 @@ class LeedColumn extends Model
         'type_otkaz',
         'can_create',
         'can_accept_contract',
+        'can_get',
 
     ];
 

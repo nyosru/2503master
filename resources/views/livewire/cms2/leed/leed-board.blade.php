@@ -543,11 +543,22 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
 
                                                             </div>
 
+{{--                                                            <pre class="text-xs text-left">{{ print_r($column->toArray(),1) }}</pre>--}}
+
+                                                            @if($column->can_get)
+                                                                @if( $record->user_id != Auth()->user()->id )
+                                                                <livewire:leed.action-get
+                                                                    :leed="$record"
+                                                                    :board_id="$board_id"
+                                                                    :key="'canget'.$record->id"
+                                                                />
+                                                                @endif
+                                                            @endif
+
                                                             @if($column->type_otkaz == true )
                                                                 <livewire:cms2.leed.item-otkaz-reason-form
                                                                     :recordId="$record->id"
                                                                     :key="'rec'.$record->id"/>
-
                                                             @endif
 
                                                             @permission('р.Лиды / отправить лида с дог-ом')
@@ -555,8 +566,9 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
                                                                 @if( empty($record->client_id) || empty($record->order_id) )
                                                                     @if( empty($record->client_id) )
                                                                         <div class="
-                                    text-gray-600
-                                    bg-gray-200 rounded border-gray-500 border p-1 my-1">Добавте
+                                                                            text-gray-600
+                                                                            bg-gray-200 rounded border-gray-500 border p-1 my-1">
+                                                                            Добавте
                                                                             клиента
                                                                         </div>
                                                                     @endif
