@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Http\Controllers\Logs2Controller;
+use App\Http\Controllers\TelegramNotificationController;
 use App\Models\LeedColumn;
 use App\Models\LeedRecord;
 use App\Models\Logs2;
@@ -46,8 +47,23 @@ class LeedRecordObserver
                 'leed_record_id' => $leedRecord->id,
                 'type' => 'tech'
             ]);
+//            dd($leedRecord->toArray());
 
-            Msg::sendTelegramm('Обьект: '.$leedRecord->name.PHP_EOL.'Перемещён: '.$oldColumnName.' > '.$newColumnName);
+            try {
+                TelegramNotificationController::sendMessageToBoardUsers(11, 22);
+            }catch (\Exception $ex ){
+                Msg::sendTelegramm($ex->getMessage());
+            }
+
+//            $telega = new TelegramNotificationController();
+//            $telega->sendMessageToBoardUsers(
+//////                $newColumn->board_id,
+//                12,
+//////                'Обьект: '.$leedRecord->name.PHP_EOL.'Перемещён: '.$oldColumnName.' > '.$newColumnName
+//                '111'
+//            );
+
+//            Msg::sendTelegramm('Обьект: '.$leedRecord->name.PHP_EOL.'Перемещён: '.$oldColumnName.' > '.$newColumnName);
 
 //
 //            try {

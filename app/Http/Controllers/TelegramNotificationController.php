@@ -7,8 +7,13 @@ use Nyos\Msg;
 
 class TelegramNotificationController extends Controller
 {
-    public function sendMessage($message,$to){
 
+    public static function sendMessageToBoardUsers($board_id, $message){
+        $message = __FUNCTION__.'('.$board_id.') '.$message;
+        Msg::sendTelegramm($message);
+    }
+
+    public function sendMessage($message,$to){
         Msg::sendTelegramm($message,$to);
 
         //        $message = $request->message;
