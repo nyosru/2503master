@@ -49,11 +49,13 @@ class LeedRecordObserver
             ]);
 //            dd($leedRecord->toArray());
 
+
             try {
                 TelegramNotificationController::sendMessageToBoardUsers(11, 22);
             }catch (\Exception $ex ){
                 Msg::sendTelegramm($ex->getMessage());
             }
+
 
 //            $telega = new TelegramNotificationController();
 //            $telega->sendMessageToBoardUsers(
