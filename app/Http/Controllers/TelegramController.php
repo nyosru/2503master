@@ -12,7 +12,6 @@ use Nyos\Msg;
 class TelegramController extends Controller
 {
 
-
     public static function showMeTelegaMsg($msg = '')
     {
         $update = json_decode(file_get_contents('php://input'), true);

@@ -395,14 +395,24 @@ hover:bg-gray-100
 hover:shadow-lg transition-all border rounded cursor-pointer relative">
 
                                                         @if(1==2)
-                                                        {{--                                                        блок справа на верху каждого лида--}}
-                                                        @iF($record->notifications_count > 0)
-                                                            <div
-                                                                style="position:absolute; top:0; right:0;">
-{{--                                                                {{ $record->notifications_count  }}--}}
-                                                                <svg class="h-8 w-8 text-red-200"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="13" r="7" />  <polyline points="12 10 12 13 14 13" />  <line x1="7" y1="4" x2="4.25" y2="6" />  <line x1="17" y1="4" x2="19.75" y2="6" /></svg>
-                                                            </div>
-                                                        @endif
+                                                            {{--                                                        блок справа на верху каждого лида--}}
+                                                            @iF($record->notifications_count > 0)
+                                                                <div
+                                                                    style="position:absolute; top:0; right:0;">
+                                                                    {{--                                                                {{ $record->notifications_count  }}--}}
+                                                                    <svg class="h-8 w-8 text-red-200" width="24"
+                                                                         height="24" viewBox="0 0 24 24"
+                                                                         stroke-width="2" stroke="currentColor"
+                                                                         fill="none" stroke-linecap="round"
+                                                                         stroke-linejoin="round">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"/>
+                                                                        <circle cx="12" cy="13" r="7"/>
+                                                                        <polyline points="12 10 12 13 14 13"/>
+                                                                        <line x1="7" y1="4" x2="4.25" y2="6"/>
+                                                                        <line x1="17" y1="4" x2="19.75" y2="6"/>
+                                                                    </svg>
+                                                                </div>
+                                                            @endif
                                                         @endif
 
                                                         {{--<pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($record->toArray(),true) }}</pre>--}}
@@ -495,10 +505,10 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
                 mt-1 flex flex-row space-x-1 items-center">
 
                                                                 @if(1==2)
-                                                                <livewire:cms2.informer.leed.client
-                                                                    {{--                                                                    :key="'block-'.$column->id.'-but1-'.$record->id"--}}
-                                                                    :key="'but1-'.$record->id"
-                                                                    :leed="$record"/>
+                                                                    <livewire:cms2.informer.leed.client
+                                                                        {{--                                                                    :key="'block-'.$column->id.'-but1-'.$record->id"--}}
+                                                                        :key="'but1-'.$record->id"
+                                                                        :leed="$record"/>
                                                                 @endif
                                                                 {{--                                                    <livewire:cms2.informer.leed.order :key="'block-but2-'.$record->id"--}}
                                                                 {{--                                                                                       :leed="$record"/>--}}
@@ -525,7 +535,7 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
 
                                                                     <div
                                                                         title="Есть уведомления в этой записи: {{ $record->notifications_count }}"
-{{--                                                                        style="position:absolute; top:0; right:0;"--}}
+                                                                        {{--                                                                        style="position:absolute; top:0; right:0;"--}}
                                                                     >
                                                                         <a href="{{ route('leed.item',[
     'board_id'=>$column->board_id ,
@@ -534,8 +544,18 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
                                                                            wire:navigate
                                                                            class="text-blue-400 xblock xtext-center hover:underline p-1"
                                                                         >
-                                                                        {{--                                                                {{ $record->notifications_count  }}--}}
-                                                                        <svg class="h-6 w-6 text-red-200"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="13" r="7" />  <polyline points="12 10 12 13 14 13" />  <line x1="7" y1="4" x2="4.25" y2="6" />  <line x1="17" y1="4" x2="19.75" y2="6" /></svg>
+                                                                            {{--                                                                {{ $record->notifications_count  }}--}}
+                                                                            <svg class="h-6 w-6 text-red-200" width="24"
+                                                                                 height="24" viewBox="0 0 24 24"
+                                                                                 stroke-width="2" stroke="currentColor"
+                                                                                 fill="none" stroke-linecap="round"
+                                                                                 stroke-linejoin="round">
+                                                                                <path stroke="none" d="M0 0h24v24H0z"/>
+                                                                                <circle cx="12" cy="13" r="7"/>
+                                                                                <polyline points="12 10 12 13 14 13"/>
+                                                                                <line x1="7" y1="4" x2="4.25" y2="6"/>
+                                                                                <line x1="17" y1="4" x2="19.75" y2="6"/>
+                                                                            </svg>
                                                                         </a>
                                                                     </div>
 
@@ -543,15 +563,15 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
 
                                                             </div>
 
-{{--                                                            <pre class="text-xs text-left">{{ print_r($column->toArray(),1) }}</pre>--}}
+                                                            {{--                                                            <pre class="text-xs text-left">{{ print_r($column->toArray(),1) }}</pre>--}}
 
                                                             @if($column->can_get)
                                                                 @if( $record->user_id != Auth()->user()->id )
-                                                                <livewire:leed.action-get
-                                                                    :leed="$record"
-                                                                    :board_id="$board_id"
-                                                                    :key="'canget'.$record->id"
-                                                                />
+                                                                    <livewire:leed.action-get
+                                                                        :leed="$record"
+                                                                        :board_id="$board_id"
+                                                                        :key="'canget'.$record->id"
+                                                                    />
                                                                 @endif
                                                             @endif
 
@@ -601,21 +621,14 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
                                                         {{--                                            @permission('р.Лиды / видеть все лиды')--}}
                                                         <div
                                                             class="text-left     @if( !empty($record->user->deleted_at) ) line-through @endif ">
+
                                                             @if( $user_id != $record->user_id )
-
-                                                                <span class="bg-gray-200 p-1 text-sm">
-
-
-           {{$record->user->name ?? '-'}}
-           ({{$record->user->roles[0]->name ?? '' }})
-       </span>
-
+                                                                <abbr title="{{$record->user->roles[0]->name ?? '' }}"
+                                                                      class="bg-gray-200 p-1 text-sm">{{$record->user->name ?? '-'}}</abbr>
                                                             @else
-
                                                                 {{--                                                <span class="bg-green-100 p-1 text-sm">--}}
                                                                 {{--                                                   ваш лид--}}
                                                                 {{--                                                </span>--}}
-
                                                             @endif
                                                         </div>
                                                     {{--                                            @endpermission--}}

@@ -7,6 +7,7 @@ use App\Models\LeedColumn;
 use App\Models\LeedRecord;
 use App\Models\Logs2;
 use Illuminate\Support\Facades\Auth;
+use Nyos\Msg;
 
 class LeedRecordObserver
 {
@@ -45,6 +46,8 @@ class LeedRecordObserver
                 'leed_record_id' => $leedRecord->id,
                 'type' => 'tech'
             ]);
+
+            Msg::sendTelegramm('Обьект: '.$leedRecord->name.PHP_EOL.'Перемещён: '.$oldColumnName.' > '.$newColumnName);
 
 //
 //            try {
