@@ -20,12 +20,13 @@ class DadataOrgSearchComponent extends Component
         $req = new DadataOrgController();
 //        $req->inn = $this->inn;
         $response0 = $req->findPartyByInn($this->inn);
-        $orgData = json_decode($response0);
-        if (!empty($orgData->suggestions)) {
-            dd($orgData->suggestions);
+        $orgData = json_decode($response0,true);
+        dd($orgData);
+        if (!empty($orgData['suggestions'])) {
+            dd($orgData['suggestions']);
         }
 
-        return $orgData->suggestions;
+        return $orgData['suggestions'];
 
         //dd($response);
 //        $response = Http::post(route('dadata.find-org'), [
