@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\Service\DadataOrgController;
 use Illuminate\Support\Facades\Route;
 
 use App\Livewire\Cms2\Client;
@@ -17,6 +18,8 @@ use Laravel\Socialite\Facades\Socialite;
 use Nyos\Msg;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
+
+Route::post('/dadata/find-org', [DadataOrgController::class, 'findByInn'])->name('dadata.find-org');
 
 
 Route::post('/webhook1', function () {

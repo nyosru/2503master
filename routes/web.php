@@ -183,6 +183,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('tech')->name('tech.')->group(function () {
 
             Route::get('', \App\Livewire\Cms2\Tech\Index::class)->name('index');
+            Route::get('inn_searc_org', \App\Livewire\Service\DadataOrgSearchComponent::class)->name('service.dadata_org_search_component');
 
             Route::get('/roles', \App\Livewire\RolePermissions::class)
                 ->name('role_permission');

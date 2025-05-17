@@ -19,6 +19,9 @@ class Index extends Component
         'Путь заказа, доступы' => ['route' => 'tech.adm_role_column', 'permission' => 'тех.Управление столбцами'],
 
         'Поля в заказе' => ['route' => 'tech.order_requests_manager', 'permission' => 'тех.упр полями в лиде'],
+        'Поиск организации по inn' => ['route' => 'tech.service.dadata_org_search_component'
+//            , 'permission' => 'тех.упр полями в лиде'
+        ],
 
 //        'Заказ - Метки' => ['route' => 'order.label',
 //            'permission' => 'тех.метки в заказах'
