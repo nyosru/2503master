@@ -13,17 +13,19 @@ class DadataOrgSearchComponent extends Component
     public $orgData = null;
     public $error = null;
 
-    public function search()
+    public function search(): object
     {
         $this->reset(['orgData', 'error']);
 
         $req = new DadataOrgController();
 //        $req->inn = $this->inn;
         $response0 = $req->findPartyByInn($this->inn);
-        $response = json_decode($response0);
-        if (!empty($response['suggestions'])) {
-            dd($response['suggestions']);
+        $orgData = json_decode($response0);
+        if (!empty($orgData->suggestions)) {
+            dd($orgData->suggestions);
         }
+
+        return $orgData->suggestions;
 
         //dd($response);
 //        $response = Http::post(route('dadata.find-org'), [
@@ -38,11 +40,11 @@ class DadataOrgSearchComponent extends Component
 //            'to_bound' => ['value' => 'cities'],
 //        ]);
 
-        if ($response->ok()) {
-            $this->orgData = $response->json();
-        } else {
-            $this->error = $response->json('error') ?? 'Ошибка поиска';
-        }
+//        if ($response->ok()) {
+//            $this->orgData = $response->json();
+//        } else {
+//            $this->error = $response->json('error') ?? 'Ошибка поиска';
+//        }
     }
 
     public function render()
