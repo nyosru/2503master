@@ -20,6 +20,8 @@ class DadataOrgSearchComponent extends Component
             'inn' => $this->inn,
         ]);
 
+        dd($response->json());
+
 //        $response = Http::get('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party', [
 //            'query' => $this->inn,
 //            'count' => 1,
