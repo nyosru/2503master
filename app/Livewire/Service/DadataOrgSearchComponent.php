@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Service;
 
+use App\Http\Controllers\Service\DadataOrgController;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
@@ -16,11 +17,15 @@ class DadataOrgSearchComponent extends Component
     {
         $this->reset(['orgData', 'error']);
 
-        $response = Http::post(route('dadata.find-org'), [
-            'inn' => $this->inn,
-        ]);
+        $req = new DadataOrgController();
+//        $req->inn = $this->inn;
+        $response = $req->findPartyByInn($this->inn);
+dd($response);
+//        $response = Http::post(route('dadata.find-org'), [
+//            'inn' => $this->inn,
+//        ]);
 
-        dd($response->json());
+//        dd($response->json());
 
 //        $response = Http::get('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party', [
 //            'query' => $this->inn,

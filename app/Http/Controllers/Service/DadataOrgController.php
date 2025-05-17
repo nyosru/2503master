@@ -7,6 +7,34 @@ use Illuminate\Http\Request;
 
 class DadataOrgController extends Controller
 {
+
+    public function findPartyByInn( $inn )
+    {
+//        $request->validate([
+//            'inn' => 'required|string',
+//        ]);
+
+        $token = env('DADATA_KEY'); // Ваш API-ключ DaData из .env
+
+        $response = Http::withHeaders([
+            'Authorization' => "Token {$token}",
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ])->post('https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party', [
+            'query' => $inn,
+        ]);
+
+        if ($response->failed()) {
+            return response()->json([
+                'error' => 'Ошибка при запросе к DaData',
+                'details' => $response->body(),
+            ], $response->status());
+        }
+
+        return response()->json($response->json());
+    }
+
+
     public function findByInn(Request $request)
     {
         $request->validate([
