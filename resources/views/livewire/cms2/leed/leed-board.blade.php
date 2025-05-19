@@ -434,7 +434,7 @@ border-1 rounded
 
                                             <li
                                                 {{--                                wire:ignore.self--}}
-                                                class="p-0 m-0"
+                                                class="p-1 m-1 border-2 border-gray-500 rounded"
                                                 id="record-{{ $record->id }}"
 
                                                 @if($column->can_transfer == true  && isset($record->transfers[0]) && $record->transfers[0]->status == 'новый' )
@@ -454,7 +454,9 @@ border-1 rounded
 bg-white/50
 {{--               text-center--}}
 hover:bg-gray-100
-hover:shadow-lg transition-all border rounded cursor-pointer relative">
+hover:shadow-lg transition-all
+{{--border rounded --}}
+cursor-pointer relative">
 
                                                         @if(1==2)
                                                             {{--                                                        блок справа на верху каждого лида--}}
@@ -488,7 +490,7 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
 'id'=>$record->id
 ]) }}"
                                                                wire:navigate
-                                                               class="text-blue-400 xblock xtext-center hover:underline p-1"
+                                                               class="text-blue-800 xblock xtext-center hover:underline p-1"
                                                             >
                                                                 {{--<pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($record->column->board->fieldSettings->toArray()) }}</pre>--}}
                                                                 {{--                                                                <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($record->toArray()) }}</pre>--}}
@@ -509,7 +511,9 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
 
                                                                     @if( !empty($record->{$f->field_name}) )
                                                                         {{--                                                                            {{$f->field_name}} :--}}
-                                                                        {{ $record->{$f->field_name} }}
+{{--                                                                        <abbr title="{{ $f->field_name }}" >--}}
+                                                                            {{ $record->{$f->field_name} }}
+{{--                                                                        </abbr>--}}
                                                                         <br/>
                                                                         @php $hasFields = true; @endphp
                                                                     @endif
