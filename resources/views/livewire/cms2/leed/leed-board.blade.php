@@ -35,24 +35,12 @@
             {{--                <pre style="max-height: 150px; overflow: auto;" >{{ print_r($columns) }}</pre>--}}
             {{--</div>--}}
 
-            @if(1==2)
-                {{--    @section('head-line-content')--}}
-                <livewire:Cms2.App.Breadcrumb
-                    {{--                :menu="[['route'=>'leed','name'=>'Лиды'], [ 'link' => 'no', 'name'=> ( $leed->name ?? 'Лид' ) ] ]"--}}
-                    :menu="[
-                        ['route'=>'leed','name'=>'Обьекты'] ,
-                          ]"
-                />
-                {{--    @endsection--}}
-            @endif
-
             {{--шапка над доской--}}
-            <div class="app-content-header"> <!--begin::Container-->
-                {{--                <div class="container-fluid"> <!--begin::Row-->--}}
-                <div class="container"> <!--begin::Row-->
+            <div class="app-content-header">
+                <div class="container">
                     <div class="flex flex-row space-x-4 w-full">
                         @if(1==1)
-                            <div class="flex-1">
+                            <div class="flex-2">
                                 <livewire:Cms2.App.Breadcrumb
                                     :board_id="$board_id"
                                     :menu="[
@@ -65,58 +53,132 @@
 
 {{--                            ['route'=>'leed','name'=>'Заказы'],--}}
                         ]"/>
+
                             </div>
                         @endif
 
                         <div class="flex-1">
+                            @if(1==2)
+                                <form action="{{ route('leed',['board_id'=>$board_id ]) }}"
+                                      class="inline"
+                                      method="get">
 
-                            <span class="float-right pr-5">
-                                @permission('р.Лиды / доска конфиг')
-                                <a href="{{ route('board.config',['board'=>$board_id ]) }}"
-                                   class="hover:text-gray-600 text-white"
-                                >⚙️ конфиг доски</a>
-                                @endpermission
-                            </span>
+                                    <input type="text" name="search" wire:model="search" class="inline-block
+                                @if( !empty($search) ) border border-2 border-red-400 rounded mr-0 @endif
+                                "/>@if( !empty($search) )
+                                        <a
+                                            class="bg-gray-300 p-2 rounded cursor-pointer "
+                                            href="{{ route('leed',['board_id'=>$board_id ]) }}"
+                                            wire:navigate
+                                        >X</a>
+                                    @endif
+
+                                </form>
+                            @endif
+
+
+                            <form class="w-full max-w-sm"
+                                  method="get"
+                                  action="{{ route('leed',['board_id'=>$board_id ]) }}"
+                            >
+                                <div class="flex items-center
+{{--                                border-2 border-b border-red-500--}}
+{{--                                rounded--}}
+                                p-1
+                                ">
+                                    <input
+                                        placeholder="Поиск"
+                                        wire:model="search" name="search"
+                                        class="appearance-none
+{{--                                        bg-transparent --}}
+bg-white
+{{--                                        border-none --}}
+border-1 rounded
+                                        w-full
+{{--                                        text-gray-700 --}}
+                                        mr-1
+                                        py-1 px-2
+                                        leading-tight
+                                        focus:outline-red-300
+                                        "
+                                        type="text" placeholder="Jane Doe" aria-label="Full name">
+                                    <button
+                                        class="flex-shrink-0
+{{--                                        ml-[-2px]--}}
+                                        bg-blue-400
+                                        border-blue-400
+                                        hover:bg-blue-500
+{{--                                        hover:border-blue-700--}}
+                                        text-sm
+{{--                                        border-4 --}}
+                                        text-white py-1 px-2 rounded"
+                                        type="button">
+                                        Искать
+                                    </button>
+                                    @if( !empty($search) )
+                                        <a
+                                            href="{{ route('leed',['board_id'=>$board_id ]) }}"
+                                            wire:navigate
+                                            class="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded"
+                                            type="button">
+                                            Отмена
+                                        </a>
+                                    @endif
+                                </div>
+                            </form>
+
+                        </div>
+
+                        <div class="flex-1">
+
+<span class="float-right pr-5">
+@permission('р.Лиды / доска конфиг')
+<a href="{{ route('board.config',['board'=>$board_id ]) }}"
+   class="hover:text-gray-600 text-white"
+   title="Настройки доски"
+>⚙️</a>
+@endpermission
+</span>
 
                             <!-- Сообщение об успехе -->
                             @if (session()->has('message'))
                                 <span class="bg-green-100 text-green-800 p-2 rounded mb-4">
-                            {{ session('message') }}
-                        </span>
+{{ session('message') }}
+</span>
                             @endif
 
                             @if (session()->has('clientMessage'))
                                 <span class="bg-green-100 text-green-800 p-2 rounded mb-4">
-                            {{ session('clientMessage') }}
-                        </span>
+{{ session('clientMessage') }}
+</span>
                             @endif
 
                             <!-- Сообщение об ошибке -->
                             @if (session()->has('error'))
                                 <span class="bg-red-100 text-red-800 p-2 rounded mb-4">
-                            {{ session('error') }}
-                        </span>
+{{ session('error') }}
+</span>
                             @endif
 
                             @if (session()->has('clientError'))
                                 <span class="bg-red-500 text-white inline-block p-2 m-3 rounded ">
-                            {{ session('clientError') }}
-                        </span>
+{{ session('clientError') }}
+</span>
                             @endif
 
 
                             <!-- Сообщение об успехе -->
                             @if (session()->has('messageAddReasonOtkaz'))
                                 <span class="bg-green-100 text-green-800 p-2 rounded mb-4">
-                            {{ session('message') }}
-                        </span>
+{{ session('message') }}
+</span>
                             @endif
 
                             <!-- Сообщение об ошибке -->
                             @if (session()->has('errorAddReasonOtkaz'))
                                 <span class="bg-red-100 text-red-800 p-2 rounded mb-4">
-                            {{ session('error') }}
-                        </span>
+{{ session('error') }}
+</span>
                             @endif
 
 
@@ -173,10 +235,10 @@
                             @foreach($columns as $k => $column)
                                 <div
                                     class="
-                                        p-1
-                                        relative
-                                        w-[250px]
-                                        bg-white border rounded relative"
+    p-1
+    relative
+    w-[250px]
+    bg-white border rounded relative"
 
                                     id="column-{{ $column->id }}"
 
@@ -194,10 +256,10 @@
                                     <div
                                         {{--                        bg-gradient-to-br from-orange-100 to-white--}}
                                         class="flex w-full justify-between items-center
-                                            mb-2 py-1
-                                            sticky top-0
-                                            bg-white
-                                            rounded"
+        mb-2 py-1
+        sticky top-0
+        bg-white
+        rounded"
                                         id="column-{{ $column->id }}"
 
                                         ondragstart="handleColumnDragStart(event, {{ $column->id }})"
@@ -216,37 +278,37 @@
                                         {{--                            кнопки--}}
                                         <span style="float:right;">
 
-        @permission('р.Лиды / удалить столбцы')
-        @if( $column->can_delete == true && $column->records->isEmpty())
+@permission('р.Лиды / удалить столбцы')
+@if( $column->can_delete == true && $column->records->isEmpty())
                                                 <button
                                                     class="text-black/50 hover:text-red-600"
                                                     wire:click="deleteColumn({{ $column->id }})"
                                                     wire:confirm="Вы уверены, что хотите удалить эту колонку?"
                                                     title="Удалить колонку"
                                                 >
-        х
-        </button>
+х
+</button>
                                             @endif
-        @endpermission
+@endpermission
 
-         @permission('р.Лиды / добавить столбцы')
-        @if( !isset($visibleAddForms[$column->id]) || $visibleAddForms[$column->id] === false )
+@permission('р.Лиды / добавить столбцы')
+@if( !isset($visibleAddForms[$column->id]) || $visibleAddForms[$column->id] === false )
                                                 <button
                                                     class="text-green-500 hover:text-green-700"
                                                     wire:click="showAddForm({{ $column->id }})"
                                                     title="Добавить новый столбец справа"
                                                 >
-        +
-        </button>
++
+</button>
                                             @endif
-        @endpermission
+@endpermission
 
 {{--        @permission('разработка')--}}
-        @permission('р.Лиды / конфиг столбцов')
-        <livewire:cms2.leed.column-config :key="$column->id" :column="$column"/>
-        @endpermission
+@permission('р.Лиды / конфиг столбцов')
+<livewire:cms2.leed.column-config :key="$column->id" :column="$column"/>
+@endpermission
 
-    </span>
+</span>
 
 
                                         {{ $column->name }}
@@ -422,9 +484,9 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
 
 
                                                             <a href="{{ route('leed.item',[
-    'board_id'=>$column->board_id ,
-    'id'=>$record->id
-    ]) }}"
+'board_id'=>$column->board_id ,
+'id'=>$record->id
+]) }}"
                                                                wire:navigate
                                                                class="text-blue-400 xblock xtext-center hover:underline p-1"
                                                             >
@@ -464,9 +526,9 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
                                                             @if(1==2)
                                                                 @if( !empty($record->name) )
                                                                     <a href="{{ route('leed.item',[
-    'board_id'=>$column->board_id ,
-    'id'=>$record->id
-    ]) }}"
+'board_id'=>$column->board_id ,
+'id'=>$record->id
+]) }}"
                                                                        wire:navigate
                                                                        class="text-blue-400 xblock xtext-center hover:underline p-1"
                                                                     >
@@ -486,23 +548,23 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
                                                                         {{--                                                              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>--}}
                                                                         {{--                                                    </svg>--}}
                                                                         {{  number_format($record->order->price,0,'',' ') }} руб
-                            </span>
+</span>
                                                                 @elseif( !empty($record->budget) )
                                                                     <br/>
                                                                     <span class="text-xl text-gray-400">
-                                                                    {{  number_format($record->budget,0,'',' ') }} руб
-                                                                </span>
+                                {{  number_format($record->budget,0,'',' ') }} руб
+                            </span>
                                                                 @endif
                                                             @endif
 
                                                             {{--блок кнопок менеджер--}}
                                                             <div class="
-                {{--                                            w-[255px]--}}
-                mx-2
+{{--                                            w-[255px]--}}
+mx-2
 
-                {{--                                            mx-auto--}}
-                {{--inline--}}
-                mt-1 flex flex-row space-x-1 items-center">
+{{--                                            mx-auto--}}
+{{--inline--}}
+mt-1 flex flex-row space-x-1 items-center">
 
                                                                 @if(1==2)
                                                                     <livewire:cms2.informer.leed.client
@@ -538,9 +600,9 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
                                                                         {{--                                                                        style="position:absolute; top:0; right:0;"--}}
                                                                     >
                                                                         <a href="{{ route('leed.item',[
-    'board_id'=>$column->board_id ,
-    'id'=>$record->id
-    ]) }}"
+'board_id'=>$column->board_id ,
+'id'=>$record->id
+]) }}"
                                                                            wire:navigate
                                                                            class="text-blue-400 xblock xtext-center hover:underline p-1"
                                                                         >
@@ -586,18 +648,18 @@ hover:shadow-lg transition-all border rounded cursor-pointer relative">
                                                                 @if( empty($record->client_id) || empty($record->order_id) )
                                                                     @if( empty($record->client_id) )
                                                                         <div class="
-                                                                            text-gray-600
-                                                                            bg-gray-200 rounded border-gray-500 border p-1 my-1">
+                                        text-gray-600
+                                        bg-gray-200 rounded border-gray-500 border p-1 my-1">
                                                                             Добавте
                                                                             клиента
                                                                         </div>
                                                                     @endif
                                                                     @if( empty($record->order_id) )
                                                                         <div class="
-                                    text-gray-600
-                                    bg-gray-200 rounded border-gray-500 border p-1 my-1
+text-gray-600
+bg-gray-200 rounded border-gray-500 border p-1 my-1
 {{--                                                        bg-yellow-200 p-1 my-1--}}
-                                    ">Добавте заказ
+">Добавте заказ
                                                                         </div>
                                                                     @endif
                                                                 @else
