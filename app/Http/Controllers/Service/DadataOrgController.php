@@ -32,7 +32,7 @@ class DadataOrgController extends Controller
             ], $response->status());
         }
 
-        return response()->json($response->json());
+        return $response->json();
     }
 
 

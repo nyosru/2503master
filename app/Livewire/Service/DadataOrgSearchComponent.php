@@ -13,39 +13,19 @@ class DadataOrgSearchComponent extends Component
     public $orgData = null;
     public $error = null;
 
-    public function search(): object
+    public function search()
     {
+
         $this->reset(['orgData', 'error']);
 
         $req = new DadataOrgController();
-//        $req->inn = $this->inn;
-        $response0 = $req->findPartyByInn($this->inn);
-        $orgData = json_decode($response0,true);
-        dd($orgData);
-        if (!empty($orgData['suggestions'])) {
-            dd($orgData['suggestions']);
+        $ee = $req->findPartyByInn($this->inn);
+        if (!empty($ee['suggestions'][0])) {
+            $this->orgData = $ee['suggestions'][0];
         }
 
-        return $orgData['suggestions'];
+//        return $this->orgData['suggestions'];
 
-        //dd($response);
-//        $response = Http::post(route('dadata.find-org'), [
-//            'inn' => $this->inn,
-//        ]);
-//        dd($response->json());
-//        $response = Http::get('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party', [
-//            'query' => $this->inn,
-//            'count' => 1,
-//            'locations' => 'Россия',
-//            'from_bound' => ['value' => 'cities'],
-//            'to_bound' => ['value' => 'cities'],
-//        ]);
-
-//        if ($response->ok()) {
-//            $this->orgData = $response->json();
-//        } else {
-//            $this->error = $response->json('error') ?? 'Ошибка поиска';
-//        }
     }
 
     public function render()
