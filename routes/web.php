@@ -141,7 +141,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
-
+    Route::group([ 'as' => 'lk.'], function () {
+        Route::get('profile', \App\Livewire\Lk\Profile::class)->name('profile');
+    });
 
 
 
