@@ -17,6 +17,7 @@ class Profile extends Component
     public $avatar;
     public $avatarPreview;
     public $phone_number;
+    public $telegram_id;
 
     public function mount()
     {
@@ -24,6 +25,7 @@ class Profile extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->phone_number = $user->phone_number;
+        $this->telegram_id = $user->telegram_id;
         $this->email = $user->email;
         $this->avatarPreview = $user->avatar
             ? asset('storage/' . $user->avatar)

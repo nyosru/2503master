@@ -59,11 +59,16 @@
                     <div class="mb-4">
                         <label class="block mb-2">Телеграм</label>
                         {{ $telegram_id ?? '--' }}
+{{--                        @if( !empty($telegram_id))--}}
+{{--                            <a href="https://t.me/{{ $telegram_id }}">{{ $telegram_id }}</a>--}}
+{{--                        @else--}}
+{{--                            ----}}
+{{--                        @endif--}}
 {{--                        <input type="text" wire:model="telegram_id"--}}
 {{--                               class="w-full p-2 border rounded"--}}
 {{--                               readonly--}}
 {{--                        >--}}
-                        {{--                        @error('name') <span class="text-red-500">{{ $message }}</span> @enderror--}}
+{{--                        @error('name') <span class="text-red-500">{{ $message }}</span> @enderror--}}
                     </div>
 
                     <div class="mb-4">
