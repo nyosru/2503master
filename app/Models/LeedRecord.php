@@ -53,6 +53,12 @@ class LeedRecord extends Model
         'post_day_do',
         'mesto_dostavki',
 
+        'number1', 'number2', 'number3', 'number4', 'number5', 'number6',
+        'date1', 'date2', 'date3', 'date4',
+        'dt1', 'dt2', 'dt3',
+        'string1', 'string2', 'string3', 'string4',
+
+
     ];
 
     public function column()

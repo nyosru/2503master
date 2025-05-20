@@ -7,6 +7,7 @@ use App\Models\ClientSupplier;
 use App\Models\Cms1\Clients;
 use App\Models\LeedRecord;
 use App\Models\OrderProductType;
+use App\Models\OrderRequestsRename;
 use Livewire\Component;
 
 class LeedRecordInfoForm extends Component
@@ -14,6 +15,7 @@ class LeedRecordInfoForm extends Component
     public $board_id;
     public $leed;
     public $isEditing = true;
+    public $polyas = [];
 
     public $name;
     public $phone;
@@ -53,30 +55,26 @@ class LeedRecordInfoForm extends Component
     public $post_day_do;
     public $mesto_dostavki;
 
+public $number1; public $number2; public $number3; public $number4; public $number5; public $number6;
+public $date1; public $date2; public $date3; public $date4;
+public $dt1; public $dt2; public $dt3;
+public $string1; public $string2; public $string3; public $string4;
 
     public function mount(LeedRecord $leed)
     {
+//        dd($leed->toArray());
         $this->leed = $leed;
 
         // Автоматическое заполнение свойств из модели
         $this->fill($leed->toArray());
 
-//        dd($this->leed->toArray());
-//        dd($this->items->getAttributes());
-
-//        $this->name = $this->leed->name;
-//        $this->name = $this->leed->name;
-//        $this->phone = $this->leed->phone;
-////        $this->company = $this->leed->company;
-//        $this->fio = $this->leed->fio;
-//        $this->comment = $this->leed->comment;
-//        $this->budget = $this->leed->budget;
-//        $this->client_supplier_id = $this->leed->client_supplier_id;
-//        $this->order_product_types_id = $this->leed->order_product_types_id;
+//        $this->polyas = OrderRequestsRename::where('board_id', $this->board_id)
+////            ->pluck('rename', 'name')->toArray()
+//            ->get()
+//        ;
 
         $this->suppliers = ClientSupplier::select('id', 'title')->get();
         $this->types = OrderProductType::select('id', 'name')->orderBy('order', 'asc')->get();
-
     }
 
     public function render()
@@ -85,40 +83,9 @@ class LeedRecordInfoForm extends Component
             'leed' => $this->leed,
         ]);
     }
-//
-//    protected $rules = [
-//
-//        'name' => 'nullable|string|max:255',
-//        'phone' => 'nullable|string|max:50',
-////        'company' => 'nullable|string|max:255',
-//        'fio' => 'nullable|string|max:255',
-//        'client_supplier_id' => 'nullable|integer',
-//        'order_product_types_id' => 'nullable|integer',
-//
-////        'name',
-////        'phone',
-//        'telegram' => 'nullable|string',
-//        'whatsapp' => 'nullable|string',
-////        'fio',
-////        'comment',
-////        'client_supplier_id',
-//        'fio2' => 'nullable|string',
-//        'phone2' => 'nullable|integer',
-//        'cooperativ' => 'nullable|string',
-//
-//        'link' => 'nullable|string',
-//        'base_number' => 'nullable|integer',
-//
-//        'price' => 'nullable|integer',
-//        'date_start' => 'nullable|date',
-//        'budget' => 'nullable|integer',
-//        'comment' => 'nullable|string|max:1000',
-//
-//    ];
 
     public function saveChanges()
     {
-
         $rules = BoardController::getRules();
         $ee = $this->validate($rules);
 
@@ -128,24 +95,12 @@ class LeedRecordInfoForm extends Component
             }
         }
 
-        //dd($ee
-
-//        dd([$ee, $this->leed->toArray()]);
-//        $this->leed->name = $ee['name'];
-//        $this->leed->phone = $ee['phone'];
-////        $this->leed->company = $ee['company'];
-//        $this->leed->fio = $ee['fio'];
-//        $this->leed->comment = $ee['comment'];
-//        $this->leed->budget = $ee['budget'];
-//        $this->leed->client_supplier_id = $ee['client_supplier_id'];
-//        $this->leed->order_product_types_id = $ee['order_product_types_id'];
-
-
         $this->leed->save();
         session()->flash('messageItemInfo', 'Сохранено');
 
-//        $this->redirectRoute('leed.item', [ 'board_id' => $this->board_id, 'id' => $this->leed->id);
+        //        $this->redirectRoute('leed.item', [ 'board_id' => $this->board_id, 'id' => $this->leed->id);
         return redirect()->route('leed.item', ['board_id' => $this->board_id, 'id' => $this->leed->id]);
 
     }
+
 }

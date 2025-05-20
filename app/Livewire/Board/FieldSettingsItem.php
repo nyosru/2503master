@@ -13,9 +13,9 @@ class FieldSettingsItem extends Component
     public $show_on_start;
     public $in_telega_msg;
     public $sort_order;
-    public $boardId;
+    public $board_id;
 
-    public function mount($field, $boardId)
+    public function mount($field, $board_id)
     {
         $this->field = $field;
 //        dd($this->field);
@@ -31,14 +31,14 @@ class FieldSettingsItem extends Component
 ////            dd($this->field);
 //
 //        $this->show_on_start = (bool) $this->field['show_on_start'] ?? false;
-        $this->boardId = $boardId;
+//        $this->boardId = $board_id;
     }
 
     public function updated($property)
     {
         BoardFieldSetting::updateOrCreate(
             [
-                'board_id' => $this->boardId,
+                'board_id' => $this->board_id,
                 'field_name' => $this->field['pole'],
             ],
             [

@@ -198,6 +198,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('order_requests_manager', \App\Livewire\Tech\OrderRequestsManager::class)->name('order_requests_manager');
             });
 
+            Route::get('order-request-rename-form', \App\Livewire\Board\OrderRequestRenameForm::class)->name('order-request-rename-form');
+
             // пользователи
             Route::middleware('check.permission:р.Пользователи')->group(function () {
                 Route::get('/u-list', \App\Livewire\Cms2\UserList::class)->name('user_list');

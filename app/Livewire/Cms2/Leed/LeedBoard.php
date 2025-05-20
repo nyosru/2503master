@@ -321,6 +321,7 @@ class LeedBoard extends Component
 
             $this->columns = LeedColumn::orderBy('order', 'asc')
                 ->where('board_id', $this->board_id)
+
                 ->with(['records' => function ($query) use ($ss){
 
                     if (!empty($ss)) {
@@ -366,11 +367,10 @@ class LeedBoard extends Component
 //                            ->orWhere('post_day_do', 'like', '%' . $this->search . '%')
                     */
 
-
-
                     $query->withCount('notifications');
 
                     $query->with([
+
                         'column' => function ($query) {
 
                             $query->select(['id', 'board_id']);
@@ -386,11 +386,14 @@ class LeedBoard extends Component
                                             ]);
                                             $query->whereShowOnStart(true);
                                             $query->orderBy('sort_order', 'desc');
+
                                         }
-                                    ]);
+//                                    ,'orderRequest','rename'
+                                        ]);
                                 }
                             ]);
                         }
+//                        ,'orderRequest','rename'
                     ]);
                 }])
                 ->get();

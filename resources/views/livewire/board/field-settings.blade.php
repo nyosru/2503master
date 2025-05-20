@@ -25,6 +25,7 @@
             <thead>
             <tr>
                 <th>Поле</th>
+                <th>Новое название</th>
                 <th>Тип</th>
                 <th>Включено</th>
                 <th>Показывать<br/>на старт доске</th>
@@ -40,7 +41,7 @@
                 @if(1==1)
                     <livewire:board.field-settings-item
                         :field="$field"
-                        :board-id="$boardId"
+                        :board_id="$boardId"
                         :key="$boardId.'-'.$field['pole']"
                     />
                     {{--                :is_enabled="$field['is_enabled'] ?? false"--}}

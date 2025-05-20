@@ -19,72 +19,10 @@ class BoardController extends Controller
     public static function getPolyaConfig()
     {
 
-        self::$polya_config = OrderRequest::get();
-
-        //        dd(self::$polya_config);
-
-//        self::$polya_config[] = ['pole' => 'name', 'name' => 'Название'
-//            , 'rule' => 'nullable|string|max:255'
-//        ];
-//        self::$polya_config[] = ['pole' => 'company', 'name' => 'Компания', 'rule' => 'nullable|string|max:255' ];
-//
-//        self::$polya_config[] = ['pole' => 'cooperativ', 'name' => 'Кооператив', 'rule' => 'nullable|string|max:255' ];
-//
-//        self::$polya_config[] = ['pole' => 'platform', 'name' => 'Платформа', 'rule' => 'nullable|string|max:255' ];
-//        self::$polya_config[] = ['pole' => 'link', 'name' => 'Ссылка', 'rule' => 'nullable|string' ];
-//
-//        self::$polya_config[] = [
-//            'pole' => 'base_number', 'name' => 'Номер',
-//            'type' => 'number',
-//            'rule' => 'nullable|integer' ];
-//
-//        self::$polya_config[] = ['pole' => 'fio', 'name' => 'ФИО', 'rule' => 'nullable|string|max:255' ];
-//        self::$polya_config[] = ['pole' => 'phone', 'name' => 'Телефон', 'rule' => 'nullable|string|max:20' ];
-//
-//        self::$polya_config[] = ['pole' => 'fio2', 'name' => 'ФИО2', 'rule' => 'nullable|string|max:255' ];
-//        self::$polya_config[] = ['pole' => 'phone2', 'name' => 'Телефон2', 'rule' => 'nullable|string' ];
-//
-//        self::$polya_config[] = ['pole' => 'telegram', 'name' => 'Телеграм id', 'rule' => 'nullable|string|max:255' ];
-//        self::$polya_config[] = ['pole' => 'whatsapp', 'name' => 'WatsApp id', 'rule' => 'nullable|string|max:255' ];
-//
-//        self::$polya_config[] = ['pole' => 'date_start', 'name' => 'Дата старта',
-//            'type' => 'date',
-//            'rule' => 'nullable|date' ];
-//        self::$polya_config[] = ['pole' => 'comment', 'name' => 'Комментарий', 'rule' => 'nullable|string|max:1000' ];
-//
-//        self::$polya_config[] = ['pole' => 'budget', 'name' => 'Бюджет', 'rule' => 'nullable|integer' ];
-//        self::$polya_config[] = ['pole' => 'price', 'name' => 'Цена', 'rule' => 'nullable|integer' ];
-//
-//        self::$polya_config[] = ['pole' => 'order_product_types_id', 'name' => 'Тип продукта', 'rule' => 'nullable|exists:order_product_types,id' ];
-//
-//        self::$polya_config[] = ['pole' => 'customer', 'name' => 'Пользователь', 'rule' => 'nullable|string' ];
-//        self::$polya_config[] = ['pole' => 'payment_due_date', 'name' => 'Дата после оплаты', 'rule' => 'nullable|date' ];
-//        self::$polya_config[] = ['pole' => 'submit_before', 'name' => 'Подать до', 'rule' => 'nullable|integer' ];
-//
-//        self::$polya_config[] = ['pole' => 'pay_day_every_year', 'name' => 'Оплата ежегодно',
-//            'type' => 'date',
-//            'rule' => 'nullable|date' ];
-//        self::$polya_config[] = ['pole' => 'pay_day_every_month', 'name' => 'Оплата ежемесячно', 'rule' => 'nullable|integer' ];
-//
-////2. эл.почта заказчика
-//        self::$polya_config[] = ['pole' => 'email', 'name' => 'E-mail заказчика', 'rule' => 'nullable|string' ];
-////3. название переделать в предмет тендера
-//        self::$polya_config[] = ['pole' => 'obj_tender', 'name' => 'предмет тендера', 'rule' => 'nullable|string' ];
-////4. Заказчик
-//        self::$polya_config[] = ['pole' => 'zakazchick', 'name' => 'Заказчик', 'rule' => 'nullable|string' ];
-////5.  срок поставки от и до (45-60 дней)
-//        self::$polya_config[] = ['pole' => 'post_day_ot', 'name' => 'срок поставки от',
-//            'type' => 'number',
-//            'rule' => 'nullable|integer' ]; // , 'name' => 'Цена', 'rule' => '' ];
-//        self::$polya_config[] = ['pole' => 'post_day_do', 'name' => 'срок поставки до',
-//            'type' => 'number',
-//            'rule' => 'nullable|integer' ]; // , 'name' => 'Цена', 'rule' => '' ];
-////6. место поставки
-//        self::$polya_config[] = ['pole' => 'mesto_dostavki', 'name' => 'место поставки', 'rule' => 'nullable|string' ];
-
+        self::$polya_config = OrderRequest::all();
+//        dd(self::$polya_config);
         return self::$polya_config;
     }
-
 
 
     public static function getRules(): array
@@ -92,7 +30,7 @@ class BoardController extends Controller
         $rules = [];
         $e = self::getPolyaConfig();
 //        dd($e);
-        foreach( $e as $v ){
+        foreach ($e as $v) {
             $rules[$v['pole']] = $v['rules'];
         }
         return $rules;
@@ -191,7 +129,7 @@ class BoardController extends Controller
         return $return;
     }
 
-    public static function delete( Board $board )
+    public static function delete(Board $board)
     {
         $board->delete();
         return redirect()->back();

@@ -5,7 +5,6 @@
         }
     </style>
 
-
     {{--    <div class="flex flex-row bg-white border w-full rounded-md mb-2">--}}
     <div class="bg-white border w-full rounded-md mb-2 mt-[-15px] py-1
     flex flex-row items-center

@@ -18,6 +18,7 @@ class OrderRequest extends Model
         'text',
         'string',
         'nullable',
+        'is_web_link',
         'rules',
     ];
 
@@ -26,5 +27,13 @@ class OrderRequest extends Model
         return $this->belongsTo(BoardFieldSetting::class, 'pole', 'field_name');
     }
 
-    
+    /**
+     * Отношение "один к одному" к OrderRequestsRename
+     * Связь по полю order_requests_id в таблице order_requests_rename
+     */
+    public function rename()
+    {
+        return $this->hasOne(OrderRequestsRename::class, 'order_requests_id', 'id');
+    }
+
 }

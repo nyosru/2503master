@@ -16,82 +16,50 @@
 
     </div>
 
-{{--        <pre class="text-xs">{{ print_r($leed->toArray()) }}</pre>--}}
+    {{--        <pre class="text-xs">{{ print_r($leed->toArray()) }}</pre>--}}
 
     <form wire:submit="saveChanges">
 
         <div class="px-2">
             <div class="flex flex-col pt-2 max-h-[550px] overflow-x-auto">
 
-{{--                <pre class="text-xs">{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>--}}
+                {{--                <pre class="text-xs">{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>--}}
 
 
-{{--<pre>{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>--}}
+                {{--<pre>{{ print_r($leed->column->board->fieldSettings->toArray()) }}</pre>--}}
 
-{{--                @foreach(['name', 'fio', 'phone','order_product_types_id','budget', 'client_supplier_id',--}}
-{{--                    //'company',--}}
-{{--                    'comment'] as $key)--}}
+                {{--                @foreach(['name', 'fio', 'phone','order_product_types_id','budget', 'client_supplier_id',--}}
+                {{--                    //'company',--}}
+                {{--                    'comment'] as $key)--}}
                 @foreach( $leed->column->board->fieldSettings as $key)
-{{--                    @if(!$key->is_enabled)--}}
-{{--                        @continue--}}
-{{--                        @endif--}}
+                    {{--                    @if(!$key->is_enabled)--}}
+                    {{--                        @continue--}}
+                    {{--                        @endif--}}
                     {{--                    @if($leed->{$key} !== null)--}}
                     <div class="py-1">
-{{--                        <pre class="text-xs">{{ print_r($key->toArray()) }}</pre>--}}
-{{--                        <pre>{{ print_r($leed->{$key}) }}</pre>--}}
+                        {{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($key->toArray()) }}</pre>--}}
+                        {{--                        <pre>{{ print_r($leed->{$key}) }}</pre>--}}
+{{--                        {{ $key->field_name }}--}}
                         <label for="{{ $key->field_name }}"
-{{--                               title="{{ $key->field_name }}"--}}
-                               title="{{ $key->orderRequest->description }}"
+                               {{--                               title="{{ $key->field_name }}"--}}
+                               title="{{ $key->orderRequest->rename->description ?? $key->orderRequest->description }}"
                                class="block text-sm font-medium text-gray-700">
 
-                            @if( !empty($key->orderRequest->name) )
+                            @if( !empty($key->orderRequest->rename->name) )
+                                {{ $key->orderRequest->rename->name }}
+                            @elseif( !empty($key->orderRequest->name) )
                                 {{ $key->orderRequest->name }}
                             @else
                                 {{ $key->field_name }}
                             @endif
 
-                            @if(1==2)
-                            @if($key->field_name === 'name')
-                                Название
-{{--                                <sup>(техническое для себя)</sup>--}}
-                            @elseif($key->field_name === 'comment')
-                                Комментарий
-                            @elseif($key->field_name === 'company')
-                                Компания
-
-                            @elseif($key->field_name === 'price')
-                                Цена
-                            @elseif($key->field_name === 'platform')
-                                Платформа
-                            @elseif($key->field_name === 'submit_before')
-                                Оплата после доставки (дней)
-                            @elseif($key->field_name === 'base_number')
-                                Номер
-                            @elseif($key->field_name === 'budget')
-                                Бюджет
-                            @elseif($key->field_name === 'fio')
-                                ФИО
-                            @elseif($key->field_name === 'phone')
-                                Тел
-                            @elseif($key->field_name === 'client_supplier_id')
-                                Источник лида
-                            @elseif($key->field_name === 'client_supplier_id')
-                                Источник лида
-                            @elseif($key->field_name === 'order_product_types_id')
-                                Тип изделия
-                            @else
-{{--                                {{ ucfirst($key->field_name) }}--}}
-                                {{ $key->field_name }}
-                            @endif
-                            @endif
-
                         </label>
-
+{{--                        <pre class="text-xs" >{{ print_r($key->toArray()) }}</pre>--}}
                         @if($isEditing)
                             @if($key->field_name === 'comment')
                                 <textarea wire:model="{{ $key->field_name }}" id="{{ $key }}"
-                                          class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
-                                          rows="3"></textarea>
+                                      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+                                      rows="3"></textarea>
                             @elseif($key->field_name === 'client_supplier_id')
                                 <select class="rounded w-full" wire:model="{{ $key->field_name }}">
                                     <option value="">--</option>
@@ -108,17 +76,20 @@
                                 </select>
                             @else
                                 <input
-                                       wire:model="{{ $key->field_name }}"
-                                       id="{{ $key->field_name }}"
+                                    wire:model="{{ $key->field_name }}"
+                                    id="{{ $key->field_name }}"
 
-                                       @if( !empty($key->type) && $key->type === 'number' )
-                                           type="number"
-                                       @else
-                                           type="text"
-                                       @endif
+{{--                                    @if( !empty($key->type) && $key->type === 'number' )--}}
+                                    @if( $key->orderRequest->number )
+                                        type="number"
+                                    @elseif( $key->orderRequest->date )
+                                        type="date"
+                                    @else
+                                        type="text"
+                                    @endif
 
-                                       :value="$leed->{$key->field_name}"
-                                       class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md">
+                                    :value="$leed->{$key->field_name}"
+                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md">
                             @endif
                         @else
                             <p class="mt-1">{{ $leed->{$key->field_name} }}</p>
@@ -128,8 +99,8 @@
                         <div class="mt-2 text-sm text-red-500">{{ $message }}</div>
                         @enderror
 
-{{--                        {{$key->field_name}}: {{ ${$key->field_name} ?? 'x' }}<br/>--}}
-{{--                        {{$key->field_name}}: {{ $leed->{$key->field_name} ?? 'x' }}<br/>--}}
+                        {{--                        {{$key->field_name}}: {{ ${$key->field_name} ?? 'x' }}<br/>--}}
+                        {{--                        {{$key->field_name}}: {{ $leed->{$key->field_name} ?? 'x' }}<br/>--}}
 
                     </div>
                     {{--                    @endif--}}
