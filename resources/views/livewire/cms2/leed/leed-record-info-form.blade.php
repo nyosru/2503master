@@ -39,7 +39,7 @@
                     <div class="py-1">
                         {{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($key->toArray()) }}</pre>--}}
                         {{--                        <pre>{{ print_r($leed->{$key}) }}</pre>--}}
-{{--                        {{ $key->field_name }}--}}
+                        {{--                        {{ $key->field_name }}--}}
                         <label for="{{ $key->field_name }}"
                                {{--                               title="{{ $key->field_name }}"--}}
                                title="{{ $key->orderRequest->rename->description ?? $key->orderRequest->description }}"
@@ -54,43 +54,99 @@
                             @endif
 
                         </label>
-{{--                        <pre class="text-xs" >{{ print_r($key->toArray()) }}</pre>--}}
+                        {{--                        <pre class="text-xs" >{{ print_r($key->toArray()) }}</pre>--}}
                         @if($isEditing)
-                            @if($key->field_name === 'comment')
-                                <textarea wire:model="{{ $key->field_name }}" id="{{ $key }}"
-                                      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
-                                      rows="3"></textarea>
-                            @elseif($key->field_name === 'client_supplier_id')
-                                <select class="rounded w-full" wire:model="{{ $key->field_name }}">
-                                    <option value="">--</option>
-                                    @foreach( $suppliers as $s )
-                                        <option value="{{ $s->id }}">{{ $s->title }}</option>
-                                    @endforeach
-                                </select>
-                            @elseif($key->field_name === 'order_product_types_id')
-                                <select class="rounded w-full" wire:model="{{ $key->field_name }}">
-                                    <option value="">--</option>
-                                    @foreach( $types as $s )
-                                        <option value="{{ $s->id }}">{{ $s->name }}</option>
-                                    @endforeach
-                                </select>
-                            @else
-                                <input
-                                    wire:model="{{ $key->field_name }}"
-                                    id="{{ $key->field_name }}"
 
-{{--                                    @if( !empty($key->type) && $key->type === 'number' )--}}
-                                    @if( $key->orderRequest->number )
-                                        type="number"
-                                    @elseif( $key->orderRequest->date )
-                                        type="date"
-                                    @else
-                                        type="text"
+                            {{--                            @if( $key->orderRequest->is_web_link )--}}
+                            <div
+                                x-data="{ link: '{{$link}}' }"
+                                class="relative max-w-md"
+                            >
+                                {{--                                    <div class="relative max-w-md">--}}
+                                {{--                                        <input--}}
+                                {{--                                            wire:model="{{ $key->field_name }}"--}}
+                                {{--                                            id="{{ $key->field_name }}"--}}
+                                {{--                                            :value="$leed->{$key->field_name}"--}}
+                                {{--                                            type="text"--}}
+                                {{--                                            class="w-full border rounded px-3 py-2 pr-20 focus:outline-none focus:ring-2 focus:ring-blue-400"--}}
+                                {{--                                            placeholder="Введите что-то..."--}}
+                                {{--                                            x-model="url"--}}
+                                {{--                                        >--}}
+                                {{--                                        <button--}}
+                                {{--                                            type="button"--}}
+                                {{--                                            class="absolute right-1 top-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition"--}}
+                                {{--                                            @click="window.open(url, '_blank')"--}}
+                                {{--                                        >--}}
+                                {{--                                            --}}{{--            Перейти--}}
+                                {{--                                            ↗--}}
+                                {{--                                        </button>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+                                {{--                            @else--}}
+
+                                @if($key->field_name === 'comment')
+                                    <textarea wire:model="{{ $key->field_name }}" id="{{ $key }}"
+                                              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+                                              rows="3"></textarea>
+                                @elseif($key->field_name === 'client_supplier_id')
+                                    <select class="rounded w-full" wire:model="{{ $key->field_name }}">
+                                        <option value="">--</option>
+                                        @foreach( $suppliers as $s )
+                                            <option value="{{ $s->id }}">{{ $s->title }}</option>
+                                        @endforeach
+                                    </select>
+                                @elseif($key->field_name === 'order_product_types_id')
+                                    <select class="rounded w-full" wire:model="{{ $key->field_name }}">
+                                        <option value="">--</option>
+                                        @foreach( $types as $s )
+                                            <option value="{{ $s->id }}">{{ $s->name }}</option>
+                                        @endforeach
+                                    </select>
+                                @else
+
+                                    {{--                                    @if( $key->orderRequest->is_web_link )--}}
+                                    {{--                                        777--}}
+                                    {{--                                        {{ $link ?? '' }}--}}
+                                    {{--                                        @endif--}}
+                                    {{--                                        {{ $key->field_name }}--}}
+                                    <input
+
+                                        wire:model="{{ $key->field_name }}"
+                                        id="{{ $key->field_name }}"
+
+                                        {{--                                    @if( !empty($key->type) && $key->type === 'number' )--}}
+                                        @if( $key->orderRequest->number )
+                                            type="number"
+                                        @elseif( $key->orderRequest->date )
+                                            type="date"
+                                        @elseif( $key->orderRequest->is_web_link )
+                                            type="text"
+                                        x-model="link"
+                                        @else
+                                            type="text"
+                                        @endif
+
+                                        :value="$leed->{$key->field_name}"
+
+                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md
+                                        @if( $key->orderRequest->is_web_link ) pr-20 @endif
+                                        "
+
+                                    >
+                                    @if( $key->orderRequest->is_web_link )
+                                        <button
+                                            type="button"
+                                            class="absolute right-1 top-1/2 -translate-y-1/2
+                                                bg-blue-200
+                                                text-white px-2 py-1 rounded
+                                                hover:bg-blue-700 transition"
+                                            @click="window.open(link, '_blank')"
+                                        >↗
+                                        </button>
                                     @endif
-
-                                    :value="$leed->{$key->field_name}"
-                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md">
-                            @endif
+                                @endif
+                                {{--                            @endif--}}
+                            </div>
                         @else
                             <p class="mt-1">{{ $leed->{$key->field_name} }}</p>
                         @endif
@@ -104,6 +160,7 @@
 
                     </div>
                     {{--                    @endif--}}
+
                 @endforeach
             </div>
 

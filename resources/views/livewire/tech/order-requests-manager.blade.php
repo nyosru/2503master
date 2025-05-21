@@ -45,12 +45,20 @@
                 @error('description') <span class="text-red-600">{{ $message }}</span> @enderror
             </div>
 
-            <div class="flex space-x-4">
+            <div class="xflex xspace-x-4">
+
+                <label><input type="checkbox" wire:model.defer="string"/> String</label>
+                <label><input type="checkbox" wire:model.defer="text"/> Text</label>
+
                 <label><input type="checkbox" wire:model.defer="number"/> Number</label>
                 <label><input type="checkbox" wire:model.defer="date"/> Date</label>
-                <label><input type="checkbox" wire:model.defer="text"/> Text</label>
-                <label><input type="checkbox" wire:model.defer="string"/> String</label>
+
+                <label><input type="checkbox" wire:model.defer="datetime"/> DateTime</label>
+                //
                 <label><input type="checkbox" wire:model.defer="nullable"/> Nullable</label>
+                <br/>
+                <label><input type="checkbox" wire:model.defer="is_web_link"/> Link</label>
+
             </div>
 
             <div>
@@ -71,6 +79,8 @@
                 @endif
             </div>
         </form>
+
+
 
         {{-- Список --}}
         <table class="w-full border-collapse border border-gray-300">
@@ -100,18 +110,24 @@
                     <td class="border border-gray-300 p-2">{{ $item->pole }}</td>
 {{--                    <td class="border border-gray-300 p-2"></td>--}}
                     <td class="border border-gray-300 p-2">
-                        @if($item->number)
-                            Number
-                        @endif
-                        @if($item->date)
-                            Date
-                        @endif
-                        @if($item->text)
-                            Text
-                        @endif
-                        @if($item->string)
-                            String
-                        @endif
+
+                        @foreach( $item->getAttributes() as $k => $v )
+                            @if($k == 'number' && $v )
+                                Цифра<br/>
+                            @elseif($k == 'date' && $v )
+                                Дата<br/>
+                            @elseif($k == 'text' && $v )
+                                Текст<br/>
+                            @elseif($k == 'string' && $v )
+                                Строка<br/>
+                            @elseif($k == 'is_web_link' && $v )
+                                Ссылка<br/>
+                            @elseif($k == 'nullable' && $v )
+                                Может быть пустым<br/>
+                            @endif
+                        @endforeach
+
+
                     </td>
                     <td class="border border-gray-300 p-2">{{ $item->nullable ? '+' : '' }}</td>
                     <td class="border border-gray-300 p-2">{{ $item->rules }}</td>

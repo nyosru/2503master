@@ -37,6 +37,8 @@ class LeedRecordInfoForm extends Component
     public $date_start;
     public $base_number;
     public $link;
+//    public $is_web_link;
+//    public $url;
 
 
     public $platform;
@@ -62,8 +64,11 @@ public $string1; public $string2; public $string3; public $string4;
 
     public function mount(LeedRecord $leed)
     {
-//        dd($leed->toArray());
+
+        //        dd($leed->toArray());
         $this->leed = $leed;
+
+//        $this->link = $leed->link;
 
         // Автоматическое заполнение свойств из модели
         $this->fill($leed->toArray());
@@ -86,6 +91,7 @@ public $string1; public $string2; public $string3; public $string4;
 
     public function saveChanges()
     {
+
         $rules = BoardController::getRules();
         $ee = $this->validate($rules);
 

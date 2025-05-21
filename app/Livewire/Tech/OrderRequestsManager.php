@@ -19,9 +19,11 @@ class OrderRequestsManager extends Component
 
     public $number = false;
     public $date = false;
+    public $datetime = false;
     public $text = false;
     public $string = false;
     public $nullable = false;
+    public $is_web_link = false;
 
     public $rules;
 
@@ -34,9 +36,11 @@ class OrderRequestsManager extends Component
 
         'number' => 'boolean',
         'date' => 'boolean',
+        'datetime' => 'boolean',
         'text' => 'boolean',
         'string' => 'boolean',
         'nullable' => 'boolean',
+        'is_web_link' => 'boolean',
 
         'rules' => 'nullable|string|max:255',
     ];
@@ -47,10 +51,13 @@ class OrderRequestsManager extends Component
         $this->name = null;
         $this->pole = null;
         $this->description = null;
+
         $this->number = false;
         $this->date = false;
         $this->text = false;
         $this->string = false;
+        $this->is_web_link = false;
+
         $this->nullable = false;
         $this->rules = null;
         $this->isEditMode = false;
@@ -75,11 +82,15 @@ class OrderRequestsManager extends Component
         $this->name = $orderRequest->name;
         $this->pole = $orderRequest->pole;
         $this->description = $orderRequest->description;
+
         $this->number = $orderRequest->number;
         $this->date = $orderRequest->date;
         $this->text = $orderRequest->text;
         $this->string = $orderRequest->string;
+
         $this->nullable = $orderRequest->nullable;
+        $this->is_web_link = $orderRequest->is_web_link;
+
         $this->rules = $orderRequest->rules;
 
         $this->isEditMode = true;
@@ -88,7 +99,7 @@ class OrderRequestsManager extends Component
     public function update()
     {
         $validatedData = $this->validate($this->rulesValidation);
-
+//dd($validatedData);
         if ($this->orderRequestId) {
             $orderRequest = OrderRequest::find($this->orderRequestId);
             $orderRequest->update($validatedData);
