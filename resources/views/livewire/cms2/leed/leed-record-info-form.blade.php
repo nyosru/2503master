@@ -128,7 +128,9 @@
 
                                         :value="$leed->{$key->field_name}"
 
-                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md
+                                        class="shadow-sm mt-1 block w-full
+                                        focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
+                                        border-gray-300 rounded-md
                                         @if( $key->orderRequest->is_web_link ) pr-20 @endif
                                         "
 
@@ -136,6 +138,7 @@
                                     @if( $key->orderRequest->is_web_link )
                                         <button
                                             type="button"
+                                            title="открыть ссылку в новом окне"
                                             class="absolute right-1 top-1/2 -translate-y-1/2
                                                 bg-blue-200
                                                 text-white px-2 py-1 rounded
