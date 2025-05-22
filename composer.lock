@@ -4015,16 +4015,16 @@
         },
         {
             "name": "nyos/msg",
-            "version": "1.15.0",
+            "version": "1.19.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nyosru/composer_nyos_msg.git",
-                "reference": "9b267d6d67fff82ccef70c74705e7265461ac721"
+                "reference": "f3d229c3b2155a13153f26ce5e015e87344ddb30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nyosru/composer_nyos_msg/zipball/9b267d6d67fff82ccef70c74705e7265461ac721",
-                "reference": "9b267d6d67fff82ccef70c74705e7265461ac721",
+                "url": "https://api.github.com/repos/nyosru/composer_nyos_msg/zipball/f3d229c3b2155a13153f26ce5e015e87344ddb30",
+                "reference": "f3d229c3b2155a13153f26ce5e015e87344ddb30",
                 "shasum": ""
             },
             "require": {
@@ -4058,9 +4058,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nyosru/composer_nyos_msg/issues",
-                "source": "https://github.com/nyosru/composer_nyos_msg/tree/1.15.0"
+                "source": "https://github.com/nyosru/composer_nyos_msg/tree/1.19.2"
             },
-            "time": "2022-12-28T06:37:59+00:00"
+            "time": "2025-05-22T08:53:11+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",

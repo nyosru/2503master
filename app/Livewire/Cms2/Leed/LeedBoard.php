@@ -321,8 +321,7 @@ class LeedBoard extends Component
 
             $this->columns = LeedColumn::orderBy('order', 'asc')
                 ->where('board_id', $this->board_id)
-
-                ->with(['records' => function ($query) use ($ss){
+                ->with(['records' => function ($query) use ($ss) {
 
                     if (!empty($ss)) {
                         $query->where(function ($q) use ($ss) {
@@ -337,8 +336,7 @@ class LeedBoard extends Component
                                 ->orWhere('link', 'like', '%' . $ss . '%')
                                 ->orWhere('obj_tender', 'like', '%' . $ss . '%')
                                 ->orWhere('zakazchick', 'like', '%' . $ss . '%')
-                                ->orWhere('mesto_dostavki', 'like', '%' . $ss . '%')
-                            ;
+                                ->orWhere('mesto_dostavki', 'like', '%' . $ss . '%');
                         });
                     }
                     /*
@@ -389,7 +387,7 @@ class LeedBoard extends Component
 
                                         }
 //                                    ,'orderRequest','rename'
-                                        ]);
+                                    ]);
                                 }
                             ]);
                         }
@@ -398,94 +396,93 @@ class LeedBoard extends Component
                 }])
                 ->get();
 
-        } catch (\Exception $ex)
-{
-$this->columns = [];
-}
-}
-
-
-public
-function hiddenAddForm()
-{
-    if (env('APP_ENV', 'x') == 'local') {
-        \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
+        } catch (\Exception $ex) {
+            $this->columns = [];
+        }
     }
 
-    // Скрыть все формы
-    if (!empty($this->visibleAddForms)) {
-        $this->visibleAddForms = array_map(fn() => false, $this->visibleAddForms);
-    }
-}
 
-public
-function showAddForm(int $columnId)
-{
-    if (env('APP_ENV', 'x') == 'local') {
-        \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__], $columnId ?? '$columnId-');
-    }
+    public
+    function hiddenAddForm()
+    {
+        if (env('APP_ENV', 'x') == 'local') {
+            \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
+        }
 
-    $this->hiddenAddForm();
-
-    if (!isset($this->visibleAddForms[$columnId])) {
-        $this->visibleAddForms[$columnId] = true;
-    } else {
-        $this->visibleAddForms[$columnId] = ($this->visibleAddForms[$columnId] === true) ? false : true;
-    }
-}
-
-public
-function addColumn(LeedColumn $column)
-{
-    if (env('APP_ENV', 'x') == 'local') {
-        \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
+        // Скрыть все формы
+        if (!empty($this->visibleAddForms)) {
+            $this->visibleAddForms = array_map(fn() => false, $this->visibleAddForms);
+        }
     }
 
-    $this->validate([
-        'addColumnName' => 'required|string|max:255',
-    ]);
+    public
+    function showAddForm(int $columnId)
+    {
+        if (env('APP_ENV', 'x') == 'local') {
+            \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__], $columnId ?? '$columnId-');
+        }
 
-    $user_id = Auth::id();
-    $user = User::find($user_id);
+        $this->hiddenAddForm();
+
+        if (!isset($this->visibleAddForms[$columnId])) {
+            $this->visibleAddForms[$columnId] = true;
+        } else {
+            $this->visibleAddForms[$columnId] = ($this->visibleAddForms[$columnId] === true) ? false : true;
+        }
+    }
+
+    public
+    function addColumn(LeedColumn $column)
+    {
+        if (env('APP_ENV', 'x') == 'local') {
+            \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
+        }
+
+        $this->validate([
+            'addColumnName' => 'required|string|max:255',
+        ]);
+
+        $user_id = Auth::id();
+        $user = User::find($user_id);
 
 // Создаем новый столбец
-    LeedColumn::create([
-        'name' => $this->addColumnName,
+        LeedColumn::create([
+            'name' => $this->addColumnName,
 //    'user_id' => $user_id,
-        'order' => ($column->order + 1),
-        'board_id' => $user->current_board_id,
-        'can_move' => true
-    ]);
+            'order' => ($column->order + 1),
+            'board_id' => $user->current_board_id,
+            'can_move' => true
+        ]);
 
 
-    // Пересчитываем порядок для всех столбцов пользователя
-    $this->reorderColumns($user_id);
+        // Пересчитываем порядок для всех столбцов пользователя
+        $this->reorderColumns($user_id);
 
-    $this->addColumnName = '';
-    $this->afterColumnId = null;
+        $this->addColumnName = '';
+        $this->afterColumnId = null;
 
-    // Обновляем список столбцов
-    $this->loadColumns();
-
-    $this->hiddenAddForm();
-}
-
-
-public
-function deleteColumn(int $columnId)
-{
-    if (env('APP_ENV', 'x') == 'local') {
-        \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
-    }
-
-    $user_id = Auth::id();
-
-    $column = LeedColumn::with('records')->find($columnId);
-    if ($column && $column->records->isEmpty()) {
-        $column->delete();
+        // Обновляем список столбцов
         $this->loadColumns();
+
+        $this->hiddenAddForm();
     }
-}
+
+
+    public
+    function deleteColumn(int $columnId)
+    {
+        if (env('APP_ENV', 'x') == 'local') {
+            \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
+        }
+
+        $user_id = Auth::id();
+
+        $column = LeedColumn::with('records')->find($columnId);
+        if ($column && $column->records->isEmpty()) {
+            $column->delete();
+            $this->loadColumns();
+        }
+    }
 
 //    public function updateRecordColumn($recordId, $newColumnId)
 //    {
@@ -524,26 +521,26 @@ function deleteColumn(int $columnId)
 
 
 //    перенос строк
-public
-function reorderRecordInColumn($sourceRecordId, $targetColumnId)
-{
-    if (env('APP_ENV', 'x') == 'local') {
-        \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
+    public
+    function reorderRecordInColumn($sourceRecordId, $targetColumnId)
+    {
+        if (env('APP_ENV', 'x') == 'local') {
+            \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
+        }
+
+        dd([$sourceRecordId, $targetColumnId]);
     }
 
-    dd([$sourceRecordId, $targetColumnId]);
-}
+    public
+    function moveRecordBetweenColumns($sourceRecordId, $targetRecordId)
+    {
+        if (env('APP_ENV', 'x') == 'local') {
+            \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
+        }
 
-public
-function moveRecordBetweenColumns($sourceRecordId, $targetRecordId)
-{
-    if (env('APP_ENV', 'x') == 'local') {
-        \Log::info('fn ' . __FUNCTION__, [__FILE__ . ' #' . __LINE__,]);
-    }
-
-    echo $sourceRecordId, $targetRecordId;
+        echo $sourceRecordId, $targetRecordId;
 //        dd([$sourceRecordId, $targetRecordId]);
-}
+    }
 
 //
 //    public function updateRecordColumn($recordId, $targetColumnId)
@@ -562,100 +559,100 @@ function moveRecordBetweenColumns($sourceRecordId, $targetRecordId)
 //
 
 
-/**
- * обработка переноса записи в новый столбец
- * @param $recordId
- * @param $newColumnId
- * @return void
- */
-public
-function updateRecordColumn($recordId, $newColumnId)
-{
-    if (env('APP_ENV', 'x') == 'local') {
-        \Log::info('updateRecordColumn', [$recordId, $newColumnId]);
-    }
+    /**
+     * обработка переноса записи в новый столбец
+     * @param $recordId
+     * @param $newColumnId
+     * @return void
+     */
+    public
+    function updateRecordColumn($recordId, $newColumnId)
+    {
+        if (env('APP_ENV', 'x') == 'local') {
+            \Log::info('updateRecordColumn', [$recordId, $newColumnId]);
+        }
 
-    try {
-        $record = LeedRecord::findOrFail($recordId);
+        try {
+            $record = LeedRecord::findOrFail($recordId);
 
-        $record->leed_column_id = $newColumnId;
-        $record->save();
+            $record->leed_column_id = $newColumnId;
+            $record->save();
 
 //            $this->loadColumns();
 
-        $col = LeedColumn::whereId($newColumnId)->select(['id', 'board_id'])->first();
+            $col = LeedColumn::whereId($newColumnId)->select(['id', 'board_id'])->first();
 //dd($col->toArray());
-        return $this->redirectRoute('leed', ['board_id' => $col->board_id]);
+            return $this->redirectRoute('leed', ['board_id' => $col->board_id]);
 
-    } catch (\Exception $ex) {
-        if (env('APP_ENV', 'x') == 'local') {
+        } catch (\Exception $ex) {
+            if (env('APP_ENV', 'x') == 'local') {
 //                \Log::error('fn updateRecordColumn', [$ex->getMessage()]);
 //                \Log::error('fn updateRecordColumn', [$ex]);
-            \Log::error('fn updateRecordColumn', ['line' => __LINE__, $recordId, $newColumnId]);
+                \Log::error('fn updateRecordColumn', ['line' => __LINE__, $recordId, $newColumnId]);
+            }
         }
     }
-}
 
 
-/**
- * Пересчитывает порядок столбцов для указанного пользователя.
- * После добавления нового столбца, обновляется порядок всех последующих.
- *
- * @return void
- */
-protected
-function reorderColumns()
-{
-    if (env('APP_ENV', 'x') == 'local') {
-        \Log::info('fn ' . __FUNCTION__, ['#' . __LINE__ . ' ' . __FILE__]);
-    }
+    /**
+     * Пересчитывает порядок столбцов для указанного пользователя.
+     * После добавления нового столбца, обновляется порядок всех последующих.
+     *
+     * @return void
+     */
+    protected
+    function reorderColumns()
+    {
+        if (env('APP_ENV', 'x') == 'local') {
+            \Log::info('fn ' . __FUNCTION__, ['#' . __LINE__ . ' ' . __FILE__]);
+        }
 
-    $user_id = Auth::id();
+        $user_id = Auth::id();
 
-    $columns = LeedColumn::orderBy('order') // Сортируем по текущему порядку
-    ->get();
-
-    $order = 1; // Начинаем с 1 для первого столбца
-    foreach ($columns as $column) {
-        // Присваиваем новый порядок для каждого столбца
-        $order = $order + 2;
-        $column->order = $order;
-        $column->save();
-    }
-}
-
-public
-function updateColumnOrder($draggedColumnId, $targetColumnId)
-{
-    if (env('APP_ENV', 'x') == 'local') {
-        \Log::info('fn updateColumnOrder(' . $draggedColumnId . ', ' . $targetColumnId . ')');
-    }
-
-    $user_id = Auth::id();
-
-    $columns = LeedColumn::orderBy('order')
+        $columns = LeedColumn::orderBy('order') // Сортируем по текущему порядку
         ->get();
 
-    $draggedColumn = $columns->where('id', $draggedColumnId)->first();
-    $targetColumn = $columns->where('id', $targetColumnId)->first();
-
-    if ($draggedColumn && $targetColumn) {
-        $draggedColumn->order = $targetColumn->order + 1;
-        $draggedColumn->save();
-        $this->reorderColumns();
-        $this->loadColumns();
+        $order = 1; // Начинаем с 1 для первого столбца
+        foreach ($columns as $column) {
+            // Присваиваем новый порядок для каждого столбца
+            $order = $order + 2;
+            $column->order = $order;
+            $column->save();
+        }
     }
-}
+
+    public
+    function updateColumnOrder($draggedColumnId, $targetColumnId)
+    {
+        if (env('APP_ENV', 'x') == 'local') {
+            \Log::info('fn updateColumnOrder(' . $draggedColumnId . ', ' . $targetColumnId . ')');
+        }
+
+        $user_id = Auth::id();
+
+        $columns = LeedColumn::orderBy('order')
+            ->get();
+
+        $draggedColumn = $columns->where('id', $draggedColumnId)->first();
+        $targetColumn = $columns->where('id', $targetColumnId)->first();
+
+        if ($draggedColumn && $targetColumn) {
+            $draggedColumn->order = $targetColumn->order + 1;
+            $draggedColumn->save();
+            $this->reorderColumns();
+            $this->loadColumns();
+        }
+    }
 
 
-public
-function render()
-{
-    $this->getCurrentBoard();
-    \Log::info('рендер leed-board');
+    public
+    function render()
+    {
+        $this->getCurrentBoard();
+        \Log::info('рендер leed-board');
 //        Debugbar::addMessage('Пример сообщения', 'debug');
-    $this->loadColumns();
-    return view('livewire.cms2.leed.leed-board');
-}
+        $this->loadColumns();
+        return view('livewire.cms2.leed.leed-board');
+    }
 
 }

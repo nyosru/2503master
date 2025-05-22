@@ -9,4 +9,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('leads:process-automations')->daily();
+
 Schedule::command('app:send-telega-blank-msg')->everySecond();
