@@ -24,7 +24,11 @@ class Index extends Component
         'Поля в заказе' => ['route' => 'tech.order_requests_manager', 'permission' => 'тех.упр полями в лиде'],
         'Доска / Лид / Названия полей - Переименовать' => ['route' => 'tech.order-request-rename-form'
             , 'permission' => 'р.Доски / переименовывать поля лидов'
+        ],
+        'Доска / Автоматизация' => ['route' => 'service.automation_rules_manager'
+//            , 'permission' => 'р.Доски / переименовывать поля лидов'
         ]
+        ,
 //        'Заказ - Метки' => ['route' => 'order.label',
 //            'permission' => 'тех.метки в заказах'
 //        ],

@@ -81,17 +81,7 @@ class AddLeedFormSimple extends Component
     public $string1; public $string2; public $string3; public $string4;
 
 
-
-
-
-
-
     protected $listeners = ['orderInputUpdated' => 'orderChildInputUpdated'];
-
-
-
-
-
 
 
     /**
@@ -118,7 +108,14 @@ class AddLeedFormSimple extends Component
         $boardId = $this->column->board_id;
         $fields = BoardFieldSetting::where('board_id', $boardId)
             ->where('is_enabled', true)
-            ->with(['orderRequest'])
+            ->with([
+                'orderRequest' => function ($query) {
+                    $query->with('rename');
+                }
+            ])
+
+//@if( !empty($field->orderRequest->rename->name) )
+
             ->orderBy('sort_order', 'desc')
             ->get()
 //            ->pluck('field_name') // Возвращаем только имена полей

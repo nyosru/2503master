@@ -179,12 +179,14 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
+    Route::get('service/auto', \App\Livewire\Service\AutomationRulesManager::class)->name('service.automation_rules_manager');
 
 
     Route::middleware('check.permission:р.Техничка')->group(function () {
         Route::prefix('tech')->name('tech.')->group(function () {
 
             Route::get('', \App\Livewire\Cms2\Tech\Index::class)->name('index');
+
             Route::get('inn_searc_org', \App\Livewire\Service\DadataOrgSearchComponent::class)->name('service.dadata_org_search_component');
 
             Route::get('/roles', \App\Livewire\RolePermissions::class)
@@ -204,7 +206,6 @@ Route::middleware(['auth'])->group(function () {
             Route::middleware('check.permission:р.Пользователи')->group(function () {
                 Route::get('/u-list', \App\Livewire\Cms2\UserList::class)->name('user_list');
             });
-
 
             Route::prefix('order')->name('order.')->group(function () {
                 Route::middleware('check.permission:тех.ТипПродуктаУпр')->group(function () {

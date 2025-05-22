@@ -37,22 +37,51 @@
 
                     <div class="w-full px-3 max-h-[70vh] overflow-auto" id="add-leed-form-simple">
 
-                        {{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($allowedFields->toArray()) }}</pre>--}}
+{{--                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($allowedFields->toArray()) }}</pre>--}}
 
                         @foreach($allowedFields as $field)
 
+                            {{--                            <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($field->toArray()) }}</pre>--}}
+
                             <label for="{{ $field['field_name'] }}" class="block text-gray-700 text-sm">
-                                <abbr title="{{$field->orderRequest->description}}">
-                                    {{$field->orderRequest->name}}
+                                <abbr
+                                    title="{{ $field->orderRequest->rename->description ?? $field->orderRequest->description}}">
+
+                                    {{--                                    ++--}}
+                                    {{--                                    {{$field->orderRequest->name}}--}}
+                                    {{--                                    <br/>--}}
+
+                                    @if( !empty($field->orderRequest->rename->name) )
+                                        {{ $field->orderRequest->rename->name }}
+                                    @elseif( !empty($field->orderRequest->name) )
+                                        {{ $field->orderRequest->name }}
+                                    @else
+                                        {{ $field->field_name }}
+                                    @endif
+
                                 </abbr>
                             </label>
 
                             <input
-                                @if( $field['field_name'] == 'base_number' ||  $field['field_name'] == 'budget'||  $field['field_name'] == 'price')
+                                @if(
+                                    $field->orderRequest->number
+                                    || $field['field_name'] == 'base_number'
+                                    ||  $field['field_name'] == 'budget'
+                                    ||  $field['field_name'] == 'price')
                                     type="number"
-                                @elseif( $field['field_name'] == 'pay_day_every_month' )
+                                @elseif(
+                                    $field->orderRequest->number
+                                    || $field['field_name'] == 'pay_day_every_month'
+                                    )
                                     type="number" min="1" max="31"
-                                @elseif( $field['field_name'] == 'submit_before' || $field['field_name'] == 'payment_due_date'
+                                @elseif(
+                                $field->orderRequest->datetime
+                                    )
+                                    type="datetime-local"
+                                @elseif(
+                                $field->orderRequest->date
+                                || $field['field_name'] == 'submit_before'
+                                || $field['field_name'] == 'payment_due_date'
                                 || $field['field_name'] =='date_start'
                                 || $field['field_name'] =='pay_day_every_year' )
                                     type="date"
