@@ -10,4 +10,4 @@ Artisan::command('inspire', function () {
 
 Schedule::command('leads:process-automations')->daily();
 
-Schedule::command('app:send-telega-blank-msg')->everySecond();
+Schedule::command('app:send-telega-blank-msg')->everyTwoHours();
