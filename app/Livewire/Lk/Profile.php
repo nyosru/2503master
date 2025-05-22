@@ -53,16 +53,16 @@ class Profile extends Component
         $user->name = $this->name;
         $user->email = $this->email;
 
-        if ($this->avatar) {
-            $avatarName = Str::random(10).'.'.$this->avatar->getClientOriginalExtension();
-            $this->avatar->storeAs('avatars', $avatarName, 'public');
-            $user->avatar = 'avatars/'.$avatarName;
-        }
+//        if ($this->avatar) {
+//            $avatarName = Str::random(10).'.'.$this->avatar->getClientOriginalExtension();
+//            $this->avatar->storeAs('avatars', $avatarName, 'public');
+//            $user->avatar = 'avatars/'.$avatarName;
+//        }
 
         $user->save();
-        $this->avatarPreview = $user->avatar
-            ? asset('storage/' . $user->avatar)
-            : null;
+//        $this->avatarPreview = $user->avatar
+//            ? asset('storage/' . $user->avatar)
+//            : null;
 
         session()->flash('message', 'Профиль успешно обновлен');
     }
