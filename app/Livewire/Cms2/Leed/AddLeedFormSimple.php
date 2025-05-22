@@ -75,6 +75,10 @@ class AddLeedFormSimple extends Component
 //    public $post_day_do;
 //    public $mesto_dostavki;
 
+    public $number1; public $number2; public $number3; public $number4; public $number5; public $number6;
+    public $date1; public $date2; public $date3; public $date4;
+    public $dt1; public $dt2; public $dt3;
+    public $string1; public $string2; public $string3; public $string4;
 
 
 
@@ -83,6 +87,12 @@ class AddLeedFormSimple extends Component
 
 
     protected $listeners = ['orderInputUpdated' => 'orderChildInputUpdated'];
+
+
+
+
+
+
 
     /**
      * заливаем переменные от формы создания заказа
