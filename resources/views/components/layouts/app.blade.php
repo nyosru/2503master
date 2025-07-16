@@ -22,6 +22,13 @@
 
 </head>
 <body class="antialiased font-sans bg-gray-100 min-h-screen">
+@if(request()->getHost() === 'xn--80ajb0aifhffacm9b.xn--p1ai')
+
+  <h1 class="text-2xl text-blue-700 text-center">небольшие изменения<br/>
+        Домен ПроцессМастер.рф переезжаем на <a href="https://Управлятор.рф" >Управлятор.рф</a>
+  </h1>
+
+@else
 <div class=" ">
     <div class="min-h-screen flex flex-col relative">
         <div class="
@@ -40,6 +47,7 @@
     || Route::is('leed*')
     || Route::is('clients*')
     || Route::is('order*')
+    || Route::is('vk*')
     )
                     {{--            <div class="w-[200px] bg-orange-500">--}}
                     {{--                меню--}}
@@ -250,5 +258,6 @@
         <!-- /Yandex.Metrika counter -->
     </div>
     </div>
+@endif
 </body>
 </html>
