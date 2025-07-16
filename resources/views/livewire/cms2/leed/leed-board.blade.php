@@ -7,7 +7,7 @@
     {{--        <pre class="text-xs">{{ print_R($user->toArray()) }}</pre>--}}
     {{--    <pre class="text-xs">{{ print_R($user->roles[0]['name'],true) }}</pre>--}}
 
-    @if( empty(auth()->user()->phone_number) )
+    @if( 1==2 && empty(auth()->user()->phone_number) )
 
         <div class="block p-3 text-left bg-gradient-to-br from-yellow-200 to-yellow-100
 {{--            w-full --}}
