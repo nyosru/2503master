@@ -21,11 +21,11 @@
     {{--    @livewireStyles--}}
 
 </head>
-<body class="antialiased font-sans bg-gray-100 min-h-screen">
+<body class="antialiased font-sans bg-gray-100 min-h-screen">11
 @if(request()->getHost() === 'xn--80ajb0aifhffacm9b.xn--p1ai')
 
   <h1 class="text-2xl text-blue-700 text-center">небольшие изменения<br/>
-        Домен ПроцессМастер.рф переезжаем на <a href="https://Управлятор.рф" >Управлятор.рф</a>
+        Домен <u>ПроцессМастер.рф</u> переезжаем на <a href="https://Управлятор.рф" >Управлятор.рф</a>
   </h1>
 
 @else
