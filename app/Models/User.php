@@ -77,5 +77,12 @@ class User extends Authenticatable
         return $this->hasMany(Invitation::class);
     }
 
+    /**
+     * Домены, которыми управляет пользователь (администратор)
+     */
+    public function domains()
+    {
+        return $this->hasMany(Domain::class, 'admin_user_id');
+    }
 
 }

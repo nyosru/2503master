@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Cms2\Leed;
 
+use App\Http\Controllers\Services\MacrosController;
 use App\Models\LeedColumn;
 use Livewire\Component;
 
@@ -13,6 +14,7 @@ class ColumnConfig extends Component
 
     public $settings = []; // Массив для хранения параметров
     public $modal_show = false; // ID текущего столбца для открытия модального окна
+    public $macroses;
 
     public $named = [
 
@@ -51,6 +53,10 @@ class ColumnConfig extends Component
             'can_get' => $column->can_get,
 //            'can_accept_contract' => $column->can_accept_contract,
         ];
+
+        $m = new MacrosController();
+        $this->macroses = $m->get( $column->id );
+
     }
 
     public function saveColumnConfig()

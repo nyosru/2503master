@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,6 +15,8 @@ class Board extends Model
     protected $fillable = [
         'name',
         'is_paid',
+        'admin_user_id',
+        'domain_id',
     ];
 
     protected $casts = [
@@ -21,6 +24,10 @@ class Board extends Model
         'updated_at' => 'datetime',
     ];
 
+    public function adminUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'admin_user_id');
+    }
 
     // Связь с пользователями (многие ко многим)
     public function users()
@@ -76,5 +83,12 @@ class Board extends Model
         return $this->hasMany(Invitation::class);
     }
 
+    /**
+     * Связь с доменом (один к одному, domain_id может быть null)
+     */
+    public function domain(): BelongsTo
+    {
+        return $this->belongsTo(Domain::class, 'domain_id');
+    }
 
 }

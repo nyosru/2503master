@@ -329,36 +329,24 @@
         @endpermission
 
 
-        <!-- CRM -->
-@if(1==2)
+{{--        @permission('р.Доски')--}}
         <li class="w-full">
-
-
-            @if (App::environment('local'))
-                <a href="https://crm.marudi.store"
-                   class="flex items-center space-x-2 px-4 py-2 xtext-gray-700 rounded hover:bg-orange-200 hover:text-gray-700                "
-                   target="_blank"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path
-                            d="M8.257 3.099c.765-1.36 2.72-1.36 3.485 0l4.546 8.09c.717 1.277-.17 2.81-1.742 2.81H5.453c-1.573 0-2.46-1.533-1.742-2.81l4.546-8.09zM11 13a1 1 0 11-2 0 1 1 0 012 0z"/>
-                    </svg>
-                    <span>Перейти на crm.marudi.store</span>
-                </a>
-            @else
-                <a href="https://marudi.store"
-                   class="flex items-center space-x-2 px-4 py-2 xtext-gray-700 rounded hover:bg-orange-200 hover:text-gray-700                "
-                   target="_blank"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path
-                            d="M8.257 3.099c.765-1.36 2.72-1.36 3.485 0l4.546 8.09c.717 1.277-.17 2.81-1.742 2.81H5.453c-1.573 0-2.46-1.533-1.742-2.81l4.546-8.09zM11 13a1 1 0 11-2 0 1 1 0 012 0z"/>
-                    </svg>
-                    <span>marudi.store</span>
-                </a>
-            @endif
+            <a href="{{ route('vk.friend') }}"
+               wire:navigate
+               class="flex items-center space-x-2 px-4 py-2 xtext-gray-700 rounded
+                hover:bg-orange-200 hover:text-gray-700
+                {{ Request::routeIs('vk.friend') ? 'bg-orange-300 text-gray-700 ' : '' }}"
+            >
+                {{--                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">--}}
+                {{--                    <path d="M10 11a4 4 0 100-8 4 4 0 000 8zm-7 8a7 7 0 1114 0H3z"/>--}}
+                {{--                </svg>--}}
+                <img src="/icon/gear.svg" class="w-[18px]"/>
+                <span>vk friends</span>
+            </a>
         </li>
-@endif
+{{--        @endpermission--}}
+
+
     </ul>
 </div>
 </div>

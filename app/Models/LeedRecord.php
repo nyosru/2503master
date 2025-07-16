@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LeedRecord extends Model
 {
@@ -133,6 +134,14 @@ class LeedRecord extends Model
     public function notifications()
     {
         return $this->hasMany(LeedNotification::class, 'leed_id');
+    }
+
+    /**
+     * Получить все макросы, связанные с этим лидом
+     */
+    public function macros(): HasMany
+    {
+        return $this->hasMany(Macros::class, 'leed_id');
     }
 
 }

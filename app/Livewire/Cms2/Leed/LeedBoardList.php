@@ -4,6 +4,7 @@ namespace App\Livewire\Cms2\Leed;
 
 use App\Http\Controllers\BoardController;
 use App\Models\Board;
+use App\Models\Domain;
 use App\Models\Invitation;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -11,11 +12,14 @@ use Livewire\Component;
 class LeedBoardList extends Component
 {
 
+    public $domain_in_user_count;
     public $boards;
     public $invite;
 
     public function mount()
     {
+
+        $this->domain_in_user_count = Domain::where('admin_user_id', Auth::user()->id)->count();
 
         // Fetch the authenticated user
         $user = Auth::user();
@@ -34,7 +38,9 @@ class LeedBoardList extends Component
         $this->boards = Board::whereHas('boardUsers', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })
+            ->orWhere('admin_user_id', $user->id)
             ->with([
+                'domain',
                 'boardUsers' => function ($query) use ($user) {
                     $query->where('user_id', $user->id);
                     $query->with(['role']);

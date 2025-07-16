@@ -235,10 +235,10 @@ border-1 rounded
                             @foreach($columns as $k => $column)
                                 <div
                                     class="
-    p-1
-    relative
-    w-[250px]
-    bg-white border rounded relative"
+                                        p-1
+                                        relative
+                                        w-[250px]
+                                        bg-white border rounded relative"
 
                                     id="column-{{ $column->id }}"
 
@@ -278,37 +278,34 @@ border-1 rounded
                                         {{--                            кнопки--}}
                                         <span style="float:right;">
 
-@permission('р.Лиды / удалить столбцы')
-@if( $column->can_delete == true && $column->records->isEmpty())
+                                            @permission('р.Лиды / удалить столбцы')
+                                                @if( $column->can_delete == true && $column->records->isEmpty())
                                                 <button
                                                     class="text-black/50 hover:text-red-600"
                                                     wire:click="deleteColumn({{ $column->id }})"
                                                     wire:confirm="Вы уверены, что хотите удалить эту колонку?"
                                                     title="Удалить колонку"
-                                                >
-х
-</button>
-                                            @endif
-@endpermission
+                                                >х</button>
+                                               @endif
+                                            @endpermission
 
-@permission('р.Лиды / добавить столбцы')
-@if( !isset($visibleAddForms[$column->id]) || $visibleAddForms[$column->id] === false )
+                                            @permission('р.Лиды / добавить столбцы')
+                                                @if( !isset($visibleAddForms[$column->id]) || $visibleAddForms[$column->id] === false )
                                                 <button
                                                     class="text-green-500 hover:text-green-700"
                                                     wire:click="showAddForm({{ $column->id }})"
                                                     title="Добавить новый столбец справа"
-                                                >
-+
-</button>
-                                            @endif
-@endpermission
+                                                    :key="'add_col_'.$column->id"
+                                                >+</button>
+                                               @endif
+                                            @endpermission
 
 {{--        @permission('разработка')--}}
-@permission('р.Лиды / конфиг столбцов')
-<livewire:cms2.leed.column-config :key="$column->id" :column="$column"/>
-@endpermission
+                                            @permission('р.Лиды / конфиг столбцов')
+                                            <livewire:cms2.leed.column-config :key="$column->id" :column="$column"/>
+                                            @endpermission
 
-</span>
+                                        </span>
 
 
                                         {{ $column->name }}

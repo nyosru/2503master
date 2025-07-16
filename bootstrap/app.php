@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -19,4 +20,14 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    ->withSchedule(function (Schedule $schedule) {
+        $schedule->command('macros:process-daily')->dailyAt('08:00');
+    })
+    ->withCommands([
+        // Укажите пути к вашим командам или конкретные классы
+        App\Console\Commands\ProcessDailyMacros::class,
+        //Или, если хотите регистрировать целую папку с командами:
+        //__DIR__.'/../app/Console/Commands',
+    ])
+        ->create();

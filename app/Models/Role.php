@@ -67,5 +67,9 @@ class Role extends SpatieRole
         return $this->hasMany(Invitation::class);
     }
 
+    public function macroses()
+    {
+        return $this->belongsToMany(Macros::class, 'macro_role', 'role_id', 'macro_id');
+    }
 
 }

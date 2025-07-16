@@ -19,6 +19,9 @@ use Nyos\Msg;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 
+Route::get('macros/go', [\App\Http\Controllers\Services\MacrosController::class, 'actionNow']);
+
+
 Route::post('/dadata/find-org', [DadataOrgController::class, 'findByInn'])->name('dadata.find-org');
 
 
@@ -67,7 +70,7 @@ Route::post('/webhook1', function () {
             'text' => "Вы написали --: $text"
         ]);
 
-        if ( empty($phone) || $text == '11') {
+        if (empty($phone) || $text == '11') {
 
 // Define the keyboard with the "Share Phone Number" button
             $keyboard = [
@@ -86,7 +89,7 @@ Route::post('/webhook1', function () {
 // Send the message with the keyboard
             Telegram::sendMessage([
                 'chat_id' => $chatId,
-                'text' => 'Поделитесь вашим номером телефона'.PHP_EOL.'кнопка ниже ↓↓↓ (Share Phone Number)',
+                'text' => 'Поделитесь вашим номером телефона' . PHP_EOL . 'кнопка ниже ↓↓↓ (Share Phone Number)',
                 'reply_markup' => json_encode($keyboard)
             ]);
 
@@ -98,7 +101,7 @@ Route::post('/webhook1', function () {
     return response('ok', 200);
 
 });
-Route::post('/webhook2', [\App\Http\Controllers\TelegramController::class,'inWebhook']);
+Route::post('/webhook2', [\App\Http\Controllers\TelegramController::class, 'inWebhook']);
 
 //Route::any('/webhook2', function () {
 //    $update = json_decode(file_get_contents('php://input'), true);
@@ -262,7 +265,6 @@ Route::get('/auth1111/telegram/callback', function (Request $request) {
 });
 
 
-
 Route::post('/auth/telegram/callback2', function (Request $request) {
 
     showMeTelegaMsg(__FUNCTION__);
@@ -291,7 +293,7 @@ Route::post('/auth/telegram/callback2', function (Request $request) {
 //    Auth::login($user);
 
 //    return redirect('/');
-    return response()->json(['data' => $data, 'user' => $user->toArray() ], 200);
+    return response()->json(['data' => $data, 'user' => $user->toArray()], 200);
 //    return response()->json(['data' => $data], 200);
 
 })->name('telegram.callback2');

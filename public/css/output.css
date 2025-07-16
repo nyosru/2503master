@@ -1208,6 +1208,10 @@ select {
   margin-top: 1rem;
 }
 
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
 .mt-6 {
   margin-top: 1.5rem;
 }
@@ -2483,6 +2487,20 @@ select {
 .bg-zinc-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(244 244 245 / var(--tw-bg-opacity, 1));
+}
+
+.bg-\[\] {
+  background-color: ;
+}
+
+.bg-\[rgb\(37\2c 149\2c 255\)\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 149 255 / var(--tw-bg-opacity, 1));
+}
+
+.bg-\[rgb\(36\2c 150\2c 227\)\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(36 150 227 / var(--tw-bg-opacity, 1));
 }
 
 .bg-opacity-50 {

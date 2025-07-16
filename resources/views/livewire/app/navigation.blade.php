@@ -13,7 +13,8 @@
         </div>
         <div class="sm:w-1/2 flex justify-center items-center ">
             @guest
-                {!! Socialite::driver('telegram')->getButton() !!}
+{{--                {!! Socialite::driver('telegram')->getButton() !!}--}}
+                <livewire:app.auth-link />
             @else
                 <div>
                     <!-- Authentication -->
@@ -141,6 +142,8 @@
                     </div>
                 @else
                     <div class="xhidden md:flex md:items-center md:ms-6 space-x-3">
+
+                        222
                         {{--                    333--}}
 
                         {!! Socialite::driver('telegram')->getButton() !!}

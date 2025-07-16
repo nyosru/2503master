@@ -58,6 +58,10 @@ Route::get('/auth/telegram', function () {
     // Если вы используете сторонний пакет, замените 'telegram' на нужный вам драйвер
     return Socialite::driver('telegram')->redirect();
 });
+Route::get('/enter/tg', function () {
+    // Если вы используете сторонний пакет, замените 'telegram' на нужный вам драйвер
+    return Socialite::driver('telegram')->redirect();
+});
 
 // Маршрут для обработки обратного вызова от Telegram
 Route::get('/auth/telegram/callback', function () {
@@ -78,8 +82,8 @@ Route::get('/auth/telegram/callback', function () {
 
 //        $user = \App\Models\User::whereEmail($data['id'] . '@telegram.ru')->firstOrFail();
         $user = \App\Models\User::whereTelegramId($data['id'])->firstOrFail();
-    } catch (\Exception $e) {
 
+    } catch (\Exception $e) {
         $user = \App\Models\User::updateOrCreate(
             [
                 'telegram_id' => $data['id']
@@ -122,6 +126,8 @@ Route::middleware(['guest'])->group(function () {
 // Маршрут для авторизованного пользователя
 Route::middleware(['auth'])->group(function () {
 
+    Route::get('vk/friend', App\Livewire\Vk\Friend::class )->name('vk.friend');
+
 //    Route::get('', \App\Livewire\Cms2\Leed\LeedBoardList::class)->name('index');
 
 
@@ -156,7 +162,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('leed/{board_id}', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leed');
 
-    Route::get('leed/{board}/config', \App\Livewire\Board\ConfigComponent::class)->name('board.config');
+    Route::get('leed/{board}/config', \App\Livewire\Board\Config\IndexComponent::class)->name('board.config');
+    Route::get('leed/{board}/config/polya', \App\Livewire\Board\ConfigComponent::class)->name('board.config.polya');
+    Route::get('leed/{board}/config/macros', \App\Livewire\Board\Config\MacrosComponent::class)->name('board.config.macros');
 
 
     Route::get('leed/{board}/delete', [\App\Http\Controllers\BoardController::class, 'delete'])
@@ -178,9 +186,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('invitations/join/{id}', [InvitationController::class, 'join'])->name('.invitations.join');
     });
 
-
     Route::get('service/auto', \App\Livewire\Service\AutomationRulesManager::class)->name('service.automation_rules_manager');
-
 
     Route::middleware('check.permission:р.Техничка')->group(function () {
         Route::prefix('tech')->name('tech.')->group(function () {
@@ -188,6 +194,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('', \App\Livewire\Cms2\Tech\Index::class)->name('index');
 
             Route::get('inn_searc_org', \App\Livewire\Service\DadataOrgSearchComponent::class)->name('service.dadata_org_search_component');
+
+            Route::get('/domains', \App\Livewire\Domain\Create::class)
+                ->name('domain.create');
 
             Route::get('/roles', \App\Livewire\RolePermissions::class)
                 ->name('role_permission');

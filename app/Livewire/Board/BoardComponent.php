@@ -5,6 +5,7 @@ namespace App\Livewire\Board;
 use App\Models\Board;
 use App\Models\BoardUser;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\On;
@@ -72,7 +73,23 @@ class BoardComponent extends Component
 //        $boards = Board::with('users')->paginate(10); // Загрузка связанных пользователей
 //        $boards = Board::with('user')->paginate(10); // Загрузка связанных пользователей
         try {
-        $boards = Board::with([
+
+            $user = Auth::user();
+            $user_id = $user->id;
+
+            if ($user->hasPermissionTo('р.Доски / видеть все доски') || $user->email == '1@php-cat.com' ) {
+                $needUsers = false; // или false
+            } else {
+                $needUsers = true; // или false
+            }
+
+//            $boards = Board::get();
+
+        $boards = Board::when($needUsers, function ($query) use ($user_id) {
+            $query->whereHas('boardUsers', function ($q) use ($user_id)  {
+                $q->where('user_id', $user_id);
+            });
+        })->with([
             'columns',
             'boardUsers' => function ($query) {
                 $query->withTrashed();
@@ -84,13 +101,19 @@ class BoardComponent extends Component
         ])
             ->paginate(10)
         ; // Загрузка связанных пользователей
+
+
         $users = \App\Models\User::all();
         $roles = Role::all(); // Получаем все роли
             } catch (\Exception $e) {
             dd($e);
         }
+
+
         return view('livewire.board.board-component', compact('boards', 'users', 'roles'));
 //        return view('livewire.board.board-component', compact('users', 'roles'));
+
+
     }
 
 }

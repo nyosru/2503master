@@ -9,6 +9,9 @@ class Index extends Component
 
     public $links = [
 
+        'Домены' => ['route' => 'tech.domain.create',
+//            'permission' => 'тех.ТипПродуктаУпр'
+        ],
         'Заказ: Типы заказа' => ['route' => 'tech.order.product-type-manager', 'permission' => 'тех.ТипПродуктаУпр'],
         'Заказ: Типы оплаты' => ['route' => 'tech.order.payment-type-manager', 'permission' => 'тех.ТипОплатыМен'],
 

@@ -14,6 +14,7 @@ class CreateForm extends Component
     public $show_payes = true;
     public $show_form = false;
 
+
     public function save()
     {
         $this->validate([
@@ -21,13 +22,17 @@ class CreateForm extends Component
 //            'selectedUsers' => 'required|array|min:1',
 //            'selectedUsers.*' => 'exists:users,id',
 //            'userRoles.*' => 'nullable|exists:roles,id', // Валидация role_id
+//            'admin_user_id.*' => 'nullable|exists:roles,id', // Валидация role_id
             'is_paid' => 'boolean',
         ]);
+
+        $admin_user_id = auth()->user()->id;
 
         // Создать доску
         $board = Board::create([
             'name' => $this->name,
             'is_paid' => $this->is_paid,
+            'admin_user_id' => $admin_user_id,
         ]);
 
 //        // Привязать пользователей с role_id
