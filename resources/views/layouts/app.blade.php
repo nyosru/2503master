@@ -16,6 +16,13 @@
         <link href="/css/output.css?v={{ filemtime(public_path('/css/output.css')) }}" rel="stylesheet">
     </head>
     <body class="font-sans antialiased">
+    @if(request()->getHost() === 'xn--80ajb0aifhffacm9b.xn--p1ai')
+
+        <h1 class="text-2xl text-blue-700 text-center">небольшие изменения<br/>
+            Домен <u>ПроцессМастер.рф</u> переезжаем на <a href="https://Управлятор.рф" >Управлятор.рф</a>
+        </h1>
+
+    @else
         <div class="min-h-screen bg-gray-100">
             <livewire:layout.navigation />
 
@@ -34,8 +41,13 @@
 {{--                меню--}}
 
                 {{ $slot }}
+
+{{--                <script src="https://forms.yandex.ru/_static/embed.js"></script><iframe src="https://forms.yandex.ru/u/685e8940493639ab347e2213?iframe=1" frameborder="0" name="ya-form-685e8940493639ab347e2213" width="650"></iframe>--}}
             </main>
         </div>
+
+        @endif
+
         <!-- Yandex.Metrika counter -->
         <script type="text/javascript" >
             (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
