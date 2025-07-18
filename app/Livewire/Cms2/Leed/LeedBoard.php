@@ -320,7 +320,12 @@ class LeedBoard extends Component
             $ss = $this->search;
 
             $this->columns = LeedColumn::orderBy('order', 'asc')
+
                 ->where('board_id', $this->board_id)
+                ->whereHas('roles', function ($q) use ($roleId) {
+                    $q->where('roles.id', $roleId);
+                })
+
                 ->with(['records' => function ($query) use ($ss) {
 
                     if (!empty($ss)) {

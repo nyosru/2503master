@@ -14,29 +14,118 @@
         {{--            <div class="bg-white p-6 rounded-lg shadow-lg w-1/2 md:w-1/3">--}}
         <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 
-            <div class="bg-white p-6 rounded-lg shadow-lg w-1/2 md:w-[90%]
-            h-[99vh]
-            md:h-[90vh]
-            overflow-auto
+            <Style>
+                .animated-box {
+                    transition: width 2.5s ease, height 2.5s ease;
+                    overflow: hidden; /* чтобы не было резких появлений скроллов */
+                }
+            </Style>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg
+
+            w-full
+            md:w-auto
+
+            max-h-[70vh]
+            md:max-h-[90vh]
+{{--            overflow-y-auto--}}
+{{--              transition-all duration-500 ease-in-out--}}
+animated-box
             ">
 
-                <h2 class="text-lg font-bold mb-4">
-                    <sup type="button" wire:click="$set('modal_show', false)"
-                         class="float-right
+                <a type="button" wire:click="$set('modal_show', false)"
+                   class="float-right
+{{--                   bg-gray-500 --}}
+                   px-4 py-1
+                        mt-[-26px]
+                        mr-[-30px]
+                        font-bold
                             cursor-pointer
-{{--                            bg-gray-500 text-white --}}
-{{--                            py-1 px-4 rounded --}}
-{{--                            mr-2--}}
                             ">
-                        X
-                    </sup>
+                    X
+                </a>
+
+                <h2 class="text-lg font-bold mb-4">
+                    Настройки столбца: <u>{{ $column->name }}</u>
+                </h2>
+
+                <div class="flex flex-col md:flex-row">
+                    <div class="
+                    w-auto md:w-[150px]
+                    flex flex-wrap flex-row md:flex-col
+                    border-r-[3px] border-orange-200
+
+                    ">
+
+                        @foreach( $menu as $m )
+                            <button wire:click="showTplSet('{{ $m['template'] }}')"
+                                    class="block
+                                    w-auto md:w-full
+                                    text-left
+                                     @if($m['template'] == $show_tpl )
+                                     bg-orange-200
+                                     @else
+                                     bg-gray-200
+                                     @endif
+                                    p-2
+                                    "
+                            >{{ $m['name'] ?? 'x-x-' }}</button>
+                        @endforeach
+                        {{--<br/>--}}
+                        {{--<br/>--}}
+                        {{--                            show_tpl:<Br/>--}}
+                        {{--                        {{ $show_tpl ?? 'xx' }}--}}
+
+                    </div>
+
+                    <div class="flex-1 bg-white p-2
+                    animated-box
+                    "
+                    >
+
+{{--                        $show_tpl: {{$show_tpl??'-'}}--}}
+{{--                        <br/>--}}
+{{--                        <br/>--}}
+
+                        @foreach( $menu as $m )
+                            @if($show_tpl == $m['template'])
+                                <livewire:dynamic-component
+                                    :component="$show_tpl"
+                                    :column="$column"
+                                    :key="'wev'.$m['template']"/>
+                            @endif
+                        @endforeach
+
+                    </div>
+                </div>
+
+
+
+
+                @if(1==2)
+<br/>
+                <hr>
+                <br/>
+                <hr>
+                <br/>
+                <hr>
+                <br/>
+                <hr>
+                <br/>
+
+
+
+
+
+                <h2 class="text-lg font-bold mb-4">
+
                     Настройки столбца: <u>{{ $column->name }}</u></h2>
 
                 <form wire:submit.prevent="saveColumnConfig">
 
                     <div class="flex flex-row
-                    space-x-2
-                    ">
+space-x-2
+">
                         <div class="w-1/2 flex flex-col space-x-3 text-sm font-medium">
 
                             <div class="flex flex-row mb-2 space-x-2">
@@ -66,8 +155,8 @@
                             <!-- Сообщение об ошибке -->
                             @if (session()->has('error'))
                                 <span class="bg-red-100 text-red-800 p-2 rounded mb-4">
-                                    {{ session('error') }}
-                                </span>
+            {{ session('error') }}
+        </span>
                             @endif
 
                             <div class="text-center mt-4">
@@ -83,9 +172,9 @@
 
                         <div
                             class="w-1/2 flex flex-col space-x-3 text-sm font-medium
-                            border-left border-l-2 border-l-red-500
+    border-left border-l-2 border-l-red-500
 {{--                            pl-2--}}
-                            ">
+    ">
 
                             <h3 class="p-1 bg-red-100 mb-1 ">Настройки макросов:</h3>
 
@@ -101,13 +190,13 @@
                                     {{--                                    </pre>--}}
                                     {{--                                    <pre class="max-h-[200px] text-xs overflow-auto">{{ print_r($macroses) }}</pre>--}}
                                     @foreach( $macroses as $mm )
-{{--                                        <pre--}}
-{{--                                            class="--}}
-{{--                                            max-h-[200px] --}}
-{{--                                            text-xs--}}
-{{--                                            overflow-auto--}}
-{{--                                            ">{{ print_r($mm) }}</pre>--}}
-                                        <livewire:column.config-macro-item-show :item="$mm" />
+                                        {{--                                        <pre--}}
+                                        {{--                                            class="--}}
+                                        {{--                                            max-h-[200px] --}}
+                                        {{--                                            text-xs--}}
+                                        {{--                                            overflow-auto--}}
+                                        {{--                                            ">{{ print_r($mm) }}</pre>--}}
+                                        <livewire:column.config-macro-item-show :item="$mm"/>
                                     @endforeach
                                 </div>
 
@@ -281,6 +370,12 @@ p-1 rounded font-bold">
 
 
                 </form>
+                @endif
+
+
+
+
+
             </div>
         </div>
         @endteleport

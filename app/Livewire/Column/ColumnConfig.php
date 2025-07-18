@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Cms2\Leed;
+namespace App\Livewire\Column;
 
 use App\Http\Controllers\Services\MacrosController;
 use App\Models\LeedColumn;
@@ -13,8 +13,10 @@ class ColumnConfig extends Component
     public $name_new; // Храним объект столбца
 
     public $settings = []; // Массив для хранения параметров
+    public $menu = []; // меню
     public $modal_show = false; // ID текущего столбца для открытия модального окна
     public $macroses;
+    public $show_tpl = '';
 
     public $named = [
 
@@ -40,8 +42,31 @@ class ColumnConfig extends Component
 
 
 
+    public function showTplSet($tpl){
+        $this->show_tpl = $tpl;
+    }
+
     public function mount(LeedColumn $column)
     {
+
+        $this->menu = [
+            [
+                'name' => 'Настройки',
+                'template' => 'column.config.main'
+            ],
+            [
+                'name' => 'Макросы',
+                'template' => 'column.config.macros'
+            ],
+            [
+                'name' => 'Доступы',
+                'template' => 'column.config.access'
+            ],
+
+        ];
+        $this->show_tpl = $this->menu[0]['template'];
+
+
 //        $this->column = $column;
         $this->settings = [
             'name' => $column->name,
@@ -103,6 +128,6 @@ class ColumnConfig extends Component
 
     public function render()
     {
-        return view('livewire.cms2.leed.column-config');
+        return view('livewire.column.column-config');
     }
 }

@@ -7,7 +7,7 @@ x-data="{ isFormVisible: false }"
     @if( !$show_form )
 <button
     x-on:click="isFormVisible = !isFormVisible"
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+    class="bg-blue-300 hover:bg-blue-500 text-white font-bold py-1 px-3 rounded-md mb-4 float-right"
 >
     Добавить доску
 </button>

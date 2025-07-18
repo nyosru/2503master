@@ -225,10 +225,18 @@ border-1 rounded
 
                     @if( 1 == 1 )
 
-                        @if( $columns->isEmpty() )
-                            Добавте первый столбец {{ $board_id ?? 'x' }}
-                            <livewire:cms2.leed.create-column-form :user="$user" :board_id="$board_id"
-                                                                   type="first"/>
+                        @if( empty($columns) )
+
+                            @permission('р.Лиды / добавлять столбцы')
+                            Добавьте первый столбец
+                            {{--                                {{ $board_id ?? 'x' }}--}}
+                            <livewire:cms2.leed.create-column-form
+                                :user="$user"
+                                :board_id="$board_id"
+                                type="first"/>
+                            @else
+                            обратитесь к администратору, ошибка №101
+                            @endpermission
                         @endif
 
                         <div class="flex  xspace-x-1 relative">
@@ -286,7 +294,7 @@ border-1 rounded
                                                     wire:confirm="Вы уверены, что хотите удалить эту колонку?"
                                                     title="Удалить колонку"
                                                 >х</button>
-                                               @endif
+                                            @endif
                                             @endpermission
 
                                             @permission('р.Лиды / добавить столбцы')
@@ -297,12 +305,12 @@ border-1 rounded
                                                     title="Добавить новый столбец справа"
                                                     :key="'add_col_'.$column->id"
                                                 >+</button>
-                                               @endif
+                                            @endif
                                             @endpermission
 
 {{--        @permission('разработка')--}}
                                             @permission('р.Лиды / конфиг столбцов')
-                                            <livewire:cms2.leed.column-config :key="$column->id" :column="$column"/>
+                                            <livewire:column.column-config :key="$column->id" :column="$column"/>
                                             @endpermission
 
                                         </span>
@@ -352,6 +360,9 @@ border-1 rounded
                                     </div>
                                 @endif
                                 @endpermission
+
+{{--                            <pre class="text-xs overflow-auto max-h-[200px]">{{ print_r($column->toArray()) }}</pre>--}}
+{{--                            <pre class="text-xs overflow-auto max-h-[200px]">{{ print_r($user->toArray()) }}</pre>--}}
 
                                 <ul class="space-y-1">
 
