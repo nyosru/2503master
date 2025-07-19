@@ -22,7 +22,8 @@
 
 </head>
 <body class="antialiased font-sans bg-gray-100 min-h-screen">
-@if(request()->getHost() == 'xn--80ajb0aifhffacm9b.xn--p1ai')
+{{--@if(request()->getHost() == 'xn--80ajb0aifhffacm9b.xn--p1ai')--}}
+@if(1==2)
 
   <h1 class="bg-yellow-300 p-3 mt-5 rounded text-2xl text-blue-700 text-center">небольшие изменения<br/>
         Домен <u>ПроцессМастер.рф</u> переезжаем на <a href="https://Управлятор.рф" class="underline">Управлятор.рф</a>
