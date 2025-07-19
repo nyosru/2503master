@@ -10,10 +10,21 @@
 
     </div>
 
+    выбор доски: <select wire:model.live="board" >
+        <option value="">Выберите доску</option>
+        @foreach ($boards as $b)
+            <option value="{{ $b->id }}">{{ $b->name }}</option>
+        @endforeach
+    </select>
+
+{{--    $board: {{ $board ?? 'x' }}--}}
+
+    @if(!empty($board))
     <div class="flex flex-col">
 
-        <div class="flex bg-gray-300 " style="position: sticky; top: 0; z-index: 10;" >
-            <div class="w-[200px] xflex-shrink-0 xsticky xleft-0 bg-gray-300 border border-gray-200 px-4 py-2">Путь заказа ->
+        <div class="flex bg-gray-300 " style="position: sticky; top: 0; z-index: 10;">
+            <div class="w-[200px] xflex-shrink-0 xsticky xleft-0 bg-gray-300 border border-gray-200 px-4 py-2">Путь
+                заказа ->
                 <br/>
                 -------
                 <br/>
@@ -25,11 +36,11 @@
                 bg-gray-300 border border-gray-200 px-4 py-2 чtext-center">
                     {{ $column->name }}
 
-{{--                    @permission('разработка')--}}
-{{--                    <span class="float-right" >--}}
-{{--                    <livewire:cms2.leed.column-config :key="$column->id" :column="$column"/>--}}
-{{--                        </span>--}}
-{{--                    @endpermission--}}
+                    {{--                    @permission('разработка')--}}
+                    {{--                    <span class="float-right" >--}}
+                    {{--                    <livewire:cms2.leed.column-config :key="$column->id" :column="$column"/>--}}
+                    {{--                        </span>--}}
+                    {{--                    @endpermission--}}
 
                 </div>
             @endforeach
@@ -54,6 +65,7 @@
             @endforeach
         </div>
     </div>
+    @endif
 
     @if (session()->has('message'))
         <div class="mt-2 text-green-500">{{ session('message') }}</div>
