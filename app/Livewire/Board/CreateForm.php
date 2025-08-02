@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Board;
 
+use App\Http\Controllers\UserController;
 use App\Models\Board;
 use Livewire\Component;
 
@@ -9,10 +10,11 @@ class CreateForm extends Component
 {
 
     public $name;
-    public $is_paid = false;
+    public $is_paid = true;
     public $return_route = 'board';
     public $show_payes = true;
     public $show_form = false;
+    public $create_dolgnost_and_me = true;
 
 
     public function save()
@@ -24,6 +26,7 @@ class CreateForm extends Component
 //            'userRoles.*' => 'nullable|exists:roles,id', // Валидация role_id
 //            'admin_user_id.*' => 'nullable|exists:roles,id', // Валидация role_id
             'is_paid' => 'boolean',
+            'create_dolgnost_and_me' => 'boolean',
         ]);
 
         $admin_user_id = auth()->user()->id;
@@ -39,6 +42,12 @@ class CreateForm extends Component
 //        foreach ($this->selectedUsers as $userId) {
 //            $board->users()->attach($userId, ['role_id' => $this->userRoles[$userId] ?? null]);
 //        }
+
+        if( $this->create_dolgnost_and_me ) {
+            $ee = UserController::creaeDefaultRoleAndLinkingMe('Должность по умолчанию '.$board->id, $board->id, $admin_user_id );
+dd($ee ?? 'x');
+//            dd([__LINE__]);
+        }
 
         $this->reset(['name',
 //            'selectedUsers', 'userRoles',

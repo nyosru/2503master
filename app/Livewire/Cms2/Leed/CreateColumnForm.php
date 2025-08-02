@@ -3,7 +3,9 @@
 namespace App\Livewire\Cms2\Leed;
 
 use App\Http\Controllers\BoardController;
+use App\Http\Controllers\ColumnController;
 use App\Models\LeedColumn;
+use App\Models\Role;
 use Livewire\Component;
 
 class CreateColumnForm extends Component
@@ -19,18 +21,23 @@ class CreateColumnForm extends Component
         ]);
 
 //        if( empty($this->user->board_user) ){
-//
 ////            BoardController::CreateBoard($this->user->id);
 ////            dd(__LINE__, __FILE__);
 //        }
-
 //        dd($this->board_id, __LINE__, __FILE__);
 
         $in = [
             'name' => $this->name,
             'board_id' => $this->board_id,
         ];
-        LeedColumn::create($in);
+        $column_new = LeedColumn::create($in);
+
+        $user = Auth()->user();
+        $roleId = $user->roles->first()?->id;
+
+        $column = new ColumnController();
+        $column->setVisibleColumnForRoles( $column_new, [$roleId ?? null] );
+
 
         $this->reset('name');
         $this->dispatch('refreshLeedBoardComponent');

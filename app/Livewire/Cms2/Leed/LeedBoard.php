@@ -23,6 +23,7 @@ class LeedBoard extends Component
         // перетаскивание строк
         'updateColumnOrder' => 'updateColumnOrder',
         'loadColumns' => 'loadColumns',
+        'reorderColumns' => 'reorderColumns',
         'setCurentBoard' => 'setCurentBoard',
 //        'changeVisibleCreateOrderForm' => 'changeVisibleCreateOrderForm',
 //        'render' => 'render',

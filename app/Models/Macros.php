@@ -15,7 +15,7 @@ class Macros extends Model
         'leed_id',
         'name',
         'comment',
-        'type',
+        'type_id',
         'to_telegrams',
         'message',
         'day',
@@ -54,5 +54,11 @@ class Macros extends Model
     {
         return $this->belongsTo(LeedColumn::class, 'move_to_column');
     }
+
+    public function macroType()
+    {
+        return $this->belongsTo(MacroType::class, 'type_id');
+    }
+
 
 }

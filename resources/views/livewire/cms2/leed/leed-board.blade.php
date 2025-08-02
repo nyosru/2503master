@@ -222,12 +222,10 @@ border-1 rounded
                 @endif
 
                 @if( 1==1 )
-
                     @if( 1 == 1 )
-
-                        @if( empty($columns) )
-
-                            @permission('р.Лиды / добавлять столбцы')
+                        @if( $columns->count() == 0 )
+{{--                            @permission('р.Лиды / добавлять столбцы')--}}
+                            @permission('р.Лиды / создать первый столбец')
                             Добавьте первый столбец
                             {{--                                {{ $board_id ?? 'x' }}--}}
                             <livewire:cms2.leed.create-column-form
@@ -298,14 +296,20 @@ border-1 rounded
                                             @endpermission
 
                                             @permission('р.Лиды / добавить столбцы')
-                                                @if( !isset($visibleAddForms[$column->id]) || $visibleAddForms[$column->id] === false )
-                                                <button
-                                                    class="text-green-500 hover:text-green-700"
-                                                    wire:click="showAddForm({{ $column->id }})"
-                                                    title="Добавить новый столбец справа"
-                                                    :key="'add_col_'.$column->id"
-                                                >+</button>
-                                            @endif
+{{--                                                @if( !isset($visibleAddForms[$column->id]) || $visibleAddForms[$column->id] === false )--}}
+{{--                                                <button--}}
+{{--                                                    class="text-green-500 hover:text-green-700"--}}
+{{--                                                    wire:click="showAddForm({{ $column->id }})"--}}
+{{--                                                    title="Добавить новый столбец справа"--}}
+{{--                                                    :key="'add_col_'.$column->id"--}}
+{{--                                                >+</button>--}}
+
+                                                <livewire:column.add-column-form-mini
+                                                    :column_id="$column->id"
+                                                    :key="'add_col_mini_'.$column->id" />
+
+
+{{--                                            @endif--}}
                                             @endpermission
 
 {{--        @permission('разработка')--}}
@@ -336,6 +340,9 @@ border-1 rounded
                                 @permission('р.Лиды / добавить столбцы')
                                 @if($visibleAddForms[$column->id] ?? false)
 
+{{--                                    <livewire:column.add-column-form-mini column_id="{{$column->id}}" :key="'add_col_mini_'.$column->id" />--}}
+
+                                @if(1==2)
                                     <div class="чmy-1 p-1 text-center rounded-xl bg-blue-200">
 
                                         <button class="float-right text-blue-600 text-sm" wire:click="hiddenAddForm()"
@@ -352,12 +359,23 @@ border-1 rounded
                                                    wire:model="addColumnName"
                                                    type="text" name="addColumnName" value=""
                                                    placeholder="Название столбца"/>
+
+                                            <div class="text-left">
+                                                Показывать столбец должностям:
+{{--                                                @foreach( $roles as $role )--}}
+{{--                                                    <label class="block">--}}
+{{--                                                        <input type="checkbox" >--}}
+{{--                                                    </label>--}}
+{{--                                                @endforeach--}}
+                                            </div>
+
                                             <input
-                                                class="bg-blue-200 active:bg-blue-400 rounded px-4 py-2"
+                                                class="bg-blue-300 active:bg-blue-400 rounded px-4 py-2"
                                                 type="submit" value="Добавить"/>
                                         </form>
 
                                     </div>
+                                @endif
                                 @endif
                                 @endpermission
 

@@ -954,6 +954,14 @@ select {
   top: 50%;
 }
 
+.right-2 {
+  right: 0.5rem;
+}
+
+.top-2 {
+  top: 0.5rem;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -1264,6 +1272,10 @@ select {
   display: grid;
 }
 
+.list-item {
+  display: list-item;
+}
+
 .hidden {
   display: none;
 }
@@ -1396,6 +1408,10 @@ select {
 
 .max-h-32 {
   max-height: 8rem;
+}
+
+.max-h-40 {
+  max-height: 10rem;
 }
 
 .max-h-\[100px\] {
@@ -3558,6 +3574,11 @@ select {
 
 .hover\:bg-green-400\/50:hover {
   background-color: rgb(74 222 128 / 0.5);
+}
+
+.hover\:bg-green-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-indigo-700:hover {

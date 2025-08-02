@@ -139,18 +139,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('index', \App\Livewire\Board\BoardIndexComponent::class)->name('board.index');
 
-
     Route::get('logout', function () {
         Auth::guard('web')->logout();
         Session::invalidate();
         Session::regenerateToken();
     });
 
-
     Route::group([ 'as' => 'lk.'], function () {
         Route::get('profile', \App\Livewire\Lk\Profile::class)->name('profile');
     });
-
 
 
 //Route::middleware('check.permission:р.Лиды')->group(function () {
@@ -192,6 +189,19 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('tech')->name('tech.')->group(function () {
 
             Route::get('', \App\Livewire\Cms2\Tech\Index::class)->name('index');
+
+            Route::prefix('macros')->name('macros.')->group(function () {
+                Route::get('/', \App\Livewire\Macros\Manager::class)->name('manager');
+            });
+
+
+
+
+
+
+
+
+
 
             Route::get('inn_searc_org', \App\Livewire\Service\DadataOrgSearchComponent::class)->name('service.dadata_org_search_component');
 

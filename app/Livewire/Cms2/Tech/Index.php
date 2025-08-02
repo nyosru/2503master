@@ -28,7 +28,13 @@ class Index extends Component
         'Доска / Лид / Названия полей - Переименовать' => ['route' => 'tech.order-request-rename-form'
             , 'permission' => 'р.Доски / переименовывать поля лидов'
         ],
+
+
         'Доска / Автоматизация' => ['route' => 'service.automation_rules_manager'
+//            , 'permission' => 'р.Доски / переименовывать поля лидов'
+        ]
+        ,
+        'Доска / Макросы' => ['route' => 'tech.macros.manager'
 //            , 'permission' => 'р.Доски / переименовывать поля лидов'
         ]
         ,

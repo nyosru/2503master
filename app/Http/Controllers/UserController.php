@@ -9,6 +9,49 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
+    /**
+     * @param $name
+     * название роли
+     * @param $board_id
+     * доска
+     * @param $user_id
+     * асер
+     * @return bool
+     */
+    public static function creaeDefaultRoleAndLinkingMe($name, $board_id, $user_id = null): object
+    {
+        if (empty($user_id)) {
+            $user_id = auth()->user()->id;
+        }
+
+        $new_role = self::creaeRole($name, $board_id);
+
+        self::setBoardRole($user_id, $board_id, $new_role->id);
+
+        return $new_role;
+
+    }
+
+    public static function creaeRole($name, $board_id): object
+    {
+        try {
+            $new_role = \App\Models\Role::create([
+                'board_id' => $board_id,
+                'name' => $name,
+                'guard_name' => 'web',
+            ]);
+            return $new_role;
+        } catch (\Exception $exception) {
+            dd([
+                $exception->getMessage(),
+                $exception->getFile(),
+                $exception->getLine(),
+            ]);
+
+        }
+    }
+
+
     public static function setBoardRole($user_id, $board_id, $role_id): void
     {
 
