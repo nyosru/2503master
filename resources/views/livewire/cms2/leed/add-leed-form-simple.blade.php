@@ -41,7 +41,7 @@
 
                         @foreach($allowedFields as $field)
 
-                                                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($field->toArray()) }}</pre>
+{{--                                                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($field->toArray()) }}</pre>--}}
 
                             <label for="{{ $field['field_name'] }}" class="block text-gray-700 text-sm">
                                 <abbr
