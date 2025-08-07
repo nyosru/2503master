@@ -7,6 +7,32 @@ use Livewire\Component;
 
 class Main extends Component
 {
+
+    public $column; // Храним объект столбца
+
+    public $named = [
+
+        'can_move' => 'Можно двигать',
+        'can_delete' => 'Можно удалить',
+
+        'type_otkaz' => 'Тип столбца - отказники',
+        'can_create' => 'Можно создавать лида',
+
+        'can_transfer' => 'Можно передать лида (договор подписан)',
+        'can_get' => 'Можно брать на себя лида (сразу в доске)',
+
+//        'can_accept_contract' => 'Принимает договор от менеджера',
+    ];
+    protected $rules = [
+        'settings' => [],
+//        'settings.can_move' => 'boolean',
+//        'settings.can_delete' => 'boolean',
+//        'settings.type_otkaz' => 'boolean',
+//        'settings.can_create' => 'boolean',
+//        'settings.can_accept_contract' => 'boolean',
+    ];
+
+
     public $settings;
     public function mount(LeedColumn $column){
 
@@ -22,6 +48,34 @@ class Main extends Component
         ];
 
     }
+
+
+
+    public function saveColumnConfig()
+    {
+        try {
+            $this->validate();
+
+            // Обновляем объект столбца
+            $this->column->update($this->settings);
+//            $this->column->save();
+
+//            session()->flash('message', 'Настройки обновлены!');
+            $this->modal_show = false; // Закрываем модальное окно после сохранения
+
+            // Эмитируем событие на другой компонент
+            $this->dispatch('refreshLeedBoardComponent');
+//            $this->dispatch('loadColumns');
+//            $this->dispatch('render');
+//            return redirect()->route('leed)');
+
+            session()->flash('CfgMainSuccess', 'Изменения сохранены');
+
+        } catch (\Exception $e) {
+            session()->flash('error', 'Ошибка при сохранении: ' . $e->getMessage());
+        }
+    }
+
     public function render()
     {
         return view('livewire.column.config.main');

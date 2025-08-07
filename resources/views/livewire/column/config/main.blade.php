@@ -31,12 +31,19 @@
         </span>
     @endif
 
+    <!-- Сообщение об ошибке -->
+    @if (session()->has('CfgMainSuccess'))
+        <span class="bg-green-200 text-black p-2 rounded mb-4">
+            {{ session('CfgMainSuccess') }}
+        </span>
+    @endif
+
     <div class="text-center mt-4">
-        <button type="button" wire:click="$set('modal_show', false)"
-                class="bg-gray-500 text-white py-1 px-4 rounded mr-2">
-            Закрыть
-        </button>
-        <button type="submit" class="bg-blue-500 text-white py-1 px-4 rounded">
+{{--        <button type="button" wire:click="$set('modal_show', false)"--}}
+{{--                class="bg-gray-500 text-white py-1 px-4 rounded mr-2">--}}
+{{--            Закрыть--}}
+{{--        </button>--}}
+        <button type="button" wire:click="saveColumnConfig" class="bg-blue-500 text-white py-1 px-4 rounded">
             Сохранить
         </button>
     </div>
