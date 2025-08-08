@@ -30,6 +30,16 @@
     {{--    <br/>--}}
 
 
+{{--    <pre class="text-xs">{{ print_r( $boards->toArray() ) }}</pre>--}}
+    <div>
+        Выберите проект: <select wire:model="selectBoard">
+            <option value="">выбрать</option>
+            @foreach ($boards as $board)
+            <option value="{{ $board->id }}">{{ $board->name }}</option>
+            @endforeach
+        </select>
+    </div>
+
     <div class="relative">
         <div class="max-w-full">
             <div class="flex flex-col">
@@ -106,7 +116,8 @@
                                 {{--                                 style="z-index: 500;"--}}
                             >
 {{--                                <pre>{{ print_r( $role->toArray() ) }}</pre>--}}
-                                <span>{{ $role->name }} <sup title="доска: {{ $role->board_id }}">д:{{ $role->board_id }}</sup></span>
+{{--                                <span>{{ $role->name }} <sup title="доска: {{ $role->board_id }}">д:{{ $role->board_id }}</sup></span>--}}
+                                <span>{{ $role->name_ru ?? $role->name ?? 'x' }} <sup title="доска: {{ $role->board_id }}">д:{{ $role->board_id }}</sup></span>
                                 @can('р.Права доступа / CRUD роли')
                                     <button
                                         wire:click="confirmDelete({{ $role->id }})"

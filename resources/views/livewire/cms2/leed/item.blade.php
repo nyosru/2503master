@@ -69,9 +69,9 @@
                 <livewire:cms2.informer.leed.comment :key="'leed.comment'.$leed->id" wire:lazy :leed="$leed"/>
 
                 {{--передать лида--}}
-                @if( $leed->user_id == Auth()->user()->id )
-                    <livewire:cms2.leed.move :leed="$leed" :board_id="$leed->column->board->id"/>
-                @endif
+{{--                @if( $leed->user_id == Auth()->user()->id )--}}
+                    <livewire:cms2.leed.move :leed="$leed" :board_id="$leed->column->board->id" :key="'leed_go_action_'.$leed->id"/>
+{{--                @endif--}}
 
                 {{--            </div>--}}
                 {{--            <b>{{ $leed->name }} тел: {{ $leed->phone }}</b>--}}

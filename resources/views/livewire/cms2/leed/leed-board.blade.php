@@ -48,7 +48,7 @@
                                     [
                                         'route'=>'leed',
                                         'route-var'=>['board_id'=>$user->currentBoard->id ?? ''],
-                                        'name'=>( $user->currentBoard->name ?? 'x' ).( $user->roles[0]['name'] ? ' <sup>'.$user->roles[0]['name'].'</sup>' : '-' )
+                                        'name'=>( $user->currentBoard->name ?? 'x' ).( $user->roles[0]['name'] ? ' <sup>'.( $user->roles[0]['name_ru'] ?? $user->roles[0]['name'] ).'</sup>' : '-' )
                                     ],
 
 {{--                            ['route'=>'leed','name'=>'Заказы'],--}}

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Board;
 use App\Models\Role as Role2;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
@@ -9,6 +10,7 @@ use Spatie\Permission\Models\Permission;
 
 class RolePermissions extends Component
 {
+    public $selectBoard;
     public $roles;
     public $permissions;
     public $rolePermissions = [];
@@ -16,11 +18,18 @@ class RolePermissions extends Component
     // Переменные для подтверждения удаления
     public $confirmingDelete = false;
     public $roleIdToDelete = null;
+    public $boards;
+    public $user_id;
 
     public function mount()
     {
+
+        $this->user_id = auth()->id();
+        $this->boards = Board::where('admin_user_id',$this->user_id)->get();
+
         // Загружаем роли и разрешения
-        $board_id = '';
+        $board_id = $this->selectBoard;
+
         $this->roles = Role::whereNull('deleted_at')
             ->
             where(function ($query) use ($board_id) {
@@ -37,10 +46,12 @@ class RolePermissions extends Component
         foreach ($this->roles as $role) {
             $this->rolePermissions[$role->id] = $role->permissions->pluck('id')->toArray();
         }
+
     }
 
     public function togglePermission($roleId, $permissionId)
     {
+
         $role = Role::find($roleId);
         $permission = Permission::find($permissionId);
 
@@ -55,7 +66,21 @@ class RolePermissions extends Component
 
             // Обновляем массив разрешений
             $this->rolePermissions[$roleId] = $role->permissions->pluck('id')->toArray();
+
         }
+    }
+
+    function updatedSelectBoard($value){
+        dd($value);
+        $this->boards = Board::where('admin_user_id',$this->user_id)->get();
+    }
+
+    // Метод для инициации подтверждения удаления
+    public function updatedSelectBoard2($value)
+    {
+        dd($value);
+        $this->boards = Board::where('admin_user_id',$this->user_id)->get();
+//        $this->mount();
     }
 
     // Метод для инициации подтверждения удаления

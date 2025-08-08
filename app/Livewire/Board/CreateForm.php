@@ -43,9 +43,9 @@ class CreateForm extends Component
 //            $board->users()->attach($userId, ['role_id' => $this->userRoles[$userId] ?? null]);
 //        }
 
-        if( $this->create_dolgnost_and_me ) {
-            $ee = UserController::creaeDefaultRoleAndLinkingMe('Должность по умолчанию '.$board->id, $board->id, $admin_user_id );
-dd($ee ?? 'x');
+        if ($this->create_dolgnost_and_me) {
+            $ee = UserController::creaeDefaultRoleAndLinkingMe('Тех. поддержка', $board->id, $admin_user_id);
+//            dd($ee ?? 'x');
 //            dd([__LINE__]);
         }
 
@@ -54,7 +54,7 @@ dd($ee ?? 'x');
             'is_paid']);
         session()->flash('message', 'Доска создана!');
 //        return redirect()->route('board');
-        return redirect()->route( $this->return_route );
+        return redirect()->route($this->return_route);
     }
 
 

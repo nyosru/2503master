@@ -56,6 +56,9 @@
                         <div class="ml-5">
                             @if(!empty($board->boardUsers) )
                                 @foreach($board->boardUsers as $ba )
+
+{{--                                    <pre class="text-xs">{{ print_r($ba['role']->toArray(),1) }}</pre>--}}
+
                                     <a href="{{ route('leed.goto',[
                                 'board_id'=>$board->id,
                                 'role_id'=>$ba->role->id
@@ -67,7 +70,7 @@
                                border border-bottom-3 border-black
                                rounded"
                                     >
-                                        {{$ba['role']['name']}}
+                                        {{ ( $ba['role']['name_ru'] ?? $ba['role']['name'] ) }}
                                     </a>
                                 @endforeach
                             @endif
