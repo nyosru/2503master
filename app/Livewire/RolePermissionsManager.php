@@ -6,6 +6,7 @@ use App\Models\Board;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
+use Illuminate\Validation\Rule;
 
 class RolePermissionsManager extends Component
 {
@@ -23,13 +24,23 @@ class RolePermissionsManager extends Component
     public function addRole()
     {
         $this->validate([
-            'newRoleName' => 'required|string|unique:roles,name|max:255',
+//            'newRoleName' => 'required|string|unique:roles,name|max:255',
+//            'newRoleName' => 'required|string|max:255',
+            'newRoleName' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('roles', 'name_ru')->where(function ($query) {
+                    return $query->where('board_id', $this->board_id);
+                }),
+            ],
             'board_id' => 'required|exists:boards,id' // Добавляем проверку
         ]);
 
         // Создание роли
         Role::create([
-            'name' => $this->newRoleName,
+            'name_ru' => $this->newRoleName,
+            'name' => $this->newRoleName.$this->board_id,
             'board_id' => $this->board_id // Сохраняем связь
         ]);
 

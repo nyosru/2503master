@@ -41,7 +41,7 @@
 
                         @foreach($allowedFields as $field)
 
-                                                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($field->toArray()) }}</pre>
+{{--                                                        <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($field->toArray()) }}</pre>--}}
 
                             <label for="{{ $field['field_name'] }}" class="block text-gray-700 text-sm">
                                 <abbr
@@ -67,13 +67,12 @@
                             <input
                                 @if(
                                     $field->orderRequest->number
-                                    || $field['field_name'] == 'base_number'
-)
-                                    type="number"
+                                    || $field['field_name'] == 'base_number' )
+                                    type="number" max="99999999"
                                 @elseif(
                                      $field['field_name'] == 'budget'
                                     ||  $field['field_name'] == 'price')
-                                    type="number" step="0.01"
+                                    type="number" step="0.01" max="99999999"
                                 @elseif(
                                     $field->orderRequest->number
                                     || $field['field_name'] == 'pay_day_every_month'

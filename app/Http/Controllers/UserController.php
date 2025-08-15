@@ -37,7 +37,8 @@ class UserController extends Controller
         try {
             $new_role = \App\Models\Role::create([
                 'board_id' => $board_id,
-                'name' => $name,
+                'name_ru' => $name,
+                'name' => $name.$board_id,
                 'guard_name' => 'web',
             ]);
             return $new_role;

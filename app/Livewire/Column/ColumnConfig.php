@@ -12,33 +12,10 @@ class ColumnConfig extends Component
     public $column; // Храним объект столбца
     public $name_new; // Храним объект столбца
 
-    public $settings = []; // Массив для хранения параметров
     public $menu = []; // меню
     public $modal_show = false; // ID текущего столбца для открытия модального окна
     public $macroses;
     public $show_tpl = '';
-
-    public $named = [
-
-        'can_move' => 'Можно двигать',
-        'can_delete' => 'Можно удалить',
-
-        'type_otkaz' => 'Тип столбца - отказники',
-        'can_create' => 'Можно создавать лида',
-
-        'can_transfer' => 'Можно передать лида (договор подписан)',
-        'can_get' => 'Можно брать на себя лида (сразу в доске)',
-
-//        'can_accept_contract' => 'Принимает договор от менеджера',
-        ];
-    protected $rules = [
-        'settings' => [],
-//        'settings.can_move' => 'boolean',
-//        'settings.can_delete' => 'boolean',
-//        'settings.type_otkaz' => 'boolean',
-//        'settings.can_create' => 'boolean',
-//        'settings.can_accept_contract' => 'boolean',
-    ];
 
 
 
@@ -68,44 +45,44 @@ class ColumnConfig extends Component
 
 
 //        $this->column = $column;
-        $this->settings = [
-            'name' => $column->name,
-            'can_move' => $column->can_move,
-            'can_delete' => $column->can_delete,
-            'type_otkaz' => $column->type_otkaz,
-            'can_create' => $column->can_create,
-            'can_transfer' => $column->can_transfer,
-            'can_get' => $column->can_get,
-//            'can_accept_contract' => $column->can_accept_contract,
-        ];
+//        $this->settings = [
+//            'name' => $column->name,
+//            'can_move' => $column->can_move,
+//            'can_delete' => $column->can_delete,
+//            'type_otkaz' => $column->type_otkaz,
+//            'can_create' => $column->can_create,
+//            'can_transfer' => $column->can_transfer,
+//            'can_get' => $column->can_get,
+////            'can_accept_contract' => $column->can_accept_contract,
+//        ];
 
         $m = new MacrosController();
         $this->macroses = $m->get( $column->id );
 
     }
-
-    public function saveColumnConfig()
-    {
-        try {
-            $this->validate();
-
-            // Обновляем объект столбца
-            $this->column->update($this->settings);
-//            $this->column->save();
-
-//            session()->flash('message', 'Настройки обновлены!');
-            $this->modal_show = false; // Закрываем модальное окно после сохранения
-
-            // Эмитируем событие на другой компонент
-            $this->dispatch('refreshLeedBoardComponent');
-//            $this->dispatch('loadColumns');
-//            $this->dispatch('render');
-//            return redirect()->route('leed)');
-
-        } catch (\Exception $e) {
-            session()->flash('error', 'Ошибка при сохранении: ' . $e->getMessage());
-        }
-    }
+//
+//    public function saveColumnConfig()
+//    {
+//        try {
+//            $this->validate();
+//
+//            // Обновляем объект столбца
+//            $this->column->update($this->settings);
+////            $this->column->save();
+//
+////            session()->flash('message', 'Настройки обновлены!');
+//            $this->modal_show = false; // Закрываем модальное окно после сохранения
+//
+//            // Эмитируем событие на другой компонент
+//            $this->dispatch('refreshLeedBoardComponent');
+////            $this->dispatch('loadColumns');
+////            $this->dispatch('render');
+////            return redirect()->route('leed)');
+//
+//        } catch (\Exception $e) {
+//            session()->flash('error', 'Ошибка при сохранении: ' . $e->getMessage());
+//        }
+//    }
 
     public function openModal()
     {
