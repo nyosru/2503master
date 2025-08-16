@@ -1,8 +1,5 @@
 <div>
 
-    {{ $show_original_link ? 1 : 2 }} /
-    {{ $link_to_auth_master_domain ?? '-' }} /
-
     @if( !$show_original_link )
         {{--    показываем ссылку с левого домена--}}
         Войти:
@@ -15,4 +12,5 @@
         {{--    показываем ссылку с оригинального домена--}}
         {!! Socialite::driver('telegram')->getButton() !!}
     @endif
+
 </div>
