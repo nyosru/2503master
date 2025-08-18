@@ -28,16 +28,18 @@
 
 
         {{--        @if( empty(auth()->user()->phone_number) )--}}
+
     @else
 
         <div class="flex flex-col xspace-y-4">
+
             {{--<div>--}}
             {{--                <pre style="max-height: 150px; overflow: auto;" >{{ print_r($columns) }}</pre>--}}
             {{--</div>--}}
 
             {{--шапка над доской--}}
             <div class="app-content-header">
-                <div class="container">
+                <div class="container mx-auto">
                     <div class="flex flex-row space-x-4 w-full">
                         @if(1==1)
                             <div class="flex-2">
@@ -134,9 +136,16 @@ border-1 rounded
 <span class="float-right pr-5">
 @permission('р.Лиды / доска конфиг')
 <a href="{{ route('board.config',['board'=>$board_id ]) }}"
-   class="hover:text-gray-600 text-white"
+   class="
+   bg-gradient-to-r from-gray-100 to-gray-200
+   hover:from-gray-200 hover:to-gray-300
+   py-1 px-2
+   rounded-md
+   text-gray-500 hover:text-gray-600
+{{--   text-white--}}
+   "
    title="Настройки доски"
->⚙️</a>
+>Настройки доски ⚙️</a>
 @endpermission
 </span>
 
@@ -201,6 +210,14 @@ border-1 rounded
                         {{--                </div>--}}
 
                     </div> <!--end::Row-->
+
+
+                    @if(session('createBoardGoodFromTemplate'))
+                        <div class="mt-4 p-3 bg-green-100 text-green-700 rounded">
+                            {{ session('createBoardGoodFromTemplate') }}
+                        </div>
+                    @endif
+
                 </div> <!--end::Container-->
             </div> <!--end::App Content Header--> <!--begin::App Content-->
 

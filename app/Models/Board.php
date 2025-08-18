@@ -44,21 +44,21 @@ class Board extends Model
 
 
     // Связь с ролью через pivot-таблицу
-    public function role()
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
 
 
     // Связь с записями в таблице board_user (один ко многим)
-    public function boardUsers()
+    public function boardUsers(): HasMany
     {
         return $this->hasMany(BoardUser::class);
     }
 
 
     // Связь с записями в таблице board_user (один ко многим)
-    public function columns()
+    public function columns(): HasMany
     {
         return $this->hasMany(LeedColumn::class);
     }

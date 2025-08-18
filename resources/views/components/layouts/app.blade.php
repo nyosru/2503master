@@ -30,18 +30,20 @@
   </h1>
 
 @else
-<div class=" ">
+<div class="">
     <div class="min-h-screen flex flex-col relative">
         <div class="
 {{--    bg-blue-100 bg-contain bg-no-repeat bg-center sm:bg-[url('/img/bg1.jpg')] --}}
     flex-grow flex-col space-y-5
-
     ">
             {{--        <livewire:app.header/>--}}
             <livewire:app.navigation/>
 
 
-            <div class="flex flex-row space-x-5">
+            <div class="flex
+{{--            flex-row space-x-5--}}
+            flex-col
+            ">
                 @if (Route::is('tech*')
     || Route::is('lk*')
     || Route::is('board*')
@@ -50,10 +52,12 @@
     || Route::is('order*')
     || Route::is('vk*')
     )
+                    <div class="container mx-auto">
                     {{--            <div class="w-[200px] bg-orange-500">--}}
                     {{--                меню--}}
                     {{--            </div>--}}
                     <livewire:app.menu/>
+                    </div>
                 @endif
                 <div class="flex-1 min-h-[400px]">
                     {{ $slot }}

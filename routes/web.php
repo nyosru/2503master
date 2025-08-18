@@ -42,10 +42,6 @@ Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
 });
 
 
-
-
-
-
 Route::get('', \App\Livewire\Index::class)->name('index');
 
 //Route::get('/auth/telegram-in/callback', [TelegramController::class, 'callbackOrigin']);
@@ -126,7 +122,7 @@ Route::middleware(['guest'])->group(function () {
 // Маршрут для авторизованного пользователя
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('vk/friend', App\Livewire\Vk\Friend::class )->name('vk.friend');
+    Route::get('vk/friend', App\Livewire\Vk\Friend::class)->name('vk.friend');
 
 //    Route::get('', \App\Livewire\Cms2\Leed\LeedBoardList::class)->name('index');
 
@@ -145,7 +141,7 @@ Route::middleware(['auth'])->group(function () {
         Session::regenerateToken();
     });
 
-    Route::group([ 'as' => 'lk.'], function () {
+    Route::group(['as' => 'lk.'], function () {
         Route::get('profile', \App\Livewire\Lk\Profile::class)->name('profile');
     });
 
@@ -166,15 +162,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('leed/{board}/delete', [\App\Http\Controllers\BoardController::class, 'delete'])
         ->name('board.config.delete')
-        ->middleware('check.permission:р.Доски / удалить')
-    ;
+        ->middleware('check.permission:р.Доски / удалить');
 
     Route::get('leed/{board_id}/{id}', \App\Livewire\Cms2\Leed\Item::class)->name('leed.item');
 
 //        Route::get('/leed/{id}', \App\Livewire\Cms2\ClientsInfo::class)->name('clients.info');
 //});
 
-    Route::group([ 'as' => 'board', 'prefix' => 'board'], function () {
+    Route::group(['as' => 'board', 'prefix' => 'board'], function () {
         Route::get('', \App\Livewire\Board\BoardComponent::class)
             ->name('')
             ->middleware('check.permission:р.Доски');
@@ -190,17 +185,15 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('', \App\Livewire\Cms2\Tech\Index::class)->name('index');
 
-            Route::prefix('macros')->name('macros.')->group(function () {
-                Route::get('/', \App\Livewire\Macros\Manager::class)->name('manager');
+            Route::prefix('macros')->name('macros')->group(function () {
+                Route::get('/', \App\Livewire\Macros\Manager::class)->name('.manager');
             });
 
-
-
-
-
-
-
-
+            Route::prefix('board')->name('board')->group(function () {
+                Route::prefix('template')->name('.template')->group(function () {
+                    Route::get('/', \App\Livewire\Board\Template\BoardTemplatesManager::class)->name('.manager');
+                });
+            });
 
 
             Route::get('inn_searc_org', \App\Livewire\Service\DadataOrgSearchComponent::class)->name('service.dadata_org_search_component');

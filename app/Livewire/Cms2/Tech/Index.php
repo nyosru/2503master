@@ -25,6 +25,8 @@ class Index extends Component
         'Поиск данных по inn' => ['route' => 'tech.service.dadata_org_search_component'],
 
         'Поля в заказе' => ['route' => 'tech.order_requests_manager', 'permission' => 'тех.упр полями в лиде'],
+
+
         'Доска / Лид / Названия полей - Переименовать' => ['route' => 'tech.order-request-rename-form'
             , 'permission' => 'р.Доски / переименовывать поля лидов'
         ],
@@ -35,6 +37,10 @@ class Index extends Component
         ]
         ,
         'Доска / Макросы' => ['route' => 'tech.macros.manager'
+//            , 'permission' => 'р.Доски / переименовывать поля лидов'
+        ]
+        ,
+        'Доска / Шаблоны' => ['route' => 'tech.board.template.manager'
 //            , 'permission' => 'р.Доски / переименовывать поля лидов'
         ]
         ,

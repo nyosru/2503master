@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Board;
+use App\Models\BoardFieldSetting;
 use App\Models\BoardUser;
 use App\Models\OrderRequest;
+use App\Models\OrderRequestsRename;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +27,51 @@ class BoardController extends Controller
     }
 
 
+    /**
+     * @param $board_id
+     * @param $pole
+     * @param $name
+     * @param $description
+     * @param $sort
+     * @param $is_enabled
+     * @param $show_on_start
+     * @param $in_telega_msg
+     * @return void
+     */
+    public static function setRenamePolya($board_id, $pole, $name, $description,
+                                          $sort,
+                                          $is_enabled = false, $show_on_start = false, $in_telega_msg = false
+    )
+    {
+        $s = BoardFieldSetting::create(['board_id' => $board_id, 'field_name' => $pole,
+            'sort_order' => $sort,
+            'is_enabled' => ( $is_enabled ? true : false ), 'show_on_start' => ( $show_on_start ? true : false ), 'in_telega_msg' => ( $in_telega_msg ? true : false )]);
+//        dump($s);
+        try {
+            $ss = OrderRequest::where('pole', $pole)->firstOrFail();
+        } catch (\Exception $e) {
+            dump($e->getMessage());
+        }
+        OrderRequestsRename::create(['board_id' => $board_id, 'order_requests_id' => $ss->id,
+            'name' => $name, 'description' => $description]);
+
+        return;
+
+        $ee = OrderRequestsRename::updateOrCreate(
+            [
+                'board_id' => $board_id,
+                'order_requests_id' => $order_requests_id
+            ],
+            [
+                'name' => $name,
+                'description' => $description
+            ]
+        );
+        return $ee;
+
+    }
+
+
     public static function getRules(): array
     {
         $rules = [];
@@ -36,7 +83,7 @@ class BoardController extends Controller
         return $rules;
     }
 
-    public static function goto($board_id, $role_id)
+    public static function enterAs($board_id, $role_id)
     {
 //        dd($board_id, $role_id);
 
@@ -55,8 +102,14 @@ class BoardController extends Controller
         }
 
         UserController::setCurentBoard($user->id, $board_id);
-//        UserController::setCurentBoard($user->id, $boards->id);
         UserController::updateRole($user->id, $role_id);
+
+    }
+
+    public static function goto($board_id, $role_id)
+    {
+
+        self::enterAs($board_id, $role_id);
 
         return redirect()->route('leed', ['board_id' => $board_id]);
 

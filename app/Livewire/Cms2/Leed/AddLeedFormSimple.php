@@ -95,7 +95,6 @@ class AddLeedFormSimple extends Component
         Log::info('order', $this->order);
     }
 
-
     // Метод для переключения видимости формы
     public function toggleForm()
     {
@@ -109,17 +108,14 @@ class AddLeedFormSimple extends Component
         $fields = BoardFieldSetting::where('board_id', $boardId)
             ->where('is_enabled', true)
             ->with([
-                'orderRequest' => function ($query) {
-                    $query->with('rename');
+                'orderRequest' => function ($q) use ( $boardId ){
+                    $q->with(['rename' => function ($q) use ( $boardId ) {
+                        $q->where('board_id',$boardId);
+                        }]);
                 }
             ])
-
-//@if( !empty($field->orderRequest->rename->name) )
-
             ->orderBy('sort_order', 'desc')
             ->get()
-//            ->pluck('field_name') // Возвращаем только имена полей
-//            ->toArray()
         ;
 
         return $fields; // Массив разрешенных имен полей

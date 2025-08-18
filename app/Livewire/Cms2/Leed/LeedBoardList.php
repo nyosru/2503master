@@ -15,6 +15,7 @@ class LeedBoardList extends Component
     public $domain_in_user_count;
     public $boards;
     public $invite;
+    public $user;
 
     public function mount()
     {
@@ -22,6 +23,7 @@ class LeedBoardList extends Component
         $this->domain_in_user_count = Domain::where('admin_user_id', Auth::user()->id)->count();
 
         // Fetch the authenticated user
+        $this->user =
         $user = Auth::user();
 //dd($user);
         $this->invite = Invitation::where('phone', $user->phone_number)->with([
@@ -33,6 +35,13 @@ class LeedBoardList extends Component
             }
         ])->get();
 //dd($this->invite->toArray());
+        $this->loadBoards();
+    }
+
+    public function loadBoards()
+    {
+
+        $user = $this->user;
 
         // Retrieve boards associated with the user via boardUsers relationship
         $this->boards = Board::whereHas('boardUsers', function ($query) use ($user) {
@@ -50,12 +59,12 @@ class LeedBoardList extends Component
                 }
             ])
             ->get();
-
     }
 
     public function delete(Board $board)
     {
-        BoardController::delete($board);
+        $board->delete();
+        $this->loadBoards();
     }
 
     public function render()

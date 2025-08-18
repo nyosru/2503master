@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderRequestsRename extends Model
 {
+
     use HasFactory;
     protected $table = 'order_requests_renames';
 

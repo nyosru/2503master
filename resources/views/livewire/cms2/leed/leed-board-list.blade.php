@@ -28,6 +28,15 @@
         />
 
         <livewire:board.create-form return_route="leed.list"/>
+        {{--        sizeof: {{ sizeof($boards)  }}--}}
+
+        создайть проект (шаги проекта, должности) по шаблону
+        <livewire:Board.CreateShablonForm
+            {{--            return_route="leed.list"--}}
+            {{--           :show_payes="false"--}}
+            {{--           :show_form="true"--}}
+        />
+
 
         @if( sizeof($boards) == 0 )
             @if(1==2)
@@ -40,11 +49,13 @@
             @endif
         @else
 
-{{--            <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($boards->toArray()) }}</pre>--}}
+            {{--            <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($boards->toArray()) }}</pre>--}}
 
             @foreach ($boards as $index => $board)
 
-                <div class="flex items-center py-5 border-b border-gray-200 hover:bg-white
+                <div
+                    wire:key="board-{{ $board->id }}"
+                    class="flex items-center py-5 border-b border-gray-200 hover:bg-white
              {{ $index % 2 != 0 ? 'bg-gray-200' : '' }}
             ">
                     <div class="
@@ -57,7 +68,7 @@
                             @if(!empty($board->boardUsers) )
                                 @foreach($board->boardUsers as $ba )
 
-{{--                                    <pre class="text-xs">{{ print_r($ba['role']->toArray(),1) }}</pre>--}}
+                                    {{--                                    <pre class="text-xs">{{ print_r($ba['role']->toArray(),1) }}</pre>--}}
 
                                     <a href="{{ route('leed.goto',[
                                 'board_id'=>$board->id,
@@ -109,7 +120,7 @@ hover:underline
 cursor-pointer
 "
                             title="удалить доску"
-                            wire:navigate
+{{--                            wire:navigate--}}
                             wire:confirm="Удалить доску ?"
                         >X</a>
                         @endpermission
