@@ -3,6 +3,7 @@
 namespace App\Livewire\Board\Template;
 
 use App\Http\Controllers\BoardController;
+use App\Http\Controllers\Master\PositionController;
 use App\Models\BoardFieldSetting;
 use App\Livewire\Cms2\Leed\LeedBoard;
 use App\Models\Board;
@@ -11,6 +12,7 @@ use App\Models\BoardUser;
 use App\Models\ColumnRole;
 use App\Models\OrderRequest;
 use App\Models\OrderRequestsRename;
+use App\Models\PermissionSetting;
 use Livewire\Component;
 use phpseclib3\Math\PrimeField\Integer;
 
@@ -53,21 +55,25 @@ class CreateBoardFromTemplateForm extends Component
         }
 
         $name = 'Тех.поддержка';
+        $name_t = $name . date('ymdhis');
         $new_position = $newBoard->role()->create([
-            'name' => $name . date('ymdhis'),
+            'name' => $name_t,
             'name_ru' => $name,
             'guard_name' => 'web',
             'board_id' => $newBoard->id
         ]);
+
+        $pos = new PositionController();
+        $pos->setStartPermissionFromPosition($new_position->id);
 
         return $new_position->id;
 
     }
 
 
+
     public function createBoardFromShablon($template_id)
     {
-
 
         $template = BoardTemplate::where('id', $template_id)
             ->with([

@@ -1402,6 +1402,10 @@ select {
   height: 100vh;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .max-h-32 {
   max-height: 8rem;
 }
@@ -1710,6 +1714,10 @@ select {
   width: 100%;
 }
 
+.w-60 {
+  width: 15rem;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
@@ -1720,6 +1728,30 @@ select {
 
 .min-w-\[250px\] {
   min-width: 250px;
+}
+
+.min-w-\[148px\] {
+  min-width: 148px;
+}
+
+.min-w-\[38px\] {
+  min-width: 38px;
+}
+
+.min-w-\[48px\] {
+  min-width: 48px;
+}
+
+.min-w-\[40px\] {
+  min-width: 40px;
+}
+
+.min-w-\[45px\] {
+  min-width: 45px;
+}
+
+.min-w-\[60px\] {
+  min-width: 60px;
 }
 
 .max-w-4xl {
@@ -1897,6 +1929,10 @@ select {
 
 .flex-wrap {
   flex-wrap: wrap;
+}
+
+.place-items-center {
+  place-items: center;
 }
 
 .items-end {
