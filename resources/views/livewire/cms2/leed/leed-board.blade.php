@@ -260,7 +260,7 @@ border-1 rounded
                                     class="
                                         p-1
                                         relative
-                                        w-[250px]
+                                        min-w-[250px]
                                         bg-white border rounded relative"
 
                                     id="column-{{ $column->id }}"

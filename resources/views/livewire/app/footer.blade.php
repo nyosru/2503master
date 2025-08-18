@@ -1,4 +1,7 @@
-<div class="py-3 bg-gray-200">
+<div class="py-3 bg-gray-200
+{{--sticky-block--}}
+{{-- right-0 fixed h-[100px]--}}
+">
     <footer class="mx-auto container ">
         <div class="flex flex-col space-y-3  ">
             <div class="flex flex-col space-y-3 sm:space-y-0 sm:flex-row">
