@@ -11,8 +11,9 @@
             @foreach( $leed->userChanges as $u )
                 <div
                     class="px-2 pb-1 hover:bg-gray-100 @if(!empty($u->newUser->deleted_at)) line-through @endif flex flex-row items-center  ">
-                    <div class="flex-1">{{$u->newUser->name}} ({{ $u->newUser->Roles[0]->name ?? '' }}
-                        )
+                    <div class="flex-1">
+                        {{$u->newUser->name}}
+                        <span class="text-gray-300 hover:text-gray-600">{{ $u->newUser->Roles[0]->name_ru ??  $u->newUser->Roles[0]->name ?? '' }}</span>
                     </div>
                     <span
                         class="w-[120px] text-center bg-gray-200">{{$u->created_at->format('H:i d.m.Y')}}</span>
