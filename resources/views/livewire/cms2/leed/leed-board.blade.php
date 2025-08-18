@@ -353,12 +353,11 @@ border-1 rounded
                                     </h3>
                                 </div>
 
+                                @if(3==4)
                                 {{--                форма добавления столюца--}}
                                 @permission('р.Лиды / добавить столбцы')
                                 @if($visibleAddForms[$column->id] ?? false)
-
                                     {{--                                    <livewire:column.add-column-form-mini column_id="{{$column->id}}" :key="'add_col_mini_'.$column->id" />--}}
-
                                     @if(1==2)
                                         <div class="чmy-1 p-1 text-center rounded-xl bg-blue-200">
 
@@ -396,6 +395,7 @@ border-1 rounded
                                     @endif
                                 @endif
                                 @endpermission
+                                @endif
 
                                 {{--                            <pre class="text-xs overflow-auto max-h-[200px]">{{ print_r($column->toArray()) }}</pre>--}}
                                 {{--                            <pre class="text-xs overflow-auto max-h-[200px]">{{ print_r($user->toArray()) }}</pre>--}}

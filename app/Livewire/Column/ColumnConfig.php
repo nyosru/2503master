@@ -31,10 +31,10 @@ class ColumnConfig extends Component
                 'name' => 'Настройки',
                 'template' => 'column.config.main'
             ],
-            [
-                'name' => 'Макросы',
-                'template' => 'column.config.macros'
-            ],
+//            [
+//                'name' => 'Макросы',
+//                'template' => 'column.config.macros'
+//            ],
             [
                 'name' => 'Доступы',
                 'template' => 'column.config.access'
