@@ -95,6 +95,7 @@ class AddLeedFormSimple extends Component
         Log::info('order', $this->order);
     }
 
+
     // Метод для переключения видимости формы
     public function toggleForm()
     {
@@ -124,8 +125,7 @@ class AddLeedFormSimple extends Component
 
     public function addLeedRecord()
     {
-
-        $rules = BoardController::getRules();
+        $rules = (Array) BoardController::getRules($this->column->board_id);
         $this->validate($rules);
 
         $user_id = Auth::id();
@@ -136,13 +136,10 @@ class AddLeedFormSimple extends Component
         ];
 
         $polya = $this->getAllowedFields();
-//        dd($polya);
 
         foreach ($polya as $v) {
             $in[$v['field_name']] = $this->{$v['field_name']}; //dd($this->$v
         }
-
-//        dd($in);
 
         // Создание новой записи в базе данных
         $leadRecord = LeedRecord::create($in);

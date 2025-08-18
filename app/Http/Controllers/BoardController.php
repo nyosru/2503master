@@ -18,10 +18,14 @@ class BoardController extends Controller
     public static $polya_config = [];
 
 
-    public static function getPolyaConfig()
+    public static function getPolyaConfig( $board_id )
     {
 
-        self::$polya_config = OrderRequest::all();
+        self::$polya_config = OrderRequest::whereHas( 'boardFieldSetting', function ($query) use ($board_id) {
+            $query->where( 'board_id', $board_id );
+        } )
+            ->get();
+//            ->all();
 //        dd(self::$polya_config);
         return self::$polya_config;
     }
@@ -72,10 +76,10 @@ class BoardController extends Controller
     }
 
 
-    public static function getRules(): array
+    public static function getRules( $board_id ): array
     {
         $rules = [];
-        $e = self::getPolyaConfig();
+        $e = self::getPolyaConfig( $board_id );
 //        dd($e);
         foreach ($e as $v) {
             $rules[$v['pole']] = $v['rules'];

@@ -241,7 +241,7 @@ border-1 rounded
                 @if( 1==1 )
                     @if( 1 == 1 )
                         @if( $columns->count() == 0 )
-{{--                            @permission('р.Лиды / добавлять столбцы')--}}
+                            {{--                            @permission('р.Лиды / добавлять столбцы')--}}
                             @permission('р.Лиды / создать первый столбец')
                             Добавьте первый столбец
                             {{--                                {{ $board_id ?? 'x' }}--}}
@@ -249,7 +249,7 @@ border-1 rounded
                                 :user="$user"
                                 :board_id="$board_id"
                                 type="first"/>
-                            @else
+                        @else
                             обратитесь к администратору, ошибка №101
                             @endpermission
                         @endif
@@ -314,16 +314,16 @@ border-1 rounded
 
                                             @permission('р.Лиды / добавить столбцы')
 {{--                                                @if( !isset($visibleAddForms[$column->id]) || $visibleAddForms[$column->id] === false )--}}
-{{--                                                <button--}}
-{{--                                                    class="text-green-500 hover:text-green-700"--}}
-{{--                                                    wire:click="showAddForm({{ $column->id }})"--}}
-{{--                                                    title="Добавить новый столбец справа"--}}
-{{--                                                    :key="'add_col_'.$column->id"--}}
-{{--                                                >+</button>--}}
+                                            {{--                                                <button--}}
+                                            {{--                                                    class="text-green-500 hover:text-green-700"--}}
+                                            {{--                                                    wire:click="showAddForm({{ $column->id }})"--}}
+                                            {{--                                                    title="Добавить новый столбец справа"--}}
+                                            {{--                                                    :key="'add_col_'.$column->id"--}}
+                                            {{--                                                >+</button>--}}
 
                                                 <livewire:column.add-column-form-mini
                                                     :column_id="$column->id"
-                                                    :key="'add_col_mini_'.$column->id" />
+                                                    :key="'add_col_mini_'.$column->id"/>
 
 
 {{--                                            @endif--}}
@@ -357,47 +357,48 @@ border-1 rounded
                                 @permission('р.Лиды / добавить столбцы')
                                 @if($visibleAddForms[$column->id] ?? false)
 
-{{--                                    <livewire:column.add-column-form-mini column_id="{{$column->id}}" :key="'add_col_mini_'.$column->id" />--}}
+                                    {{--                                    <livewire:column.add-column-form-mini column_id="{{$column->id}}" :key="'add_col_mini_'.$column->id" />--}}
 
-                                @if(1==2)
-                                    <div class="чmy-1 p-1 text-center rounded-xl bg-blue-200">
+                                    @if(1==2)
+                                        <div class="чmy-1 p-1 text-center rounded-xl bg-blue-200">
 
-                                        <button class="float-right text-blue-600 text-sm" wire:click="hiddenAddForm()"
-                                                title="Скрыть формы">
-                                            x
-                                        </button>
+                                            <button class="float-right text-blue-600 text-sm"
+                                                    wire:click="hiddenAddForm()"
+                                                    title="Скрыть формы">
+                                                x
+                                            </button>
 
-                                        <b>Добавить столбец справа</b>
+                                            <b>Добавить столбец справа</b>
 
-                                        <form
-                                            class="block"
-                                            wire:submit="addColumn({{$column->id }})">
-                                            <input class="w-full"
-                                                   wire:model="addColumnName"
-                                                   type="text" name="addColumnName" value=""
-                                                   placeholder="Название столбца"/>
+                                            <form
+                                                class="block"
+                                                wire:submit="addColumn({{$column->id }})">
+                                                <input class="w-full"
+                                                       wire:model="addColumnName"
+                                                       type="text" name="addColumnName" value=""
+                                                       placeholder="Название столбца"/>
 
-                                            <div class="text-left">
-                                                Показывать столбец должностям:
-{{--                                                @foreach( $roles as $role )--}}
-{{--                                                    <label class="block">--}}
-{{--                                                        <input type="checkbox" >--}}
-{{--                                                    </label>--}}
-{{--                                                @endforeach--}}
-                                            </div>
+                                                <div class="text-left">
+                                                    Показывать столбец должностям:
+                                                    {{--                                                @foreach( $roles as $role )--}}
+                                                    {{--                                                    <label class="block">--}}
+                                                    {{--                                                        <input type="checkbox" >--}}
+                                                    {{--                                                    </label>--}}
+                                                    {{--                                                @endforeach--}}
+                                                </div>
 
-                                            <input
-                                                class="bg-blue-300 active:bg-blue-400 rounded px-4 py-2"
-                                                type="submit" value="Добавить"/>
-                                        </form>
+                                                <input
+                                                    class="bg-blue-300 active:bg-blue-400 rounded px-4 py-2"
+                                                    type="submit" value="Добавить"/>
+                                            </form>
 
-                                    </div>
-                                @endif
+                                        </div>
+                                    @endif
                                 @endif
                                 @endpermission
 
-{{--                            <pre class="text-xs overflow-auto max-h-[200px]">{{ print_r($column->toArray()) }}</pre>--}}
-{{--                            <pre class="text-xs overflow-auto max-h-[200px]">{{ print_r($user->toArray()) }}</pre>--}}
+                                {{--                            <pre class="text-xs overflow-auto max-h-[200px]">{{ print_r($column->toArray()) }}</pre>--}}
+                                {{--                            <pre class="text-xs overflow-auto max-h-[200px]">{{ print_r($user->toArray()) }}</pre>--}}
 
                                 <ul class="space-y-1">
 
@@ -405,7 +406,9 @@ border-1 rounded
                                         @permission('р.Лиды / добавить лида')
                                         <li>
                                             <livewire:Cms2.Leed.AddLeedFormSimple :key="'add'.$column->id"
-                                                                                  :column="$column"/>
+                                                                                  :column="$column"
+                                                                                    :board="$column->board"
+                                            />
                                         </li>
                                         @endpermission
                                     @endif
