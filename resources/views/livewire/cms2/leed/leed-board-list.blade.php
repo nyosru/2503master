@@ -29,14 +29,28 @@
 
         <livewire:board.create-form return_route="leed.list"/>
         {{--        sizeof: {{ sizeof($boards)  }}--}}
+        <div x-data="{ showListTemplate: false }">
+            <div class="text-right">
+            <button @click="showListTemplate = !showListTemplate"
+{{--            class="float-right"--}}
+class="bg-blue-300 hover:bg-blue-500 text-white font-bold py-1 px-3 rounded-md mb-4 "
+            >Добавить доску (по шаблону)</button>
+            </div>
+            <div x-show="showListTemplate"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform scale-95"
+                 x-transition:enter-end="opacity-100 transform scale-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform scale-100"
+                 x-transition:leave-end="opacity-0 transform scale-95"
 
-        создайть проект (шаги проекта, должности) по шаблону
-        <livewire:Board.CreateShablonForm
-            {{--            return_route="leed.list"--}}
-            {{--           :show_payes="false"--}}
-            {{--           :show_form="true"--}}
-        />
-
+            >
+                {{--            <div class="w-full">--}}
+                {{--                <button>создать доску по шаблону</button>--}}
+                {{--            </div>--}}
+                <livewire:Board.CreateShablonForm/>
+            </div>
+        </div>
 
         @if( sizeof($boards) == 0 )
             @if(1==2)
@@ -120,7 +134,7 @@ hover:underline
 cursor-pointer
 "
                             title="удалить доску"
-{{--                            wire:navigate--}}
+                            {{--                            wire:navigate--}}
                             wire:confirm="Удалить доску ?"
                         >X</a>
                         @endpermission

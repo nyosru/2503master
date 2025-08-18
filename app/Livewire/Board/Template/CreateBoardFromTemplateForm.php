@@ -12,6 +12,7 @@ use App\Models\ColumnRole;
 use App\Models\OrderRequest;
 use App\Models\OrderRequestsRename;
 use Livewire\Component;
+use phpseclib3\Math\PrimeField\Integer;
 
 class CreateBoardFromTemplateForm extends Component
 {
@@ -22,20 +23,6 @@ class CreateBoardFromTemplateForm extends Component
     public function setConfigNewBoard( Board $board , $polya)
     {
 
-
-        //"id" => 2
-        //"board_template_id" => 1
-        //"name" => "Машина (марка модель цвет)"
-        //"pole" => "string1"
-        //"sort" => 80
-        //"is_enabled" => true
-        //"show_on_start" => true
-        //"in_telega_msg" => true
-        //"created_at" => "2025-08-18T04:28:30.000000Z"
-        //"updated_at" => "2025-08-18T04:28:30.000000Z"
-        //]
-//        dd($polya);
-
         foreach( $polya as $pole ) {
             BoardController::setRenamePolya($board->id, $pole['pole'], $pole['name'], '', $pole['sort'],
                 $pole['is_enabled'],
@@ -44,85 +31,36 @@ class CreateBoardFromTemplateForm extends Component
                 );
         }
 
-//        BoardController::setRenamePolya( $board->id, 'string1', 'Авто (марка модель цвет)', '', 80, true, true , true );
-//        BoardController::setRenamePolya( $board->id, 'string2', 'Причина обращения', '', 75, true, true , true );
-//        BoardController::setRenamePolya( $board->id, 'price', 'Цена', '', 50, true, true , false );
+    }
 
-//        return;
-//
-////        $ee = $board->id;
-////$ee = 23;
-////        $in = Board::with([
-////            'fieldSettings',
-////            'fieldSettings.orderRequest',
-////            'fieldSettings.orderRequest.rename',
-////            'roles',
-////            'invitations',
-////            'domain'
-////            ])->find($ee);
-////        dump($in->toArray());
-//
-//        $pole = 'string1';
-//
-//        $s = BoardFieldSetting::create([
-//            'board_id' => $board->id,
-//            'field_name' => $pole,
-//            'sort_order' => 80, 'is_enabled' => true, 'show_on_start' => true, 'in_telega_msg' => true]);
-//
-////        $in2 = Board::with([
-////            'fieldSettings',
-////            'fieldSettings.orderRequest',
-////            'fieldSettings.orderRequest.rename',
-////            'roles',
-////            'invitations',
-////            'domain'
-////        ])->find($in->id);
-////            dump($in2->toArray());
-////dd($s);
-//
-//        $s = BoardFieldSetting::create(['board_id' => $board->id, 'field_name' => $pole, 'sort_order' => 80, 'is_enabled' => true, 'show_on_start' => true, 'in_telega_msg' => true]);
-////        dd($s);
-//
-//        $req = OrderRequest::
-//            //addSelect('id')->
-//            where('pole',$pole)->first();
-////        dd($req);
-//
-//        BoardController::setRenamePolya( $board->id, $req->id, 'Марка модель цвет 777' , '' );
-//
-////        order_requests
-////        OrderRequest::create([  ]);
-//
-//        $board_id = $board->id;
-//
-////        OrderRequestsRename::create([ 'board_id' => $board->id, 'order_requests_id' => $s->id,
-////            'name' => 'Марка модель цвет', 'description' => '']);
-//
-//        $pole = 'string2';
-//        $s = BoardFieldSetting::create(['board_id' => $board_id, 'field_name' => $pole, 'sort_order' => 70, 'is_enabled' => true, 'show_on_start' => true, 'in_telega_msg' => true]);
-//        $ss = OrderRequest::where('pole',$pole)->first();
-//        OrderRequestsRename::create([ 'board_id' => $board_id, 'order_requests_id' => $ss->id,
-//            'name' => 'Поломка', 'description' => '']);
-//
-//
-//        $pole = 'price';
-//        $s = BoardFieldSetting::create(['board_id' => $board_id, 'field_name' => $pole, 'sort_order' => 60, 'is_enabled' => true, 'show_on_start' => true, 'in_telega_msg' => true]);
-//        $ss = OrderRequest::where('pole',$pole)->first();
-//        OrderRequestsRename::create([ 'board_id' => $board_id, 'order_requests_id' => $ss->id,
-//            'name' => 'Цена', 'description' => '']);
-//
-//
-//        $pole = 'phone';
-//        $s = BoardFieldSetting::create(['board_id' => $board_id, 'field_name' => $pole, 'sort_order' => 40, 'is_enabled' => true, 'show_on_start' => true, 'in_telega_msg' => true]);
-//        $ss = OrderRequest::where('pole',$pole)->first();
-//        OrderRequestsRename::create([ 'board_id' => $board_id, 'order_requests_id' => $ss->id,
-//            'name' => 'Телефон', 'description' => '']);
-//
-//        $pole = 'fio';
-//        $s = BoardFieldSetting::create(['board_id' => $board_id, 'field_name' => $pole, 'sort_order' => 45, 'is_enabled' => true, 'show_on_start' => true, 'in_telega_msg' => true]);
-//        $ss = OrderRequest::where('pole',$pole)->first();
-//        OrderRequestsRename::create([ 'board_id' => $board_id, 'order_requests_id' => $ss->id,
-//            'name' => 'ФИО Клиент', 'description' => '']);
+
+    /**
+     * создание должностей в доске
+     * @param $template
+     * @param $newBoard
+     * @return int
+     */
+    public function createPositionInBoardFromShablon($template, $newBoard): int
+    {
+
+        foreach ($template->positions as $position) {
+            $newBoard->role()->create([
+                'name' => $position->name . date('ymdhis'),
+                'name_ru' => $position->name,
+                'guard_name' => 'web',
+                'board_id' => $newBoard->id
+            ]);
+        }
+
+        $name = 'Тех.поддержка';
+        $new_position = $newBoard->role()->create([
+            'name' => $name . date('ymdhis'),
+            'name_ru' => $name,
+            'guard_name' => 'web',
+            'board_id' => $newBoard->id
+        ]);
+
+        return $new_position->id;
 
     }
 
@@ -141,42 +79,26 @@ class CreateBoardFromTemplateForm extends Component
             ])
             ->first();
 
-//        foreach( $template->positions as $position ){
-//            dump($position);
-//        }
-
-//        foreach ($template->columns as $column) {
-//            dump($column);
-//        }
-
-//        dd($template->toArray());
-
-        //        dd($this->board_name);
-
+        // создание новой доски
         $newBoard = Board::create([
             'name' => $this->board_name,
             'admin_user_id' => auth()->user()->id
         ]);
 
-
+        // создание полей в новую доску из шаблона
         $this->setConfigNewBoard($newBoard,$template->polya->toArray());
 
-        foreach ($template->positions as $position) {
-//            dump($position);
-            $new_position = $newBoard->role()->create([
-                'name' => $position->name . date('ymdhis'),
-                'name_ru' => $position->name,
-                'guard_name' => 'web',
-                'board_id' => $newBoard->id
-            ]);
-
-        }
+        // создание должностей в новую доску из шаблона
+        $new_position_id = $this->createPositionInBoardFromShablon($template, $newBoard);
 
         BoardUser::create([
             'board_id' => $newBoard->id,
             'user_id' => auth()->user()->id,
-            'role_id' => $new_position->id,
+            'role_id' => $new_position_id,
         ]);
+
+
+
 
         $sort = 1;
         $start = true;
@@ -198,13 +120,13 @@ class CreateBoardFromTemplateForm extends Component
 
             ColumnRole::create([
                 'column_id' => $columnNew->id,
-                'role_id' => $new_position->id,
+                'role_id' => $new_position_id,
             ]);
 
             $sort += 2;
         }
 
-        BoardController::enterAs($newBoard->id, $new_position->id);
+        BoardController::enterAs($newBoard->id, $new_position_id);
 
         session()->flash('createBoardGoodFromTemplate', 'Доска создана, настраивайте шаги, проведите тест драйв!');
 
