@@ -23,246 +23,237 @@
 </head>
 <body class="antialiased font-sans bg-gray-100 min-h-screen">
 {{--@if(request()->getHost() == 'xn--80ajb0aifhffacm9b.xn--p1ai')--}}
+
 @if(1==2)
 
-  <h1 class="bg-yellow-300 p-3 mt-5 rounded text-2xl text-blue-700 text-center">небольшие изменения<br/>
+    <h1 class="bg-yellow-300 p-3 mt-5 rounded text-2xl text-blue-700 text-center">небольшие изменения<br/>
         Домен <u>ПроцессМастер.рф</u> переезжаем на <a href="https://Управлятор.рф" class="underline">Управлятор.рф</a>
-  </h1>
+    </h1>
 
 @else
-<div class="">
-    <div class="min-h-screen flex flex-col relative">
-        <div class="
-{{--    bg-blue-100 bg-contain bg-no-repeat bg-center sm:bg-[url('/img/bg1.jpg')] --}}
-    flex-grow flex-col space-y-5
-    ">
-            {{--        <livewire:app.header/>--}}
-            <livewire:app.navigation/>
+
+    {{--        <livewire:app.header/>--}}
+    <livewire:app.navigation/>
 
 
-            <div class="flex
-{{--            flex-row space-x-5--}}
-            flex-col
-            ">
-                @if (Route::is('tech*')
-    || Route::is('lk*')
-    || Route::is('board*')
-    || Route::is('leed*')
-    || Route::is('clients*')
-    || Route::is('order*')
-    || Route::is('vk*')
-    )
-                    <div class="container mx-auto">
-                    {{--            <div class="w-[200px] bg-orange-500">--}}
-                    {{--                меню--}}
-                    {{--            </div>--}}
-                    <livewire:app.menu/>
-                    </div>
-                @endif
-                <div class="flex-1 min-h-[400px]">
-                    {{ $slot }}
-                </div>
-            </div>
-
-            <livewire:app.footer/>
+    @if (Route::is('tech*')
+|| Route::is('lk*')
+|| Route::is('board*')
+|| Route::is('leed*')
+|| Route::is('clients*')
+|| Route::is('order*')
+|| Route::is('vk*')
+)
+        <div class="container mb-5 mx-auto">
+            {{--            <div class="w-[200px] bg-orange-500">--}}
+            {{--                меню--}}
+            {{--            </div>--}}
+            <livewire:app.menu/>
         </div>
+    @endif
+    <div class="min-h-[500px] ">
+        {{ $slot }}
+    </div>
 
 
-        @if(1==2)
-            <div class="min-h-screen flex flex-col">
-                <div class="
+    <livewire:app.footer/>
+
+
+
+    @if(1==2)
+        <div class="min-h-screen flex flex-col">
+            <div class="
 {{--    bg-blue-100 bg-contain bg-no-repeat bg-center sm:bg-[url('/img/bg1.jpg')] --}}
     flex-grow flex-col space-y-5
     ">
-                    <header class="
+                <header class="
         bg-gradient-to-bl from-gray-100 to-blue-200
         py-5
 {{--        flex flex-col--}}
         ">
 
-                        <div class="container mx-auto text-center
+                    <div class="container mx-auto text-center
             flex
             flex-col
             sm:flex-row
 {{--            border-red-300 border-2--}}
             ">
-                            <div class="w-full sm:w-1/3 text-center text-2xl font-bold font-monospace py-3">
-                                ПроцессМастер<small>.рф</small>
-                            </div>
-                            <div class="w-2/3 text-right py-3">
-                                @if (Route::has('login'))
-                                    <livewire:welcome.navigation/>
-                                @endif
-                            </div>
+                        <div class="w-full sm:w-1/3 text-center text-2xl font-bold font-monospace py-3">
+                            ПроцессМастер<small>.рф</small>
                         </div>
+                        <div class="w-2/3 text-right py-3">
+                            @if (Route::has('login'))
+                                <livewire:welcome.navigation/>
+                            @endif
+                        </div>
+                    </div>
 
-                    </header>
+                </header>
 
-                    <main class="min-h-[550px]
+                <main class="min-h-[550px]
             container mx-auto
             flex flex-col
             space-y-5
             lg:space-y-10
             ">
 
-                        <div class="w-full bg-yellow-300 py-3 text-center">
+                    <div class="w-full bg-yellow-300 py-3 text-center">
                 <span class="text-lg font-bold">
                 Демо версия, посмотреть, покликать
                 <button class="bg-blue-300 rounded px-3 py-1">Посмотреть!</button>
                     </span>
-                            <br/>
-                            каждые 2 часа все изменения сбрасываются на тестовый набор (шаги,пользователи,комментарии)
-                            {{--                <button class="bg-blue-300 rounded px-3 py-1">Производство, посмотреть!</button>--}}
-                            {{--                <button class="bg-blue-300 rounded px-3 py-1">Услуги, посмотреть!</button>--}}
-                        </div>
+                        <br/>
+                        каждые 2 часа все изменения сбрасываются на тестовый набор (шаги,пользователи,комментарии)
+                        {{--                <button class="bg-blue-300 rounded px-3 py-1">Производство, посмотреть!</button>--}}
+                        {{--                <button class="bg-blue-300 rounded px-3 py-1">Услуги, посмотреть!</button>--}}
+                    </div>
 
-                        {{--            <div class="w-full flex flex-row--}}
-                        {{--            space-x-5--}}
-                        {{--            ">--}}
-                        {{--                <div class="w-1/2"></div>--}}
-                        {{--                <div class="w-1/2">22</div>--}}
-                        {{--            </div>--}}
-                        <div class="w-full flex
+                    {{--            <div class="w-full flex flex-row--}}
+                    {{--            space-x-5--}}
+                    {{--            ">--}}
+                    {{--                <div class="w-1/2"></div>--}}
+                    {{--                <div class="w-1/2">22</div>--}}
+                    {{--            </div>--}}
+                    <div class="w-full flex
             flex-col space-x-5
             lg:flex-row space-y-5
 
             ">
-                            <div class="w-full lg:w-1/2">
-                                <div class="w-full flex flex-row
+                        <div class="w-full lg:w-1/2">
+                            <div class="w-full flex flex-row
             space-x-5
             ">
-                                    <div class="w-[150px]">
-                                        <img src="/icon/checklist.png" class="w-[132px] float-right"/>
-                                    </div>
-                                    <div class="flex-1">
-                                        <ul>
-                                            <li>Управление, ведение и история работы с Лидами</li>
-                                            <li>Производство изделия с передачей по этапам от спеца к спецу</li>
-                                            <li>Контроль стройки (фотоотчёты по этапам строительства)</li>
-                                        </ul>
-                                    </div>
+                                <div class="w-[150px]">
+                                    <img src="/icon/checklist.png" class="w-[132px] float-right"/>
                                 </div>
-                            </div>
-                            <div class="w-full lg:w-1/2">
-                                <div class="w-full flex flex-row
-            space-x-5
-            ">
-                                    <div class="w-[150px]">
-                                        <img src="/icon/checklist2.png" class="w-[132px] float-right"/>
-                                    </div>
-                                    <div class="flex-1">
-                                        <ul>
-                                            <li>Роли участников</li>
-                                            <li>Распределённый доступ</li>
-                                            <li>Фиксация рабочих процессов</li>
-                                            <li>Отметки о приёмке/сдаче своего этапа</li>
-                                            <li>База контактных данных</li>
-                                            <li>Работа со складом</li>
-                                            <li>Аналитика статистики и времени производства</li>
-                                            <li>Свой домен для работы</li>
-                                        </ul>
-                                    </div>
+                                <div class="flex-1">
+                                    <ul>
+                                        <li>Управление, ведение и история работы с Лидами</li>
+                                        <li>Производство изделия с передачей по этапам от спеца к спецу</li>
+                                        <li>Контроль стройки (фотоотчёты по этапам строительства)</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="w-full bg-yellow-300 py-3 text-center">
-                            ПроцессМастер
-                            <button class="bg-blue-300 rounded px-3 py-1">Попробовать бесплатно!</button>
+                        <div class="w-full lg:w-1/2">
+                            <div class="w-full flex flex-row
+            space-x-5
+            ">
+                                <div class="w-[150px]">
+                                    <img src="/icon/checklist2.png" class="w-[132px] float-right"/>
+                                </div>
+                                <div class="flex-1">
+                                    <ul>
+                                        <li>Роли участников</li>
+                                        <li>Распределённый доступ</li>
+                                        <li>Фиксация рабочих процессов</li>
+                                        <li>Отметки о приёмке/сдаче своего этапа</li>
+                                        <li>База контактных данных</li>
+                                        <li>Работа со складом</li>
+                                        <li>Аналитика статистики и времени производства</li>
+                                        <li>Свой домен для работы</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
+                    </div>
 
-                        {{--            <div class="w-full flex flex-row--}}
-                        {{--            space-x-5--}}
-                        {{--            ">--}}
-                        {{--                <div class="w-1/2">Штучки</div>--}}
-                        {{--                <div class="w-1/2">--}}
+                    <div class="w-full bg-yellow-300 py-3 text-center">
+                        ПроцессМастер
+                        <button class="bg-blue-300 rounded px-3 py-1">Попробовать бесплатно!</button>
+                    </div>
 
-                        {{--                </div>--}}
-                        {{--            </div>--}}
+                    {{--            <div class="w-full flex flex-row--}}
+                    {{--            space-x-5--}}
+                    {{--            ">--}}
+                    {{--                <div class="w-1/2">Штучки</div>--}}
+                    {{--                <div class="w-1/2">--}}
 
-                        <div class="w-full flex
+                    {{--                </div>--}}
+                    {{--            </div>--}}
+
+                    <div class="w-full flex
             flex-col space-x-5
             lg:flex-row space-y-5
 
             ">
-                            <div class="w-full lg:w-1/2">
-                                <div class="w-full max-w-[350px] mx-auto rounded
+                        <div class="w-full lg:w-1/2">
+                            <div class="w-full max-w-[350px] mx-auto rounded
 {{--                    bg-yellow-300 --}}
                     border-l-[10px] border-yellow-300
                     p-2">
-                                    <img src="/icon/time-date.png" class="w-[50px] m-2 float-left"/>
-                                    До 1 сентября 2025г идёт этап настройки приложения и бизнес процессов,
-                                    присоединяйтесь,
-                                    ваша фиксированная <span class="bg-yellow-300 p-1 rounded">скидка 50%</span>
-                                    навсегда
-                                </div>
-                            </div>
-                            <div class="w-full lg:w-1/2">
-
-                                <div class="w-full flex flex-row
-            space-x-5
-            ">
-                                    <div class="w-[150px]">
-                                        <img src="/icon/share.png" class="w-[132px] float-right"/>
-                                    </div>
-                                    <div class="flex-1">
-                                        Взаимодействие работников с&nbsp;сервисом происходит в&nbsp;мобильном телефоне,
-                                        телеграм и&nbsp;мобильный
-                                        сайт (отметка принял/сдал, подгрузка фото и&nbsp;оставить комментарии
-                                    </div>
-                                </div>
-
+                                <img src="/icon/time-date.png" class="w-[50px] m-2 float-left"/>
+                                До 1 сентября 2025г идёт этап настройки приложения и бизнес процессов,
+                                присоединяйтесь,
+                                ваша фиксированная <span class="bg-yellow-300 p-1 rounded">скидка 50%</span>
+                                навсегда
                             </div>
                         </div>
+                        <div class="w-full lg:w-1/2">
 
-                    </main>
-
-                    <footer class="mx-auto container ">
-                        <div class="flex flex-col space-y-3  ">
-                            <div class="flex flex-col space-y-3 sm:space-y-0 sm:flex-row">
-                                <div class="w-full sm:w-1/2 text-center">&copy; Все права защищены {{ date('Y') }}</div>
-                                <div class="w-full sm:w-1/2 text-center">Создание сервиса <a href="https://php-cat.com"
-                                                                                             class="text-blue-600 hover:underline"
-                                                                                             target="_blank">php-cat.com</a>
+                            <div class="w-full flex flex-row
+            space-x-5
+            ">
+                                <div class="w-[150px]">
+                                    <img src="/icon/share.png" class="w-[132px] float-right"/>
+                                </div>
+                                <div class="flex-1">
+                                    Взаимодействие работников с&nbsp;сервисом происходит в&nbsp;мобильном телефоне,
+                                    телеграм и&nbsp;мобильный
+                                    сайт (отметка принял/сдал, подгрузка фото и&nbsp;оставить комментарии
                                 </div>
                             </div>
-                    </footer>
-                </div>
+
+                        </div>
+                    </div>
+
+                </main>
+
+                <footer class="mx-auto container ">
+                    <div class="flex flex-col space-y-3  ">
+                        <div class="flex flex-col space-y-3 sm:space-y-0 sm:flex-row">
+                            <div class="w-full sm:w-1/2 text-center">&copy; Все права защищены {{ date('Y') }}</div>
+                            <div class="w-full sm:w-1/2 text-center">Создание сервиса <a href="https://php-cat.com"
+                                                                                         class="text-blue-600 hover:underline"
+                                                                                         target="_blank">php-cat.com</a>
+                            </div>
+                        </div>
+                </footer>
             </div>
-        @endif
+        </div>
+    @endif
 
-        @livewireScripts
+    @livewireScripts
 
-        <!-- Yandex.Metrika counter -->
-        <script type="text/javascript">
-            (function (m, e, t, r, i, k, a) {
-                m[i] = m[i] || function () {
-                    (m[i].a = m[i].a || []).push(arguments);
-                };
-                m[i].l = 1 * new Date();
-                for (var j = 0; j < document.scripts.length; j++) {
-                    if (document.scripts[j].src === r) {
-                        return;
-                    }
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () {
+                (m[i].a = m[i].a || []).push(arguments);
+            };
+            m[i].l = 1 * new Date();
+            for (var j = 0; j < document.scripts.length; j++) {
+                if (document.scripts[j].src === r) {
+                    return;
                 }
-                k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(
-                    k, a);
-            })
-            (window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+            }
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(
+                k, a);
+        })
+        (window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
 
-            ym(100568272, 'init', {
-                clickmap: true,
-                trackLinks: true,
-                accurateTrackBounce: true,
-                webvisor: true
-            });
-        </script>
-        <noscript>
-            <div><img src="https://mc.yandex.ru/watch/100568272" style="position:absolute; left:-9999px;" alt=""/></div>
-        </noscript>
-        <!-- /Yandex.Metrika counter -->
-    </div>
-    </div>
+        ym(100568272, 'init', {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true
+        });
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/100568272" style="position:absolute; left:-9999px;" alt=""/></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+
 @endif
 </body>
 </html>
