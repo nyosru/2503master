@@ -1,12 +1,5 @@
 <div>
 
-
-    {{--    name {{$user->currentBoard->name ?? 'x' }}<br/>--}}
-    {{--    id {{$user->currentBoard->id ?? 'x' }}<br/>--}}
-
-    {{--        <pre class="text-xs">{{ print_R($user->toArray()) }}</pre>--}}
-    {{--    <pre class="text-xs">{{ print_R($user->roles[0]['name'],true) }}</pre>--}}
-
     @if( 1==2 && empty(auth()->user()->phone_number) )
 
         <div class="block p-3 text-left bg-gradient-to-br from-yellow-200 to-yellow-100
@@ -60,24 +53,6 @@
                         @endif
 
                         <div class="flex-1">
-                            @if(1==2)
-                                <form action="{{ route('leed',['board_id'=>$board_id ]) }}"
-                                      class="inline"
-                                      method="get">
-
-                                    <input type="text" name="search" wire:model="search" class="inline-block
-                                @if( !empty($search) ) border border-2 border-red-400 rounded mr-0 @endif
-                                "/>@if( !empty($search) )
-                                        <a
-                                            class="bg-gray-300 p-2 rounded cursor-pointer "
-                                            href="{{ route('leed',['board_id'=>$board_id ]) }}"
-                                            wire:navigate
-                                        >X</a>
-                                    @endif
-
-                                </form>
-                            @endif
-
 
                             <form class="w-full max-w-sm"
                                   method="get"
@@ -190,27 +165,9 @@ border-1 rounded
 </span>
                             @endif
 
-
-
-                            {{--                    <input type="text" wire:model.live="searchTerm" placeholder="Поиск по клиенту ..."--}}
-                            {{--                           class="form-control">--}}
-                            {{--                    @if( $columns && count($columns) > 0 )--}}
-                            {{--                        <livewire:Cms2.Leed.AddLeedFormSimple/>--}}
-                            {{--                    @endif--}}
                         </div>
 
-                        {{--                <div сclass="flex-1 text-right">--}}
-                        {{--                    @if(sizeof($user->boardUser) )--}}
-                        {{--                        <a href="{{ route('board.select') }}" wire:navigate--}}
-                        {{--                           class="text-blue-400 hover:underline"--}}
-                        {{--                        >--}}
-                        {{--                            выбрать другую доску--}}
-                        {{--                        </a>--}}
-                        {{--                    @endif--}}
-                        {{--                </div>--}}
-
                     </div> <!--end::Row-->
-
 
                     @if(session('createBoardGoodFromTemplate'))
                         <div class="mt-4 p-3 bg-green-100 text-green-700 rounded">
@@ -220,13 +177,6 @@ border-1 rounded
 
                 </div> <!--end::Container-->
             </div> <!--end::App Content Header--> <!--begin::App Content-->
-
-            {{--            columns--}}
-            {{--                        <pre class="max-h-[100px] text-xs overflow-auto">{{ print_r($columns->toArray())}}</pre>--}}
-
-            @if(1==2)
-                <livewire:cms2.leed.select-board-form :user="$user"/>
-            @endif
 
             @if( empty($user->current_board_id) )
                 <span class="w-[350px] text-center text-xl font-bold text-gray-400 p-2">Не выбрана рабочая доска</span>
@@ -257,6 +207,8 @@ border-1 rounded
                         <div class="flex  xspace-x-1 relative">
                             @foreach($columns as $k => $column)
                                 <div
+
+
                                     class="
                                         p-1
                                         relative
@@ -264,6 +216,7 @@ border-1 rounded
                                         bg-white border rounded relative"
 
                                     id="column-{{ $column->id }}"
+                                    wire:key="column-{{ $column->id }}"
 
                                     {{--                    wire:sortable="updateOrder"--}}
                                     {{--                    wire:sortable-group="{{ $column->id }}"--}}
@@ -353,52 +306,7 @@ border-1 rounded
                                     </h3>
                                 </div>
 
-                                @if(3==4)
-                                {{--                форма добавления столюца--}}
-                                @permission('р.Лиды / добавить столбцы')
-                                @if($visibleAddForms[$column->id] ?? false)
-                                    {{--                                    <livewire:column.add-column-form-mini column_id="{{$column->id}}" :key="'add_col_mini_'.$column->id" />--}}
-                                    @if(1==2)
-                                        <div class="чmy-1 p-1 text-center rounded-xl bg-blue-200">
-
-                                            <button class="float-right text-blue-600 text-sm"
-                                                    wire:click="hiddenAddForm()"
-                                                    title="Скрыть формы">
-                                                x
-                                            </button>
-
-                                            <b>Добавить столбец справа</b>
-
-                                            <form
-                                                class="block"
-                                                wire:submit="addColumn({{$column->id }})">
-                                                <input class="w-full"
-                                                       wire:model="addColumnName"
-                                                       type="text" name="addColumnName" value=""
-                                                       placeholder="Название столбца"/>
-
-                                                <div class="text-left">
-                                                    Показывать столбец должностям:
-                                                    {{--                                                @foreach( $roles as $role )--}}
-                                                    {{--                                                    <label class="block">--}}
-                                                    {{--                                                        <input type="checkbox" >--}}
-                                                    {{--                                                    </label>--}}
-                                                    {{--                                                @endforeach--}}
-                                                </div>
-
-                                                <input
-                                                    class="bg-blue-300 active:bg-blue-400 rounded px-4 py-2"
-                                                    type="submit" value="Добавить"/>
-                                            </form>
-
-                                        </div>
-                                    @endif
-                                @endif
-                                @endpermission
-                                @endif
-
-                                {{--                            <pre class="text-xs overflow-auto max-h-[200px]">{{ print_r($column->toArray()) }}</pre>--}}
-                                {{--                            <pre class="text-xs overflow-auto max-h-[200px]">{{ print_r($user->toArray()) }}</pre>--}}
+                                {{--список лидов--}}
 
                                 <ul class="space-y-1">
 
@@ -407,66 +315,13 @@ border-1 rounded
                                         <li>
                                             <livewire:Cms2.Leed.AddLeedFormSimple :key="'add'.$column->id"
                                                                                   :column="$column"
-                                                                                    :board="$column->board"
+                                                                                  :board="$column->board"
                                             />
                                         </li>
                                         @endpermission
                                     @endif
 
-
                                     @foreach($column->records as $record)
-
-                                        {{--                                                                <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($record->toArray()) }}</pre>--}}
-
-                                        {{-- инфа о лиде--}}
-                                        @if(1==2)
-                                            @permission('Полный//доступ')
-                                            <div class="bg-yellow-400 p-1">
-
-                                                user: {{ $record->user->id }}/{{ $record->user->name }}
-                                                <a href="{{ route('leed.item',['id'=>$record->id]) }}" wire:navigate
-                                                   class="text-blue-600 underline block hover:bg-orange-300 p-1"
-                                                >
-                                                    <b>
-                                                        {{ $record->name }}
-                                                    </b>
-                                                </a>
-                                                {{--                                                <br/>--}}
-
-
-                                                @if( !empty($record->phone) )
-                                                    {{--                                                <div class="text-sm">тел</div>--}}
-                                                    {{ $record->phone }}
-                                                    {{--                                                    <livewire:Informer.PhoneFormatter :phone="$record->phone" :key="'ph'.$record->id"  />--}}
-                                                    <br/>
-                                                @endif
-
-                                                {{--                                            @if( !empty($record->telegram) )--}}
-                                                {{--                                                Tg: {{ $record->telegram }}--}}
-                                                {{--                                                <br/>--}}
-                                                {{--                                            @endif--}}
-
-                                                {{--                                            @if( !empty($record->whatsapp) )--}}
-                                                {{--                                                WA: {{ $record->whatsapp }}--}}
-                                                {{--                                                <br/>--}}
-                                                {{--                                            @endif--}}
-
-                                                @if( !empty($record->company) )
-                                                    {{--                                                    <div class="text-sm">Компания</div>--}}
-                                                    <img src="/icon/briefcase.svg" class="w-[18px] mr-1 inline"/>
-                                                    {{ $record->company }}
-                                                    <br/>
-                                                @endif
-                                                @if( !empty($record->comment) )
-                                                    <div class="text-sm">
-                                                        {{--                                                    <div class="text-sm">Компания</div>--}}
-                                                        {{ $record->comment }}
-                                                    </div>
-                                                    {{--                                                <br/>--}}
-                                                @endif
-                                            </div>
-                                            @endpermission
-                                        @endif
 
                                         {{--отказники--}}
                                         @if( $column->type_otkaz && !empty($record->otkaz_reason) )
@@ -475,10 +330,13 @@ border-1 rounded
                                         @elseif( $column->can_transfer && $record->user_id !== Auth::id() && !empty($record->client_id) && !empty($record->order_id) )
                                         @else
 
-                                            {{--                            @if( )--}}
-                                            {{--                            <li>{{ $record->user_id }} / {{ Auth::id() }}</li>--}}
+                                            <livewire:board.board-item-component
+                                                :key="'column-'.$column->id.'record-'.$record->id"
+                                                :record="$record" :column="$column" />
 
+                                            @if(1==2)
                                             <li
+
                                                 {{--                                wire:ignore.self--}}
                                                 class="p-1 m-1 border-2 border-gray-500 rounded"
                                                 id="record-{{ $record->id }}"
@@ -497,61 +355,20 @@ border-1 rounded
                                                     <div
 
                                                         class="xp-2
-bg-white/50
-{{--               text-center--}}
-hover:bg-gray-100
-hover:shadow-lg transition-all
-{{--border rounded --}}
-cursor-pointer relative">
-
-                                                        @if(1==2)
-                                                            {{--                                                        блок справа на верху каждого лида--}}
-                                                            @iF($record->notifications_count > 0)
-                                                                <div
-                                                                    style="position:absolute; top:0; right:0;">
-                                                                    {{--                                                                {{ $record->notifications_count  }}--}}
-                                                                    <svg class="h-8 w-8 text-red-200" width="24"
-                                                                         height="24" viewBox="0 0 24 24"
-                                                                         stroke-width="2" stroke="currentColor"
-                                                                         fill="none" stroke-linecap="round"
-                                                                         stroke-linejoin="round">
-                                                                        <path stroke="none" d="M0 0h24v24H0z"/>
-                                                                        <circle cx="12" cy="13" r="7"/>
-                                                                        <polyline points="12 10 12 13 14 13"/>
-                                                                        <line x1="7" y1="4" x2="4.25" y2="6"/>
-                                                                        <line x1="17" y1="4" x2="19.75" y2="6"/>
-                                                                    </svg>
-                                                                </div>
-                                                            @endif
-                                                        @endif
-
-                                                        {{--<pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($record->toArray(),true) }}</pre>--}}
-                                                        {{--                                                        <pre class="overflow-auto max-h-[500px] text-sm">{{ print_r($column->toArray(),true) }}</pre>--}}
+                                                            bg-white/50
+                                                            {{--               text-center--}}
+                                                            hover:bg-gray-100
+                                                            hover:shadow-lg transition-all
+                                                            {{--border rounded --}}
+                                                            cursor-pointer relative">
 
                                                         <div class="py-2 text-center">
 
-
-                                                            <a href="{{ route('leed.item',[
-'board_id'=>$column->board_id ,
-'id'=>$record->id
-]) }}"
+                                                            <a href="{{ route('leed.item',[ 'board_id'=>$column->board_id , 'id'=>$record->id ]) }}"
                                                                wire:navigate
                                                                class="text-blue-800 xblock xtext-center hover:underline p-1"
                                                             >
-                                                                {{--<pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($record->column->board->fieldSettings->toArray()) }}</pre>--}}
-                                                                {{--                                                                <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($record->toArray()) }}</pre>--}}
-                                                                {{-- <pre class="max-h-[200px] overflow-auto text-xs">{{ print_r($record->column->board->fieldSettings->toArray()) }}</pre>--}}
                                                                 @php $hasFields = false; @endphp
-
-                                                                @if( 1==2 )
-                                                                    <pre
-                                                                        class="text-xs max-h-[200px] overflow-auto">{{ print_r($record->column->board->fieldSettings->toArray()) }}</pre>
-                                                                    <br/>
-                                                                    $record
-                                                                    <br/>
-                                                                    <pre
-                                                                        class="text-xs max-h-[200px] overflow-auto">{{ print_r($record->toArray()) }}</pre>
-                                                                @endif
 
                                                                 @foreach( $record->column->board->fieldSettings as $f )
 
@@ -568,188 +385,124 @@ cursor-pointer relative">
                                                                 @endif
                                                             </a>
 
+                                                            {{--блок кнопок менеджер--}}
+                                                            <div class="mx-2 mt-1 flex flex-row space-x-1 items-center"
+                                                                 wire:key="'column-key-'.$column->id.'-but1-'.$record->id"
+                                                            '"
+                                                            >
 
-                                                            {{--                                                            строки олд--}}
-                                                            @if(1==2)
-                                                                @if( !empty($record->name) )
-                                                                    <a href="{{ route('leed.item',[
-'board_id'=>$column->board_id ,
-'id'=>$record->id
-]) }}"
+                                                            {{--твои горящие задачи--}}
+                                                            <livewire:cms2.informer.leed.order-you
+                                                                {{--                                                                    :key="'block-'.$column->id.'-but3-'.$record->id"--}}
+                                                                :key="'but3-'.$record->id"
+                                                                :leed="$record"/>
+                                                            {{--горящие задачи от других--}}
+                                                            <livewire:cms2.informer.leed.order-to-you
+                                                                {{--                                                                    :key="'block-'.$column->id.'-but4-'.$record->id"--}}
+                                                                :key="'but4-'.$record->id"
+                                                                :leed="$record"/>
+                                                            {{--кол-во комментариев и горит если есть непрочитанные другие--}}
+                                                            <livewire:cms2.informer.leed.comment
+                                                                {{--                                                                    :key="'block-'.$column->id.'-but5-'.$record->id"--}}
+                                                                :key="'but5-'.$record->id"
+                                                                :leed="$record"/>
+                                                            {{--передать лида--}}
+                                                            {{--                                                            <livewire:cms2.leed.move :leed="$record"/>--}}
+
+                                                            @iF($record->notifications_count > 0)
+
+                                                                <div
+                                                                    title="Есть уведомления в этой записи: {{ $record->notifications_count }}"
+                                                                    {{--                                                                        style="position:absolute; top:0; right:0;"--}}
+                                                                >
+                                                                    <a href="{{ route('leed.item',['board_id'=>$column->board_id ,'id'=>$record->id]) }}"
                                                                        wire:navigate
                                                                        class="text-blue-400 xblock xtext-center hover:underline p-1"
                                                                     >
-                                                                        {{--                                                        @if( !empty($record->phone) )--}}
-                                                                        {{--                                                            {{$record->phone ?? '-'}} /--}}
-                                                                        {{--                                                        @endif--}}
-                                                                        {{ $record->name }}
+                                                                        {{--                                                                {{ $record->notifications_count  }}--}}
+                                                                        <svg class="h-6 w-6 text-red-200" width="24"
+                                                                             height="24" viewBox="0 0 24 24"
+                                                                             stroke-width="2" stroke="currentColor"
+                                                                             fill="none" stroke-linecap="round"
+                                                                             stroke-linejoin="round">
+                                                                            <path stroke="none" d="M0 0h24v24H0z"/>
+                                                                            <circle cx="12" cy="13" r="7"/>
+                                                                            <polyline points="12 10 12 13 14 13"/>
+                                                                            <line x1="7" y1="4" x2="4.25" y2="6"/>
+                                                                            <line x1="17" y1="4" x2="19.75" y2="6"/>
+                                                                        </svg>
                                                                     </a>
-                                                                @endif
-                                                                @if( !empty($record->order->price) )
-                                                                    <br/>
-                                                                    <span class="text-xl text-red-600 ">
-{{--                                                    <svg class="h-4 w-4 text-gray-500 inline " fill="none" viewBox="0 0 24 24"--}}
-                                                                        {{--                                                         stroke="currentColor">--}}
-                                                                        {{--                                                        <path stroke-linecap="round" stroke-linejoin="round"--}}
-                                                                        {{--                                                              stroke-width="2"--}}
-                                                                        {{--                                                              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>--}}
-                                                                        {{--                                                    </svg>--}}
-                                                                        {{  number_format($record->order->price,0,'',' ') }} руб
-</span>
-                                                                @elseif( !empty($record->budget) )
-                                                                    <br/>
-                                                                    <span class="text-xl text-gray-400">
-                                {{  number_format($record->budget,0,'',' ') }} руб
-                            </span>
-                                                                @endif
+                                                                </div>
+
                                                             @endif
 
-                                                            {{--блок кнопок менеджер--}}
-                                                            <div class="
-{{--                                            w-[255px]--}}
-mx-2
+                                                        </div>
 
-{{--                                            mx-auto--}}
-{{--inline--}}
-mt-1 flex flex-row space-x-1 items-center">
+                                                        {{--                                                            <pre class="text-xs text-left">{{ print_r($column->toArray(),1) }}</pre>--}}
 
-                                                                @if(1==2)
-                                                                    <livewire:cms2.informer.leed.client
-                                                                        {{--                                                                    :key="'block-'.$column->id.'-but1-'.$record->id"--}}
-                                                                        :key="'but1-'.$record->id"
-                                                                        :leed="$record"/>
-                                                                @endif
-                                                                {{--                                                    <livewire:cms2.informer.leed.order :key="'block-but2-'.$record->id"--}}
-                                                                {{--                                                                                       :leed="$record"/>--}}
-
-                                                                {{--твои горящие задачи--}}
-                                                                <livewire:cms2.informer.leed.order-you
-                                                                    {{--                                                                    :key="'block-'.$column->id.'-but3-'.$record->id"--}}
-                                                                    :key="'but3-'.$record->id"
-                                                                    :leed="$record"/>
-                                                                {{--горящие задачи от других--}}
-                                                                <livewire:cms2.informer.leed.order-to-you
-                                                                    {{--                                                                    :key="'block-'.$column->id.'-but4-'.$record->id"--}}
-                                                                    :key="'but4-'.$record->id"
-                                                                    :leed="$record"/>
-                                                                {{--кол-во комментариев и горит если есть непрочитанные другие--}}
-                                                                <livewire:cms2.informer.leed.comment
-                                                                    {{--                                                                    :key="'block-'.$column->id.'-but5-'.$record->id"--}}
-                                                                    :key="'but5-'.$record->id"
-                                                                    :leed="$record"/>
-                                                                {{--передать лида--}}
-                                                                {{--                                                            <livewire:cms2.leed.move :leed="$record"/>--}}
-
-                                                                @iF($record->notifications_count > 0)
-
-                                                                    <div
-                                                                        title="Есть уведомления в этой записи: {{ $record->notifications_count }}"
-                                                                        {{--                                                                        style="position:absolute; top:0; right:0;"--}}
-                                                                    >
-                                                                        <a href="{{ route('leed.item',[
-'board_id'=>$column->board_id ,
-'id'=>$record->id
-]) }}"
-                                                                           wire:navigate
-                                                                           class="text-blue-400 xblock xtext-center hover:underline p-1"
-                                                                        >
-                                                                            {{--                                                                {{ $record->notifications_count  }}--}}
-                                                                            <svg class="h-6 w-6 text-red-200" width="24"
-                                                                                 height="24" viewBox="0 0 24 24"
-                                                                                 stroke-width="2" stroke="currentColor"
-                                                                                 fill="none" stroke-linecap="round"
-                                                                                 stroke-linejoin="round">
-                                                                                <path stroke="none" d="M0 0h24v24H0z"/>
-                                                                                <circle cx="12" cy="13" r="7"/>
-                                                                                <polyline points="12 10 12 13 14 13"/>
-                                                                                <line x1="7" y1="4" x2="4.25" y2="6"/>
-                                                                                <line x1="17" y1="4" x2="19.75" y2="6"/>
-                                                                            </svg>
-                                                                        </a>
-                                                                    </div>
-
-                                                                @endif
-
-                                                            </div>
-
-                                                            {{--                                                            <pre class="text-xs text-left">{{ print_r($column->toArray(),1) }}</pre>--}}
-
-                                                            @if($column->can_get)
-                                                                @if( $record->user_id != Auth()->user()->id )
-                                                                    <livewire:leed.action-get
-                                                                        :leed="$record"
-                                                                        :board_id="$board_id"
-                                                                        :key="'canget'.$record->id"
-                                                                    />
-                                                                @endif
+                                                        @if($column->can_get)
+                                                            @if( $record->user_id != Auth()->user()->id )
+                                                                <livewire:leed.action-get
+                                                                    :leed="$record"
+                                                                    :board_id="$board_id"
+                                                                    :key="'canget'.$record->id"
+                                                                />
                                                             @endif
+                                                        @endif
 
-                                                            @if($column->type_otkaz == true )
-                                                                <livewire:cms2.leed.item-otkaz-reason-form
-                                                                    :recordId="$record->id"
-                                                                    :key="'rec'.$record->id"/>
-                                                            @endif
+                                                        @if($column->type_otkaz == true )
+                                                            <livewire:cms2.leed.item-otkaz-reason-form
+                                                                :recordId="$record->id"
+                                                                :key="'rec'.$record->id"/>
+                                                        @endif
 
-                                                            @permission('р.Лиды / отправить лида с дог-ом')
-                                                            @if($column->can_transfer == true )
-                                                                @if( empty($record->client_id) || empty($record->order_id) )
-                                                                    @if( empty($record->client_id) )
-                                                                        <div class="
+                                                        @permission('р.Лиды / отправить лида с дог-ом')
+                                                        @if($column->can_transfer == true )
+                                                            @if( empty($record->client_id) || empty($record->order_id) )
+                                                                @if( empty($record->client_id) )
+                                                                    <div class="
                                         text-gray-600
                                         bg-gray-200 rounded border-gray-500 border p-1 my-1">
-                                                                            Добавте
-                                                                            клиента
-                                                                        </div>
-                                                                    @endif
-                                                                    @if( empty($record->order_id) )
-                                                                        <div class="
+                                                                        Добавте
+                                                                        клиента
+                                                                    </div>
+                                                                @endif
+                                                                @if( empty($record->order_id) )
+                                                                    <div class="
 text-gray-600
 bg-gray-200 rounded border-gray-500 border p-1 my-1
 {{--                                                        bg-yellow-200 p-1 my-1--}}
 ">Добавте заказ
-                                                                        </div>
-                                                                    @endif
-                                                                @else
-                                                                    <livewire:cms2.leed.item-transfer-form
-                                                                        :lead="$record"
-                                                                        :key="'rec_transfer_'.$record->id"/>
+                                                                    </div>
                                                                 @endif
-                                                            @endif
-                                                            @endpermission
-
-                                                            @if(1==2)
-                                                                @permission('разработка')
-                                                                <div class="text-sm max-h-[200px] overflow-auto">
-                                                                    <pre>{{ print_r($record->toArray(),1) }}</pre>
-                                                                </div>
-                                                                @endpermission
-                                                            @endif
-
-                                                        </div>
-
-                                                        {{--                                            @permission('р.Лиды / видеть все лиды')--}}
-                                                        <div
-                                                            class="text-left     @if( !empty($record->user->deleted_at) ) line-through @endif ">
-
-                                                            @if( $user_id != $record->user_id )
-                                                                <abbr title="{{$record->user->roles[0]->name ?? '' }}"
-                                                                      class="bg-gray-200 p-1 text-sm">{{$record->user->name ?? '-'}}</abbr>
                                                             @else
-                                                                {{--                                                <span class="bg-green-100 p-1 text-sm">--}}
-                                                                {{--                                                   ваш лид--}}
-                                                                {{--                                                </span>--}}
+                                                                <livewire:cms2.leed.item-transfer-form
+                                                                    :lead="$record"
+                                                                    :key="'rec_transfer_'.$record->id"/>
                                                             @endif
-                                                        </div>
+                                                        @endif
+                                                        @endpermission
+
+                                                    </div>
+
+                                                    {{--                                            @permission('р.Лиды / видеть все лиды')--}}
+                                                    <div
+                                                        class="text-left     @if( !empty($record->user->deleted_at) ) line-through @endif ">
+
+                                                        @if( $user_id != $record->user_id )
+                                                            <abbr title="{{$record->user->roles[0]->name ?? '' }}"
+                                                                  class="bg-gray-200 p-1 text-sm">{{$record->user->name ?? '-'}}</abbr>
+                                                        @endif
+                                                    </div>
                                                     {{--                                            @endpermission--}}
 
                                                 @endif
 
 
                                             </li>
+                                           @endif
+
                                         @endif
-
-                                        {{--                            <pre class="text-sm max-h-[200px] overflow-auto">{{print_r($record->toArray())}}</pre>--}}
-
                                     @endforeach
                                 </ul>
                         </div>
@@ -859,30 +612,6 @@ bg-gray-200 rounded border-gray-500 border p-1 my-1
                     }
                 }
 
-            </script>
-        @endif
-
-        {{--перетаскиваем на livewire--}}
-        @if(1==2)
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    @foreach($columns as $column => $tasks)
-                    new Sortable(document.querySelector('[wire\\:sortable-group="{{ $column }}"]'), {
-                        group: 'shared',
-                        animation: 150,
-                        onEnd: function (evt) {
-                            let order = {};
-
-                            document.querySelectorAll('[wire\\:sortable-group]').forEach(el => {
-                                order[el.getAttribute('wire:sortable-group')] =
-                                    Array.from(el.children).map(item => item.getAttribute('wire:sortable.item'));
-                            });
-
-                            Livewire.emit('updateOrder', order);
-                        }
-                    });
-                    @endforeach
-                });
             </script>
         @endif
 

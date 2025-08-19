@@ -17,10 +17,8 @@ class BoardController extends Controller
 
     public static $polya_config = [];
 
-
     public static function getPolyaConfig( $board_id )
     {
-
         self::$polya_config = OrderRequest::whereHas( 'boardFieldSetting', function ($query) use ($board_id) {
             $query->where( 'board_id', $board_id );
         } )

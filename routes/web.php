@@ -155,7 +155,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('leed/{board_id}', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leed');
 
+
     Route::get('leed/{board}/config', \App\Livewire\Board\Config\IndexComponent::class)->name('board.config');
+
     Route::get('leed/{board}/config/polya', \App\Livewire\Board\ConfigComponent::class)->name('board.config.polya');
     Route::get('leed/{board}/config/macros', \App\Livewire\Board\Config\MacrosComponent::class)->name('board.config.macros');
 
