@@ -266,23 +266,11 @@ border-1 rounded
                                             @endpermission
 
                                             @permission('р.Лиды / добавить столбцы')
-{{--                                                @if( !isset($visibleAddForms[$column->id]) || $visibleAddForms[$column->id] === false )--}}
-                                            {{--                                                <button--}}
-                                            {{--                                                    class="text-green-500 hover:text-green-700"--}}
-                                            {{--                                                    wire:click="showAddForm({{ $column->id }})"--}}
-                                            {{--                                                    title="Добавить новый столбец справа"--}}
-                                            {{--                                                    :key="'add_col_'.$column->id"--}}
-                                            {{--                                                >+</button>--}}
-
                                                 <livewire:column.add-column-form-mini
                                                     :column_id="$column->id"
                                                     :key="'add_col_mini_'.$column->id"/>
-
-
-{{--                                            @endif--}}
                                             @endpermission
 
-{{--        @permission('разработка')--}}
                                             @permission('р.Лиды / конфиг столбцов')
                                             <livewire:column.column-config :key="$column->id" :column="$column"/>
                                             @endpermission

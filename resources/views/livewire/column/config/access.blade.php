@@ -11,7 +11,7 @@
         <tbody>
         @foreach($roles as $role)
             <tr>
-                <td class="border border-gray-300 px-2 py-1">{{ $role->name }}</td>
+                <td class="border border-gray-300 px-2 py-1">{{ $role->name_ru }}</td>
                 <td class="border border-gray-300 px-2 py-1 text-center">
                     <input type="checkbox" wire:model.defer="accesses.{{ $role->id }}"
                            wire:change="$set('accesses.{{ $role->id }}', $event.target.checked)"
