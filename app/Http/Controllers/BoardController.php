@@ -17,14 +17,21 @@ class BoardController extends Controller
 
     public static $polya_config = [];
 
-    public static function getPolyaConfig( $board_id )
+    public static function getPolyaConfig($board_id = null)
     {
-        self::$polya_config = OrderRequest::whereHas( 'boardFieldSetting', function ($query) use ($board_id) {
-            $query->where( 'board_id', $board_id );
-        } )
-            ->get();
+        if ($board_id == 'all') {
+            self::$polya_config = OrderRequest::all();
+        } else {
+            self::$polya_config = OrderRequest::whereHas('boardFieldSetting', function ($query) use ($board_id) {
+
+                if (!empty($board_id))
+                    $query->where('board_id', $board_id);
+
+            })
+                ->get();
 //            ->all();
 //        dd(self::$polya_config);
+        }
         return self::$polya_config;
     }
 
@@ -47,7 +54,7 @@ class BoardController extends Controller
     {
         $s = BoardFieldSetting::create(['board_id' => $board_id, 'field_name' => $pole,
             'sort_order' => $sort,
-            'is_enabled' => ( $is_enabled ? true : false ), 'show_on_start' => ( $show_on_start ? true : false ), 'in_telega_msg' => ( $in_telega_msg ? true : false )]);
+            'is_enabled' => ($is_enabled ? true : false), 'show_on_start' => ($show_on_start ? true : false), 'in_telega_msg' => ($in_telega_msg ? true : false)]);
 //        dump($s);
         try {
             $ss = OrderRequest::where('pole', $pole)->firstOrFail();
@@ -74,10 +81,10 @@ class BoardController extends Controller
     }
 
 
-    public static function getRules( $board_id ): array
+    public static function getRules($board_id): array
     {
         $rules = [];
-        $e = self::getPolyaConfig( $board_id );
+        $e = self::getPolyaConfig($board_id);
 //        dd($e);
         foreach ($e as $v) {
             $rules[$v['pole']] = $v['rules'];
@@ -188,6 +195,12 @@ class BoardController extends Controller
     {
         $board->delete();
         return redirect()->back();
+    }
+
+    public static function getRolesBoard($board_id)
+    {
+        $board_roles = Board::find($board_id)->roles;
+        return $board_roles;
     }
 
     public static function getCurrentBoard($user_id, $new_board_id = null)

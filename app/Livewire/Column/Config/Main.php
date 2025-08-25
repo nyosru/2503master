@@ -37,7 +37,7 @@ class Main extends Component
     public function mount(LeedColumn $column){
 
         $this->settings = [
-            'name' => $column->name,
+//            'name' => $column->name,
             'can_move' => $column->can_move,
             'can_delete' => $column->can_delete,
             'type_otkaz' => $column->type_otkaz,

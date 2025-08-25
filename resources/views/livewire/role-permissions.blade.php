@@ -32,12 +32,13 @@
 
 {{--    <pre class="text-xs">{{ print_r( $boards->toArray() ) }}</pre>--}}
     <div>
-        Выберите проект: <select wire:model="selectBoard">
+        Выберите проект: <select wire:model.live="selectBoard">
             <option value="">выбрать</option>
             @foreach ($boards as $board)
             <option value="{{ $board->id }}">{{ $board->name }}</option>
             @endforeach
         </select>
+{{--        selectBoard: {{ $selectBoard }}--}}
     </div>
 
     <div class="relative">

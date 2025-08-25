@@ -51,7 +51,6 @@ justify-center
     </div>
     @endpermission
 
-
     @permission('р.Техничка')
     <livewire:app.menu-item :route="route('tech.index')" :active="Request::is('tech*')" name="Тех. отдел"
                             img="/icon/gear.svg"
@@ -59,7 +58,7 @@ justify-center
     @endpermission
 
     @permission('р.Доски')
-    <livewire:app.menu-item :route="route('board')" :active="Request::is('board*')" name="Доски" img="/icon/gear.svg"
+    <livewire:app.menu-item :route="route('board.list')" :active="Request::is('board*')" name="Рабочие доски" img="/icon/gear.svg"
                             :key="'mnu-docki'"/>
     @endpermission
 

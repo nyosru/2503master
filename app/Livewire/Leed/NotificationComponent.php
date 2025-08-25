@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Leed;
 
+use App\Http\Controllers\BoardController;
+use App\Models\Board;
 use App\Models\LeedNotification;
 use App\Models\LeedRecord;
 use App\Models\User;
@@ -11,6 +13,7 @@ use Livewire\Component;
 class NotificationComponent extends Component
 {
 //    public LeedRecord $leed;
+    public $notificationType;
     public $leed_id;
 
     public $notifications;
@@ -28,6 +31,9 @@ class NotificationComponent extends Component
     public $yearly_time;
     public $telegram_id;
     public $user_id;
+    public $position_id;
+    public $board_roles;
+    public $board_id;
 
 //    public $telegramUsers;
     public $users;
@@ -51,6 +57,7 @@ class NotificationComponent extends Component
 
 //        'telegram_id' => 'nullable|exists:telegram_users,id',
         'user_id' => 'nullable|exists:users,id',
+        'position_id' => 'nullable|exists:roles,id',
     ];
 
     public function mount(LeedRecord $leed)
@@ -60,6 +67,15 @@ class NotificationComponent extends Component
 
 //        $this->telegramUsers = TelegramUser::all();
         $this->users = User::all();
+
+//        $this->board_roles = Board::find($this->board_id)->roles;
+//        dd($roles->toArray());
+//
+//        dd($this->board_id);
+//        dd($this->leed->id);
+//        $e = BoardController::getRolesBoard($this->leed->column->board->id);
+//    dd($e->toArray());
+        $this->board_roles = BoardController::getRolesBoard($this->board_id);
     }
 
     public function loadNotifications()
@@ -94,6 +110,7 @@ class NotificationComponent extends Component
         $this->yearly_time = $notification->yearly_time ? \Carbon\Carbon::parse($notification->yearly_time)->format('H:i') : null;
         $this->telegram_id = $notification->telegram_id;
         $this->user_id = $notification->user_id;
+        $this->position_id = $notification->position_id;
 
         $this->showForm = true;
     }
@@ -115,6 +132,7 @@ class NotificationComponent extends Component
             'yearly_time' => $this->yearly_time,
 //            'telegram_id' => $this->telegram_id,
             'user_id' => $this->user_id,
+            'position_id' => $this->position_id,
         ];
 
         if ($this->notificationId) {
@@ -151,6 +169,7 @@ class NotificationComponent extends Component
         $this->yearly_time = null;
         $this->telegram_id = null;
         $this->user_id = null;
+        $this->position_id = null;
     }
 
     public function render()

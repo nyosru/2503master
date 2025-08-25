@@ -1,5 +1,6 @@
 <div>
     <div class="flex flex-row flex-wrap">
+
         @foreach ($shablons as $k => $shablon)
 
             {{--            <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($shablon->toArray()) }}</pre>--}}
@@ -70,5 +71,4 @@
             @endif
         @endforeach
     </div>
-</div>
 </div>

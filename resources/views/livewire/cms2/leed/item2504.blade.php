@@ -135,6 +135,7 @@
                 {{--оповещения--}}
                 <livewire:leed.notification-component
                     :leed_id="$leed->id"
+                    :board_id="$board_id"
                 />
             </div>
         </div>

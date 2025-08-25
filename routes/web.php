@@ -172,9 +172,14 @@ Route::middleware(['auth'])->group(function () {
 //});
 
     Route::group(['as' => 'board', 'prefix' => 'board'], function () {
+
         Route::get('', \App\Livewire\Board\BoardComponent::class)
-            ->name('')
+            ->name('.list')
             ->middleware('check.permission:р.Доски');
+
+        Route::get('{board_id}', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('.item');
+
+
         Route::get('select', \App\Livewire\Cms2\Leed\SelectBoardForm::class)->name('.select');
 //        Route::post('invitations', [InvitationController::class, 'store'])->name('.invitations.store');
         Route::get('invitations/join/{id}', [InvitationController::class, 'join'])->name('.invitations.join');
@@ -192,9 +197,11 @@ Route::middleware(['auth'])->group(function () {
             });
 
             Route::prefix('board')->name('board')->group(function () {
+
                 Route::prefix('template')->name('.template')->group(function () {
                     Route::get('/', \App\Livewire\Board\Template\BoardTemplatesManager::class)->name('.manager');
                 });
+
             });
 
 

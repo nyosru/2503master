@@ -33,15 +33,17 @@ class RolePermissions extends Component
         // Загружаем роли и разрешения
         $board_id = $this->selectBoard;
 
-        $this->roles = Role::whereNull('deleted_at')
-            ->
-            where(function ($query) use ($board_id) {
-                if (!empty($board_id)) {
-                    $query->whereBoardId($board_id);
-                }
-            })
-            ->
-            with(['permissions'])->get();
+//        $this->roles = Role::whereNull('deleted_at')
+//            ->
+//            where(function ($query) use ($board_id) {
+//                if (!empty($board_id)) {
+//                    $query->whereBoardId($board_id);
+//                }
+//            })
+//            ->
+//            with(['permissions'])->get();
+
+        $this->loadRoles();
 
         $this->permissions = Permission::orderBy('sort', 'asc')->get();
         $this->permissionsSettings = PermissionSetting::whereForStart(true)->pluck('permission_id')->toArray();
@@ -72,6 +74,20 @@ class RolePermissions extends Component
 
     }
 
+    public function loadRoles()
+    {
+        $board_id = $this->selectBoard;
+        $this->roles = Role::whereNull('deleted_at')
+            ->
+            where(function ($query) use ($board_id) {
+                if (!empty($board_id)) {
+                    $query->whereBoardId($board_id);
+                }
+            })
+            ->
+            with(['permissions'])->get();
+    }
+
     public function togglePermission($roleId, $permissionId)
     {
 
@@ -95,8 +111,10 @@ class RolePermissions extends Component
 
     function updatedSelectBoard($value)
     {
-        dd($value);
-        $this->boards = Board::where('admin_user_id', $this->user_id)->get();
+//        dd($value);
+//        $this->boards = Board::where('admin_user_id', $this->user_id)->get();
+//        $this->boards = Board::where('id', $this->selectBoard)->get();
+        $this->loadRoles();
     }
 
     // Метод для инициации подтверждения удаления

@@ -18,7 +18,14 @@
         </button>
 
         <span class="font-bold flex items-center">
-            <svg class="h-6 w-6 text-red-200 inline"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="13" r="7" />  <polyline points="12 10 12 13 14 13" />  <line x1="7" y1="4" x2="4.25" y2="6" />  <line x1="17" y1="4" x2="19.75" y2="6" /></svg>
+            <svg class="h-6 w-6 text-red-200 inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none"
+                                                                                                          d="M0 0h24v24H0z"/>  <circle
+                    cx="12" cy="13" r="7"/>  <polyline points="12 10 12 13 14 13"/>  <line x1="7" y1="4" x2="4.25"
+                                                                                           y2="6"/>  <line x1="17"
+                                                                                                           y1="4"
+                                                                                                           x2="19.75"
+                                                                                                           y2="6"/></svg>
             Оповещения</span>
 
 
@@ -60,7 +67,7 @@
                 <div class="mb-4">
                     <label>Тип оповещения</label>
                     <select
-                        x-model="notificationType"
+                        wire:model.live="notificationType"
                         class="w-full border rounded p-2 mb-4"
                         required
                     >
@@ -72,8 +79,9 @@
                     </select>
                 </div>
 
+                @if( $notificationType == 'once' )
                 <!-- Одноразовое оповещение -->
-                <div x-show="notificationType === 'once'" class="mb-4 border p-2 rounded">
+                <div class="mb-4 border p-2 rounded">
                     <label class="block font-medium mb-1">Дата и время</label>
                     <input
                         type="datetime-local"
@@ -82,111 +90,148 @@
                     />
                     @error('once_at') <span class="text-red-600">{{ $message }}</span> @enderror
                 </div>
+                @endif
 
-                <!-- Еженедельное оповещение -->
-                <div x-show="notificationType === 'weekly'" class="mb-4 border p-2 rounded">
-                    <div class="mb-2">
-                        <label class="block font-medium mb-1">День недели</label>
-                        <select
-                            wire:model.defer="weekly_day"
-                            class="border rounded p-1 w-full"
-                        >
-                            <option value="">Выберите день недели</option>
-                            @foreach(['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'] as $index => $day)
-                                <option value="{{ $index }}">{{ $day }}</option>
-                            @endforeach
-                        </select>
-                        @error('weekly_day') <span class="text-red-600">{{ $message }}</span> @enderror
-                    </div>
+                @if( $notificationType == 'weekly' )
+                    <!-- Еженедельное оповещение -->
+                    <div
+{{--                        x-show="notificationType === 'weekly'" --}}
+                        class="mb-4 border p-2 rounded">
+                        <div class="mb-2">
+                            <label class="block font-medium mb-1">День недели</label>
+                            <select
+                                wire:model.defer="weekly_day"
+                                class="border rounded p-1 w-full"
+                            >
+                                <option value="">Выберите день недели</option>
+                                @foreach(['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'] as $index => $day)
+                                    <option value="{{ $index }}">{{ $day }}</option>
+                                @endforeach
+                            </select>
+                            @error('weekly_day') <span class="text-red-600">{{ $message }}</span> @enderror
+                        </div>
 
-                    <div>
-                        <label class="block font-medium mb-1">Время</label>
-                        <input
-                            type="time"
-                            wire:model.defer="weekly_time"
-                            class="border rounded p-1 w-full"
-                        />
-                        @error('weekly_time') <span class="text-red-600">{{ $message }}</span> @enderror
-                    </div>
-                </div>
-
-                <!-- Ежемесячное оповещение -->
-                <div x-show="notificationType === 'monthly'" class="mb-4 border p-2 rounded">
-                    <div class="mb-2">
-                        <label class="block font-medium mb-1">День месяца</label>
-                        <input
-                            type="number"
-                            min="1"
-                            max="31"
-                            wire:model.defer="monthly_day"
-                            placeholder="День месяца"
-                            class="border rounded p-1 w-full"
-                        />
-                        @error('monthly_day') <span class="text-red-600">{{ $message }}</span> @enderror
-                    </div>
-
-                    <div>
-                        <label class="block font-medium mb-1">Время</label>
-                        <input
-                            type="time"
-                            wire:model.defer="monthly_time"
-                            class="border rounded p-1 w-full"
-                        />
-                        @error('monthly_time') <span class="text-red-600">{{ $message }}</span> @enderror
-                    </div>
-                </div>
-
-                <!-- Ежегодное оповещение -->
-                <div x-show="notificationType === 'yearly'" class="mb-4 border p-2 rounded">
-                    <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block font-medium mb-1">День</label>
+                            <label class="block font-medium mb-1">Время</label>
                             <input
+                                required
+                                type="time"
+                                wire:model.defer="weekly_time"
+                                class="border rounded p-1 w-full"
+                            />
+                            @error('weekly_time') <span class="text-red-600">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+                @endif
+
+                @if( $notificationType == 'monthly' )
+                    <!-- Ежемесячное оповещение -->
+                    <div class="mb-4 border p-2 rounded">
+                        <div class="mb-2">
+                            <label class="block font-medium mb-1">День месяца</label>
+                            <input
+                                required
                                 type="number"
                                 min="1"
                                 max="31"
-                                wire:model.defer="yearly_day"
-                                placeholder="День"
+                                wire:model.defer="monthly_day"
+                                placeholder="День месяца"
                                 class="border rounded p-1 w-full"
                             />
-                            @error('yearly_day') <span class="text-red-600">{{ $message }}</span> @enderror
+                            @error('monthly_day') <span class="text-red-600">{{ $message }}</span> @enderror
                         </div>
 
                         <div>
-                            <label class="block font-medium mb-1">Месяц</label>
+                            <label class="block font-medium mb-1">Время</label>
                             <input
-                                type="number"
-                                min="1"
-                                max="12"
-                                wire:model.defer="yearly_month"
-                                placeholder="Месяц"
+                                required
+                                type="time"
+                                wire:model.defer="monthly_time"
                                 class="border rounded p-1 w-full"
                             />
-                            @error('yearly_month') <span class="text-red-600">{{ $message }}</span> @enderror
+                            @error('monthly_time') <span class="text-red-600">{{ $message }}</span> @enderror
                         </div>
                     </div>
+                @endif
+                @if( $notificationType == 'yearly' )
+                    <!-- Ежегодное оповещение -->
+                    <div class="mb-4 border p-2 rounded">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-medium mb-1">День</label>
+                                <input
+                                    required
+                                    type="number"
+                                    min="1"
+                                    max="31"
+                                    wire:model.defer="yearly_day"
+                                    placeholder="День"
+                                    class="border rounded p-1 w-full"
+                                />
+                                @error('yearly_day') <span class="text-red-600">{{ $message }}</span> @enderror
+                            </div>
 
-                    <div class="mt-2">
-                        <label class="block font-medium mb-1">Время</label>
-                        <input
-                            type="time"
-                            wire:model.defer="yearly_time"
-                            class="border rounded p-1 w-full"
-                        />
-                        @error('yearly_time') <span class="text-red-600">{{ $message }}</span> @enderror
+                            <div>
+                                <label class="block font-medium mb-1">Месяц</label>
+                                <input
+                                    required
+                                    type="number"
+                                    min="1"
+                                    max="12"
+                                    wire:model.defer="yearly_month"
+                                    placeholder="Месяц"
+                                    class="border rounded p-1 w-full"
+                                />
+                                @error('yearly_month') <span class="text-red-600">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="block font-medium mb-1">Время</label>
+                            <input
+                                required
+                                type="time"
+                                wire:model.defer="yearly_time"
+                                class="border rounded p-1 w-full"
+                            />
+                            @error('yearly_time') <span class="text-red-600">{{ $message }}</span> @enderror
+                        </div>
                     </div>
-                </div>
+                @endif
 
                 <div class="mb-2">
-                    <label>Кому отправить (Пользователь)</label>
-                    <select wire:model.defer="user_id" class="border rounded p-1 w-full">
-                        <option value="">Не выбран</option>
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('user_id') <span class="text-red-600">{{ $message }}</span> @enderror
+                    Кому отправить
                 </div>
+
+                @if( empty($position_id) )
+                    <div class="mb-2">
+                        <label>Пользователю</label>
+                        <select wire:model.live="user_id"
+                                required
+                                class="border rounded p-1 w-full">
+                            <option value="">Не выбран</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('user_id') <span class="text-red-600">{{ $message }}</span> @enderror
+                    </div>
+                @endif
+
+                @if( empty($user_id) )
+                    <div class="mb-2">
+                        <label>Должности (всем у кого есть выбранная должность)</label>
+                        <select wire:model.live="position_id"
+                                required
+                                class="border rounded p-1 w-full">
+                            <option value="">Не выбран</option>
+                            @foreach($board_roles as $b)
+                                <option value="{{ $b->id }}">{{ $b->name_ru }}</option>
+                            @endforeach
+                        </select>
+                        @error('position_id') <span class="text-red-600">{{ $message }}</span> @enderror
+                    </div>
+                @endif
 
                 <div class="flex gap-2 mt-4">
                     <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Сохранить</button>
@@ -224,23 +269,23 @@
                         @endif
 
                         <span class="float-right">
-                                <button
-                                    wire:click="editNotification({{ $notification->id }})"
-                                    class="text-blue-600 p-1
-                                    hover:bg-blue-200
-                                    "
-                                >
-                                    Изм.
-                                </button>
-                                <button wire:click="deleteNotification({{ $notification->id }})"
-                                        wire:confirm="Удалить оповещение?"
-                                        class="text-red-600 p-1
-                                          hover:bg-red-200
-                                          ">
-                                    X
-                                    {{--                            Удалить--}}
-                                </button>
-                            </span>
+                <button
+                    wire:click="editNotification({{ $notification->id }})"
+                    class="text-blue-600 p-1
+                    hover:bg-blue-200
+                    "
+                >
+                    Изм.
+                </button>
+                <button wire:click="deleteNotification({{ $notification->id }})"
+                        wire:confirm="Удалить оповещение?"
+                        class="text-red-600 p-1
+                          hover:bg-red-200
+                          ">
+                    X
+                    {{--                            Удалить--}}
+                </button>
+            </span>
 
                     </div>
 
