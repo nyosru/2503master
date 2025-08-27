@@ -26,6 +26,7 @@ class BoardComponent extends Component
     {
         Board::whereId($boardId)->delete();
         session()->flash('deleteOkMessage', 'Доска удалена!');
+        return redirect()->route('board.list');
     }
 
     public function deleteBoardUser($id)

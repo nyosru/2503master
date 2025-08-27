@@ -78,7 +78,7 @@
             >
                 <option value="">Выберите роль</option>
                 @foreach($roles as $role)
-                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                    <option value="{{ $role->id }}">{{ $role->name_ru }}</option>
                 @endforeach
             </select>
             @error('role_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror

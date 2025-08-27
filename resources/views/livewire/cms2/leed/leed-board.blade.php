@@ -319,6 +319,7 @@ border-1 rounded
 
                                             {{--передать договор подписанный--}}
                                         @elseif( $column->can_transfer && $record->user_id !== Auth::id() && !empty($record->client_id) && !empty($record->order_id) )
+
                                         @else
 
                                             <livewire:board.board-item-component

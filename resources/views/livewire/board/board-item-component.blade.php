@@ -106,7 +106,7 @@
                 @if( $record->user_id != Auth()->user()->id )
                     <livewire:leed.action-get
                         :leed="$record"
-                        :board_id="$board_id"
+                        :board_id="$record->Column->board_id"
                         :key="'canget'.$record->id"
                     />
                 @endif
@@ -118,9 +118,11 @@
                     :key="'rec'.$record->id"/>
             @endif
 
+
             @permission('р.Лиды / отправить лида с дог-ом')
-            @if($column->can_transfer == true )
+            @if( $record->column->can_transfer == true )
                 @if( empty($record->client_id) || empty($record->order_id) )
+
                     @if( empty($record->client_id) )
                         <div class="
                                         text-gray-600
@@ -140,7 +142,8 @@ bg-gray-200 rounded border-gray-500 border p-1 my-1
                 @else
                     <livewire:cms2.leed.item-transfer-form
                         :lead="$record"
-                        :key="'rec_transfer_'.$record->id"/>
+                        :key="'rec_transfer_'.$record->id"
+                    />
                 @endif
             @endif
             @endpermission

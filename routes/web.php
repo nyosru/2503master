@@ -128,7 +128,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('', function () {
-        return redirect(route('leed.list'));
+        return redirect(route('board.list'));
     })->name('index');
 ////    Route::get('', \App\Livewire\Index::class)->name('login');
 

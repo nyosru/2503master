@@ -13,6 +13,7 @@ use Livewire\Component;
 
 class ItemTransferForm extends Component
 {
+
     public $lead; //  лида
     public $lead_id;
     public $sendToUser; // ID пользователя, которому передаем

@@ -132,8 +132,18 @@
                         key="invites{{ $board->id }}"
                     />
 
+                    @permission('р.Доски / все, + user')
                     <livewire:board.add-user-form :key="'board'.$board->id" :board_id="$board->id"/>
-
+                    @else
+                        @permission('р.Доски / свои, + user')
+{{--                    <pre>{{ print_r($board->toArray()) }}</pre>--}}
+                            @if($board->admin_user_id == Auth()->user()->id)
+                            <livewire:board.add-user-form :key="'board'.$board->id" :board_id="$board->id"/>
+{{--                                @else--}}
+{{--                                ----}}
+                            @endif
+                        @endpermission
+                    @endpermission
                     <div class=" max-h-[150px]
                             overflow-auto">
                         @foreach($board->boardUsers as $k => $bu)
@@ -157,6 +167,7 @@
                                 </sup>
                             </span>
 
+                                @permission('р.Доски / вкл/выкл user')
                                 @if( !empty($bu->deleted) )
                                     <button class="bg-green-100 hover:bg-green-400 p-1 rounded"
                                             wire:click="onBoardUser({{$bu->id}})">вкл
@@ -166,7 +177,8 @@
                                             wire:click="offBoardUser({{$bu->id}})">выкл
                                     </button>
                                 @endif
-                                {{$bu->id}}
+                                @endpermission
+{{--                                {{$bu->id}}--}}
                             </div>
                             {{--                            <pre class="text-xs">{{ print_r($bu->toArray()) }}</pre>--}}
 

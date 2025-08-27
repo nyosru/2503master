@@ -21,13 +21,11 @@ class Index extends Component
         'Пользователи' => ['route' => 'tech.user_list', 'permission' => 'р.Пользователи'],
         'Путь заказа, доступы' => ['route' => 'tech.adm_role_column', 'permission' => 'тех.Управление столбцами'],
 
-
         'Поиск данных по inn' => ['route' => 'tech.service.dadata_org_search_component'
             ,'permission' => 'р.Техничка / поиск по ИНН'
         ],
 
         'Поля в заказе' => ['route' => 'tech.order_requests_manager', 'permission' => 'тех.упр полями в лиде'],
-
 
         'Доска / Лид / Названия полей - Переименовать' => ['route' => 'tech.order-request-rename-form'
             , 'permission' => 'р.Доски / переименовывать поля лидов'
