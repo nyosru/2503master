@@ -4,20 +4,21 @@ namespace App\Livewire\Column;
 
 use App\Http\Controllers\Services\MacrosController;
 use App\Models\LeedColumn;
+use App\Models\LeedColumnBackgroundColor;
 use Livewire\Component;
 
 class ColumnConfig extends Component
 {
 
     public $column; // Храним объект столбца
+
+
     public $name_new; // Храним объект столбца
 
     public $menu = []; // меню
     public $modal_show = false; // ID текущего столбца для открытия модального окна
     public $macroses;
     public $show_tpl = '';
-
-
 
     public function showTplSet($tpl){
         $this->show_tpl = $tpl;
@@ -58,8 +59,10 @@ class ColumnConfig extends Component
 
         $m = new MacrosController();
         $this->macroses = $m->get( $column->id );
-
     }
+
+
+
 //
 //    public function saveColumnConfig()
 //    {

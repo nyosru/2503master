@@ -85,4 +85,20 @@ class User extends Authenticatable
         return $this->hasMany(Domain::class, 'admin_user_id');
     }
 
+    /**
+     * Отношение к новостям, которые пользователь создал
+     */
+    public function news(): HasMany
+    {
+        return $this->hasMany(News::class, 'author_user_id');
+    }
+
+    /**
+     * Отношение к опубликованным новостям
+     */
+    public function publishedNews(): HasMany
+    {
+        return $this->news()->published();
+    }
+
 }

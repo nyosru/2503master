@@ -109,6 +109,18 @@ Route::get('/auth/telegram/callback', function () {
 
 Route::get('/download/{id}/{file_name}', [DownloadController::class, 'download'])->name('download.file');
 
+use App\Http\Controllers\NewsController;
+
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
+
+// Для авторизованных пользователей
+Route::middleware('auth')->group(function () {
+    Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
+    Route::post('/news', [NewsController::class, 'store'])->name('news.store');
+    // ... другие маршруты
+});
+
 
 // Маршрут для НЕ авторизованного пользователя
 Route::middleware(['guest'])->group(function () {
@@ -189,6 +201,8 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('tech')->name('tech.')->group(function () {
 
             Route::get('', \App\Livewire\Cms2\Tech\Index::class)->name('index');
+
+            Route::get('column-bg-colors-manager', \App\Livewire\Tech\ColumnBackgroundColorsManager::class)->name('column-bg-color-manager');
 
             Route::prefix('macros')->name('macros.')->group(function () {
                 Route::get('/', \App\Livewire\Macros\Manager::class)->name('manager');

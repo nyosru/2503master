@@ -327,7 +327,12 @@ class LeedBoard extends Component
                     $q->where('roles.id', $roleId);
                 })
 
-                ->with(['records' => function ($query) use ($ss) {
+                ->with([
+
+                    'backgroundColor' => function ($query) {
+//                        $query->select('html_code');
+                    },
+                    'records' => function ($query) use ($ss) {
 
                     if (!empty($ss)) {
                         $query->where(function ($q) use ($ss) {

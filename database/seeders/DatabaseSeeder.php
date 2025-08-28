@@ -49,6 +49,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleHasPermissionsSeeder::class);
         $this->call(BoardUsersSeeder::class);
         $this->call(LeedColumnsSeeder::class);
+        $this->call(NewsSeeder::class );
+
+
 
     }
 }

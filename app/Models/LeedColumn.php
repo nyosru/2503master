@@ -62,4 +62,24 @@ class LeedColumn extends Model
         );
     }
 
+
+    // Если у вас связь many-to-one (каждая колонка имеет один цвет)
+    public function backgroundColor()
+    {
+        return $this->belongsToMany(
+            LeedColumnBackgroundColor::class,
+            'leed_column_color_assignments', // имя таблицы связи
+            'leed_column_id',
+            'background_color_id'
+        )->withTimestamps();
+    }
+
+
+    // Если предполагается, что одна колонка имеет ровно один цвет, и таблица связи есть
+    public function currentBackgroundColor()
+    {
+        return $this->backgroundColor()->first();
+    }
+
+
 }

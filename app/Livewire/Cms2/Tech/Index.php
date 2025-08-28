@@ -38,6 +38,10 @@ class Index extends Component
 //            , 'permission' => 'р.Доски / переименовывать поля лидов'
         ]
         ,
+        'Колонки / цвета фона / управление' => ['route' => 'tech.column-bg-color-manager'
+//            , 'permission' => 'р.Доски / переименовывать поля лидов'
+        ]
+        ,
 //        'Заказ - Метки' => ['route' => 'order.label',
 //            'permission' => 'тех.метки в заказах'
 //        ],

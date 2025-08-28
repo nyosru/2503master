@@ -56,7 +56,10 @@
                     <livewire:app.menu/>
                 @endif
                 <div class="flex-1 min-h-[400px]">
-                    {{ $slot }}
+                    {{ $slot ?? ''}}
+{{--                    @section('content')--}}
+{{--                        @section('content')  @endsection--}}
+                        @yield('content')
                 </div>
             </div>
 
