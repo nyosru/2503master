@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Board;
+use App\Models\PermissionSetting;
 use App\Models\Role as Role2;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
@@ -10,9 +11,11 @@ use Spatie\Permission\Models\Permission;
 
 class RolePermissions extends Component
 {
+
     public $selectBoard;
     public $roles;
     public $permissions;
+    public $permissionsSettings = [];
     public $rolePermissions = [];
 
     // Переменные для подтверждения удаления
@@ -25,11 +28,55 @@ class RolePermissions extends Component
     {
 
         $this->user_id = auth()->id();
-        $this->boards = Board::where('admin_user_id',$this->user_id)->get();
+        $this->boards = Board::where('admin_user_id', $this->user_id)->get();
 
         // Загружаем роли и разрешения
         $board_id = $this->selectBoard;
 
+//        $this->roles = Role::whereNull('deleted_at')
+//            ->
+//            where(function ($query) use ($board_id) {
+//                if (!empty($board_id)) {
+//                    $query->whereBoardId($board_id);
+//                }
+//            })
+//            ->
+//            with(['permissions'])->get();
+
+        $this->loadRoles();
+
+        $this->permissions = Permission::orderBy('sort', 'asc')->get();
+        $this->permissionsSettings = PermissionSetting::whereForStart(true)->pluck('permission_id')->toArray();
+
+
+        // Формируем массив для отметки галочек
+        foreach ($this->roles as $role) {
+            $this->rolePermissions[$role->id] = $role->permissions->pluck('id')->toArray();
+        }
+
+    }
+
+    /**
+     * настройка for_start для стартовых должностей при создании по шаблону
+     * @param $permissionId
+     * @return void
+     */
+    public function toggleStartPermission($permissionId)
+    {
+
+        try {
+            $perm = PermissionSetting::where('permission_id', $permissionId)->FirstOrFail();
+            $perm->for_start = !$perm->for_start;
+            $perm->save();
+        } catch (\Exception $e) {
+            PermissionSetting::create(['permission_id' => $permissionId, 'for_start' => true]);
+        }
+
+    }
+
+    public function loadRoles()
+    {
+        $board_id = $this->selectBoard;
         $this->roles = Role::whereNull('deleted_at')
             ->
             where(function ($query) use ($board_id) {
@@ -39,14 +86,6 @@ class RolePermissions extends Component
             })
             ->
             with(['permissions'])->get();
-
-        $this->permissions = Permission::orderBy('sort', 'asc')->get();
-
-        // Формируем массив для отметки галочек
-        foreach ($this->roles as $role) {
-            $this->rolePermissions[$role->id] = $role->permissions->pluck('id')->toArray();
-        }
-
     }
 
     public function togglePermission($roleId, $permissionId)
@@ -70,16 +109,19 @@ class RolePermissions extends Component
         }
     }
 
-    function updatedSelectBoard($value){
-        dd($value);
-        $this->boards = Board::where('admin_user_id',$this->user_id)->get();
+    function updatedSelectBoard($value)
+    {
+//        dd($value);
+//        $this->boards = Board::where('admin_user_id', $this->user_id)->get();
+//        $this->boards = Board::where('id', $this->selectBoard)->get();
+        $this->loadRoles();
     }
 
     // Метод для инициации подтверждения удаления
     public function updatedSelectBoard2($value)
     {
         dd($value);
-        $this->boards = Board::where('admin_user_id',$this->user_id)->get();
+        $this->boards = Board::where('admin_user_id', $this->user_id)->get();
 //        $this->mount();
     }
 

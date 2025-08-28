@@ -26,6 +26,7 @@ class BoardComponent extends Component
     {
         Board::whereId($boardId)->delete();
         session()->flash('deleteOkMessage', 'Доска удалена!');
+        return redirect()->route('board.list');
     }
 
     public function deleteBoardUser($id)
@@ -45,18 +46,39 @@ class BoardComponent extends Component
 //        session()->flash('messageBU', 'Пользователь в Доске удалён!');
     }
 
-    public function restoreBoardUser($id)
+    public function offBoardUser($id)
     {
-        $post = BoardUser::withTrashed()->find($id);
+        // Поиск записи
+        try {
+
+            $boardUser = BoardUser::findOrFail($id);
+            $boardUser->deleted = true;
+            $boardUser->save();
+
+            session()->flash('messageBU', 'Пользователь в Доске удалён!');
+            $this->render();
+        } catch (\Exception $e) {
+            session()->flash('errorBU', 'Запись не найдена!'.$id);
+        }
+//        session()->flash('messageBU', 'Пользователь в Доске удалён!');
+    }
+
+    public function onBoardUser($id)
+    {
+//        $post = BoardUser::withTrashed()->find($id);
+        $post = BoardUser::find($id);
 
         if (!$post) {
 //            return redirect()->back()->with('errorBU', 'Запись не найдена.');
             session()->flash('errorBU', 'Запись не найдена!');
         }
 
-        $post->restore();
+        $post->deleted = false;
+        $post->save();
+
 //        return redirect()->back()->with('messageBU', 'Запись восстановлена.');
         session()->flash('messageBU', 'Пользователь в Доске восстановлен!');
+
         $this->render();
     }
 
@@ -85,26 +107,47 @@ class BoardComponent extends Component
 
 //            $boards = Board::get();
 
-        $boards = Board::when($needUsers, function ($query) use ($user_id) {
-            $query->whereHas('boardUsers', function ($q) use ($user_id)  {
-                $q->where('user_id', $user_id);
-            });
-        })->with([
-            'columns',
-            'boardUsers' => function ($query) {
-                $query->withTrashed();
-                $query->with([
-                    'role',
-                    'user',
-                ]);
-            }
-        ])
-            ->paginate(10)
-        ; // Загрузка связанных пользователей
+//        $boards = Board::when($needUsers, function ($query) use ($user_id) {
+//            $query->whereHas('boardUsers', function ($q) use ($user_id)  {
+//                $q->where('user_id', $user_id);
+//            });
+//        })->with([
+//            'columns',
+//            'boardUsers' => function ($query) {
+//                $query->withTrashed();
+//                $query->with([
+//                    'role',
+//                    'user',
+//                ]);
+//            }
+//        ])
+//            ->paginate(10)
+//        ; // Загрузка связанных пользователей
 
 
-        $users = \App\Models\User::all();
-        $roles = Role::all(); // Получаем все роли
+            $boards = Board::whereHas('boardUsers', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+                ->orWhere('admin_user_id', $user->id)
+                ->with([
+                    'domain',
+                    'boardUsers' => function ($query) use ($user) {
+//                        $query->where('user_id', $user->id);
+//                        $query->withTrashed();
+                        $query->with(['role']);
+
+                    },
+                    'invitations' => function ($query) {
+                        $query->with(['role']);
+                    }
+                ])
+//                ->get();
+                ->paginate(10)
+            ; // Загрузка связанных пользователей
+
+            $users = \App\Models\User::all();
+            $roles = Role::all(); // Получаем все роли
+
             } catch (\Exception $e) {
             dd($e);
         }

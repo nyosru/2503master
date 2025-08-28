@@ -109,17 +109,14 @@ class AddLeedFormSimple extends Component
         $fields = BoardFieldSetting::where('board_id', $boardId)
             ->where('is_enabled', true)
             ->with([
-                'orderRequest' => function ($query) {
-                    $query->with('rename');
+                'orderRequest' => function ($q) use ( $boardId ){
+                    $q->with(['rename' => function ($q) use ( $boardId ) {
+                        $q->where('board_id',$boardId);
+                        }]);
                 }
             ])
-
-//@if( !empty($field->orderRequest->rename->name) )
-
             ->orderBy('sort_order', 'desc')
             ->get()
-//            ->pluck('field_name') // Возвращаем только имена полей
-//            ->toArray()
         ;
 
         return $fields; // Массив разрешенных имен полей
@@ -128,8 +125,7 @@ class AddLeedFormSimple extends Component
 
     public function addLeedRecord()
     {
-
-        $rules = BoardController::getRules();
+        $rules = (Array) BoardController::getRules($this->column->board_id);
         $this->validate($rules);
 
         $user_id = Auth::id();
@@ -140,13 +136,10 @@ class AddLeedFormSimple extends Component
         ];
 
         $polya = $this->getAllowedFields();
-//        dd($polya);
 
         foreach ($polya as $v) {
             $in[$v['field_name']] = $this->{$v['field_name']}; //dd($this->$v
         }
-
-//        dd($in);
 
         // Создание новой записи в базе данных
         $leadRecord = LeedRecord::create($in);

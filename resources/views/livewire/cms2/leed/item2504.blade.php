@@ -33,6 +33,7 @@
                 <livewire:cms2.informer.leed.comment :key="'leed.comment'.$leed->id" wire:lazy :leed="$leed"/>
 
                 {{--передать лида--}}
+                {{--                    <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($leed,1) }}</pre>--}}
                 @if( $leed->user_id == Auth()->user()->id )
                     <livewire:cms2.leed.move :leed="$leed" :board_id="$leed->column->board->id"/>
                 @endif
@@ -47,13 +48,42 @@
         {{--        </div>--}}
     </div>
 
+@if(session('moveToColumnMessage'))
+    <div
+        x-data="{ showMessage: true }"
+        class="fixed top-10 right-10 z-50"
+    >
+        <div
+            x-show="showMessage"
+            x-transition.opacity.duration.300ms
+            class="bg-green-500 text-white p-4 rounded-lg shadow-lg flex flex-col items-start relative"
+        >
+            <!-- Кнопка закрытия -->
+            <button
+                @click="showMessage = false"
+                class="absolute top-2 right-2 text-white text-xl font-bold hover:text-gray-200"
+            >
+                &times;
+            </button>
+
+            <!-- Текст сообщения -->
+            <p class="text-sm pr-5">
+                {{ session('moveToColumnMessage') }}
+            </p>
+        </div>
+    </div>
+@endif
+
+
+
     @if (session()->has('moveMessage'))
         <span class="bg-green-500 text-white p-3 rounded">{{ session()->get('moveMessage') }}</span>
     @endif
 
+
     <div class="
         grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4
-        pr-2
+        px-4
     ">
 
         <div>
@@ -105,6 +135,7 @@
                 {{--оповещения--}}
                 <livewire:leed.notification-component
                     :leed_id="$leed->id"
+                    :board_id="$board_id"
                 />
             </div>
         </div>

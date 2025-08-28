@@ -50,7 +50,7 @@
                         @foreach($roles as $role)
                             <label class="block">
                                 <input type="checkbox" wire:model="select_roles" value="{{ $role->id }}">
-                                {{ $role->name }}
+                                {{ $role->name_ru }}
                             </label>
                         @endforeach
                     </div>

@@ -32,12 +32,13 @@
 
 {{--    <pre class="text-xs">{{ print_r( $boards->toArray() ) }}</pre>--}}
     <div>
-        Выберите проект: <select wire:model="selectBoard">
+        Выберите проект: <select wire:model.live="selectBoard">
             <option value="">выбрать</option>
             @foreach ($boards as $board)
             <option value="{{ $board->id }}">{{ $board->name }}</option>
             @endforeach
         </select>
+{{--        selectBoard: {{ $selectBoard }}--}}
     </div>
 
     <div class="relative">
@@ -45,7 +46,7 @@
             <div class="flex flex-col">
                 <!-- Заголовок таблицы -->
                 <div class="flex bg-gray-200 sticky top-0">
-                    <div class="bg-gray-200 z-20 border border-gray-300 px-4 py-2 font-bold w-48">
+                    <div class="bg-gray-200 z-20 border border-gray-300 px-4 py-2 font-bold min-w-[148px]">
                         Роль
                     </div>
                     @foreach ($permissions as $permission)
@@ -59,9 +60,11 @@
                          border border-gray-300
                          border-t-[5px]
 
-                        px-4 py-2 text-center
+{{--                        px-4 py-2 --}}
+                        text-center
                         чw-48
-                        w-20
+{{--                        w-20--}}
+                        min-w-[60px]
                         box_rotate">
 
 
@@ -106,12 +109,69 @@
                     @endforeach
                 </div>
 
+
+
+
+
+
+
+
+
+                @permission('р.Техничка / установка старт доступов (адм)')
+                <div class="flex bg-white">
+                    <!-- Левый столбец -->
+                    <div
+                        class="sticky left-0 xbg-white z-10 border border-gray-300 px-4 py-2 font-bold
+{{--                            w-48--}}
+                            min-w-[148px]
+                              bg-white">
+                        <div class="flex justify-between items-center"
+                            {{--                                 style="z-index: 500;"--}}
+                        >
+                            <span><abbr title="когда создают по шаблону">Старт.набор</abbr></span>
+                        </div>
+                    </div>
+
+{{--                    <pre>{{ print_r($permissionsSettings,1) }}</pre>--}}
+
+                    <!-- Остальные ячейки -->
+                    @foreach ($permissions as $permission)
+                        <label >
+                            <div class="border border-gray-300 min-w-[60px] h-12 grid place-items-center"
+                            wire:key="'permission-{{ $permission->id }}'"
+                            >
+                                <input
+                                    type="checkbox"
+                                    wire:click="toggleStartPermission({{ $permission->id }})"
+{{--                                    @if ( $permission->for_start ) checked @endif--}}
+                                    @if(is_array($permissionsSettings) && in_array($permission->id, $permissionsSettings) ) checked @endif
+                                >{{ $permission->id }}
+                            </div>
+                        </label>
+                    @endforeach
+                </div>
+                @endpermission
+
+
+
+
+
+
+
+
+
+
+
+
                 <!-- Тело таблицы -->
                 @foreach ($roles as $index => $role)
                     <div class="flex {{ $index % 2 == 0 ? 'bg-white' : 'bg-cyan-100' }}">
                         <!-- Левый столбец -->
                         <div
-                            class="sticky left-0 xbg-white z-10 border border-gray-300 px-4 py-2 font-bold w-48   {{ $index % 2 == 0 ? 'bg-white' : 'bg-cyan-100' }}">
+                            class="sticky left-0 xbg-white z-10 border border-gray-300 px-4 py-2 font-bold
+{{--                            w-48--}}
+                            min-w-[148px]
+                              {{ $index % 2 == 0 ? 'bg-white' : 'bg-cyan-100' }}">
                             <div class="flex justify-between items-center"
                                 {{--                                 style="z-index: 500;"--}}
                             >
@@ -133,12 +193,19 @@
 
                         <!-- Остальные ячейки -->
                         @foreach ($permissions as $permission)
-                            <div class="border border-gray-300 px-4 py-2 text-center w-20">
+{{--                            <div class="border border-gray-300--}}
+{{--                            px-4 py-2 --}}
+{{--                            min-w-[60px]--}}
+{{--                            text-center--}}
+{{--                            w-20--}}
+{{--                            ">--}}
+
+                            <label >
+                            <div class="border border-gray-300 min-w-[60px] h-12 grid place-items-center">
                                 {{--                                @can('р.Права доступа / CRUD роли')--}}
                                 @permission('р.Права доступа / CRUD роли')
                                 <input
                                     type="checkbox"
-
                                     wire:click="togglePermission({{ $role->id }}, {{ $permission->id }})"
                                     @if (in_array($permission->id, $rolePermissions[$role->id] ?? [])) checked @endif
                                 >
@@ -149,9 +216,8 @@
                                         -
                                     @endif
                                     @endpermission
-
-
                             </div>
+                            </label>
                         @endforeach
                     </div>
                 @endforeach

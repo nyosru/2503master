@@ -15,6 +15,7 @@ class BoardUser extends Model
         'board_id',
         'user_id',
         'role_id',
+        'deleted',
     ];
 
 

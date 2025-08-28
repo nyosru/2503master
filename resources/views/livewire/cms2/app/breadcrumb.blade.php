@@ -7,6 +7,12 @@
 {{--    <pre class="text-xs"> {{ print_r($menu) }}</pre>--}}
 
     @foreach( $menu as $k => $m )
+
+{{--        если нет имени то пропускаем элемент--}}
+        @if( empty($m['name']) )
+            @continue
+        @endif
+
         @if($k > 0) / @endif
         @if( isset($m['link']) && $m['link'] == 'no' )
             <span class="breadcrumb-item active xme-2" aria-current="page">

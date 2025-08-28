@@ -7,18 +7,26 @@
         href="#" wire:click.prevent="openModal" class="text-blue-500 hover:underline"><img src="/icon/arrow-right.png"
                                                                                            class="w-[28px]"/></a>
 
-        --}}
         @if( $isOpen )
+
         <div
             {{--        x-data="{ isOpen: @entangle('isOpen') }" x-show="isOpen"--}}
-            class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-screen bg-black bg-opacity-50">
+            class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-screen bg-black bg-opacity-50"
+{{--            wire:click="closeModal"--}}
+        >
 
+                <div class="bg-white rounded shadow-md p-4 w-2/3 justify-center items-center">
 
-                <div class="bg-white rounded shadow-md p-4 w-1/2">
+                    <span
+                        class="float-right cursor-pointer"
+                        wire:click="closeModal"
+                    >X</span>
 
-       @if( $leed->user_id == Auth()->user()->id )
+                {{--<pre class="text-xs">{{ print_r($move_variants->toArray(),true) }}</pre>--}}
 
-                        <form wire:submit.prevent="submit">
+                    @if( $autor_look && count($move_variants->toArray()) > 1 )
+
+                        <form wire:submit.prevent="submit" class="w-full justify-center items-center">
                 <h2 class="text-lg font-bold mb-4">Передать лида</h2>
                 <div class="my-2">
                     <label for="user" class="block text-sm font-medium text-gray-700">Пользователь</label>
@@ -53,14 +61,41 @@
                     @endif
 
 
-                <div class="bg-white rounded shadow-md p-4 w-1/2">
-                <h2 class="text-lg font-bold mb-4">Переместить лида</h2>
+        <div class="bg-white rounded shadow-md p-4 w-full"
+             x-data="{ showLoading: false }"
+        >
+            <form wire:submit.prevent="leedMove"
+                  @submit="showLoading = true"
+            >
+                <span class="text-lg font-bold mb-4 ">Текущий лид</span>
+                в столбец:
+                    <select class="inline-block"
+                            wire:model="move_to_column"
+                            required>
+                        <option value="">выберите</option>
+                        @foreach($columns as $column)
+                            @if( $column->id != $leed->leed_column_id )
+                                <option value="{{ $column->id }}">{{ $column->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                <span>
+                    <button
+                        @click="showLoading = true; "
+                        class=" bg-blue-400 rounded px-2 py-1">Переместить</button>
+                </span>
 
-    в столбец: <select></select> <button>переместить</button>
+              <span x-show="showLoading" class="bg-green-200 p-2 rounded m-2">
+                    Перемещаю...
+                </span>
 
+                @if(session('moveToColumnMessage'))
+                    <span class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
+                    {{ session('moveToColumnMessage') }}
+                    </span>
+                @endif
 
-
-
+            </form>
         </div>
     </div>
     @endif

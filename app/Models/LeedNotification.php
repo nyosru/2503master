@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Jobs\ProcessLeedNotificationJob;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LeedNotification extends Model
@@ -29,6 +31,7 @@ class LeedNotification extends Model
 //        'telegram_id',
 
         'user_id',
+        'position_id',
 
     ];
 
@@ -66,4 +69,23 @@ class LeedNotification extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function position()
+    {
+        return $this->belongsTo(Role::class, 'position_id');
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($notification) {
+            ProcessLeedNotificationJob::dispatch($notification);
+        });
+    }
+
+    public function logs(): hasMany
+    {
+        return $this->hasMany(LeedNotificationLog::class);
+    }
+
+
 }

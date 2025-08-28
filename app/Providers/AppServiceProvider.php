@@ -8,16 +8,21 @@ use App\Models\LeedRecord;
 use App\Models\LeedRecordComment;
 use App\Models\LeedRecordOrder;
 use App\Models\Order;
+use App\Models\User;
 use App\Observers\LeedCommentFileObserver;
 use App\Observers\LeedMoneyMovementObserver;
 use App\Observers\LeedRecordCommentObserver;
 use App\Observers\LeedRecordObserver;
 use App\Observers\LeedRecordOrderObserver;
 use App\Observers\OrderObserver;
+use App\Observers\UserObserver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\Events\Login;
+use Nyos\Msg;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,9 +40,25 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
+// Регистрируем событие входа и слушатель напрямую
+        Event::listen(
+            Login::class,
+//            SendTelegramLoginNotification::class
+            function(){
+                $user = Auth::user();
+//                dd($user);
+                Msg::sendTelegramm('🐹🐹 вход: '.
+//                    print_r($user)
+                    '('.( $user->id ?? 'x' ).') '.( $user->name ?? '--' ).PHP_EOL.( $user->email ?? '-' )
+                );
+            }
+        );
+
         Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
             $event->extendSocialite('telegram', \SocialiteProviders\Telegram\Provider::class);
         });
+
+        User::observe(UserObserver::class);
 
         // в лог о перемещении из столбца в столбец
         LeedRecord::observe(LeedRecordObserver::class);

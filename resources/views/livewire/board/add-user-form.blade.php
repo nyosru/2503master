@@ -4,9 +4,9 @@
 
     <button
         x-on:click="isFormVisible = !isFormVisible"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+        class="bg-orange-200 hover:bg-orange-300 py-2 px-4 rounded mb-4"
     >
-        +
+        Добавить пользователя
     </button>
 
     <!-- Уведомление об успешном добавлении -->
@@ -24,7 +24,7 @@
 
 
     <!-- Форма -->
-    <form wire:submit.prevent="save" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    <form wire:submit.prevent="save" class="bg-white my-[5%] shadow-md rounded px-8 pt-6 pb-8 mb-4"
           x-show="isFormVisible"
           x-transition:enter="transition ease-out duration-300"
           x-transition:enter-start="opacity-0 transform scale-95"
@@ -78,7 +78,7 @@
             >
                 <option value="">Выберите роль</option>
                 @foreach($roles as $role)
-                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                    <option value="{{ $role->id }}">{{ $role->name_ru }}</option>
                 @endforeach
             </select>
             @error('role_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror

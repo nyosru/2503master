@@ -18,10 +18,9 @@ use Laravel\Socialite\Facades\Socialite;
 use Nyos\Msg;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
+Route::get('notification/run', [\App\Http\Controllers\NotificationController::class, 'startJob']);
 
 Route::get('macros/go', [\App\Http\Controllers\Services\MacrosController::class, 'actionNow']);
-
-
 Route::post('/dadata/find-org', [DadataOrgController::class, 'findByInn'])->name('dadata.find-org');
 
 
