@@ -242,9 +242,7 @@
         </nav>
 @endif
 
-
-
-        <!-- Герой секция -->a
+        <!-- Герой секция -->
         <section class="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
             <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-10 md:mb-0">
@@ -312,18 +310,18 @@
             </div>
         </section>
 
-
         <section class="py-12 bg-white">
             <livewire:PM.News.index perPage="3" :showFilter="false" />
         </section>
-        <!-- Возможности -->
 
+        <!-- Возможности -->
         <section class="py-16 bg-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-4">Мощные возможности для вашего бизнеса</h2>
                 <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">Наша CRM-система предоставляет все необходимое для эффективного управления лидами и повышения конверсии</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
                     <!-- Возможность 1 -->
                     <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 hover:shadow-md transition duration-300">
                         <div class="bg-blue-100 w-14 h-14 rounded-lg flex items-center justify-center text-blue-600 mb-4">
