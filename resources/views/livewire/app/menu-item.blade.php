@@ -1,4 +1,5 @@
 <div class="xw-full">
+{{--    {{ $route }}--}}
     <a href="{{ $route }}"
        wire:navigate
        class="flex items-center space-x-2 px-4 py-2 xtext-gray-700 rounded

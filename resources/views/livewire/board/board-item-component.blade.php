@@ -71,11 +71,10 @@
                 {{--передать лида--}}
                 {{--                                                            <livewire:cms2.leed.move :leed="$record"/>--}}
 
-                @iF($record->notifications_count > 0)
-
+                @if($record->notifications_count > 0)
                     <div
                         title="Есть уведомления в этой записи: {{ $record->notifications_count }}"
-                        {{--                                                                        style="position:absolute; top:0; right:0;"--}}
+                        {{-- style="position:absolute; top:0; right:0;" --}}
                     >
                         <a href="{{ route('leed.item',['board_id'=>$column->board_id ,'id'=>$record->id]) }}"
                            wire:navigate

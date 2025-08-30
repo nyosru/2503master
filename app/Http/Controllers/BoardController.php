@@ -120,7 +120,8 @@ class BoardController extends Controller
 
         self::enterAs($board_id, $role_id);
 
-        return redirect()->route('leed', ['board_id' => $board_id]);
+//        return redirect()->route('leed', ['board_id' => $board_id]);
+        return redirect()->route('board.show', ['board_id' => $board_id]);
 
 //        dd($boards->toArray());
 //        dd([$board_id,$role_id,$user->id]);

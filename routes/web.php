@@ -42,10 +42,6 @@ Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
 });
 
 
-
-
-
-
 Route::get('', \App\Livewire\Index::class)->name('index');
 
 //Route::get('/auth/telegram-in/callback', [TelegramController::class, 'callbackOrigin']);
@@ -110,6 +106,19 @@ Route::get('/auth/telegram/callback', function () {
 Route::get('/download/{id}/{file_name}', [DownloadController::class, 'download'])->name('download.file');
 
 
+use App\Http\Controllers\NewsController;
+
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
+
+// Для авторизованных пользователей
+Route::middleware('auth')->group(function () {
+    Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
+    Route::post('/news', [NewsController::class, 'store'])->name('news.store');
+    // ... другие маршруты
+});
+
+
 // Маршрут для НЕ авторизованного пользователя
 Route::middleware(['guest'])->group(function () {
 
@@ -126,7 +135,7 @@ Route::middleware(['guest'])->group(function () {
 // Маршрут для авторизованного пользователя
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('vk/friend', App\Livewire\Vk\Friend::class )->name('vk.friend');
+    Route::get('vk/friend', App\Livewire\Vk\Friend::class)->name('vk.friend');
 
 //    Route::get('', \App\Livewire\Cms2\Leed\LeedBoardList::class)->name('index');
 
@@ -145,7 +154,7 @@ Route::middleware(['auth'])->group(function () {
         Session::regenerateToken();
     });
 
-    Route::group([ 'as' => 'lk.'], function () {
+    Route::group(['as' => 'lk.'], function () {
         Route::get('profile', \App\Livewire\Lk\Profile::class)->name('profile');
     });
 
@@ -158,6 +167,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('leed/goto/{board_id}/{role_id}', [\App\Http\Controllers\BoardController::class, 'goto'])->name('leed.goto');
 
     Route::get('leed/{board_id}', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leed');
+//    Route::get('leed/{board_id}', \App\Livewire\Cms2\Leed\LeedBoard::class)->name('leed.one');
 
     Route::get('leed/{board}/config', \App\Livewire\Board\Config\IndexComponent::class)->name('board.config');
     Route::get('leed/{board}/config/polya', \App\Livewire\Board\ConfigComponent::class)->name('board.config.polya');
@@ -166,26 +176,46 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('leed/{board}/delete', [\App\Http\Controllers\BoardController::class, 'delete'])
         ->name('board.config.delete')
-        ->middleware('check.permission:р.Доски / удалить')
-    ;
+        ->middleware('check.permission:р.Доски / удалить');
 
     Route::get('leed/{board_id}/{id}', \App\Livewire\Cms2\Leed\Item::class)->name('leed.item');
 
 //        Route::get('/leed/{id}', \App\Livewire\Cms2\ClientsInfo::class)->name('clients.info');
 //});
 
-    Route::group([ 'as' => 'board', 'prefix' => 'board'], function () {
+    Route::group(['as' => 'board', 'prefix' => 'board'], function () {
+
         Route::get('', \App\Livewire\Board\BoardComponent::class)
             ->name('')
             ->middleware('check.permission:р.Доски');
+        Route::get('', \App\Livewire\Board\BoardComponent::class)
+            ->name('.list')
+            ->middleware('check.permission:р.Доски');
+
         Route::get('select', \App\Livewire\Cms2\Leed\SelectBoardForm::class)->name('.select');
 //        Route::post('invitations', [InvitationController::class, 'store'])->name('.invitations.store');
         Route::get('invitations/join/{id}', [InvitationController::class, 'join'])->name('.invitations.join');
+
+
+
+            Route::get('{board_id}', \App\Livewire\Board\OneComponent::class)->name('.show');
+            Route::get('{board}/config', \App\Livewire\Board\Config\IndexComponent::class)->name('.config');
+            Route::get('{board}/config/polya', \App\Livewire\Board\ConfigComponent::class)->name('.config.polya');
+            Route::get('{board}/config/macros', \App\Livewire\Board\Config\MacrosComponent::class)->name('.config.macros');
+            Route::get('{board}/delete', [\App\Http\Controllers\BoardController::class, 'delete'])
+                ->name('.config.delete')
+                ->middleware('check.permission:р.Доски / удалить');
+
+
+
+
+
     });
 
     Route::get('service/auto', \App\Livewire\Service\AutomationRulesManager::class)->name('service.automation_rules_manager');
 
     Route::middleware('check.permission:р.Техничка')->group(function () {
+
         Route::prefix('tech')->name('tech.')->group(function () {
 
             Route::get('', \App\Livewire\Cms2\Tech\Index::class)->name('index');
@@ -193,14 +223,6 @@ Route::middleware(['auth'])->group(function () {
             Route::prefix('macros')->name('macros.')->group(function () {
                 Route::get('/', \App\Livewire\Macros\Manager::class)->name('manager');
             });
-
-
-
-
-
-
-
-
 
 
             Route::get('inn_searc_org', \App\Livewire\Service\DadataOrgSearchComponent::class)->name('service.dadata_org_search_component');
@@ -263,5 +285,17 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+
+
+
+
+
 //require __DIR__ . '/auth.php';
+Route::prefix('site')->name('site')->group(function () {
+    Route::prefix('news')->name('.news')->group(function () {
+        Route::get('', \App\Livewire\PM\News\Index::class)->name('.index');
+        Route::get('{id}', \App\Livewire\PM\News\Show::class)->name('.show');
+    });
+});
+
 Route::get('login', \App\Livewire\Index::class)->name('login');

@@ -9,6 +9,7 @@ class IndexComponent extends Component
 {
 
     public $board;
+    public $activeTab ;
 
 
     public function mount( Board $board){

@@ -5,6 +5,7 @@
             lg:space-y-10
             ">
 
+    @if(1==2)
     @if( strpos($_SERVER['HTTP_HOST'], '.local') !== false )
         <div>
             <a href="/a/1">войти как админ</a> /
@@ -12,9 +13,10 @@
             <a href="/a/3">войти как мен</a> /
         </div>
     @endif
+    @endif
 
     @if(1==2)
-    @if(1==1)
+    @if(1==2)
         <div class="w-full" x-data="{ showButtons: true }">
 
             <div class="w-full bg-yellow-300 py-3 text-center">
@@ -217,7 +219,7 @@
     </div>
         @endif
 
-        <livewire:news-list />
+{{--        <livewire:news-list />--}}
 
         @if(1==2)
         <nav class="bg-white shadow-md py-4">
@@ -242,7 +244,7 @@
 
 
 
-        <!-- Герой секция -->
+        <!-- Герой секция -->a
         <section class="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
             <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-10 md:mb-0">
@@ -310,7 +312,12 @@
             </div>
         </section>
 
+
+        <section class="py-12 bg-white">
+            <livewire:PM.News.index perPage="3" :showFilter="false" />
+        </section>
         <!-- Возможности -->
+
         <section class="py-16 bg-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-4">Мощные возможности для вашего бизнеса</h2>
@@ -375,15 +382,16 @@
         </section>
 
         <!-- CTA секция -->
-        <section class="py-16 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+        <section class="py-16 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl font-bold mb-6">Готовы повысить эффективность вашей команды?</h2>
-                <p class="text-blue-100 max-w-2xl mx-auto mb-10">Присоединяйтесь к тысячам компаний, которые уже используют KanbanCRM для управления своими лидами и повышения конверсии.</p>
+                <p class="text-blue-100 max-w-2xl mx-auto mb-10">Присоединяйтесь к десяткам компаний (и ИП), которые уже используют ПроцессМастер
+                    для управления своими лидами и ведения мониторинга и повышения конверсии.</p>
                 <a href="#" class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-medium shadow-lg transition duration-300 transform hover:scale-105 inline-flex items-center">
                     Попробовать бесплатно
                     <i class="fas fa-arrow-right ml-2"></i>
                 </a>
-                <p class="mt-4 text-blue-200">14 дней бесплатно, без кредитной карты</p>
+{{--                <p class="mt-4 text-blue-200">14 дней бесплатно, без кредитной карты</p>--}}
             </div>
         </section>
 

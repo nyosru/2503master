@@ -52,13 +52,14 @@ justify-center
     @endpermission
 
     @permission('р.Техничка')
-    <livewire:app.menu-item :route="route('tech.index')" :active="Request::is('tech*')" name="Тех. отдел"
+    <livewire:app.menu-item :route=" route('tech.index') " :active="Request::is('tech*')" name="Тех. отдел"
                             img="/icon/gear.svg"
                             :key="'mnu-tech-i'"/>
     @endpermission
 
     @permission('р.Доски')
-    <livewire:app.menu-item :route="route('board.list')" :active="Request::is('board*')" name="Рабочие доски" img="/icon/gear.svg"
+    <livewire:app.menu-item :route="route('board.list')" :active="Request::is('board*')" name="Рабочие доски"
+                            img="/icon/gear.svg"
                             :key="'mnu-docki'"/>
     @endpermission
 
@@ -67,10 +68,6 @@ justify-center
                             img="/icon/gear.svg"
                             :key="'mnu-vk-friends'"/>
     @endpermission
-
-
-
-
 
 
     @if(1==2)

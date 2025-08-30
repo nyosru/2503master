@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class LeedColumn extends Model
 {
@@ -16,50 +19,105 @@ class LeedColumn extends Model
         'user_id',
         'board_id',
         'order',
-        // настройки
         'can_move',
         'can_delete',
-
         'head_type',
         'type_otkaz',
         'can_create',
         'can_accept_contract',
         'can_get',
-
+        'bg_color', // новое поле
+        'border_color', // новое поле
     ];
 
-    public function records()
+    protected $casts = [
+        'can_move' => 'boolean',
+        'can_delete' => 'boolean',
+        'can_create' => 'boolean',
+        'can_accept_contract' => 'boolean',
+        'can_get' => 'boolean',
+        'order' => 'integer',
+        'deleted_at' => 'datetime',
+        'bg_color' => 'string', // новое
+        'border_color' => 'string', // новое
+    ];
+
+    /**
+     * Отношение к записям лидов
+     */
+    public function records(): HasMany
     {
         return $this->hasMany(LeedRecord::class);
     }
 
-    public function roles()
+    /**
+     * Отношение к ролям с доступом к колонке
+     */
+    public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class, 'column_role', 'column_id', 'role_id');
+        return $this->belongsToMany(Role::class, 'column_role', 'column_id', 'role_id')
+            ->withTimestamps();
     }
 
-
-    // Связь с доской
-    public function board()
+    /**
+     * Отношение к доске
+     */
+    public function board(): BelongsTo
     {
         return $this->belongsTo(Board::class);
     }
 
     /**
-     * Получить все макросы, связанные с этой колонкой
+     * Отношение к макросам
      */
-//    public function macros(): HasMany
-//    {
-//        return $this->hasMany(Macros::class, 'column_id');
-//    }
-    public function macroses()
+    public function macros(): BelongsToMany
     {
         return $this->belongsToMany(
             Macros::class,
             'macro_column',
             'column_id',
             'macro_id'
-        );
+        )->withTimestamps();
+    }
+
+    /**
+     * Отношение к пользователю (создателю колонки)
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Scope для колонок определенной доски
+     */
+    public function scopeForBoard(Builder $query, int $boardId): Builder
+    {
+        return $query->where('board_id', $boardId);
+    }
+
+    /**
+     * Scope для активных колонок (не удаленных)
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->whereNull('deleted_at');
+    }
+
+    /**
+     * Scope для колонок с возможностью создания
+     */
+    public function scopeCanCreate(Builder $query): Builder
+    {
+        return $query->where('can_create', true);
+    }
+
+    /**
+     * Проверка, может ли колонка принимать контракты
+     */
+    public function canAcceptContract(): bool
+    {
+        return (bool) $this->can_accept_contract;
     }
 
 
@@ -82,4 +140,43 @@ class LeedColumn extends Model
     }
 
 
+    /**
+     * Проверка, можно ли перемещать лиды из этой колонки
+     */
+    public function canMoveLeeds(): bool
+    {
+        return (bool) $this->can_move;
+    }
+
+    /**
+     * Получить следующее значение порядка для новой колонки
+     */
+    public static function getNextOrder(int $boardId): int
+    {
+        return static::where('board_id', $boardId)->max('order') + 1;
+    }
+
+    /**
+     * Переместить колонку в новую позицию
+     */
+    public function moveToPosition(int $newPosition): void
+    {
+        // Логика изменения порядка колонок
+        $currentOrder = $this->order;
+
+        if ($newPosition > $currentOrder) {
+            static::where('board_id', $this->board_id)
+                ->where('order', '>', $currentOrder)
+                ->where('order', '<=', $newPosition)
+                ->decrement('order');
+        } else {
+            static::where('board_id', $this->board_id)
+                ->where('order', '>=', $newPosition)
+                ->where('order', '<', $currentOrder)
+                ->increment('order');
+        }
+
+        $this->order = $newPosition;
+        $this->save();
+    }
 }

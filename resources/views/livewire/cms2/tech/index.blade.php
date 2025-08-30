@@ -12,7 +12,8 @@
     <div class="flex flex-wrap">
         @foreach( $links as $name => $v )
 
-            @if( !empty($v['permission']) )
+            @if( !empty($v['permission']) && !empty($v['route']) )
+                @if(1==2)
                 {{--            11 /<br/>--}}
                 {{--            {{$v['route']}} /<br/>--}}
                 {{--            {{route($v['route'])}}--}}
@@ -27,7 +28,7 @@
                 >{{ $name }}</a>
 
                 @endpermission
-
+                @endif
             @else
                 <a href="{{route($v['route'])}}"
                    wire:navigate

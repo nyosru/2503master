@@ -7,14 +7,14 @@ use Livewire\Component;
 
 class Show extends Component
 {
-
     public News $news;
     public $relatedNews;
 
     public function mount(News $news)
     {
         // Проверяем, опубликована ли новость
-        if (!$news->isPublished() && !auth()->check()) {
+//        if (!$news->isPublished() && !auth()->check()) {
+        if ( !$news->isPublished() ) {
             abort(404);
         }
 

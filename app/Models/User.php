@@ -101,4 +101,11 @@ class User extends Authenticatable
         return $this->news()->published();
     }
 
+    // В модели User добавляем:
+    public function boardSettings(): HasMany
+    {
+        return $this->hasMany(BoardUserSetting::class);
+    }
+
+
 }

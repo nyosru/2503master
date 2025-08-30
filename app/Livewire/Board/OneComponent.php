@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Cms2\Leed;
+namespace App\Livewire\Board;
 
 use App\Http\Controllers\LeedController;
 use App\Http\Controllers\UserController;
@@ -8,14 +8,13 @@ use App\Models\Board;
 use App\Models\LeedColumn;
 use App\Models\LeedRecord;
 use App\Models\User;
-use DebugBar\DebugBar;
-
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
-class LeedBoard extends Component
+class OneComponent extends Component
 {
+
 
     // Настройка слушателя события
     protected $listeners = [
@@ -350,77 +349,77 @@ class LeedBoard extends Component
                     },
                     'records' => function ($query) use ($ss) {
 
-                    if (!empty($ss)) {
-                        $query->where(function ($q) use ($ss) {
-                            $q->where('name', 'like', '%' . $ss . '%')
+                        if (!empty($ss)) {
+                            $query->where(function ($q) use ($ss) {
+                                $q->where('name', 'like', '%' . $ss . '%')
 //                                ->orWhere('description', 'like', '%' . $ss . '%')
 //                                ->orWhere('company', 'like', '%' . $ss . '%')
-                                ->orWhere('comment', 'like', '%' . $ss . '%')
+                                    ->orWhere('comment', 'like', '%' . $ss . '%')
 //                                ->orWhere('cooperativ', 'like', '%' . $ss . '%')
 //                                ->orWhere('price', 'like', '%' . $ss . '%')s
 //                                ->orWhere('platform', 'like', '%' . $ss . '%')
-                                ->orWhere('base_number', 'like', '%' . $ss . '%')
-                                ->orWhere('link', 'like', '%' . $ss . '%')
-                                ->orWhere('obj_tender', 'like', '%' . $ss . '%')
-                                ->orWhere('zakazchick', 'like', '%' . $ss . '%')
-                                ->orWhere('mesto_dostavki', 'like', '%' . $ss . '%');
-                        });
-                    }
-                    /*
-//                            ->orWhere('status', 'like', '%' . $this->search . '%')
-//                            ->orWhere('telegram', 'like', '%' . $this->search . '%')
-//                            ->orWhere('whatsapp', 'like', '%' . $this->search . '%')
-//                            ->orWhere('client_id', 'like', '%' . $this->search . '%')
-//                            ->orWhere('client_supplier_id', 'like', '%' . $this->search . '%')
-//                            ->orWhere('order_product_types_id', 'like', '%' . $this->search . '%')
-//                            ->orWhere('leed_column_id', 'like', '%' . $this->search . '%')
-//                            ->orWhere('user_id', 'like', '%' . $this->search . '%')
-//                            ->orWhere('otkaz_reason', 'like', '%' . $this->search . '%')
-////                            ->orWhere('leed_id', 'like', '%' . $this->search . '%')
-//                            ->orWhere('budget', 'like', '%' . $this->search . '%')
-//                            ->orWhere('phone', 'like', '%' . $this->search . '%')
-//                            ->orWhere('fio', 'like', '%' . $this->search . '%')
-//                            ->orWhere('fio2', 'like', '%' . $this->search . '%')
-//                            ->orWhere('phone2', 'like', '%' . $this->search . '%')
-//                            ->orWhere('date_start', 'like', '%' . $this->search . '%')
-//                            ->orWhere('submit_before', 'like', '%' . $this->search . '%')
-//                            ->orWhere('payment_due_date', 'like', '%' . $this->search . '%')
-//                            ->orWhere('pay_day_every_year', 'like', '%' . $this->search . '%')
-//                            ->orWhere('pay_day_every_month', 'like', '%' . $this->search . '%')
-//                            ->orWhere('email', 'like', '%' . $this->search . '%')
-//                            ->orWhere('post_day_ot', 'like', '%' . $this->search . '%')
-//                            ->orWhere('post_day_do', 'like', '%' . $this->search . '%')
-                    */
-
-                    $query->withCount('notifications');
-
-                    $query->with([
-
-                        'column' => function ($query) {
-
-                            $query->select(['id', 'board_id']);
-                            $query->with([
-                                'board' => function ($query) {
-                                    $query->select(['id']);
-
-                                    $query->with([
-                                        'fieldSettings' => function ($query) {
-                                            $query->select(['id',
-                                                'field_name',
-                                                'board_id'
-                                            ]);
-                                            $query->whereShowOnStart(true);
-                                            $query->orderBy('sort_order', 'desc');
-
-                                        }
-//                                    ,'orderRequest','rename'
-                                    ]);
-                                }
-                            ]);
+                                    ->orWhere('base_number', 'like', '%' . $ss . '%')
+                                    ->orWhere('link', 'like', '%' . $ss . '%')
+                                    ->orWhere('obj_tender', 'like', '%' . $ss . '%')
+                                    ->orWhere('zakazchick', 'like', '%' . $ss . '%')
+                                    ->orWhere('mesto_dostavki', 'like', '%' . $ss . '%');
+                            });
                         }
+                        /*
+    //                            ->orWhere('status', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('telegram', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('whatsapp', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('client_id', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('client_supplier_id', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('order_product_types_id', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('leed_column_id', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('user_id', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('otkaz_reason', 'like', '%' . $this->search . '%')
+    ////                            ->orWhere('leed_id', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('budget', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('phone', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('fio', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('fio2', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('phone2', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('date_start', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('submit_before', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('payment_due_date', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('pay_day_every_year', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('pay_day_every_month', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('email', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('post_day_ot', 'like', '%' . $this->search . '%')
+    //                            ->orWhere('post_day_do', 'like', '%' . $this->search . '%')
+                        */
+
+                        $query->withCount('notifications');
+
+                        $query->with([
+
+                            'column' => function ($query) {
+
+                                $query->select(['id', 'board_id']);
+                                $query->with([
+                                    'board' => function ($query) {
+                                        $query->select(['id']);
+
+                                        $query->with([
+                                            'fieldSettings' => function ($query) {
+                                                $query->select(['id',
+                                                    'field_name',
+                                                    'board_id'
+                                                ]);
+                                                $query->whereShowOnStart(true);
+                                                $query->orderBy('sort_order', 'desc');
+
+                                            }
+//                                    ,'orderRequest','rename'
+                                        ]);
+                                    }
+                                ]);
+                            }
 //                        ,'orderRequest','rename'
-                    ]);
-                }])
+                        ]);
+                    }])
                 ->get();
 
         } catch (\Exception $ex) {
@@ -592,8 +591,17 @@ class LeedBoard extends Component
      * @param $newColumnId
      * @return void
      */
-    public
-    function updateRecordColumn($recordId, $newColumnId)
+    public function updateRecordColumn2($recordId, $newColumnId)
+    {
+
+    }
+    /**
+     * обработка переноса записи в новый столбец
+     * @param $recordId
+     * @param $newColumnId
+     * @return void
+     */
+    public function updateRecordColumn($recordId, $newColumnId)
     {
         if (env('APP_ENV', 'x') == 'local') {
             \Log::info('updateRecordColumn', [$recordId, $newColumnId]);
@@ -609,7 +617,8 @@ class LeedBoard extends Component
 
             $col = LeedColumn::whereId($newColumnId)->select(['id', 'board_id'])->first();
 //dd($col->toArray());
-            return $this->redirectRoute('leed', ['board_id' => $col->board_id]);
+//            return $this->redirectRoute('leed', ['board_id' => $col->board_id]);
+            return $this->redirectRoute('board.show', ['board_id' => $col->board_id]);
 
         } catch (\Exception $ex) {
             if (env('APP_ENV', 'x') == 'local') {
@@ -672,14 +681,24 @@ class LeedBoard extends Component
     }
 
 
-    public
-    function render()
+//    public
+//    function render()
+//    {
+//        $this->getCurrentBoard();
+//        \Log::info('рендер leed-board');
+////        Debugbar::addMessage('Пример сообщения', 'debug');
+//        $this->loadColumns();
+//        return view('livewire.cms2.leed.leed-board');
+//    }
+
+
+    public function render()
     {
         $this->getCurrentBoard();
         \Log::info('рендер leed-board');
 //        Debugbar::addMessage('Пример сообщения', 'debug');
         $this->loadColumns();
-        return view('livewire.cms2.leed.leed-board');
-    }
 
+        return view('livewire.board.one-component');
+    }
 }

@@ -91,4 +91,13 @@ class Board extends Model
         return $this->belongsTo(Domain::class, 'domain_id');
     }
 
+
+    /**
+     * Связь с пользовательскими настройками доски
+     */
+    public function userSettings(): HasMany
+    {
+        return $this->hasMany(BoardUserSetting::class);
+    }
+
 }
