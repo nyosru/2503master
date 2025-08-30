@@ -11,7 +11,21 @@ class Index extends Component
     use WithPagination;
 
     public $perPage = 10;
+    /**
+     * показ фильтров
+     * @var bool
+     */
     public $showFilter = true;
+    /**
+     * показывать постраничную навигацию
+     * @var bool
+     */
+    public $showPages = true;
+    /**
+     * показывать ссылку на раздел в заголовке
+     * @var bool
+     */
+    public $showLinkInHead = false;
     public $page ;
     public $search = '';
     public $sortField = 'published_at';

@@ -311,7 +311,9 @@
         </section>
 
         <section class="py-12 bg-white">
-            <livewire:PM.News.index perPage="3" :showFilter="false" />
+            <livewire:PM.News.index perPage="3"
+                                    :showPages="false"
+                                    :showFilter="false" :showLinkInHead="true"/>
         </section>
 
         <!-- Возможности -->

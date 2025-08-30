@@ -17,17 +17,24 @@
         </style>
 
         <!-- Заголовок и поиск -->
+        @if($showLinkInHead)
+            <a href="{{ route('site.news.index') }}"
+               class="hover:underline"
+            wire:navigate >
+            @endif
         <div class="p-6
     {{--    border-b border-gray-200--}}
         ">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <h2 class="text-2xl font-bold text-gray-800">Новости проекта</h2>
-
                 {{--            <div class="w-full md:w-64">--}}
                 {{--              --}}
                 {{--            </div>--}}
             </div>
         </div>
+                @if($showLinkInHead)
+                    </a>
+                        @endif
 
         <!-- Сортировка -->
         @if($showFilter)
@@ -163,8 +170,10 @@
             @endforelse
         </div>
 
+    @if($showPages)
         <div class="w-8/12 mx-auto">
-            {{$news->links()}}
+            {{$news->links('vendor.pagination.my1tailwind')}}
         </div>
+    @endif
     @endif
 </div>
