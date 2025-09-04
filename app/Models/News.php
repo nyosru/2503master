@@ -20,6 +20,7 @@ class News extends Model
         'content',
         'image',
         'author_user_id',
+        'board_id',
         'is_published',
         'published_at',
     ];
@@ -38,6 +39,16 @@ class News extends Model
         return $this->belongsTo(User::class, 'author_user_id');
     }
 
+
+    /**
+     * Отношение к доске (board)
+     */
+    public function board(): BelongsTo
+    {
+        return $this->belongsTo(Board::class, 'board_id');
+    }
+
+
     /**
      * Scope для опубликованных новостей
      */
@@ -45,6 +56,23 @@ class News extends Model
     {
         return $query->where('is_published', true)
             ->where('published_at', '<=', now());
+    }
+
+
+    /**
+     * Scope для новостей определенной доски
+     */
+    public function scopeForBoard($query, $boardId)
+    {
+        return $query->where('board_id', $boardId);
+    }
+
+    /**
+     * Scope для новостей без привязки к доске
+     */
+    public function scopeWithoutBoard($query)
+    {
+        return $query->whereNull('board_id');
     }
 
     /**
@@ -88,6 +116,14 @@ class News extends Model
     }
 
     /**
+     * Проверить, привязана ли новость к доске
+     */
+    public function hasBoard(): bool
+    {
+        return !is_null($this->board_id);
+    }
+
+    /**
      * Опубликовать новость
      */
     public function publish(): void
@@ -104,6 +140,22 @@ class News extends Model
     public function unpublish(): void
     {
         $this->update(['is_published' => false]);
+    }
+
+    /**
+     * Привязать к доске
+     */
+    public function attachToBoard($boardId): void
+    {
+        $this->update(['board_id' => $boardId]);
+    }
+
+    /**
+     * Отвязать от доски
+     */
+    public function detachFromBoard(): void
+    {
+        $this->update(['board_id' => null]);
     }
 
     /**

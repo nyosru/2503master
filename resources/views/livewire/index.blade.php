@@ -242,18 +242,97 @@
         </nav>
 @endif
 
-        <!-- Герой секция -->
+        <!-- первый блок -->
         <section class="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
             <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
+
+{{--                блок с нопкой модальный--}}
+                @if(1==2)
+                <div class="md:w-1/2 mb-10 md:mb-0"
+                     x-data="{ showModal: false }"
+                >
                     <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Управляйте лидами с помощью интуитивных канбан-досок</h1>
                     <p class="text-lg text-gray-700 mb-8">Создавайте собственные доски, перемещайте задачи между колонками, назначайте права доступа сотрудникам и повышайте эффективность вашей команды.</p>
-                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-medium shadow-lg transition duration-300 transform hover:-translate-y-1 inline-flex items-center">
+                   <!-- Кнопка -->
+
+
+
+
+<a
+    href="#"
+    @click.prevent="showModal = true"
+    class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-medium shadow-lg transition duration-300 transform hover:-translate-y-1 inline-flex items-center"
+>
+    Попробовать бесплатно
+    <i class="fas fa-arrow-right ml-2"></i>
+</a>
+
+<!-- Модальное окно -->
+                    @if(1==1)
+
+
+                    <div
+
+    x-show="showModal"
+    @keydown.escape.window="showModal = false"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+    <div
+        class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full"
+        @click.away="showModal = false"
+    >
+        <h2 class="text-xl font-bold mb-4">Попробуйте бесплатно</h2>
+        <p class="mb-4">
+            Подготовили для Вас <b>быстрый бесплатный старт</b>,
+            <Br/>
+            <Br/>
+            чтобы попасть в свою первую бесплатную рабочую доску
+            <Br/>
+            пройдите авторизацию с помощью телеграм <b>(кнопка на верху)</b>!</p>
+
+        @if(1==2)
+        <!-- Пример формы -->
+        <form class="space-y-4">
+            <input type="text" placeholder="Имя" class="w-full p-2 border rounded">
+            <input type="email" placeholder="Email" class="w-full p-2 border rounded">
+            <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+                Начать
+            </button>
+        </form>
+
+        <button
+            type="button"
+            @click="showModal = false"
+            class="mt-4 text-gray-500 hover:text-gray-700 float-right"
+        >
+            Закрыть
+        </button>
+        @endif
+
+    </div>
+</div>
+                    @endif
+
+{{--                    <p class="mt-4 text-gray-600">Первый месяц бесплатно, без необходимости привязывать карту</p>--}}
+                </div>
+               @endif
+
+                @if(1==1)
+                <div class="md:w-1/2 mb-10 md:mb-0" >
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Управляйте лидами с помощью интуитивных канбан-досок</h1>
+                    <p class="text-lg text-gray-700 mb-8">Создавайте собственные доски, перемещайте задачи между колонками, назначайте права доступа сотрудникам и повышайте эффективность вашей команды.</p>
+                   <!-- Кнопка -->
+
+
+                    <a href="{{ route('auth.telegram.redirect') }}"
+                       class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-medium shadow-lg transition duration-300 transform hover:-translate-y-1 inline-flex items-center">
                         Попробовать бесплатно
                         <i class="fas fa-arrow-right ml-2"></i>
                     </a>
-                    <p class="mt-4 text-gray-600">Первый месяц бесплатно, без необходимости привязывать карту</p>
                 </div>
+               @endif
+
+{{--                показ типа доски--}}
                 <div class="md:w-1/2 flex justify-center">
                     <div class="relative w-full max-w-lg">
                         <div class="absolute -top-6 -left-6 w-64 h-64 bg-blue-200 rounded-lg opacity-50 animate-pulse"></div>
@@ -387,7 +466,8 @@
                 <h2 class="text-3xl font-bold mb-6">Готовы повысить эффективность вашей команды?</h2>
                 <p class="text-blue-100 max-w-2xl mx-auto mb-10">Присоединяйтесь к десяткам компаний (и ИП), которые уже используют ПроцессМастер
                     для управления своими лидами и ведения мониторинга и повышения конверсии.</p>
-                <a href="#" class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-medium shadow-lg transition duration-300 transform hover:scale-105 inline-flex items-center">
+                <a href="{{ route('auth.telegram.redirect') }}"
+                   class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-medium shadow-lg transition duration-300 transform hover:scale-105 inline-flex items-center">
                     Попробовать бесплатно
                     <i class="fas fa-arrow-right ml-2"></i>
                 </a>

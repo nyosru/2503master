@@ -4,6 +4,7 @@ namespace App\Livewire\Board\Config;
 
 use App\Models\Board;
 use App\Models\BoardUserSetting;
+use App\Models\Domain;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -15,10 +16,12 @@ class UserSettings extends Component
         'cards_per_page' => 20,
         'show_avatars' => true,
         'compact_mode' => false,
+        'domain_id' => '',
     ];
 
     protected $rules = [
         'settings.view_type' => 'required|in:доска,таблица',
+        'settings.domain_id' => 'nullable|integer|exists:domains,id',
         'settings.cards_per_page' => 'required|integer|min:5|max:100',
         'settings.show_avatars' => 'boolean',
         'settings.compact_mode' => 'boolean',
@@ -30,19 +33,25 @@ class UserSettings extends Component
         'cards_per_page' => 'Карточек на странице',
         'show_avatars' => 'Показывать аватары',
         'compact_mode' => 'Компактный режим',
+        'domain_id' => 'Домен',
     ];
 
     // Опции для выпадающих списков
-    protected array $settingOptions = [
-        'view_type' => [
-            'доска' => 'Доска (канбан)',
-            'таблица' => 'Таблица',
-        ],
-    ];
+    public array $settingOptions = [];
 
     public function mount(Board $board)
     {
         $this->board = $board;
+
+        $this->settingOptions = [
+//            'domain' => Domain::all()->pluck('domain', 'domain_ru', 'id')->toArray(),
+            'domain' => Domain::all(),
+            'view_type' => [
+                'доска' => 'Доска (канбан)',
+                'таблица' => 'Таблица',
+            ],
+        ];
+
         $this->loadUserSettings();
     }
 
@@ -66,6 +75,11 @@ class UserSettings extends Component
     public function saveSettings(): void
     {
         $this->validate();
+
+//        dd($this->settings);
+
+        $this->board->domain_id = $this->settings['domain_id'];
+        $this->board->save();
 
         foreach ($this->settings as $settingKey => $value) {
             $this->saveSingleSetting($settingKey, $value);

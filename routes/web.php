@@ -49,11 +49,19 @@ Route::get('', \App\Livewire\Index::class)->name('index');
 //Route::post('/auth/telegram/callback777', [TelegramController::class, 'callback']);
 
 
+// Маршруты для Telegram аутентификации
+Route::get('/auth/telegram/redirect', [\App\Http\Controllers\Auth\TelegramController::class, 'redirect'])
+    ->name('auth.telegram.redirect');
+Route::get('/auth/telegram/callback2', [\App\Http\Controllers\Auth\TelegramController::class, 'callback'])
+    ->name('auth.telegram.callback');
+
+
 // Маршрут для перенаправления на страницу авторизации Telegram
 Route::get('/auth/telegram', function () {
     // Если вы используете сторонний пакет, замените 'telegram' на нужный вам драйвер
     return Socialite::driver('telegram')->redirect();
-});
+})->name('auth.telegram');
+
 Route::get('/enter/tg', function () {
     // Если вы используете сторонний пакет, замените 'telegram' на нужный вам драйвер
     return Socialite::driver('telegram')->redirect();
@@ -99,7 +107,8 @@ Route::get('/auth/telegram/callback', function () {
     Auth::login($user);
 
     // Перенаправление на нужную страницу после авторизации
-    return redirect()->route('leed.list');
+//    return redirect()->route('leed.list');
+    return redirect()->route('board.list');
 });
 
 
@@ -141,7 +150,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('', function () {
-        return redirect(route('leed.list'));
+//        return redirect(route('leed.list'));
+        return redirect(route('board.list'));
     })->name('index');
 ////    Route::get('', \App\Livewire\Index::class)->name('login');
 
@@ -185,9 +195,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['as' => 'board', 'prefix' => 'board'], function () {
 
-        Route::get('', \App\Livewire\Board\BoardComponent::class)
-            ->name('')
-            ->middleware('check.permission:р.Доски');
+//        Route::get('', \App\Livewire\Board\BoardComponent::class)
+//            ->name('')
+//            ->middleware('check.permission:р.Доски');
+
         Route::get('', \App\Livewire\Board\BoardComponent::class)
             ->name('.list')
             ->middleware('check.permission:р.Доски');
@@ -196,19 +207,13 @@ Route::middleware(['auth'])->group(function () {
 //        Route::post('invitations', [InvitationController::class, 'store'])->name('.invitations.store');
         Route::get('invitations/join/{id}', [InvitationController::class, 'join'])->name('.invitations.join');
 
-
-
-            Route::get('{board_id}', \App\Livewire\Board\OneComponent::class)->name('.show');
-            Route::get('{board}/config', \App\Livewire\Board\Config\IndexComponent::class)->name('.config');
-            Route::get('{board}/config/polya', \App\Livewire\Board\ConfigComponent::class)->name('.config.polya');
-            Route::get('{board}/config/macros', \App\Livewire\Board\Config\MacrosComponent::class)->name('.config.macros');
-            Route::get('{board}/delete', [\App\Http\Controllers\BoardController::class, 'delete'])
-                ->name('.config.delete')
-                ->middleware('check.permission:р.Доски / удалить');
-
-
-
-
+        Route::get('{board_id}', \App\Livewire\Board\OneComponent::class)->name('.show');
+        Route::get('{board}/config', \App\Livewire\Board\Config\IndexComponent::class)->name('.config');
+        Route::get('{board}/config/polya', \App\Livewire\Board\ConfigComponent::class)->name('.config.polya');
+        Route::get('{board}/config/macros', \App\Livewire\Board\Config\MacrosComponent::class)->name('.config.macros');
+        Route::get('{board}/delete', [\App\Http\Controllers\BoardController::class, 'delete'])
+            ->name('.config.delete')
+            ->middleware('check.permission:р.Доски / удалить');
 
     });
 
@@ -219,28 +224,20 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('tech')->name('tech.')->group(function () {
 
             Route::get('', \App\Livewire\Cms2\Tech\Index::class)->name('index');
-
             Route::prefix('macros')->name('macros.')->group(function () {
                 Route::get('/', \App\Livewire\Macros\Manager::class)->name('manager');
             });
-
-
             Route::get('inn_searc_org', \App\Livewire\Service\DadataOrgSearchComponent::class)->name('service.dadata_org_search_component');
-
             Route::get('/domains', \App\Livewire\Domain\Create::class)
                 ->name('domain.create');
-
             Route::get('/roles', \App\Livewire\RolePermissions::class)
                 ->name('role_permission');
-
             Route::middleware('check.permission:тех.Управление столбцами')->group(function () {
                 Route::get('adm_role_column', \App\Livewire\RoleColumnAccess::class)->name('adm_role_column');
             });
-
             Route::middleware('check.permission:тех.упр полями в лиде')->group(function () {
                 Route::get('order_requests_manager', \App\Livewire\Tech\OrderRequestsManager::class)->name('order_requests_manager');
             });
-
             Route::get('order-request-rename-form', \App\Livewire\Board\OrderRequestRenameForm::class)->name('order-request-rename-form');
 
             // пользователи
@@ -261,16 +258,20 @@ Route::middleware(['auth'])->group(function () {
                 });
             });
 
+            // Администрирование новостей
+            Route::prefix('news-admin')->as('news-admin')->group(function () {
+                Route::get('/', \App\Livewire\PM\NewsAdmin\Index::class)->name('');
+                Route::get('/create', \App\Livewire\PM\NewsAdmin\Form::class)->name('.create');
+                Route::get('/edit/{id}', \App\Livewire\PM\NewsAdmin\Form::class)->name('.edit');
+            });
+
         });
     });
-
 
     Route::middleware('check.permission:р.Клиенты')->group(function () {
         Route::prefix('clients')->name('clients')->group(function () {
             Route::get('/', Client\Clients::class);
-
             Route::get('create', Client\ClientsInfo::class)->name('.create');
-
             Route::get('{client_id}', Client\ClientsInfo::class)->name('.info');
             Route::get('{client_id}/edit', Client\ClientsInfo::class)->name('.edit');
         });
@@ -284,10 +285,6 @@ Route::middleware(['auth'])->group(function () {
     });
 
 });
-
-
-
-
 
 
 //require __DIR__ . '/auth.php';

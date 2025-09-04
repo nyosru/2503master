@@ -20,6 +20,26 @@
             @enderror
         </div>
 
+        <!-- Режим отображения -->
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                {{ $this->getLabel('domain') }}:
+            </label>
+
+            <select wire:model="settings.domain_id"
+                    class="w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                <option value="">выберите</option>
+                @foreach($this->settingOptions['domain'] as $v)
+{{--                @foreach($this->getOptions('domain') as $v)--}}
+                    <option value="{{ $v->id }}">{{ $v->domain_ru ?? $v->domain ?? '??' }}</option>
+                @endforeach
+            </select>
+
+            @error('settings.domain')
+            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
         <!-- Карточек на странице -->
         <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700 mb-2">

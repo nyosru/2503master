@@ -25,16 +25,15 @@ class Create extends Component
     public function updatedDomain(string $value)
     {
         $parsed = parse_url(trim($value));
-        $domain = $parsed['host'] ?? $value;
-        $cleanDomain = trim($domain);
+        $domain_ru = $parsed['host'] ?? $value;
+        $cleanDomain = trim($domain_ru);
+        $this->domain_ru = $cleanDomain;
 
-        $this->domain = $cleanDomain;
-
-        if (Str::endsWith(mb_strtolower($cleanDomain), '.рф')) {
-            $this->domain_ru = $this->toPunycode($cleanDomain);
-        } else {
-            $this->domain_ru = $cleanDomain;
-        }
+//        if ( $this->domain_ru != $this->toPunycode($cleanDomain) ) {}
+            $this->domain = $this->toPunycode($cleanDomain);
+//        } else {
+//            $this->domain = $cleanDomain;
+//        }
     }
 
     protected function toPunycode(string $domain): string

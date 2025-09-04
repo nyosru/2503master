@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Master\PositionController;
 use App\Models\Board;
 use App\Models\BoardFieldSetting;
+use App\Models\BoardTemplate;
 use App\Models\BoardUser;
+use App\Models\ColumnRole;
 use App\Models\OrderRequest;
 use App\Models\OrderRequestsRename;
 use App\Models\User;
@@ -16,6 +19,24 @@ class BoardController extends Controller
 {
 
     public static $polya_config = [];
+
+    /**
+     * строим доску если у пользователя ещё не было досок
+     * @return void
+     */
+    public function startBoardBuilder()
+    {
+        $user = Auth::user();
+        $count = boardUser::withTrashed()->where('user_id', $user->id)->count();
+        // нет аккаунтов, создаём первую доску, роль и всё такое
+        if ($count == 0) {
+            $this->board_name = 'Доска №1';
+            $create_result = $this->createNewStartBoardFromTemplate();
+
+            $res = $this->createBoardFromTemplate($create_result['template'], $create_result['newBoard']);
+        }
+    }
+
 
     public static function getPolyaConfig($board_id = null)
     {
@@ -91,6 +112,138 @@ class BoardController extends Controller
         }
         return $rules;
     }
+
+    public function createNewStartBoardFromTemplate($template_id = null)
+    {
+
+        if (empty($template_id)) {
+            $template = BoardTemplate::startTemplates()
+                ->with([
+                    'columns' => function ($query) {
+                        $query->orderBy('sorting', 'asc');
+                    },
+                    'positions',
+                    'polya'
+                ])
+                ->first();
+        } else {
+            $template = BoardTemplate::
+            where('id', $template_id)
+                ->with([
+                    'columns' => function ($query) {
+                        $query->orderBy('sorting', 'asc');
+                    },
+                    'positions',
+                    'polya'
+                ])
+                ->first();
+        }
+
+        // создание новой доски
+        $newBoard = Board::create([
+            'name' => $this->board_name,
+            'admin_user_id' => auth()->user()->id
+        ]);
+
+        // создание полей в новую доску из шаблона
+        $this->setConfigNewBoard($newBoard, $template->polya->toArray());
+
+        return [
+            'newBoard' => $newBoard,
+            'template' => $template,
+        ];
+
+    }
+
+    public function createBoardFromTemplate(BoardTemplate $template, Board $newBoard)
+    {
+
+        // создание должностей в новую доску из шаблона
+        $new_position_id = $this->createPositionInBoardFromShablon($template, $newBoard);
+
+        BoardUser::create([
+            'board_id' => $newBoard->id,
+            'user_id' => auth()->user()->id,
+            'role_id' => $new_position_id,
+        ]);
+
+        $sort = 1;
+        $start = true;
+
+        foreach ($template->columns as $column) {
+//            dump($column);
+
+            $datain_col = [
+                'name' => $column->name,
+                'order' => $sort,
+            ];
+
+            if ($start) {
+                $datain_col['can_create'] = true;
+                $start = false;
+            }
+
+            $columnNew = $newBoard->columns()->create($datain_col);
+
+            ColumnRole::create([
+                'column_id' => $columnNew->id,
+                'role_id' => $new_position_id,
+            ]);
+
+            $sort += 2;
+        }
+
+//        return [$newBoard_id, $new_position_id];
+        return [$newBoard->id, $new_position_id];
+
+    }
+
+
+    /**
+     * создание должностей в доске
+     * @param $template
+     * @param $newBoard
+     * @return int
+     */
+    public function createPositionInBoardFromShablon($template, $newBoard): int
+    {
+
+        foreach ($template->positions as $position) {
+            $newBoard->role()->create([
+                'name' => $position->name . date('ymdhis'),
+                'name_ru' => $position->name,
+                'guard_name' => 'web',
+                'board_id' => $newBoard->id
+            ]);
+        }
+
+        $name = 'Тех.поддержка';
+        $name_t = $name . date('ymdhis');
+        $new_position = $newBoard->role()->create([
+            'name' => $name_t,
+            'name_ru' => $name,
+            'guard_name' => 'web',
+            'board_id' => $newBoard->id
+        ]);
+
+        $pos = new PositionController();
+        $pos->setStartPermissionFromPosition($new_position->id);
+
+        return $new_position->id;
+    }
+
+
+    public function setConfigNewBoard(Board $board, $polya)
+    {
+        foreach ($polya as $pole) {
+            self::setRenamePolya($board->id, $pole['pole'], $pole['name'], '', $pole['sort'],
+                $pole['is_enabled'],
+                $pole['show_on_start'],
+                $pole['in_telega_msg'],
+            );
+        }
+    }
+
 
     public static function enterAs($board_id, $role_id)
     {

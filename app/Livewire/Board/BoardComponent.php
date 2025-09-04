@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Board;
 
+use App\Http\Controllers\BoardController;
 use App\Models\Board;
 use App\Models\BoardUser;
 use App\Models\Role;
@@ -12,7 +13,14 @@ use Livewire\Attributes\On;
 
 class BoardComponent extends Component
 {
+
     use WithPagination;
+
+    public function mount(){
+        // если нет досок создаём доску первую
+        $bb = new BoardController;
+        $bb->startBoardBuilder();
+    }
 
     #[On('user-added')]
     public function refreshBoardUsers()

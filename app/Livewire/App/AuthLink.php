@@ -20,9 +20,7 @@ class AuthLink extends Component
 
         $this->show_original_link = ( $APP_URL == $domain_now );
         $this->link_to_auth_master_domain = 'https://'.$APP_URL.'/enter/tg?return_to='.urlencode($domain_now);
-
     }
-
 
     public function render()
     {

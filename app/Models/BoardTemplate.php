@@ -9,7 +9,14 @@ class BoardTemplate extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'status', 'price'];
+    protected $fillable = ['name', 'status', 'price',
+        'start_template',
+        ];
+
+    protected $casts = [
+        'start_template' => 'boolean',
+        // другие casts...
+    ];
 
     // Шаблон доски имеет множество колонок
     public function columns()
@@ -27,6 +34,14 @@ class BoardTemplate extends Model
     public function polya()
     {
         return $this->hasMany(BoardTemplatePolya::class);
+    }
+
+    /**
+     * Scope для получения стартовых шаблонов
+     */
+    public function scopeStartTemplates($query)
+    {
+        return $query->where('start_template', true);
     }
 
 }

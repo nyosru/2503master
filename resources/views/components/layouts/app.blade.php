@@ -55,6 +55,12 @@
                         {{--            </div>--}}
                         <livewire:app.menu/>
                     @endif
+
+                    {{--                        если техничка то меню сверху--}}
+                    @if (Route::is('tech*') )
+                        <livewire:tech.menu/>
+                    @endif
+
                     <div class="flex-1 min-h-[400px]">
                         {{ $slot ?? '' }}
                         @yield('content' , '' )
@@ -68,20 +74,20 @@
                 <div class="min-h-screen flex flex-col">
                     <div class="
 {{--    bg-blue-100 bg-contain bg-no-repeat bg-center sm:bg-[url('/img/bg1.jpg')] --}}
-    flex-grow flex-col space-y-5
-    ">
+flex-grow flex-col space-y-5
+">
                         <header class="
-        bg-gradient-to-bl from-gray-100 to-blue-200
-        py-5
+bg-gradient-to-bl from-gray-100 to-blue-200
+py-5
 {{--        flex flex-col--}}
-        ">
+">
 
                             <div class="container mx-auto text-center
-            flex
-            flex-col
-            sm:flex-row
+flex
+flex-col
+sm:flex-row
 {{--            border-red-300 border-2--}}
-            ">
+">
                                 <div class="w-full sm:w-1/3 text-center text-2xl font-bold font-monospace py-3">
                                     ПроцессМастер<small>.рф</small>
                                 </div>
@@ -95,17 +101,17 @@
                         </header>
 
                         <main class="min-h-[550px]
-            container mx-auto
-            flex flex-col
-            space-y-5
-            lg:space-y-10
-            ">
+container mx-auto
+flex flex-col
+space-y-5
+lg:space-y-10
+">
 
                             <div class="w-full bg-yellow-300 py-3 text-center">
-                <span class="text-lg font-bold">
-                Демо версия, посмотреть, покликать
-                <button class="bg-blue-300 rounded px-3 py-1">Посмотреть!</button>
-                    </span>
+<span class="text-lg font-bold">
+Демо версия, посмотреть, покликать
+<button class="bg-blue-300 rounded px-3 py-1">Посмотреть!</button>
+</span>
                                 <br/>
                                 каждые 2 часа все изменения сбрасываются на тестовый набор
                                 (шаги,пользователи,комментарии)
@@ -120,14 +126,14 @@
                             {{--                <div class="w-1/2">22</div>--}}
                             {{--            </div>--}}
                             <div class="w-full flex
-            flex-col space-x-5
-            lg:flex-row space-y-5
+flex-col space-x-5
+lg:flex-row space-y-5
 
-            ">
+">
                                 <div class="w-full lg:w-1/2">
                                     <div class="w-full flex flex-row
-            space-x-5
-            ">
+space-x-5
+">
                                         <div class="w-[150px]">
                                             <img src="/icon/checklist.png" class="w-[132px] float-right"/>
                                         </div>
@@ -142,8 +148,8 @@
                                 </div>
                                 <div class="w-full lg:w-1/2">
                                     <div class="w-full flex flex-row
-            space-x-5
-            ">
+space-x-5
+">
                                         <div class="w-[150px]">
                                             <img src="/icon/checklist2.png" class="w-[132px] float-right"/>
                                         </div>
@@ -178,15 +184,15 @@
                             {{--            </div>--}}
 
                             <div class="w-full flex
-            flex-col space-x-5
-            lg:flex-row space-y-5
+flex-col space-x-5
+lg:flex-row space-y-5
 
-            ">
+">
                                 <div class="w-full lg:w-1/2">
                                     <div class="w-full max-w-[350px] mx-auto rounded
 {{--                    bg-yellow-300 --}}
-                    border-l-[10px] border-yellow-300
-                    p-2">
+border-l-[10px] border-yellow-300
+p-2">
                                         <img src="/icon/time-date.png" class="w-[50px] m-2 float-left"/>
                                         До 1 сентября 2025г идёт этап настройки приложения и бизнес процессов,
                                         присоединяйтесь,
@@ -197,8 +203,8 @@
                                 <div class="w-full lg:w-1/2">
 
                                     <div class="w-full flex flex-row
-            space-x-5
-            ">
+space-x-5
+">
                                         <div class="w-[150px]">
                                             <img src="/icon/share.png" class="w-[132px] float-right"/>
                                         </div>

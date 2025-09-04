@@ -30,6 +30,8 @@ class Index extends Component
     public $search = '';
     public $sortField = 'published_at';
     public $sortDirection = 'desc';
+    public $showDomain = '';
+    public $showBoardId = '';
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -61,7 +63,36 @@ class Index extends Component
 
     public function render()
     {
+
+//        public $showDomain = '';
+//        public $showBoardId = '';
+
+        $domain = $this->showDomain;
+
+        if( $_SERVER['HTTP_HOST'] == 'master.local' )
+            $domain = 'master.local';
+
         $news = News::published()
+
+            ->with('board.domain')
+            ->when($domain, function ($query) use ($domain) {
+                $query->whereHas('board.domain', function ($query) use ($domain) {
+                    $query->where('domain', $domain);
+                });
+            })
+
+//                ->with('board.domain')
+//                ->whereHas('board.domain', function ($query) use ( $domain) {
+//                    $query->where('domain', $domain);
+//                })
+//                ->get()
+//            ->when($this->showDomain, function ($query) {
+////                $query->where('domain', $this->showDomain);
+//            })
+//            ->when($this->showBoardId, function ($query) {
+////                $query->where('domain', $this->showDomain);
+//            })
+
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('title', 'like', '%' . $this->search . '%')

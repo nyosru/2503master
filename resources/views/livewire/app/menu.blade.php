@@ -4,7 +4,8 @@ text-[#c2c7d0]
 {{-- border border-3 border-blue-300--}}
 flex flex-row flex-wrap
 w-full
-space-y-1 space-x-1
+{{--space-y-1--}}
+space-x-1
 justify-center
 ">
 
@@ -26,13 +27,6 @@ justify-center
     {{--        </div>--}}
 
 
-    <!-- Лиды -->
-    @permission('р.Лиды')
-    <livewire:app.menu-item :route="route('leed.list')" :active="Request::is('leed*')" name="Рабочие доски"
-                            img="/icon/gear.svg"
-                            :key="'mnu-docki-leed'"/>
-    @endpermission
-
     {{--        @can('р.Клиенты')--}}
     @permission('р.Клиенты')
     <div>
@@ -51,17 +45,31 @@ justify-center
     </div>
     @endpermission
 
+    @permission('р.Доски')
+    <livewire:app.menu-item :route="route('board.list')"
+                            :active="Request::is('board*')"
+                            name="Рабочие доски"
+                            img="/icon/gear.svg"
+                            :key="'mnu-docki'"/>
+    @endpermission
+
+
     @permission('р.Техничка')
     <livewire:app.menu-item :route=" route('tech.index') " :active="Request::is('tech*')" name="Тех. отдел"
                             img="/icon/gear.svg"
                             :key="'mnu-tech-i'"/>
     @endpermission
 
-    @permission('р.Доски')
-    <livewire:app.menu-item :route="route('board.list')" :active="Request::is('board*')" name="Рабочие доски"
-                            img="/icon/gear.svg"
-                            :key="'mnu-docki'"/>
+
+    <!-- Лиды -->
+    @permission('р.Лиды')
+    <livewire:app.menu-item :route="route('leed.list')"
+                            :active="Request::is('leed*')"
+                            name="Д"
+                            {{--                            img="/icon/gear.svg"--}}
+                            :key="'mnu-docki-leed'"/>
     @endpermission
+
 
     @permission('Разработка')
     <livewire:app.menu-item :route="route('vk.friend')" :active="Request::routeIs('vk.friend')" name="vk friends"

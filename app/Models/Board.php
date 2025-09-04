@@ -100,4 +100,13 @@ class Board extends Model
         return $this->hasMany(BoardUserSetting::class);
     }
 
+
+    /**
+     * Связь с новостями доски
+     */
+    public function news(): HasMany
+    {
+        return $this->hasMany(News::class);
+    }
+
 }
