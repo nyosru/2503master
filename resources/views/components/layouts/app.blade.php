@@ -32,27 +32,17 @@
 @else
     <div class=" ">
         <div class="min-h-screen flex flex-col relative">
-
-            <div class="
-{{--    bg-blue-100 bg-contain bg-no-repeat bg-center sm:bg-[url('/img/bg1.jpg')] --}}
-    flex-grow flex-row space-y-5
-
-    ">
-                {{--        <livewire:app.header/>--}}
+            <div class="flex-grow flex-row space-y-5">
                 <livewire:app.navigation/>
-
                 <div class="flex flex-col space-x-5">
                     @if (Route::is('tech*')
-        || Route::is('lk*')
-        || Route::is('board*')
-        || Route::is('leed*')
-        || Route::is('clients*')
-        || Route::is('order*')
-        || Route::is('vk*')
-        )
-                        {{--            <div class="w-[200px] bg-orange-500">--}}
-                        {{--                меню--}}
-                        {{--            </div>--}}
+                        || Route::is('lk*')
+                        || Route::is('board*')
+                        || Route::is('leed*')
+                        || Route::is('clients*')
+                        || Route::is('order*')
+                        || Route::is('vk*')
+                        )
                         <livewire:app.menu/>
                     @endif
 
@@ -72,22 +62,9 @@
 
             @if(1==2)
                 <div class="min-h-screen flex flex-col">
-                    <div class="
-{{--    bg-blue-100 bg-contain bg-no-repeat bg-center sm:bg-[url('/img/bg1.jpg')] --}}
-flex-grow flex-col space-y-5
-">
-                        <header class="
-bg-gradient-to-bl from-gray-100 to-blue-200
-py-5
-{{--        flex flex-col--}}
-">
-
-                            <div class="container mx-auto text-center
-flex
-flex-col
-sm:flex-row
-{{--            border-red-300 border-2--}}
-">
+                    <div class="flex-grow flex-col space-y-5">
+                        <header class="bg-gradient-to-bl from-gray-100 to-blue-200py-5">
+                            <div class="container mx-auto text-center flex flex-col sm:flex-row ">
                                 <div class="w-full sm:w-1/3 text-center text-2xl font-bold font-monospace py-3">
                                     ПроцессМастер<small>.рф</small>
                                 </div>
@@ -100,13 +77,7 @@ sm:flex-row
 
                         </header>
 
-                        <main class="min-h-[550px]
-container mx-auto
-flex flex-col
-space-y-5
-lg:space-y-10
-">
-
+                        <main class="min-h-[550px] container mx-auto flex flex-col space-y-5 lg:space-y-10 ">
                             <div class="w-full bg-yellow-300 py-3 text-center">
 <span class="text-lg font-bold">
 Демо версия, посмотреть, покликать
