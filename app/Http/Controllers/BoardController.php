@@ -27,19 +27,18 @@ class BoardController extends Controller
     public function startBoardBuilder()
     {
 
-        $templates = BoardTemplate::all();
-        if ($templates->isEmpty()) {
-            return false;
-        }
-
         $user = Auth::user();
         $count = boardUser::withTrashed()->where('user_id', $user->id)->count();
         // нет аккаунтов, создаём первую доску, роль и всё такое
         if ($count == 0) {
+
             $this->board_name = 'Доска №1';
             $create_result = $this->createNewStartBoardFromTemplate();
+            try {
+                $res = $this->createBoardFromTemplate($create_result['template'], $create_result['newBoard']);
+            } catch (\Exception $e) {
+            }
 
-            $res = $this->createBoardFromTemplate($create_result['template'], $create_result['newBoard']);
         }
     }
 
@@ -123,7 +122,7 @@ class BoardController extends Controller
     {
 
         $ee = BoardTemplate::all()->count();
-        if( $ee == 0 ){
+        if ($ee == 0) {
             return;
         }
 
@@ -160,7 +159,8 @@ class BoardController extends Controller
         // создание полей в новую доску из шаблона
         try {
             $this->setConfigNewBoard($newBoard, $template->polya->toArray());
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         return [
             'newBoard' => $newBoard,
@@ -169,7 +169,7 @@ class BoardController extends Controller
 
     }
 
-    public function createBoardFromTemplate( int $template_id, string $board_name )
+    public function createBoardFromTemplate(int $template_id, string $board_name)
     {
 
         $template = BoardTemplate::where('id', $template_id)
