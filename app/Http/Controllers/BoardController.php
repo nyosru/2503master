@@ -116,6 +116,11 @@ class BoardController extends Controller
     public function createNewStartBoardFromTemplate($template_id = null)
     {
 
+        $ee = BoardTemplate::all()->count();
+        if( $ee == 0 ){
+            return;
+        }
+
         if (empty($template_id)) {
             $template = BoardTemplate::startTemplates()
                 ->with([
@@ -138,6 +143,7 @@ class BoardController extends Controller
                 ])
                 ->first();
         }
+
 
         // создание новой доски
         $newBoard = Board::create([
