@@ -195,10 +195,10 @@ Route::get('', \App\Livewire\Index::class)->name('index');
 
 
 
-use App\Livewire\Auth\vk;
+use App\Livewire\Auth\Vk;
 
-Route::get('/auth/vk', [vk::class, 'redirect'])->name('auth.vk');
-Route::get('/auth/vk/callback', [vk::class, 'handleVKCallback'])->name('auth.vk.callback');
+Route::get('/auth/vk', [Vk::class, 'redirect'])->name('auth.vk');
+Route::get('/auth/vk/callback', [Vk::class, 'handleVKCallback'])->name('auth.vk.callback');
 
 
 // Маршруты для Telegram аутентификации
