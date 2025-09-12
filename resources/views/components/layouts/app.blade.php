@@ -86,25 +86,11 @@
                                 <br/>
                                 каждые 2 часа все изменения сбрасываются на тестовый набор
                                 (шаги,пользователи,комментарии)
-                                {{--                <button class="bg-blue-300 rounded px-3 py-1">Производство, посмотреть!</button>--}}
-                                {{--                <button class="bg-blue-300 rounded px-3 py-1">Услуги, посмотреть!</button>--}}
                             </div>
 
-                            {{--            <div class="w-full flex flex-row--}}
-                            {{--            space-x-5--}}
-                            {{--            ">--}}
-                            {{--                <div class="w-1/2"></div>--}}
-                            {{--                <div class="w-1/2">22</div>--}}
-                            {{--            </div>--}}
-                            <div class="w-full flex
-flex-col space-x-5
-lg:flex-row space-y-5
-
-">
+                            <div class="w-full flex flex-col space-x-5 lg:flex-row space-y-5 ">
                                 <div class="w-full lg:w-1/2">
-                                    <div class="w-full flex flex-row
-space-x-5
-">
+                                    <div class="w-full flex flex-row space-x-5 ">
                                         <div class="w-[150px]">
                                             <img src="/icon/checklist.png" class="w-[132px] float-right"/>
                                         </div>
@@ -118,9 +104,7 @@ space-x-5
                                     </div>
                                 </div>
                                 <div class="w-full lg:w-1/2">
-                                    <div class="w-full flex flex-row
-space-x-5
-">
+                                    <div class="w-full flex flex-row  space-x-5 ">
                                         <div class="w-[150px]">
                                             <img src="/icon/checklist2.png" class="w-[132px] float-right"/>
                                         </div>
@@ -145,25 +129,9 @@ space-x-5
                                 <button class="bg-blue-300 rounded px-3 py-1">Попробовать бесплатно!</button>
                             </div>
 
-                            {{--            <div class="w-full flex flex-row--}}
-                            {{--            space-x-5--}}
-                            {{--            ">--}}
-                            {{--                <div class="w-1/2">Штучки</div>--}}
-                            {{--                <div class="w-1/2">--}}
-
-                            {{--                </div>--}}
-                            {{--            </div>--}}
-
-                            <div class="w-full flex
-flex-col space-x-5
-lg:flex-row space-y-5
-
-">
+                            <div class="w-full flex flex-col space-x-5 lg:flex-row space-y-5 ">
                                 <div class="w-full lg:w-1/2">
-                                    <div class="w-full max-w-[350px] mx-auto rounded
-{{--                    bg-yellow-300 --}}
-border-l-[10px] border-yellow-300
-p-2">
+                                    <div class="w-full max-w-[350px] mx-auto rounded border-l-[10px] border-yellow-300 p-2">
                                         <img src="/icon/time-date.png" class="w-[50px] m-2 float-left"/>
                                         До 1 сентября 2025г идёт этап настройки приложения и бизнес процессов,
                                         присоединяйтесь,
@@ -172,10 +140,7 @@ p-2">
                                     </div>
                                 </div>
                                 <div class="w-full lg:w-1/2">
-
-                                    <div class="w-full flex flex-row
-space-x-5
-">
+                                    <div class="w-full flex flex-row space-x-5 ">
                                         <div class="w-[150px]">
                                             <img src="/icon/share.png" class="w-[132px] float-right"/>
                                         </div>
