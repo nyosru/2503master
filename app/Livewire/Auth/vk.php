@@ -13,7 +13,6 @@ use App\Models\User;
 class vk extends Component
 {
 
-
     public function redir()
     {
 
