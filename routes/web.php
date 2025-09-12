@@ -360,8 +360,8 @@ Route::middleware(['auth'])->group(function () {
 
                 Route::get('', \App\Livewire\Board\OneComponent::class)->name('.show');
                 Route::get('config', \App\Livewire\Board\Config\IndexComponent::class)->name('.config');
-                Route::get('config/polya', \App\Livewire\Board\ConfigComponent::class)->name('.config.polya');
-                Route::get('config/macros', \App\Livewire\Board\Config\MacrosComponent::class)->name('.config.macros');
+//                Route::get('config/polya', \App\Livewire\Board\ConfigComponent::class)->name('.config.polya');
+//                Route::get('config/macros', \App\Livewire\Board\Config\MacrosComponent::class)->name('.config.macros');
 
                 Route::get('delete', [\App\Http\Controllers\BoardController::class, 'delete'])
                     ->name('.config.delete')

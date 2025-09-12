@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 class LeedController extends Controller
 {
 
+    public static function createLinkToMini( $board_id, $leed_id){
+        return 'https://'.$_SERVER['HTTP_HOST'].'/board/'.$board_id.'/leed/'.$leed_id.'/mini?s='.self::createSecret( $board_id, $leed_id);
+    }
     public static function createSecret( $board_id, $leed_id){
         return md5($board_id.'-'. $leed_id.'-'.env('SECRET' , 'x') );
     }

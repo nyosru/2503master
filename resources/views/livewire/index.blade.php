@@ -261,7 +261,11 @@
 <a
     href="#"
     @click.prevent="showModal = true"
-    class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-medium shadow-lg transition duration-300 transform hover:-translate-y-1 inline-flex items-center"
+    class="bg-blue-600 hover:bg-blue-700 text-white
+    px-8 py-4 rounded-lg text-lg font-medium
+    shadow-lg
+    transition duration-300 transform hover:-translate-y-1
+    inline-flex items-center"
 >
     Попробовать бесплатно
     <i class="fas fa-arrow-right ml-2"></i>

@@ -62,6 +62,36 @@ class LeedRecord extends Model
 
     ];
 
+
+    protected $casts = [
+//        'budget' => 'decimal:2',
+        'budget' => 'decimal',
+//        'price' => 'decimal:2',
+        'price' => 'decimal',
+        'date_start' => 'datetime',
+        'submit_before' => 'datetime',
+        'payment_due_date' => 'datetime',
+        'pay_day_every_year' => 'date',
+        'pay_day_every_month' => 'integer',
+        'post_day_ot' => 'integer',
+        'post_day_do' => 'integer',
+//        'number1' => 'decimal:2',
+//        'number2' => 'decimal:2',
+//        'number3' => 'decimal:2',
+//        'number4' => 'decimal:2',
+//        'number5' => 'decimal:2',
+//        'number6' => 'decimal:2',
+        'date1' => 'datetime',
+        'date2' => 'datetime',
+        'date3' => 'datetime',
+        'date4' => 'datetime',
+        'dt1' => 'datetime',
+        'dt2' => 'datetime',
+        'dt3' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     public function column()
     {
         return $this->belongsTo(LeedColumn::class, 'leed_column_id');

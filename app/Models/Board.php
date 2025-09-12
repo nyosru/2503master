@@ -36,6 +36,7 @@ class Board extends Model
             ->withPivot('role_id');
     }
 
+
     // Обратная связь с пользователями через current_board_id
     public function currentUsers()
     {

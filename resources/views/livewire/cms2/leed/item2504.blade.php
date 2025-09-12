@@ -1,5 +1,6 @@
 <div>
-    <div class="bg-white border w-full rounded-md mb-2 mt-[-15px] py-1
+    <div class="bg-white border
+    w-full rounded-md mb-2 mt-[-15px] py-1
     flex flex-row items-center
     ">
         <div class="flex-1">
@@ -47,31 +48,31 @@
         {{--        </div>--}}
     </div>
 
-@if(session('moveToColumnMessage'))
-    <div
-        x-data="{ showMessage: true }"
-        class="fixed top-10 right-10 z-50"
-    >
+    @if(session('moveToColumnMessage'))
         <div
-            x-show="showMessage"
-            x-transition.opacity.duration.300ms
-            class="bg-green-500 text-white p-4 rounded-lg shadow-lg flex flex-col items-start relative"
+            x-data="{ showMessage: true }"
+            class="fixed top-10 right-10 z-50"
         >
-            <!-- Кнопка закрытия -->
-            <button
-                @click="showMessage = false"
-                class="absolute top-2 right-2 text-white text-xl font-bold hover:text-gray-200"
+            <div
+                x-show="showMessage"
+                x-transition.opacity.duration.300ms
+                class="bg-green-500 text-white p-4 rounded-lg shadow-lg flex flex-col items-start relative"
             >
-                &times;
-            </button>
+                <!-- Кнопка закрытия -->
+                <button
+                    @click="showMessage = false"
+                    class="absolute top-2 right-2 text-white text-xl font-bold hover:text-gray-200"
+                >
+                    &times;
+                </button>
 
-            <!-- Текст сообщения -->
-            <p class="text-sm pr-5">
-                {{ session('moveToColumnMessage') }}
-            </p>
+                <!-- Текст сообщения -->
+                <p class="text-sm pr-5">
+                    {{ session('moveToColumnMessage') }}
+                </p>
+            </div>
         </div>
-    </div>
-@endif
+    @endif
 
 
 
@@ -161,12 +162,27 @@
             </div>
         </div>
         {{--            <div class="w-1/2 px-5">--}}
+
         <div>
             <div class="bg-white border-2 border-gray-400
 {{--            w-1/2 --}}
             rounded-md">
                 {{--                ответственный за лид--}}
                 <livewire:cms2.leed.leed-record-user-changes :leed="$leed"/>
+            </div>
+        </div>
+
+        <div>
+            <div class="bg-white border-2 border-gray-400
+{{--            w-1/2 --}}
+            rounded-md"
+            >
+                {{--                ответственный за лид--}}
+                <livewire:board.leed.block-qr-to-mini
+                    :leed_id="$leed->id"
+                    :board_id="$board_id"
+                />
+
             </div>
         </div>
 

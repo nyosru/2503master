@@ -9,22 +9,28 @@ use Livewire\Component;
 class IndexComponent extends Component
 {
 
-    public $board;
+    public Board $board;
+
     #[Url]
     public $activeTab;
 
     public $buttons = [
         'base' => ['name' => 'Базовые настройки', 'template' => 'board.config.user-settings'],
-        'polya' => ['name' => 'Настройки полей', 'template' => 'board.config.polya-component'],
-        'users' => ['name' => 'users', 'template' => 'board.config.user-settings'],
-        'macros' => ['name' => 'macros', 'template' => 'board.config.macros-component'],
-        'board.field-settings' => ['name' => 'field', 'template' => 'board.field-settings'],
+//        'users' => ['name' => 'users', 'template' => 'board.config.user-settings'],
+
+        'board.field-settings' => ['name' => 'Настройки полей', 'template' => 'board.field-settings'],
+//        'polya' => ['name' => 'Настройки полей', 'template' => 'board.config.polya-component'],
+
+//        'macros' => ['name' => 'Автодейсвтия (макросы)', 'template' => 'board.config.macros-component'],
+
     ];
 
 
-    public function mount(Board $board)
+    public function mount( )
     {
-        $this->board = $board;
+        if( !empty(request()->board_id)) {
+            $this->board = Board::find(request()->board_id);
+        }
     }
 
     public function render()

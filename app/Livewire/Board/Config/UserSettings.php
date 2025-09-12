@@ -12,28 +12,31 @@ class UserSettings extends Component
 {
     public Board $board;
     public array $settings = [
-        'view_type' => 'доска',
-        'cards_per_page' => 20,
-        'show_avatars' => true,
-        'compact_mode' => false,
-        'domain_id' => '',
+        'name' => '',
+//        'view_type' => 'доска',
+//        'cards_per_page' => 20,
+//        'show_avatars' => true,
+//        'compact_mode' => false,
+//        'domain_id' => '',
     ];
 
     protected $rules = [
-        'settings.view_type' => 'required|in:доска,таблица',
-        'settings.domain_id' => 'nullable|integer|exists:domains,id',
-        'settings.cards_per_page' => 'required|integer|min:5|max:100',
-        'settings.show_avatars' => 'boolean',
-        'settings.compact_mode' => 'boolean',
+        'settings.name' => 'required|min:5',
+//        'settings.view_type' => 'required|in:доска,таблица',
+//        'settings.domain_id' => 'nullable|integer|exists:domains,id',
+//        'settings.cards_per_page' => 'required|integer|min:5|max:100',
+//        'settings.show_avatars' => 'boolean',
+//        'settings.compact_mode' => 'boolean',
     ];
 
     // Лейблы для настроек
     protected array $settingLabels = [
-        'view_type' => 'Режим отображения',
-        'cards_per_page' => 'Карточек на странице',
-        'show_avatars' => 'Показывать аватары',
-        'compact_mode' => 'Компактный режим',
-        'domain_id' => 'Домен',
+        'name' => 'Название доски',
+//        'view_type' => 'Режим отображения',
+//        'cards_per_page' => 'Карточек на странице',
+//        'show_avatars' => 'Показывать аватары',
+//        'compact_mode' => 'Компактный режим',
+//        'domain_id' => 'Домен',
     ];
 
     // Опции для выпадающих списков
@@ -43,16 +46,18 @@ class UserSettings extends Component
     {
         $this->board = $board;
 
-        $this->settingOptions = [
+//        $this->settingOptions = [
+        $this->settings = [
+            'name' => $this->board->name,
 //            'domain' => Domain::all()->pluck('domain', 'domain_ru', 'id')->toArray(),
-            'domain' => Domain::all(),
-            'view_type' => [
-                'доска' => 'Доска (канбан)',
-                'таблица' => 'Таблица',
-            ],
+//            'domain' => Domain::all(),
+//            'view_type' => [
+//                'доска' => 'Доска (канбан)',
+//                'таблица' => 'Таблица',
+//            ],
         ];
 
-        $this->loadUserSettings();
+//        $this->loadUserSettings();
     }
 
     /**
@@ -72,21 +77,27 @@ class UserSettings extends Component
     /**
      * Сохраняем все настройки
      */
-    public function saveSettings(): void
+    public function saveSettings()
     {
         $this->validate();
 
 //        dd($this->settings);
 
-        $this->board->domain_id = $this->settings['domain_id'];
+        $this->board->name = $this->settings['name'];
+//        $this->board->domain_id = $this->settings['domain_id'];
         $this->board->save();
 
-        foreach ($this->settings as $settingKey => $value) {
-            $this->saveSingleSetting($settingKey, $value);
-        }
+//        foreach ($this->settings as $settingKey => $value) {
+//            $this->saveSingleSetting($settingKey, $value);
+//        }
 
-        session()->flash('userSettingsSuccess', 'Настройки успешно сохранены!');
-        $this->dispatch('userSettingsUpdated', settings: $this->settings);
+
+//        session()->flash('userSettingsSuccess', 'Настройки успешно сохранены!');
+
+
+        session()->flash('successSave', 'Настройки успешно сохранены!');
+//        $this->dispatch('userSettingsUpdated', settings: $this->settings);
+        return redirect()->route('board.config',['board_id' => $this->board->id , 'activeTab'=>'base' ]);
     }
 
     /**

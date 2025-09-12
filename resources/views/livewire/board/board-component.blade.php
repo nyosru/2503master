@@ -34,6 +34,7 @@
                 <h2 class="text-lg my-2 text-center">создать доску по шаблону</h2>
                 <livewire:Board.CreateShablonForm/>
             </div>
+
         </div>
 
     </div>
@@ -162,7 +163,7 @@
                     @foreach($board->boardUsers as $ba )
                         {{--                            @if($ba->deleted_at) @continue @endif--}}
 
-                        @if($ba->user_id != Auth()->user()->id)
+                        @if($ba->user_id != Auth()->user()->id || $ba->deleted )
                             @continue
                         @endif
 
@@ -182,6 +183,9 @@
                         >
                             {{ ( $ba['role']['name_ru'] ?? $ba['role']['name'] ) }}
                         </a>
+
+{{--                        <pre>{{ print_r($ba->toArray()) }}</pre>--}}
+
                     @endforeach
                 @endif
                 {{--            </td>--}}

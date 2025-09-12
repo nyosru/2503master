@@ -21,7 +21,8 @@
         "nuwave/lighthouse": "^6.55",
         "nyos/msg": "^1.15",
         "socialiteproviders/telegram": "^4.1",
-        "spatie/laravel-permission": "^6.16"
+        "spatie/laravel-permission": "^6.16",
+        "vkcom/vk-php-sdk": "^5.131"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",

@@ -584,7 +584,6 @@ class OneComponent extends Component
 //    }
 //
 
-
     /**
      * обработка переноса записи в новый столбец
      * @param $recordId

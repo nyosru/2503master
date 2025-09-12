@@ -9,7 +9,7 @@
                             'route'=>'board.show',
                             'route-var'=>['board_id'=>$board->id ?? ''],
                             'name'=> $board->name
-    {{--                                        'name'=>( $user->currentBoard->name ?? 'x' ).( $user->roles[0]['name'] ? ' <sup>'.$user->roles[0]['name'].'</sup>' : '-' )--}}
+{{--                                            'name'=>( $user->currentBoard->name ?? 'x' ).( $user->roles[0]['name'] ? ' <sup>'.$user->roles[0]['name'].'</sup>' : '-' )--}}
                         ],
 
                         [
