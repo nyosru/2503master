@@ -10,7 +10,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 
 
-class vk extends Component
+class Vk extends Component
 {
 
     public function redir()
