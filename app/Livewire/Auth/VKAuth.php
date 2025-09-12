@@ -147,45 +147,6 @@ class VKAuth extends Component
         }
     }
 
-    public function a11ndleVKCallback(Request $request)
-    {
-
-        dd($request->all());
-
-        try {
-            $vkUser = Socialite::driver('vk')->user();
-
-            $user = User::where('vk_id', $vkUser->id)->first();
-
-            if (!$user) {
-                $user = User::where('email', $vkUser->email)->first();
-
-                if (!$user) {
-                    $user = User::create([
-                        'name' => $vkUser->name,
-                        'email' => $vkUser->email,
-                        'password' => bcrypt(uniqid()),
-                        'vk_id' => $vkUser->id,
-                    ]);
-                } else {
-                    $user->update(['vk_id' => $vkUser->id]);
-                }
-            }
-
-            Auth::login($user);
-
-            return redirect()->intended('/dashboard');
-
-        } catch (\Exception $e) {
-            dd($e);
-            dd($e->getMessage());
-            dump($e->getLine());
-            session()->flash('error', 'Ошибка авторизации через VK');
-            return redirect()->route('login');
-        }
-    }
-
-
     public function render()
     {
         return view('livewire.auth.v-k-auth');
