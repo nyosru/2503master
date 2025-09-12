@@ -30,16 +30,63 @@ class BoardController extends Controller
         $user = Auth::user();
         $count = boardUser::withTrashed()->where('user_id', $user->id)->count();
         // нет аккаунтов, создаём первую доску, роль и всё такое
-        if ($count == 0) {
+        if ( $count == 0) {
 
             $this->board_name = 'Доска №1';
-            $create_result = $this->createNewStartBoardFromTemplate();
-            try {
-                $res = $this->createBoardFromTemplate($create_result['template'], $create_result['newBoard']);
-            } catch (\Exception $e) {
-            }
+            $new = $this->createNewStartBoardFromTemplate();
+            $position_new = $this->createPositionInBoardFromShablon($new['template'], $new['newBoard']);
+
+//            $this->goto($board_id, $role_id)
+            $this->goto($new['newBoard']->id, $position_new);
+
+
+
+
+//            $this->enterAs($board_id, $role_id);
+
+//            dd($create_result);
+
+
+//            try {
+//                $res = $this->createBoardFromTemplate($create_result['template'], $create_result['newBoard']);
+//            } catch (\Exception $e) {
+//            }
 
         }
+    }
+
+
+    /**
+     * создание должностей в доске
+     * @param $template
+     * @param $newBoard
+     * @return int
+     */
+    public function createPositionInBoardFromShablon($template, $newBoard): int
+    {
+
+        foreach ($template->positions as $position) {
+            $newBoard->role()->create([
+                'name' => $position->name . date('ymdhis'),
+                'name_ru' => $position->name,
+                'guard_name' => 'web',
+                'board_id' => $newBoard->id
+            ]);
+        }
+
+        $name = 'Тех.поддержка';
+        $name_t = $name . date('ymdhis');
+        $new_position = $newBoard->role()->create([
+            'name' => $name_t,
+            'name_ru' => $name,
+            'guard_name' => 'web',
+            'board_id' => $newBoard->id
+        ]);
+
+        $pos = new PositionController();
+        $pos->setStartPermissionFromPosition($new_position->id);
+
+        return $new_position->id;
     }
 
 
@@ -121,11 +168,6 @@ class BoardController extends Controller
     public function createNewStartBoardFromTemplate($template_id = null)
     {
 
-        $ee = BoardTemplate::all()->count();
-        if ($ee == 0) {
-            return;
-        }
-
         if (empty($template_id)) {
             $template = BoardTemplate::startTemplates()
                 ->with([
@@ -149,6 +191,13 @@ class BoardController extends Controller
                 ->first();
         }
 
+        if( empty($template) ){
+//            dd(__LINE__);
+            return;
+        }
+//        else{
+////            dd(__LINE__);
+//        }
 
         // создание новой доски
         $newBoard = Board::create([
@@ -157,10 +206,11 @@ class BoardController extends Controller
         ]);
 
         // создание полей в новую доску из шаблона
-        try {
-            $this->setConfigNewBoard($newBoard, $template->polya->toArray());
-        } catch (\Exception $e) {
-        }
+
+//        dd([$template]);
+//        dd([$template->toArray()]);
+//        dd([$template->toArray(),$template->polya->toArray()]);
+        $this->setConfigNewBoard($newBoard, $template->polya->toArray());
 
         return [
             'newBoard' => $newBoard,
@@ -230,41 +280,6 @@ class BoardController extends Controller
         return [$newBoard->id, $new_position_id];
 
     }
-
-
-    /**
-     * создание должностей в доске
-     * @param $template
-     * @param $newBoard
-     * @return int
-     */
-    public function createPositionInBoardFromShablon($template, $newBoard): int
-    {
-
-        foreach ($template->positions as $position) {
-            $newBoard->role()->create([
-                'name' => $position->name . date('ymdhis'),
-                'name_ru' => $position->name,
-                'guard_name' => 'web',
-                'board_id' => $newBoard->id
-            ]);
-        }
-
-        $name = 'Тех.поддержка';
-        $name_t = $name . date('ymdhis');
-        $new_position = $newBoard->role()->create([
-            'name' => $name_t,
-            'name_ru' => $name,
-            'guard_name' => 'web',
-            'board_id' => $newBoard->id
-        ]);
-
-        $pos = new PositionController();
-        $pos->setStartPermissionFromPosition($new_position->id);
-
-        return $new_position->id;
-    }
-
 
     public function setConfigNewBoard(Board $board, $polya = [])
     {

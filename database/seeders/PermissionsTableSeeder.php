@@ -18,12 +18,12 @@ class PermissionsTableSeeder extends Seeder
 
         $permissions = [
 //            INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`, `sort`) VALUES
-            ['name' => 'р.Права доступа', 'guard_name' => 'web', 'sort' => 70 ],
-            ['name' => 'р.Пользователи', 'guard_name' => 'web', 'sort' =>  50 ],
+//            ['name' => 'р.Права доступа', 'guard_name' => 'web', 'sort' => 70 ],
+//            ['name' => 'р.Пользователи', 'guard_name' => 'web', 'sort' =>  50 ],
             ['name' => 'разработка', 'guard_name' => 'web', 'sort' => 90 ],
             ['name' => 'р.Права доступа / изменить роли', 'guard_name' => 'web', 'sort' =>  72 ],
-            ['name' => 'р.Лиды', 'guard_name' => 'web', 'sort' => 30 ],
-            ['name' => 'р.Лиды / добавить столбцы', 'guard_name' => 'web','sort' =>  32 ],
+//            ['name' => 'р.Лиды', 'guard_name' => 'web', 'sort' => 30 ],
+//            ['name' => 'р.Лиды / добавить столбцы', 'guard_name' => 'web','sort' =>  32 ],
 //            ['name' => 'р.Заказы', 'guard_name' => 'web', 'sort' => 40 ],
 //            ['name' => 'р.Клиенты', 'guard_name' => 'web', 'sort' =>  45 ],
 //            ['name' =>'р.Лиды / добавить лида', 'guard_name' => 'web', 'sort' =>  32 ],

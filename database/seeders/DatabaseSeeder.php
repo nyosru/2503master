@@ -50,6 +50,8 @@ class DatabaseSeeder extends Seeder
         $this->call(BoardUsersSeeder::class);
         $this->call(LeedColumnsSeeder::class);
         $this->call(NewsSeeder::class );
+        $this->call(BoardTemplatesSeeder::class );
+
 
 
 
