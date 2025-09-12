@@ -249,7 +249,7 @@ class BoardController extends Controller
     }
 
 
-    public function setConfigNewBoard(Board $board, $polya)
+    public function setConfigNewBoard(Board $board, $polya = [])
     {
         foreach ($polya as $pole) {
             self::setRenamePolya($board->id, $pole['pole'], $pole['name'], '', $pole['sort'],
