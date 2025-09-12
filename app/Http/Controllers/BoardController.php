@@ -169,8 +169,11 @@ class BoardController extends Controller
 
     }
 
-    public function createBoardFromTemplate(int $template_id, string $board_name)
+    public function createBoardFromTemplate( $template_id = null , string $board_name)
     {
+
+        if( empty($template_id) )
+            return;
 
         $template = BoardTemplate::where('id', $template_id)
             ->with([
