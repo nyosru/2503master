@@ -26,6 +26,12 @@ class BoardController extends Controller
      */
     public function startBoardBuilder()
     {
+
+        $templates = BoardTemplate::all();
+        if ($templates->isEmpty()) {
+            return false;
+        }
+
         $user = Auth::user();
         $count = boardUser::withTrashed()->where('user_id', $user->id)->count();
         // нет аккаунтов, создаём первую доску, роль и всё такое
