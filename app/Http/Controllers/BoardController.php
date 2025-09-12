@@ -146,6 +146,7 @@ class BoardController extends Controller
         ]);
 
         // создание полей в новую доску из шаблона
+        if( !empty($template->polya->toArray()) )
         $this->setConfigNewBoard($newBoard, $template->polya->toArray());
 
         return [
