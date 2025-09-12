@@ -15,7 +15,8 @@
         <div class="sm:w-1/2 flex justify-center items-center ">
             @guest
 {{--                {!! Socialite::driver('telegram')->getButton() !!}--}}
-                <livewire:app.auth-link />
+{{--                <livewire:app.auth-link />--}}
+                <livewire:auth.vk-auth />
             @else
                 <div>
                     <!-- Authentication -->

@@ -16,11 +16,13 @@ use App\Observers\LeedRecordObserver;
 use App\Observers\LeedRecordOrderObserver;
 use App\Observers\OrderObserver;
 use App\Observers\UserObserver;
+use App\Services\VKService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Events\Login;
+use Laravel\Socialite\Contracts\Factory;
 use Nyos\Msg;
 
 
@@ -39,6 +41,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        $socialite = $this->app->make(Factory::class);
+
+        $socialite->extend('vk', function ($app) use ($socialite) {
+            $config = $app['config']['services.vk'];
+            return $socialite->buildProvider(VKService::class, $config);
+        });
+
 
 // Регистрируем событие входа и слушатель напрямую
         Event::listen(
@@ -76,7 +86,10 @@ class AppServiceProvider extends ServiceProvider
             $user = Auth::user();
 
             // Проверяем email пользователя
-            if ($user && $user->email === '1@php-cat.com') {
+            if ($user && (
+                $user->email === '1@php-cat.com'
+                || $user->email === 'nyos@rambler.ru'
+                ) ) {
                 return true;
             } // полный доступ
             elseif ($user && $user->can('Полный//доступ')) {

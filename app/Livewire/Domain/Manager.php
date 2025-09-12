@@ -4,6 +4,7 @@ namespace App\Livewire\Domain;
 
 use App\Models\Domain;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Manager extends Component
 {

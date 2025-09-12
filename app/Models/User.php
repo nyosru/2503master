@@ -29,6 +29,7 @@ class User extends Authenticatable
         'current_board_id',
         'phone_number',
         'telegram_id',
+        'vk_id',
     ];
 
     /**
@@ -106,6 +107,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(BoardUserSetting::class);
     }
-
 
 }

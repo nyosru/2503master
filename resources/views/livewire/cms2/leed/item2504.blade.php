@@ -6,10 +6,9 @@
             <livewire:Cms2.App.Breadcrumb
                 :board_id="$leed->column->board_id"
                 :menu="[
-
-                    ['route'=>'leed.list','name'=>'Рабочие доски'],
+                    ['route'=>'board.list','name'=>'Рабочие доски'],
                     [
-                        'route'=>'leed',
+                        'route'=>'board.show',
                         'name'=>( $leed->column->board->name ?? 'x' )
                     ],
                      [ 'link' => 'no', 'name'=> ( ($leed->name ?? '-') ) ]

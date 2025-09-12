@@ -36,6 +36,7 @@ class RoleColumnAccess extends Component
         if (
             $user->hasPermissionTo('тех.упр - путь заказа / видеть все доски')
             || $user->email == '1@php-cat.com'
+            || $user->email == 'nyos@rambler.ru'
         ) {
             $this->boards = Board::all();
         }else{

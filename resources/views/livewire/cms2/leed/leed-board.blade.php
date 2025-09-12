@@ -113,7 +113,7 @@ border-1 rounded
 
 <span class="float-right pr-5">
 @permission('р.Лиды / доска конфиг')
-<a href="{{ route('board.config',['board'=>$board_id ]) }}"
+<a href="{{ route('board.config',['board_id'=>$board_id ]) }}"
    class="
    bg-gradient-to-r from-gray-100 to-gray-200
    hover:from-gray-200 hover:to-gray-300

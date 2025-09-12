@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class LeedController extends Controller
 {
+
+    public static function createSecret( $board_id, $leed_id){
+        return md5($board_id.'-'. $leed_id.'-'.env('SECRET' , 'x') );
+    }
+
     public static function addNewClientToLeed(int $leed_id, int $client_id): bool
     {
         $leed = LeedRecord::find($leed_id);

@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Item extends Component
 {
-    public $id;
+    public $leed_id;
     public $board_id;
     public $leed;
     public $showTab = 'order'; // order|comment|notificate
@@ -26,7 +26,6 @@ class Item extends Component
     {
 
         if (!empty($showTab)) {
-//            dd($showTab);
             $this->changeShowTab($showTab);
         }
 
@@ -49,8 +48,6 @@ class Item extends Component
                                     'orderRequest' => function ($q3) use ($board_id) {
                                         $q3->with(['rename' => function ($q31) use ($board_id) {
                                             $q31->where('board_id', '=', $board_id);
-//                                            $q31->where('board_id', '=', 'record_columns.board_id');
-//                                            dump( $q31->toSql() );
                                         }]);
                                     }
                                 ]);
@@ -68,21 +65,14 @@ class Item extends Component
                     $query->withTrashed();
                     $query->with(['roles' => function ($query) {
                     }]);
-//                    $query->with(['staff' => function ($query) {                    }]);
                 }
                 ]);
             },
-        ])->findOrFail($this->id);
-
-//        dump( $this->leed->toSql() );
+        ])->findOrFail($this->leed_id);
     }
 
     public function render()
     {
-
-//        dd($e->toArray());
-
-//        return view('livewire.cms2.leed.item');
         return view('livewire.cms2.leed.item2504');
     }
 }

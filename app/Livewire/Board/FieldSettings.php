@@ -3,6 +3,7 @@
 namespace App\Livewire\Board;
 
 use App\Http\Controllers\BoardController;
+use App\Models\Board;
 use App\Models\BoardFieldSetting;
 use Livewire\Component;
 
@@ -10,13 +11,16 @@ class FieldSettings extends Component
 {
 
     public $boardId;
+    public $board;
     public $settings = [];
 
     protected $listeners = ['refresh' => '$refresh'];
 
-    public function mount($boardId)
+    public function mount( Board $board)
     {
-        $this->boardId = $boardId;
+        if( !empty( $board->id) ) {
+            $this->boardId = $board->id;
+        }
     }
 
     public function loadSettings()

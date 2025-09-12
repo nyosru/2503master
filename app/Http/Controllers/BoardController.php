@@ -155,8 +155,24 @@ class BoardController extends Controller
 
     }
 
-    public function createBoardFromTemplate(BoardTemplate $template, Board $newBoard)
+    public function createBoardFromTemplate( int $template_id, string $board_name )
     {
+
+        $template = BoardTemplate::where('id', $template_id)
+            ->with([
+                'columns' => function ($query) {
+                    $query->orderBy('sorting', 'asc');
+                },
+                'positions',
+                'polya'
+            ])
+            ->first();
+
+        // создание новой доски
+        $newBoard = Board::create([
+            'name' => $board_name,
+            'admin_user_id' => auth()->user()->id
+        ]);
 
         // создание должностей в новую доску из шаблона
         $new_position_id = $this->createPositionInBoardFromShablon($template, $newBoard);

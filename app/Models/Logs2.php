@@ -17,7 +17,8 @@ class Logs2 extends Model
         'reminder_at',
         'user_id',
         'leed_record_id',
-        'user_id', 'order_id', 'data',
+        'order_id',
+        'data',
     ];
 
     public function user()

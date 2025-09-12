@@ -27,25 +27,27 @@
 
             <div class="py-2 text-center">
 
-                <a href="{{ route('leed.item',[ 'board_id'=>$column->board_id , 'id'=>$record->id ]) }}"
+                <a
+{{--                    href="{{ route('leed.item',[ 'board_id'=>$column->board_id , 'id'=>$record->id ]) }}"--}}
+                    href="{{ route('board.leed.item',[ 'board_id'=>$column->board_id , 'leed_id'=>$record->id ]) }}"
                    wire:navigate
                    class="text-blue-800 xblock xtext-center hover:underline p-1"
                 >
+
                     @php $hasFields = false; @endphp
 
                     @foreach( $record->column->board->fieldSettings as $f )
-
                         @if( !empty($record->{$f->field_name}) )
                             {{ $record->{$f->field_name} }}
                             <br/>
                             @php $hasFields = true; @endphp
                         @endif
-
                     @endforeach
 
                     @if(!$hasFields)
                         Запись #{{$record->id}}<br/>
                     @endif
+
                 </a>
 
                 {{--блок кнопок менеджер--}}
