@@ -149,6 +149,6 @@ class VKAuth extends Component
 
     public function render()
     {
-        return view('livewire.auth.v-k-auth');
+        return view('livewire.auth.vk-auth');
     }
 }
