@@ -10,11 +10,11 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 
 
-class VKAuth extends Component
+class vk extends Component
 {
 
 
-    public function redirectToVK()
+    public function redir()
     {
 
         $clientId = config('services.vk.client_id');
@@ -149,6 +149,6 @@ class VKAuth extends Component
 
     public function render()
     {
-        return view('livewire.auth.vk-auth');
+        return view('livewire.auth.vk');
     }
 }

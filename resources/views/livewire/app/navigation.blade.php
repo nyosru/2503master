@@ -14,7 +14,7 @@
         </div>
         <div class="sm:w-1/2 flex justify-center items-center ">
             @guest
-                <livewire:auth.vk-auth />
+                <livewire:auth.vk />
             @else
                 <div>
                     <div x-data="{ open: false }">
