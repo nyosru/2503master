@@ -26,25 +26,25 @@ class Menu extends Component
 
         'Поля в заказе' => ['route' => 'tech.order_requests_manager', 'permission' => 'тех.упр полями в лиде'],
 
-        'Доска / Лид / Названия полей - Переименовать' => ['route' => 'tech.order-request-rename-form'
-            , 'permission' => 'р.Доски / переименовывать поля лидов'
-        ],
-
-
-        'Доска / Автоматизация' => ['route' => 'service.automation_rules_manager'
+//        'Доска / Лид / Названия полей - Переименовать' => ['route' => 'tech.order-request-rename-form'
 //            , 'permission' => 'р.Доски / переименовывать поля лидов'
-        ]
-        ,
+//        ],
+
+
+//        'Доска / Автоматизация' => ['route' => 'service.automation_rules_manager'
+////            , 'permission' => 'р.Доски / переименовывать поля лидов'
+//        ]
+//        ,
         'Доска / Макросы' => ['route' => 'tech.macros.manager'
             , 'permission' => 'р.Техничка / Доска Макросы'
         ]
         ,
         'Доска / Шаблоны' => ['route' => 'tech.board.template.manager'
-//            , 'permission' => 'р.Техничка / шаблоны (упр)'
+            , 'permission' => 'р.Техничка / Шаблоны Досок создать'
         ]
         ,
-        'Новости2' => ['route' => 'tech.news-admin'
-//            , 'permission' => 'р.Техничка / шаблоны (упр)'
+        'Новости админ' => ['route' => 'tech.news-admin'
+            , 'permission' => 'р.Техничка / Новости Админ'
         ]
         ,
 //        'Колонки / цвета фона / управление' => ['route' => 'tech.column-bg-color-manager'

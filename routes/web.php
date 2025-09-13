@@ -30,7 +30,6 @@ Route::get('/a/{id}', function ($id) {
 
 
 Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
-
     Route::get('', function () {
         $user = User::findOrFail(2);
         Auth::login($user);
@@ -38,7 +37,6 @@ Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
         return redirect('/leed')
             ->with('success', 'Вы вошли как ' . $user->name);
     })->name('sz');
-
 });
 
 
