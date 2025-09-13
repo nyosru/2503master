@@ -30,8 +30,9 @@ class BoardController extends Controller
 
         $user = Auth::user();
         $count = boardUser::withTrashed()->where('user_id', $user->id)->count();
+
         // нет аккаунтов, создаём первую доску, роль и всё такое
-        if ( 1 == 2 || $count == 0) {
+        if (1 == 2 || $count == 0) {
 
             $this->board_name = 'Доска №1';
             $new = $this->createNewStartBoardFromTemplate();
@@ -170,9 +171,9 @@ class BoardController extends Controller
      * @param $position_id
      * @return void
      */
-    public static function setRoleToColumns( Board $board , $position_id)
+    public static function setRoleToColumns(Board $board, $position_id)
     {
-        foreach( $board->columns as $column ) {
+        foreach ($board->columns as $column) {
             $column->assignRole($position_id); // по ID
         }
     }
@@ -284,6 +285,10 @@ class BoardController extends Controller
                     ->firstOrFail();
             }
 
+            //        dd([$template]);
+//        dd([$template->toArray()]);
+//        dd([$template->toArray(),$template->polya->toArray()]);
+
 
             // создание новой доски
             $newBoard = Board::create([
@@ -293,9 +298,6 @@ class BoardController extends Controller
 
             // создание полей в новую доску из шаблона
 
-//        dd([$template]);
-//        dd([$template->toArray()]);
-//        dd([$template->toArray(),$template->polya->toArray()]);
             $this->setConfigNewBoard($newBoard, $template->polya->toArray());
 
             return [
@@ -303,6 +305,9 @@ class BoardController extends Controller
                 'template' => $template,
             ];
         } catch (\Exception $e) {
+//            if (env('APP_DEBUG')) {
+                dd($e);
+//            }
         }
     }
 
@@ -383,6 +388,7 @@ class BoardController extends Controller
                 $pole['in_telega_msg'],
             );
         }
+//        dd(__LINE__);
     }
 
 

@@ -73,13 +73,13 @@ Route::get('/qr', App\Livewire\Services\QrGenerator::class)
     ->name('qr');
 
 
-
-
 // Добавляем маршрут для создания записей
 Route::get('/editor/create', App\Livewire\Editor\CkEditorCreate::class)
     ->name('editor.create');
+
 Route::get('/test-wysiwyg-local22', App\Livewire\Editor\CkEditorCreateSimple::class)
     ->name('test-wysiwyg-local22');
+
 Route::get('/test-wysiwyg-local', function () {
     return '
     <!DOCTYPE html>
@@ -192,7 +192,6 @@ Route::get('', \App\Livewire\Index::class)->name('index');
 //Route::get('/auth/telegram-in/callback', [TelegramController::class, 'callbackOrigin']);
 //Route::get('/auth/telegram/callback', [TelegramController::class, 'callbackStart']);
 //Route::post('/auth/telegram/callback777', [TelegramController::class, 'callback']);
-
 
 
 use App\Livewire\Auth\Vk;
@@ -334,10 +333,6 @@ Route::middleware(['auth'])->group(function () {
 //});
 
 
-
-
-
-
     Route::group(['as' => 'board', 'prefix' => 'board'], function () {
 
 //        Route::get('', \App\Livewire\Board\BoardComponent::class)
@@ -345,14 +340,12 @@ Route::middleware(['auth'])->group(function () {
 //            ->middleware('check.permission:р.Доски');
 
         Route::get('', \App\Livewire\Board\BoardComponent::class)
-            ->name('.list')
-//            ->middleware('check.permission:р.Доски')
+            ->name('.list')//            ->middleware('check.permission:р.Доски')
         ;
 
         Route::get('select', \App\Livewire\Cms2\Leed\SelectBoardForm::class)->name('.select');
 //        Route::post('invitations', [InvitationController::class, 'store'])->name('.invitations.store');
         Route::get('invitations/join/{id}', [InvitationController::class, 'join'])->name('.invitations.join');
-
 
         Route::prefix('{board_id}')
             //->name('boards.') // Общее имя для всех маршрутов группы
@@ -424,7 +417,18 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/edit/{id}', \App\Livewire\PM\NewsAdmin\Form::class)->name('.edit');
             });
 
+            Route::prefix('board')->name('board')->group(function () {
+                Route::name('.')->group(function () {
+                    Route::prefix('template')->name('template')->group(function () {
+                        Route::name('.')->group(function () {
+                            Route::get('manager', \App\Livewire\Board\Template\BoardTemplatesManager::class)->name('manager');
+                        });
+                    });
+                });
+            });
+
         });
+
     });
 
     Route::middleware('check.permission:р.Клиенты')->group(function () {

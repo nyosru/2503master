@@ -38,10 +38,10 @@ class Menu extends Component
         'Доска / Макросы' => ['route' => 'tech.macros.manager'
             , 'permission' => 'р.Техничка / Доска Макросы'
         ]
-//        ,
-//        'Доска / Шаблоны' => ['route' => 'tech.board.template.manager'
+        ,
+        'Доска / Шаблоны' => ['route' => 'tech.board.template.manager'
 //            , 'permission' => 'р.Техничка / шаблоны (упр)'
-//        ]
+        ]
         ,
         'Новости2' => ['route' => 'tech.news-admin'
 //            , 'permission' => 'р.Техничка / шаблоны (упр)'

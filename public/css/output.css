@@ -1446,10 +1446,6 @@ select {
   height: 200px;
 }
 
-.h-\[26px\] {
-  height: 26px;
-}
-
 .h-\[28px\] {
   height: 28px;
 }
@@ -2698,11 +2694,6 @@ select {
 
 .bg-orange-300\/70 {
   background-color: rgb(253 186 116 / 0.7);
-}
-
-.bg-orange-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 115 22 / var(--tw-bg-opacity, 1));
 }
 
 .bg-purple-100 {
@@ -4728,10 +4719,6 @@ select {
 @media (min-width: 768px) {
   .md\:mb-0 {
     margin-bottom: 0px;
-  }
-
-  .md\:ms-6 {
-    margin-inline-start: 1.5rem;
   }
 
   .md\:block {
