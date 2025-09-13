@@ -174,6 +174,8 @@
                 </div> <!--end::Container-->
             </div> <!--end::App Content Header--> <!--begin::App Content-->
 
+{{--            <pre class="text-xs">{{ print_r($board->toArray(),1) }}</pre>--}}
+
             @if( empty($user->current_board_id) )
                 <span
                     class="w-[350px] text-center text-xl font-bold text-gray-400 p-2">Не выбрана рабочая доска</span>
@@ -198,7 +200,7 @@
                                 type="first"/>
                         @else
                             обратитесь к администратору, ошибка №101
-                            @endpermission
+                                @endpermission
                         @endif
 
                         <div class="flex  xspace-x-1 relative"

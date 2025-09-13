@@ -660,7 +660,7 @@ class LeedBoard extends Component
         $columns = LeedColumn::orderBy('order')
             ->get();
 
-        $draggedColumn = $columns->where('id', $draggedColumnId)->first();
+        $draggedColumn = $columns->where('id', $draggedColumnId)->where('can_move',TRUE)->first();
         $targetColumn = $columns->where('id', $targetColumnId)->first();
 
         if ($draggedColumn && $targetColumn) {

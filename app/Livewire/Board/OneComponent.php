@@ -73,7 +73,6 @@ class OneComponent extends Component
     public $board_id;
     public $board;
 
-
     public function setCurentBoard($id)
     {
 //        dd( 'setCurentBoard'.$id);

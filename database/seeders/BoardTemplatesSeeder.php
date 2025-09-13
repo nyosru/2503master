@@ -33,7 +33,7 @@ class BoardTemplatesSeeder extends Seeder
                 'status' => 1,
                 'price' => 0,
                 'sort' => 50,
-                'start_template' => 0,
+                'start_template' => 1,
                 'created_at' => '2025-08-18 10:42:55',
                 'updated_at' => '2025-08-18 10:42:55'
             ],

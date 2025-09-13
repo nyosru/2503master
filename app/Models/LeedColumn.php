@@ -179,4 +179,78 @@ class LeedColumn extends Model
         $this->order = $newPosition;
         $this->save();
     }
+
+
+    /**
+     * Проверить, имеет ли колонка указанную роль
+     */
+    public function hasRole($role): bool
+    {
+        if (is_numeric($role)) {
+            return $this->roles()->where('id', $role)->exists();
+        }
+
+        if (is_string($role)) {
+            return $this->roles()->where('name', $role)->exists();
+        }
+
+        if ($role instanceof Role) {
+            return $this->roles()->where('id', $role->id)->exists();
+        }
+
+        return false;
+    }
+
+    /**
+     * Добавить роль к колонке
+     */
+    public function assignRole($role): void
+    {
+        if (is_numeric($role)) {
+            $this->roles()->attach($role);
+        } elseif (is_string($role)) {
+            $roleModel = Role::where('name', $role)->first();
+            if ($roleModel) {
+                $this->roles()->attach($roleModel->id);
+            }
+        } elseif ($role instanceof Role) {
+            $this->roles()->attach($role->id);
+        }
+    }
+
+    /**
+     * Удалить роль из колонки
+     */
+    public function removeRole($role): void
+    {
+        if (is_numeric($role)) {
+            $this->roles()->detach($role);
+        } elseif (is_string($role)) {
+            $roleModel = Role::where('name', $role)->first();
+            if ($roleModel) {
+                $this->roles()->detach($roleModel->id);
+            }
+        } elseif ($role instanceof Role) {
+            $this->roles()->detach($role->id);
+        }
+    }
+
+    /**
+     * Синхронизировать роли колонки
+     */
+    public function syncRoles(array $roleIds): void
+    {
+        $this->roles()->sync($roleIds);
+    }
+
+    /**
+     * Получить ID ролей, имеющих доступ к колонке
+     */
+    public function getRoleIdsAttribute(): array
+    {
+        return $this->roles->pluck('id')->toArray();
+    }
+
+
+
 }

@@ -32,10 +32,9 @@ class Board extends Model
     // Связь с пользователями (многие ко многим)
     public function users()
     {
-        return $this->belongsToMany(User::class)
+        return $this->belongsToMany(User::class, 'board_users')
             ->withPivot('role_id');
     }
-
 
     // Обратная связь с пользователями через current_board_id
     public function currentUsers()

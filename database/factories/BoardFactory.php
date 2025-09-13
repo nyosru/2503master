@@ -26,4 +26,5 @@ class BoardFactory extends Factory
             'updated_at' => now(),
         ];
     }
+
 }

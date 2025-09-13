@@ -11,6 +11,8 @@ class BoardUser extends Model
 
     use HasFactory, softDeletes;
 
+    protected $table = 'board_users';
+
     protected $fillable = [
         'board_id',
         'user_id',

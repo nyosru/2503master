@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Master\PositionController;
 use App\Models\Board;
+use App\Models\BoardColumnTemplate;
 use App\Models\BoardFieldSetting;
 use App\Models\BoardTemplate;
 use App\Models\BoardUser;
@@ -30,29 +31,102 @@ class BoardController extends Controller
         $user = Auth::user();
         $count = boardUser::withTrashed()->where('user_id', $user->id)->count();
         // нет аккаунтов, создаём первую доску, роль и всё такое
-        if ( $count == 0) {
+        if ( 1 == 2 || $count == 0) {
 
             $this->board_name = 'Доска №1';
             $new = $this->createNewStartBoardFromTemplate();
+
+            if (1 == 2) {
+                $rr = Board::whereId($new['newBoard']->id)->with(
+                    [
+                        'columns',
+                        'role',
+//                    'boardUsers',
+                        'currentUsers',
+//                    'users',
+                        'adminUser',
+                        'columns',
+                        'fieldSettings',
+                        'roles',
+                        'invitations',
+                        'domain',
+                        'userSettings',
+                        'news',
+//                    '',
+//                    '',
+//                    '',
+                    ])->first();
+
+                dd($rr->toArray());
+            }
+
             $position_new = $this->createPositionInBoardFromShablon($new['template'], $new['newBoard']);
+            //dd($position_new);
+            UserController::setBoardRole($user->id, $new['newBoard']->id, $position_new);
 
-//            $this->goto($board_id, $role_id)
+            $this->columnCreateFromTemplate($new['template'], $new['newBoard']);
+            $this->setRoleToColumns($new['newBoard'], $position_new);
+
+            //        $w = Board::where('id', $newBoard->id)->with('columns')->first();
+//            $column->assignRole(1); // по ID
+
+            if (1 == 2) {
+                $rr = Board::whereId($new['newBoard']->id)->with(
+                    [
+                        'columns',
+                        'role',
+//                    'boardUsers',
+                        'currentUsers',
+                        'users',
+                        'adminUser',
+                        'columns.roles',
+                        'fieldSettings',
+                        'fieldSettings.orderRequest',
+                        'fieldSettings.orderRequest.rename',
+                        'roles',
+                        'invitations',
+                        'domain',
+                        'userSettings',
+                        'news',
+//                    '',
+//                    '',
+//                    '',
+                    ])->first();
+                dd($rr->toArray());
+            }
+
             $this->goto($new['newBoard']->id, $position_new);
-
-
-
-
-//            $this->enterAs($board_id, $role_id);
-
-//            dd($create_result);
-
-
-//            try {
-//                $res = $this->createBoardFromTemplate($create_result['template'], $create_result['newBoard']);
-//            } catch (\Exception $e) {
-//            }
-
         }
+    }
+
+    /**
+     * создаём колоники в новой доске из шаблона
+     * @param $template
+     * @param $newBoard
+     * @return void
+     */
+    public function columnCreateFromTemplate(BoardTemplate $template, Board $newBoard)
+    {
+        $e = BoardColumnTemplate::where('board_template_id', $template->id)->get();
+        $nn = 1;
+        foreach ($e as $v) {
+//            dd($v->toArray());
+//            dump($v->toArray());
+
+//            $newBoard->columns()->create($v->toArray());
+            $newBoard->columns()->create([
+                'name' => $v->name,
+                'description' => $v->description,
+                'order' => $v->sorting ?? null,
+                'can_create' => ($nn == 1)
+            ]);
+
+            $nn++;
+        }
+
+//        $w = Board::where('id', $newBoard->id)->with('columns')->first();
+//        dd($w->toArray());
+//        dd($newBoard->toArray());
     }
 
 
@@ -87,6 +161,20 @@ class BoardController extends Controller
         $pos->setStartPermissionFromPosition($new_position->id);
 
         return $new_position->id;
+    }
+
+
+    /**
+     * присваиваем доступ роли для всех столбцов доски
+     * @param Board $board
+     * @param $position_id
+     * @return void
+     */
+    public static function setRoleToColumns( Board $board , $position_id)
+    {
+        foreach( $board->columns as $column ) {
+            $column->assignRole($position_id); // по ID
+        }
     }
 
 
@@ -125,9 +213,14 @@ class BoardController extends Controller
                                           $is_enabled = false, $show_on_start = false, $in_telega_msg = false
     )
     {
-        $s = BoardFieldSetting::create(['board_id' => $board_id, 'field_name' => $pole,
+        $s = BoardFieldSetting::create([
+            'board_id' => $board_id,
+            'field_name' => $pole,
             'sort_order' => $sort,
-            'is_enabled' => ($is_enabled ? true : false), 'show_on_start' => ($show_on_start ? true : false), 'in_telega_msg' => ($in_telega_msg ? true : false)]);
+            'is_enabled' => ($is_enabled ? true : false),
+            'show_on_start' => ($show_on_start ? true : false),
+            'in_telega_msg' => ($in_telega_msg ? true : false)
+        ]);
 //        dump($s);
         try {
             $ss = OrderRequest::where('pole', $pole)->firstOrFail();
@@ -167,62 +260,56 @@ class BoardController extends Controller
 
     public function createNewStartBoardFromTemplate($template_id = null)
     {
+        try {
+            if (empty($template_id)) {
+                $template = BoardTemplate::startTemplates()
+                    ->with([
+                        'columns' => function ($query) {
+                            $query->orderBy('sorting', 'asc');
+                        },
+                        'positions',
+                        'polya'
+                    ])
+                    ->firstOrFail();
+            } else {
+                $template = BoardTemplate::
+                where('id', $template_id)
+                    ->with([
+                        'columns' => function ($query) {
+                            $query->orderBy('sorting', 'asc');
+                        },
+                        'positions',
+                        'polya'
+                    ])
+                    ->firstOrFail();
+            }
 
-        if (empty($template_id)) {
-            $template = BoardTemplate::startTemplates()
-                ->with([
-                    'columns' => function ($query) {
-                        $query->orderBy('sorting', 'asc');
-                    },
-                    'positions',
-                    'polya'
-                ])
-                ->first();
-        } else {
-            $template = BoardTemplate::
-            where('id', $template_id)
-                ->with([
-                    'columns' => function ($query) {
-                        $query->orderBy('sorting', 'asc');
-                    },
-                    'positions',
-                    'polya'
-                ])
-                ->first();
-        }
 
-        if( empty($template) ){
-//            dd(__LINE__);
-            return;
-        }
-//        else{
-////            dd(__LINE__);
-//        }
+            // создание новой доски
+            $newBoard = Board::create([
+                'name' => $this->board_name,
+                'admin_user_id' => auth()->user()->id
+            ]);
 
-        // создание новой доски
-        $newBoard = Board::create([
-            'name' => $this->board_name,
-            'admin_user_id' => auth()->user()->id
-        ]);
-
-        // создание полей в новую доску из шаблона
+            // создание полей в новую доску из шаблона
 
 //        dd([$template]);
 //        dd([$template->toArray()]);
 //        dd([$template->toArray(),$template->polya->toArray()]);
-        $this->setConfigNewBoard($newBoard, $template->polya->toArray());
+            $this->setConfigNewBoard($newBoard, $template->polya->toArray());
 
-        return [
-            'newBoard' => $newBoard,
-            'template' => $template,
-        ];
-
+            return [
+                'newBoard' => $newBoard,
+                'template' => $template,
+            ];
+        } catch (\Exception $e) {
+        }
     }
 
-    public function createBoardFromTemplate( $template_id = null , string $board_name)
+    public function createBoardFromTemplate($template_id = null, string $board_name)
     {
 
-        if( empty($template_id) )
+        if (empty($template_id))
             return;
 
         $template = BoardTemplate::where('id', $template_id)
@@ -284,7 +371,13 @@ class BoardController extends Controller
     public function setConfigNewBoard(Board $board, $polya = [])
     {
         foreach ($polya as $pole) {
-            self::setRenamePolya($board->id, $pole['pole'], $pole['name'], '', $pole['sort'],
+//            dump($pole);
+            self::setRenamePolya(
+                $board->id,
+                $pole['pole'],
+                $pole['name'],
+                '',
+                $pole['sort'],
                 $pole['is_enabled'],
                 $pole['show_on_start'],
                 $pole['in_telega_msg'],

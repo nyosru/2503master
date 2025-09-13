@@ -86,7 +86,8 @@ return new class extends Migration
             $table->index('leed_id');
             $table->index('order_payment_type_id');
             $table->index('order_product_type_id');
-            $table->fullText('name');
+//            $table->fullText('name');
+//            $table->index('name');
 
             $table->timestamps();
             $table->softDeletes();

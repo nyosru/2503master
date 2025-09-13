@@ -3,6 +3,7 @@
 namespace App\Livewire\PM\News;
 
 use App\Models\News;
+use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -69,8 +70,13 @@ class Index extends Component
 
         $domain = $this->showDomain;
 
-        if( $_SERVER['HTTP_HOST'] == 'master.local' )
+        $host = Request::getHost();
+        if ($host === 'master.local') {
             $domain = 'master.local';
+        }
+        elseif( ( $_SERVER['HTTP_HOST'] ?? '' ) == 'master.local' ) {
+            $domain = 'master.local';
+        }
 
         $news = News::published()
 

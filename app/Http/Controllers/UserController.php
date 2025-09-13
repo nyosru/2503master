@@ -24,15 +24,14 @@ class UserController extends Controller
             $user_id = auth()->user()->id;
         }
 
-        $new_role = self::creaeRole($name, $board_id);
-
+        $new_role = self::createRole($name, $board_id);
         self::setBoardRole($user_id, $board_id, $new_role->id);
 
         return $new_role;
 
     }
 
-    public static function creaeRole($name, $board_id): object
+    public static function createRole($name, $board_id): object
     {
         try {
             $new_role = \App\Models\Role::create([
