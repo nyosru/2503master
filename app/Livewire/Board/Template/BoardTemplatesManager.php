@@ -25,13 +25,6 @@ class BoardTemplatesManager extends Component
     public $newPositionName;
     public $sorting = 50;
 
-    protected $rules = [
-        'templateName' => 'required|string|max:255',
-        'newColumnName' => 'nullable|string|max:255',
-        'newPositionName' => 'nullable|string|max:255',
-        'sorting' => 'required|number|main:1|max:99',
-    ];
-
     public function mount()
     {
         $this->loadTemplates();
@@ -81,29 +74,7 @@ class BoardTemplatesManager extends Component
         }
     }
 
-    public function addColumn()
-    {
-        $this->validateOnly('newColumnName,sorting');
 
-        if($this->selectedTemplateId && $this->newColumnName) {
-            BoardColumnTemplate::create([
-                'board_template_id' => $this->selectedTemplateId,
-                'name' => $this->newColumnName,
-//                'sorting' => 50,
-                'sorting' => $this->sorting,
-                'extra_params' => [],
-                'description' => null,
-            ]);
-            $this->newColumnName = '';
-            $this->refreshColumns();
-        }
-    }
-
-    public function deleteColumn($columnId)
-    {
-        BoardColumnTemplate::where('id', $columnId)->delete();
-        $this->refreshColumns();
-    }
 
     public function addPosition()
     {
