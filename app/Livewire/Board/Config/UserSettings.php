@@ -10,54 +10,40 @@ use Livewire\Component;
 
 class UserSettings extends Component
 {
+
     public Board $board;
     public array $settings = [
         'name' => '',
-//        'view_type' => 'доска',
-//        'cards_per_page' => 20,
-//        'show_avatars' => true,
-//        'compact_mode' => false,
-//        'domain_id' => '',
+        'view' => 'kanban',
     ];
 
     protected $rules = [
         'settings.name' => 'required|min:5',
-//        'settings.view_type' => 'required|in:доска,таблица',
-//        'settings.domain_id' => 'nullable|integer|exists:domains,id',
-//        'settings.cards_per_page' => 'required|integer|min:5|max:100',
-//        'settings.show_avatars' => 'boolean',
-//        'settings.compact_mode' => 'boolean',
+        'settings.view' => 'required|in:kanban,table',
     ];
 
     // Лейблы для настроек
     protected array $settingLabels = [
         'name' => 'Название доски',
-//        'view_type' => 'Режим отображения',
-//        'cards_per_page' => 'Карточек на странице',
-//        'show_avatars' => 'Показывать аватары',
-//        'compact_mode' => 'Компактный режим',
-//        'domain_id' => 'Домен',
+        'view' => 'Режим отображения',
     ];
 
     // Опции для выпадающих списков
-    public array $settingOptions = [];
+    public array $settingOptions = [
+        'view' => [
+            'kanban' => 'Доска (канбан)',
+            'table' => 'Таблица'],
+    ];
 
     public function mount(Board $board)
     {
         $this->board = $board;
 
-//        $this->settingOptions = [
         $this->settings = [
             'name' => $this->board->name,
-//            'domain' => Domain::all()->pluck('domain', 'domain_ru', 'id')->toArray(),
-//            'domain' => Domain::all(),
-//            'view_type' => [
-//                'доска' => 'Доска (канбан)',
-//                'таблица' => 'Таблица',
-//            ],
+            'view' => $board->view ?? 'канбан',
         ];
 
-//        $this->loadUserSettings();
     }
 
     /**
@@ -80,24 +66,11 @@ class UserSettings extends Component
     public function saveSettings()
     {
         $this->validate();
-
-//        dd($this->settings);
-
         $this->board->name = $this->settings['name'];
-//        $this->board->domain_id = $this->settings['domain_id'];
+        $this->board->view = $this->settings['view'];
         $this->board->save();
-
-//        foreach ($this->settings as $settingKey => $value) {
-//            $this->saveSingleSetting($settingKey, $value);
-//        }
-
-
-//        session()->flash('userSettingsSuccess', 'Настройки успешно сохранены!');
-
-
         session()->flash('successSave', 'Настройки успешно сохранены!');
-//        $this->dispatch('userSettingsUpdated', settings: $this->settings);
-        return redirect()->route('board.config',['board_id' => $this->board->id , 'activeTab'=>'base' ]);
+        return redirect()->route('board.config', ['board_id' => $this->board->id, 'activeTab' => 'base']);
     }
 
     /**

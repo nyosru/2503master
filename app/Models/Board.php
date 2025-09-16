@@ -17,6 +17,7 @@ class Board extends Model
         'is_paid',
         'admin_user_id',
         'domain_id',
+        'view',
     ];
 
     protected $casts = [

@@ -27,7 +27,25 @@
             @enderror
         </div>
 
-        @if(1==2)
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                {{ $this->getLabel('view') }}:
+            </label>
+
+            <select wire:model="settings.view"
+                    class="w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                @foreach($this->getOptions('view') as $value => $label)
+                    <option value="{{ $value }}">{{ $label }}</option>
+                @endforeach
+            </select>
+
+            @error('settings.view')
+            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
+
+    @if(1==2)
 
             <!-- Режим отображения -->
             <div class="mb-4">
