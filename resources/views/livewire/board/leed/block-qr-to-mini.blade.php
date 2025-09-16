@@ -1,4 +1,5 @@
 <div>
+
     <div class="p-2 text-lg border-b ">
         <span class="font-bold">QR код Лида</span>
     </div>
@@ -6,6 +7,7 @@
         <img src="{{ $qrCode }}"
              alt="QR Code"
              class="mx-auto border rounded">
-        {{--{{ $link }}--}}
+{{--        <a href="{{ $link }}" >{{ $link }}</a>--}}
     </div>
+
 </div>
