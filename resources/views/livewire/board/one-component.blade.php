@@ -6,17 +6,19 @@
 
         <div class="block p-3 text-left bg-gradient-to-br from-yellow-200 to-yellow-100
             mx-4">
+
             <h2 class="text-xl font-bold">Для начала работы </h2>
             <br/>s
             1) Зайдите в телеграм чат бота <a class="bg-white px-2 py-1 rounded border border-yellow-400"
-                                              target="_blank"
-                                              href="https://t.me/{{env('TELEGRAM_BOT_USERNAME')}}"><img
-                    src="{{asset('/icon/telega/Logo.svg')}}" class="h-6 inline"> {{ env('TELEGRAM_BOT_USERNAME') }}
+                target="_blank"
+                href="https://t.me/{{env('TELEGRAM_BOT_USERNAME')}}"><img
+                src="{{asset('/icon/telega/Logo.svg')}}" class="h-6 inline"> {{ env('TELEGRAM_BOT_USERNAME') }}
             </a>
             <br/>
             2) в боте - поделитесь своим номером телефона (появится кнопка после старта)
             <br/>
             3) в боте - будут приходить оповещения от ПроцессМастер.рф о ваших задачах, напоминаниях и всякое такое
+
         </div>
 
         {{--            <pre class="text-xs">{{ print_R(auth()->user()) }}</pre>--}}
@@ -174,7 +176,7 @@
                 </div> <!--end::Container-->
             </div> <!--end::App Content Header--> <!--begin::App Content-->
 
-{{--            <pre class="text-xs">{{ print_r($board->toArray(),1) }}</pre>--}}
+            {{--            <pre class="text-xs">{{ print_r($board->toArray(),1) }}</pre>--}}
 
             @if( empty($user->current_board_id) )
                 <span
@@ -200,7 +202,7 @@
                                 type="first"/>
                         @else
                             обратитесь к администратору, ошибка №101
-                                @endpermission
+                            @endpermission
                         @endif
 
                         <div class="flex  xspace-x-1 relative"

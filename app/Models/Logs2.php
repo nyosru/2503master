@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Logs2 extends Model
 {
+    protected $table = 'logs2s';
+
     /** @use HasFactory<\Database\Factories\Logs2Factory> */
     use HasFactory;
 
@@ -16,6 +18,7 @@ class Logs2 extends Model
         'type',
         'reminder_at',
         'user_id',
+        'board_id',
         'leed_record_id',
         'order_id',
         'data',

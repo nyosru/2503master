@@ -20,6 +20,7 @@ class BoardController extends Controller
 {
 
     public static $polya_config = [];
+    public $board_name;
 
     /**
      * строим доску если у пользователя ещё не было досок
@@ -33,71 +34,24 @@ class BoardController extends Controller
 
         // нет аккаунтов, создаём первую доску, роль и всё такое
         if (1 == 2 || $count == 0) {
-
-            $this->board_name = 'Доска №1';
-            $new = $this->createNewStartBoardFromTemplate();
-
-            if (1 == 2) {
-                $rr = Board::whereId($new['newBoard']->id)->with(
-                    [
-                        'columns',
-                        'role',
-//                    'boardUsers',
-                        'currentUsers',
-//                    'users',
-                        'adminUser',
-                        'columns',
-                        'fieldSettings',
-                        'roles',
-                        'invitations',
-                        'domain',
-                        'userSettings',
-                        'news',
-//                    '',
-//                    '',
-//                    '',
-                    ])->first();
-
-                dd($rr->toArray());
-            }
-
-            $position_new = $this->createPositionInBoardFromShablon($new['template'], $new['newBoard']);
-            //dd($position_new);
-            UserController::setBoardRole($user->id, $new['newBoard']->id, $position_new);
-
-            $this->columnCreateFromTemplate($new['template'], $new['newBoard']);
-            $this->setRoleToColumns($new['newBoard'], $position_new);
-
-            //        $w = Board::where('id', $newBoard->id)->with('columns')->first();
-//            $column->assignRole(1); // по ID
-
-            if (1 == 2) {
-                $rr = Board::whereId($new['newBoard']->id)->with(
-                    [
-                        'columns',
-                        'role',
-//                    'boardUsers',
-                        'currentUsers',
-                        'users',
-                        'adminUser',
-                        'columns.roles',
-                        'fieldSettings',
-                        'fieldSettings.orderRequest',
-                        'fieldSettings.orderRequest.rename',
-                        'roles',
-                        'invitations',
-                        'domain',
-                        'userSettings',
-                        'news',
-//                    '',
-//                    '',
-//                    '',
-                    ])->first();
-                dd($rr->toArray());
-            }
-
-            $this->goto($new['newBoard']->id, $position_new);
+            [ $board_new_id, $new_position_id ] = $this->completeCreateBoardFromTemplate('Доска №1');
+            $this->goto($board_new_id, $new_position_id );
         }
+
+    }
+
+    public function completeCreateBoardFromTemplate($name, $template_id = null): array
+    {
+        Auth::user();
+        $user = Auth::user();
+
+        $this->board_name = $name;
+        $new = $this->createNewStartBoardFromTemplate($template_id);
+        $position_new = $this->createPositionInBoardFromShablon($new['template'], $new['newBoard']);
+        UserController::setBoardRole($user->id, $new['newBoard']->id, $position_new);
+        $this->columnCreateFromTemplate($new['template'], $new['newBoard']);
+        $this->setRoleToColumns($new['newBoard'], $position_new);
+        return [ $new['newBoard']->id , $position_new ];
     }
 
     /**
@@ -415,17 +369,15 @@ class BoardController extends Controller
 
     }
 
+    /**
+     * @param $board_id
+     * @param $role_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public static function goto($board_id, $role_id)
     {
-
         self::enterAs($board_id, $role_id);
-
-//        return redirect()->route('leed', ['board_id' => $board_id]);
         return redirect()->route('board.show', ['board_id' => $board_id]);
-
-//        dd($boards->toArray());
-//        dd([$board_id,$role_id,$user->id]);
-
     }
 
     public static function CreateBoard($user_id, $new_board_name = null)

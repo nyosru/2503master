@@ -62,27 +62,12 @@ class AddLeedFormSimple extends Component
 
     public $order = [];
 
-//    public $fio2;
-//    public $phone2;
-//    public $date_start;
-//    public $price;
-//    public $pay_day_every_year;
-//    public $pay_day_every_month;
-//    public $email;
-//    public $obj_tender;
-//    public $zakazchick;
-//    public $post_day_ot;
-//    public $post_day_do;
-//    public $mesto_dostavki;
-
     public $number1; public $number2; public $number3; public $number4; public $number5; public $number6;
     public $date1; public $date2; public $date3; public $date4;
     public $dt1; public $dt2; public $dt3;
     public $string1; public $string2; public $string3; public $string4;
 
-
     protected $listeners = ['orderInputUpdated' => 'orderChildInputUpdated'];
-
 
     /**
      * заливаем переменные от формы создания заказа
@@ -94,7 +79,6 @@ class AddLeedFormSimple extends Component
         $this->order[$val['name']] = $val['value'];
         Log::info('order', $this->order);
     }
-
 
     // Метод для переключения видимости формы
     public function toggleForm()
@@ -166,13 +150,7 @@ class AddLeedFormSimple extends Component
         // Закрыть форму после добавления
         $this->isFormVisible = false;
 
-        // Сообщение об успешном добавлении
-//        session()->flash('message', 'Новый лид успешно добавлен!');
-
-        // Эмитируем событие на другой компонент
-//        $this->dispatch('refreshLeedBoardComponent');
-
-        return $this->redirectRoute('leed', ['board_id' => $this->column->board_id]);
+        return redirect()->route('board.show', ['board_id' => $this->column->board_id]);
     }
 
     public function render()

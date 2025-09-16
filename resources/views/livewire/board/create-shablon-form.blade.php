@@ -1,10 +1,6 @@
 <div>
     <div class="flex flex-row flex-wrap">
-
         @foreach ($shablons as $k => $shablon)
-
-            {{--            <pre class="text-xs max-h-[200px] overflow-auto">{{ print_r($shablon->toArray()) }}</pre>--}}
-
 
             @if( $shablon->columns && count($shablon->columns) > 0 )
                 <div
@@ -19,24 +15,20 @@
 
                     <livewire:board.template.create-board-from-template-form template_id="{{ $shablon->id }}"/>
 
-
                     <div x-data="{ showInfo: false,}">
 
                         <center>
                             <button
                                 @click="showInfo = !showInfo"
-                                {{--                        wire:click="createBoardFromShablon({{ $shablon->id }})"--}}
-                                {{--                        wire:confirm="Создать доску ?"--}}
                                 class="bg-gradient-to-br from-gray-100 to-orange-300 rounded-lg
-                                mt-3 px-2 py-0
-                        w-1/2
-                        btn btn-sm btn-outline-primary">
+                                    mt-3 px-2 py-0
+                                    w-1/2
+                                    btn btn-sm btn-outline-primary">
                                 Описание
                             </button>
                         </center>
 
                         <div x-show="showInfo" class="m-4 p-4 bg-white border rounded-md shadow">
-
 
                             <div class="pl-2">
                                 <b>Шаги проекта:</b>

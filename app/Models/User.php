@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\SendsVkNotifications;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,10 +13,12 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
     use HasRoles;
     use SoftDeletes;
+    use SendsVkNotifications;
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +33,7 @@ class User extends Authenticatable
         'phone_number',
         'telegram_id',
         'vk_id',
+        'vk_token',
     ];
 
     /**
@@ -47,13 +51,12 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'vk_token' => 'encrypted',
+    ];
+
 
     // Связь с досками (многие ко многим)
 //    public function boards()
@@ -107,5 +110,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(BoardUserSetting::class);
     }
+
+
+
 
 }

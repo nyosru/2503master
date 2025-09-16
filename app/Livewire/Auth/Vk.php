@@ -23,6 +23,9 @@ class Vk extends Component
                 'client_id' => $clientId,
                 'redirect_uri' => $redirectUri,
                 'response_type' => 'code',
+//                'scope' => 'email,messages,phone_number',
+//                'scope' => 'email,messages',
+//                'scope' => 'email,messages,wall,offline',
                 'scope' => 'email',
                 'v' => '5.131',
                 'state' => csrf_token(),
@@ -53,15 +56,11 @@ class Vk extends Component
     public function handleVKCallback()
     {
         try {
-            // Проверяем наличие кода
             if (!request()->has('code')) {
                 throw new \Exception('Код авторизации не получен');
             }
 
             $code = request('code');
-
-            logger()->info('VK Auth Code received: ' . $code);
-            logger()->info('Full request: ', request()->all());
 
             // 1. Получаем access token
             $tokenResponse = Http::asForm()->post('https://oauth.vk.com/access_token', [
@@ -71,15 +70,12 @@ class Vk extends Component
                 'code' => $code,
             ]);
 
-            logger()->info('VK Token response: ', $tokenResponse->json());
-
             if ($tokenResponse->failed()) {
                 throw new \Exception('Ошибка получения access token: ' . $tokenResponse->status());
             }
 
             $tokenData = $tokenResponse->json();
 
-            // Проверяем ошибки от VK
             if (isset($tokenData['error'])) {
                 throw new \Exception('VK Error: ' . $tokenData['error_description'] . ' (' . $tokenData['error'] . ')');
             }
@@ -93,7 +89,6 @@ class Vk extends Component
             ]);
 
             $userData = $userResponse->json();
-            logger()->info('VK User data: ', $userData);
 
             if (!isset($userData['response'][0])) {
                 throw new \Exception('Данные пользователя не найдены');
@@ -102,9 +97,7 @@ class Vk extends Component
             $vkUser = $userData['response'][0];
             $email = $tokenData['email'] ?? ($tokenData['user_id'] . '@vk.com');
             $userId = $tokenData['user_id'];
-
-            logger()->info('VK User ID: ' . $userId);
-            logger()->info('VK Email: ' . $email);
+            $accessToken = $tokenData['access_token']; // получаем токен
 
             // 3. Поиск или создание пользователя
             $user = User::where('vk_id', $userId)->first();
@@ -122,29 +115,40 @@ class Vk extends Component
                         'email' => $email,
                         'password' => bcrypt(uniqid()),
                         'vk_id' => $userId,
+                        'vk_token' => $accessToken, // сохраняем токен
                     ]);
-                    logger()->info('New user created: ' . $user->id);
                 } else {
                     // Обновляем существующего пользователя
-                    $user->update(['vk_id' => $userId]);
-                    logger()->info('Existing user updated: ' . $user->id);
+                    $user->update([
+                        'vk_id' => $userId,
+                        'vk_token' => $accessToken, // сохраняем токен
+                    ]);
                 }
+            } else {
+                // Обновляем токен у существующего пользователя
+                $user->update([
+                    'vk_token' => $accessToken, // обновляем токен
+                ]);
             }
 
             // 4. Логиним пользователя
             Auth::login($user, true);
-            logger()->info('User logged in successfully: ' . $user->id);
 
-            return redirect()->intended('/dashboard');
+//            $message = "🔔 Уведомление: 987";
+//            $vkController = new \App\Http\Controllers\VkMessageController();
+//            $vkController->sendNotification($user, $message);
+
+            return redirect()->route('board.list');
+//            return redirect()->intended('/dashboard');
 
         } catch (\Exception $e) {
             logger()->error('VK Auth Error: ' . $e->getMessage());
-            logger()->error('Stack trace: ' . $e->getTraceAsString());
-
             session()->flash('error', 'Ошибка авторизации через VK: ' . $e->getMessage());
             return redirect()->route('login');
         }
     }
+
+
 
     public function render()
     {

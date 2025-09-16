@@ -36,13 +36,12 @@ class CreateBoardFromTemplateForm extends Component
     {
 
         $bc = new BoardController;
-        [$newBoard_id, $new_position_id] = $bc->createBoardFromTemplate($template_id, $this->board_name);
-
-        BoardController::enterAs($newBoard_id, $new_position_id);
+        [ $board_new_id, $new_position_id ] = $bc->completeCreateBoardFromTemplate($this->board_name,$template_id);
         session()->flash('createBoardGoodFromTemplate', 'Доска создана, настраивайте шаги, проведите тест драйв!');
+        $bc->goto($board_new_id, $new_position_id );
 
         return redirect()->route('board.show', [
-            'board_id' => $newBoard_id
+            'board_id' => $board_new_id
         ]);
 
     }

@@ -261,11 +261,11 @@ Route::get('/auth/telegram/callback', function () {
 
 Route::get('/download/{id}/{file_name}', [DownloadController::class, 'download'])->name('download.file');
 
+
 use App\Http\Controllers\NewsController;
 
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
-
 // Для авторизованных пользователей
 Route::middleware('auth')->group(function () {
     Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
@@ -274,18 +274,30 @@ Route::middleware('auth')->group(function () {
 });
 
 // Маршрут для НЕ авторизованного пользователя
-Route::middleware(['guest'])->group(function () {
+//Route::middleware(['guest'])->group(function () {
 
 //    Route::get('', \App\Livewire\Index::class)->name('login');
 //// Авторизуем пользователя
 //    Route::fallback(function () {
 //        return redirect('/');
 //    });
-});
+//});
 
 
 // Маршрут для авторизованного пользователя
 Route::middleware(['auth'])->group(function () {
+
+    // Отправка сообщения конкретному пользователю
+    Route::post('/vk/send-message', [\App\Http\Controllers\VkMessageController::class, 'sendMessageToUser']);
+    // Отправка приветственного сообщения
+    Route::post('/vk/send-welcome', [\App\Http\Controllers\VkMessageController::class, 'sendWelcomeMessage']);
+    // Массовая отправка сообщений
+    Route::post('/vk/send-bulk', [\App\Http\Controllers\VkMessageController::class, 'sendBulkMessages']);
+    // Информация о токене
+    Route::get('/vk/token-info', [\App\Http\Controllers\VkMessageController::class, 'getTokenInfo']);
+//    Route::post('/vk/send-message', [\App\Http\Controllers\VkMessageController::class, 'sendMessageToUser']);
+//    Route::post('/vk/send-welcome', [\App\Http\Controllers\VkMessageController::class, 'sendWelcomeMessage']);
+
 
     Route::get('vk/friend', App\Livewire\Vk\Friend::class)->name('vk.friend');
 //    Route::get('', \App\Livewire\Cms2\Leed\LeedBoardList::class)->name('index');
