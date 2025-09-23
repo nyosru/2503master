@@ -28,7 +28,6 @@ Route::get('/a/{id}', function ($id) {
         ;
 });
 
-
 Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
     Route::get('', function () {
         $user = User::findOrFail(2);
@@ -39,6 +38,10 @@ Route::prefix('go-to-test')->name('go-to-test.')->group(function () {
     })->name('sz');
 });
 
+
+Route::get('/health', function () {
+    return response()->json(['status' => 'ok'], 200);
+});
 
 ////тест контент
 //
