@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Board;
 
+use App\Models\LeedRecord;
 use Livewire\Component;
 
 class BoardItemComponent extends Component
@@ -11,7 +12,8 @@ class BoardItemComponent extends Component
     public $record;
     public $user_id;
 
-    public function mount( ){
+    public function mount( LeedRecord $record ){
+        $this->record = $record;
         $this->user_id = auth()->user()->id;
     }
 
