@@ -15,7 +15,8 @@ class ItemMiniDocumentLinks extends Component
     public function mount($leed)
     {
         $this->leed = $leed;
-        $documents = Document::where('leed_id', $leed->id)->get();
+//        $documents = Document::where('leed_id', $leed->id)->get();
+        $documents = Document::all();
         foreach ($documents as $doc) {
             $this->documentsTemplates[$doc->id] = $doc->url_template;
         }
