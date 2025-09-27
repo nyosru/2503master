@@ -37,13 +37,13 @@
 
                     @php $hasFields = false; @endphp
 
-                    @php dump($record->column->board->fieldSettings); @endphp
-                    @php dump($record); @endphp
+{{--                    @php dump($record->column->board->fieldSettings); @endphp--}}
+{{--                    @php dump($record); @endphp--}}
 
                     @foreach( $record->column->board->fieldSettings as $f )
 {{--                        @if( !empty($record->{$f->field_name}) )--}}
 {{--                            {{ $record->{$f->field_name} }}--}}
-                          ee:  {{ $record->{$f->field_name} ?? 'x'}}
+                          ee:  {{ $record->{$f->field_name ?? 'id' } ?? 'x'}}
                         <br/>
 {{--                            <br/>--}}
 {{--                            @php $hasFields = true; @endphp--}}
