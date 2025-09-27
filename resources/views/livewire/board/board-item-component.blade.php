@@ -37,7 +37,8 @@
 
                     @php $hasFields = false; @endphp
 
-                    @php dd($record->column->board->fieldSettings); @endphp
+                    @php dump($record->column->board->fieldSettings); @endphp
+                    @php dump($record); @endphp
 
                     @foreach( $record->column->board->fieldSettings as $f )
 {{--                        @if( !empty($record->{$f->field_name}) )--}}
