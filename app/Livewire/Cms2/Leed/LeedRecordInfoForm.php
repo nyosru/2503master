@@ -87,8 +87,15 @@ class LeedRecordInfoForm extends Component
 //        if( !empty($leed) ) {
 //        if ($leed instanceof LeedRecord && $leed->exists) {
 
-        if (!empty($leed)) {
-            $this->fill($leed);
+//        if (!empty($leed)) {
+//            $this->fill($leed);
+//        }
+
+        foreach ($leed->getAttributes() as $k => $v) {
+//            dump([$k,$v]);
+//            if (isset($this->{$k})) {
+                $this->{$k} = $v;
+//            }
         }
 
 //        $this->polyas = OrderRequestsRename::where('board_id', $this->board_id)
