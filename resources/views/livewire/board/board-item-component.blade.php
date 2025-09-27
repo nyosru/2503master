@@ -41,11 +41,13 @@
                     @php dump($record); @endphp
 
                     @foreach( $record->column->board->fieldSettings as $f )
-{{--                        @if( !empty($record->{$f->field_name}) )--}}
+                        @if( !empty($record->{$f->field_name}) )
 {{--                            {{ $record->{$f->field_name} }}--}}
+                          ee:  {{ $record->{$f->field_name} }}
+                        <br/>
 {{--                            <br/>--}}
 {{--                            @php $hasFields = true; @endphp--}}
-{{--                        @endif--}}
+                        @endif
                     @endforeach
 
                     @if(!$hasFields)
