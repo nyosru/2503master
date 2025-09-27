@@ -7,15 +7,16 @@ use Livewire\Component;
 
 class ItemMiniDocumentLinks extends Component
 {
+    public $board_id;
     public $leed;
     public $documentLinks = [];
     public array $documentsTemplates = [];
 
 
-    public function mount($leed)
+    public function mount($leed,$board_id)
     {
         $this->leed = $leed;
-//        $documents = Document::where('leed_id', $leed->id)->get();
+//        $documents = Document::where('board_id', $leed->column()->board_id)->get();
         $documents = Document::all();
         foreach ($documents as $doc) {
             $this->documentsTemplates[$doc->id] = $doc->url_template;
@@ -29,7 +30,10 @@ class ItemMiniDocumentLinks extends Component
         $this->documentLinks = [];
 
 //        $documents = Document::where('leed_id', $this->leed->id)->get();
-        $documents = Document::first();
+//        dd($this->leed);
+//        $documents = Document::where('board_id', $this->leed->column()->board_id)->get();
+        $documents = Document::all();
+
 
         foreach ($documents as $doc) {
             // Подставляем id лида в URL шаблон
