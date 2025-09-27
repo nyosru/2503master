@@ -71,7 +71,7 @@ public $string1; public $string2; public $string3; public $string4;
 //        $this->link = $leed->link;
 
         // Автоматическое заполнение свойств из модели
-        if( !empty($leed->toArray()) ) {
+        if( !empty($leed) ) {
             $this->fill($leed->toArray());
         }
 
