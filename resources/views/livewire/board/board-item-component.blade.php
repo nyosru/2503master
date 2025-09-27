@@ -16,9 +16,6 @@
 >
 
 
-    $column {{ $column->toArray() }}<br/>
-    $record {{ $record->toArray() }}<br/>
-    $user_id {{ $user_id }}
 
     @if(1==1)
         <div
