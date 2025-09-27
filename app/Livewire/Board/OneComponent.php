@@ -91,9 +91,14 @@ class OneComponent extends Component
 //        dd($board_id);
         $this->board = Board::find($board_id)
             ->with([
-                'adminUser','role','boardUsers',
-                'columns','fieldSettings','roles',
-                'invitations','domain',
+                'adminUser',
+                'role',
+                'boardUsers',
+                'columns',
+                'fieldSettings',
+                'roles',
+                'invitations',
+                'domain',
                 'userSettings' => function ($query) {
 
                 }
