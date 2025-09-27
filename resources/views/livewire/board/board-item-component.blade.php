@@ -37,7 +37,7 @@
                     @php $hasFields = false; @endphp
 
                     @foreach( $record->column->board->fieldSettings as $f )
-                        @if( !empty($record->{$f->field_name}) )
+                        @if( !empty($f->field_name) && !empty($record->{$f->field_name}) )
                             {{ $record->{$f->field_name} }}
                             <br/>
                             @php $hasFields = true; @endphp
