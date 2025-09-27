@@ -193,6 +193,7 @@
             >
                 {{--                ответственный за лид--}}
                 <livewire:board.leed.item-mini-document-links
+                    :key="'leed-doc-'.$leed->id"
                     :leed="$leed"
                     :board_id="$board_id"
                 />
