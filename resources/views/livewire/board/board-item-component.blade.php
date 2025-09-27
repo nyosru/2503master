@@ -15,6 +15,11 @@
     ondrop="handleRecordDrop(event, {{ $column->id }})"
 >
 
+
+    $column {{ $column->toArray() }}<br/>
+    $record {{ $record->toArray() }}<br/>
+    $user_id {{ $user_id }}
+
     @if(1==1)
         <div
 
@@ -43,7 +48,7 @@
                     @foreach( $record->column->board->fieldSettings as $f )
 {{--                        @if( !empty($record->{$f->field_name}) )--}}
 {{--                            {{ $record->{$f->field_name} }}--}}
-                          ee:  {{ $record->{$f->field_name ?? 'id' } ?? 'x'}}
+{{--                          ee:  {{ $record->{$f->field_name ?? 'id' } ?? 'x'}}--}}
                         <br/>
 {{--                            <br/>--}}
 {{--                            @php $hasFields = true; @endphp--}}
