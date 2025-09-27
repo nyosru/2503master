@@ -28,7 +28,8 @@ class ItemMiniDocumentLinks extends Component
     {
         $this->documentLinks = [];
 
-        $documents = Document::where('leed_id', $this->leed->id)->get();
+//        $documents = Document::where('leed_id', $this->leed->id)->get();
+        $documents = Document::first();
 
         foreach ($documents as $doc) {
             // Подставляем id лида в URL шаблон
