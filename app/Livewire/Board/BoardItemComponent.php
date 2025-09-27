@@ -12,8 +12,10 @@ class BoardItemComponent extends Component
     public $record;
     public $user_id;
 
-    public function mount( LeedRecord $record ){
-        $this->record = $record;
+    public function mount(
+//        LeedRecord $record
+    ){
+//        $this->record = $record;
         $this->user_id = auth()->user()->id;
     }
 
