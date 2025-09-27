@@ -86,9 +86,9 @@ class LeedRecordInfoForm extends Component
         // Автоматическое заполнение свойств из модели
 //        if( !empty($leed) ) {
 //        if ($leed instanceof LeedRecord && $leed->exists) {
-        $in = $leed->toArray() ?? [];
-        if (!empty($in)) {
-            $this->fill($leed->toArray());
+
+        if (!empty($leed)) {
+            $this->fill($leed);
         }
 
 //        $this->polyas = OrderRequestsRename::where('board_id', $this->board_id)
