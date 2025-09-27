@@ -71,7 +71,9 @@ public $string1; public $string2; public $string3; public $string4;
 //        $this->link = $leed->link;
 
         // Автоматическое заполнение свойств из модели
-        $this->fill($leed->toArray());
+        if( !empty($leed->toArray()) ) {
+            $this->fill($leed->toArray());
+        }
 
 //        $this->polyas = OrderRequestsRename::where('board_id', $this->board_id)
 ////            ->pluck('rename', 'name')->toArray()

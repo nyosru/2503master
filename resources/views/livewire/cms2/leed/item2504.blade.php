@@ -186,5 +186,19 @@
             </div>
         </div>
 
+        <div>
+            <div class="bg-white border-2 border-gray-400
+{{--            w-1/2 --}}
+            rounded-md"
+            >
+                {{--                ответственный за лид--}}
+                <livewire:board.leed.item-mini-document-links
+                    :leed="$leed"
+                    :board_id="$board_id"
+                />
+
+            </div>
+        </div>
+
     </div>
 </div>
