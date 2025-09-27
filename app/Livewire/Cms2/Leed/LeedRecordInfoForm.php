@@ -57,10 +57,23 @@ class LeedRecordInfoForm extends Component
     public $post_day_do;
     public $mesto_dostavki;
 
-public $number1; public $number2; public $number3; public $number4; public $number5; public $number6;
-public $date1; public $date2; public $date3; public $date4;
-public $dt1; public $dt2; public $dt3;
-public $string1; public $string2; public $string3; public $string4;
+    public $number1;
+    public $number2;
+    public $number3;
+    public $number4;
+    public $number5;
+    public $number6;
+    public $date1;
+    public $date2;
+    public $date3;
+    public $date4;
+    public $dt1;
+    public $dt2;
+    public $dt3;
+    public $string1;
+    public $string2;
+    public $string3;
+    public $string4;
 
     public function mount(LeedRecord $leed)
     {
@@ -72,7 +85,9 @@ public $string1; public $string2; public $string3; public $string4;
 
         // Автоматическое заполнение свойств из модели
 //        if( !empty($leed) ) {
-        if ($leed instanceof LeedRecord && $leed->exists) {
+//        if ($leed instanceof LeedRecord && $leed->exists) {
+        $in = $leed->toArray() ?? [];
+        if (!empty($in)) {
             $this->fill($leed->toArray());
         }
 
