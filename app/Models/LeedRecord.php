@@ -20,7 +20,7 @@ class LeedRecord extends Model
         'phone2',
         //+in contr
         'cooperativ',
-        'price',
+//        'price',
         'date_start',
 
 
@@ -70,8 +70,8 @@ class LeedRecord extends Model
 //        'budget' => 'decimal:2',
         'budget' => 'decimal',
 //        'price' => 'decimal:2',
-        'price' => 'decimal',
-        'date_start' => 'date',
+//        'price' => 'decimal',
+        'date_start' => 'datetime',
 
         'submit_before' => 'datetime',
         'payment_due_date' => 'datetime',
