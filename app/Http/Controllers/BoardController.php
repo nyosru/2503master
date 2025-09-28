@@ -187,18 +187,6 @@ class BoardController extends Controller
 
         return;
 
-        $ee = OrderRequestsRename::updateOrCreate(
-            [
-                'board_id' => $board_id,
-                'order_requests_id' => $order_requests_id
-            ],
-            [
-                'name' => $name,
-                'description' => $description
-            ]
-        );
-        return $ee;
-
     }
 
 
