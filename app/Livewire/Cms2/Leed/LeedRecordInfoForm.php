@@ -15,96 +15,56 @@ class LeedRecordInfoForm extends Component
     public $board_id;
     public $leed;
     public $isEditing = true;
-    public $polyas = [];
 
-    public $name;
-    public $phone;
-    public $company;
-    public $fio;
-    public $comment;
-    public $budget;
-    public $client_supplier_id;
-    public $order_product_types_id;
-    public $suppliers;
-    public $types;
+    // Все поля
+    public $name, $phone, $company, $fio, $comment, $budget;
+    public $client_supplier_id, $order_product_types_id;
+    public $telegram, $whatsapp, $fio2, $phone2, $cooperativ, $price, $date_start, $base_number, $link;
+    public $platform, $customer, $payment_due_date, $submit_before;
+    public $pay_day_every_year, $pay_day_every_month, $email, $obj_tender;
+    public $zakazchick, $post_day_ot, $post_day_do, $mesto_dostavki;
+    public $number1, $number2, $number3, $number4, $number5, $number6;
+    public $date1, $date2, $date3, $date4, $dt1, $dt2, $dt3;
+    public $string1, $string2, $string3, $string4;
 
-    public $telegram;
-    public $whatsapp;
-    public $fio2;
-    public $phone2;
-    public $cooperativ;
-    public $price;
-    public $date_start;
-    public $base_number;
-    public $link;
-//    public $is_web_link;
-//    public $url;
+    public $suppliers, $types;
 
-
-    public $platform;
-
-    public $customer;
-    public $payment_due_date;
-    public $submit_before;
-
-    public $pay_day_every_year;
-    public $pay_day_every_month;
-    public $email;
-    public $obj_tender;
-
-    public $zakazchick;
-    public $post_day_ot;
-    public $post_day_do;
-    public $mesto_dostavki;
-
-    public $number1;
-    public $number2;
-    public $number3;
-    public $number4;
-    public $number5;
-    public $number6;
-    public $date1;
-    public $date2;
-    public $date3;
-    public $date4;
-    public $dt1;
-    public $dt2;
-    public $dt3;
-    public $string1;
-    public $string2;
-    public $string3;
-    public $string4;
-
-    public function mount(LeedRecord $leed)
+    public function mount(LeedRecord $leed, $isEditing = true)
     {
-
-        //        dd($leed->toArray());
         $this->leed = $leed;
+        $this->isEditing = $isEditing;
 
-//        $this->link = $leed->link;
-
-        // Автоматическое заполнение свойств из модели
-//        if( !empty($leed) ) {
-//        if ($leed instanceof LeedRecord && $leed->exists) {
-
-//        if (!empty($leed)) {
-//            $this->fill($leed);
-//        }
-
-        foreach ($leed->getAttributes() as $k => $v) {
-//            dump([$k,$v]);
-//            if (isset($this->{$k})) {
-                $this->{$k} = $v;
-//            }
-        }
-
-//        $this->polyas = OrderRequestsRename::where('board_id', $this->board_id)
-////            ->pluck('rename', 'name')->toArray()
-//            ->get()
-//        ;
+        $this->fill($leed->only([
+            'name','phone','company','fio','comment','budget',
+            'client_supplier_id','order_product_types_id',
+            'telegram','whatsapp','fio2','phone2','cooperativ',
+            'price','date_start','base_number','link',
+            'platform','customer','payment_due_date','submit_before',
+            'pay_day_every_year','pay_day_every_month','email','obj_tender',
+            'zakazchick','post_day_ot','post_day_do','mesto_dostavki',
+            'number1','number2','number3','number4','number5','number6',
+            'date1','date2','date3','date4','dt1','dt2','dt3',
+            'string1','string2','string3','string4',
+        ]));
 
         $this->suppliers = ClientSupplier::select('id', 'title')->get();
-        $this->types = OrderProductType::select('id', 'name')->orderBy('order', 'asc')->get();
+        $this->types = OrderProductType::select('id', 'name')->orderBy('order')->get();
+    }
+
+    protected function rules()
+    {
+        return BoardController::getRules($this->board_id);
+    }
+
+    public function saveChanges()
+    {
+        $validated = $this->validate();
+        $this->leed->fill($validated)->save();
+
+        return redirect()->route('board.leed.item', [
+            'board_id' => $this->board_id,
+            'leed_id' => $this->leed->id
+        ])->with('messageItemInfo', 'Сохранено');
     }
 
     public function render()
@@ -113,27 +73,4 @@ class LeedRecordInfoForm extends Component
             'leed' => $this->leed,
         ]);
     }
-
-    public function saveChanges()
-    {
-
-        $rules = BoardController::getRules($this->board_id);
-
-//        dd($rules);
-        $ee = $this->validate($rules);
-        dd($ee);
-        foreach ($ee as $k => $v) {
-            if ($this->leed->{$k} != $v) {
-                $this->leed->{$k} = $v;
-            }
-        }
-
-        $this->leed->save();
-        session()->flash('messageItemInfo', 'Сохранено');
-
-        //        $this->redirectRoute('leed.item', [ 'board_id' => $this->board_id, 'id' => $this->leed->id);
-        return redirect()->route('leed.item', ['board_id' => $this->board_id, 'id' => $this->leed->id]);
-
-    }
-
 }
