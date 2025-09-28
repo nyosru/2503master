@@ -40,7 +40,8 @@ class LeedRecordInfoForm extends Component
 //            'comment', 'budget',
             'client_supplier_id', 'order_product_types_id',
 //            //+бд
-//            'telegram', 'whatsapp', 'fio2', 'phone2',
+//            'telegram', 'whatsapp',
+ 'fio2', 'phone2',
 //            //+бд
 //            'cooperativ', 'price', 'date_start',
 //            'base_number', 'link',
