@@ -13,10 +13,18 @@ class LeedRecord extends Model
     protected $fillable = [
         'name' ,
 
+        //+in contr
         'telegram' ,
         'whatsapp' ,
-        'company' ,
+        'fio2',
+        'phone2',
+        //+in contr
+        'cooperativ',
+        'price',
+        'date_start',
 
+
+        'company' ,
         'comment' ,
 //        'content',
         'client_id',
@@ -33,11 +41,6 @@ class LeedRecord extends Model
         'fio' ,
 
 
-        'fio2',
-        'phone2',
-        'cooperativ',
-        'price',
-        'date_start',
 
         'platform',
         'base_number',
