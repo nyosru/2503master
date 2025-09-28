@@ -3,7 +3,7 @@
                                     wire:ignore.self
     class="p-1 m-1 border-2 border-gray-500 rounded"
     id="record-{{ $record->id }}"
-    :key="record-{{ $record->id }}"
+{{--    :key="'record-'.$record->id"--}}
 
     @if($column->can_transfer == true  && isset($record->transfers[0]) && $record->transfers[0]->status == 'новый' )
     @else
