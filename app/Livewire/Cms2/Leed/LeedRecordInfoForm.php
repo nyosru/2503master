@@ -34,7 +34,7 @@ class LeedRecordInfoForm extends Component
         $this->leed = $leed;
         $this->isEditing = $isEditing;
 
-        $this->fill($leed->attributesToArray());
+        $this->fill($this->leed->attributesToArray());
 
         $this->suppliers = ClientSupplier::select('id', 'title')->get();
         $this->types = OrderProductType::select('id', 'name')->orderBy('order')->get();
