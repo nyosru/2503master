@@ -35,13 +35,15 @@ class LeedRecordInfoForm extends Component
         $this->isEditing = $isEditing;
 
         $this->fill($this->leed->only([
-            'name', 'phone', 'company', 'fio', 'comment', 'budget',
+            'name',  'company',
+            'fio', 'phone',
+//            'comment', 'budget',
             'client_supplier_id', 'order_product_types_id',
-            //+бд
-            'telegram', 'whatsapp', 'fio2', 'phone2',
-            //+бд
-            'cooperativ', 'price', 'date_start',
-            'base_number', 'link',
+//            //+бд
+//            'telegram', 'whatsapp', 'fio2', 'phone2',
+//            //+бд
+//            'cooperativ', 'price', 'date_start',
+//            'base_number', 'link',
 //            'platform', 'customer', 'payment_due_date', 'submit_before',
 //            'pay_day_every_year', 'pay_day_every_month', 'email', 'obj_tender',
 //            'zakazchick', 'post_day_ot', 'post_day_do', 'mesto_dostavki',
