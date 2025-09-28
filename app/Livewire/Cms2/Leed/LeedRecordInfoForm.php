@@ -117,7 +117,7 @@ class LeedRecordInfoForm extends Component
     public function saveChanges()
     {
 
-        $rules = BoardController::getRules();
+        $rules = BoardController::getRules($this->board_id);
         $ee = $this->validate($rules);
 
         foreach ($ee as $k => $v) {
