@@ -29,28 +29,25 @@
                                                             cursor-pointer relative">
 
             <div class="py-2 text-center">
-
                 <a
 {{--                    href="{{ route('leed.item',[ 'board_id'=>$column->board_id , 'id'=>$record->id ]) }}"--}}
                     href="{{ route('board.leed.item',[ 'board_id'=>$column->board_id , 'leed_id'=>$record->id ]) }}"
                    wire:navigate
                    class="text-blue-800 xblock xtext-center hover:underline p-1"
                 >
-
                     @php $hasFields = false; @endphp
-
 {{--                    @php dump($record->column->board->fieldSettings); @endphp--}}
 {{--                    @php dump($record->toArray()); @endphp--}}
-
                     @foreach( $record->column->board->fieldSettings as $f )
-{{--                        @if( !empty($record->{$f->field_name}) )--}}
-                        <div> {{ $f->field_name }} </div>
-{{--                            {{ $record->{$f->field_name} }}--}}
+                        @if( !empty($record->{$f->field_name}) )
+                        <div>
+{{--                            {{ $f->field_name }} --}}
+                            {{ $record->{$f->field_name} }}
 {{--                          ee:  {{ $record->{$f->field_name ?? 'id' } ?? 'x'}}--}}
-{{--                        <br/>--}}
+                        </div>
 {{--                            <br/>--}}
-{{--                            @php $hasFields = true; @endphp--}}
-{{--                        @endif--}}
+                            @php $hasFields = true; @endphp
+                        @endif
                     @endforeach
 
                     @if(!$hasFields)
