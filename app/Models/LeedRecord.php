@@ -71,7 +71,8 @@ class LeedRecord extends Model
         'budget' => 'decimal',
 //        'price' => 'decimal:2',
         'price' => 'decimal',
-        'date_start' => 'datetime',
+        'date_start' => 'date',
+
         'submit_before' => 'datetime',
         'payment_due_date' => 'datetime',
         'pay_day_every_year' => 'date',

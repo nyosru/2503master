@@ -19,7 +19,8 @@ class LeedRecordInfoForm extends Component
     // Все поля
     public $name, $phone, $company, $fio, $comment, $budget;
     public $client_supplier_id, $order_product_types_id;
-    public $telegram, $whatsapp, $fio2, $phone2, $cooperativ, $price, $date_start, $base_number, $link;
+    public $telegram, $whatsapp, $fio2, $phone2, $cooperativ, $base_number, $link;
+    public $price, $date_start;
     public $platform, $customer, $payment_due_date, $submit_before;
     public $pay_day_every_year, $pay_day_every_month, $email, $obj_tender;
     public $zakazchick, $post_day_ot, $post_day_do, $mesto_dostavki;
