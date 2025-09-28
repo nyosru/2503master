@@ -119,7 +119,7 @@ class LeedRecordInfoForm extends Component
 
         $rules = BoardController::getRules($this->board_id);
 
-        dD($rules);
+//        dD($rules);
         $ee = $this->validate($rules);
 
         foreach ($ee as $k => $v) {
