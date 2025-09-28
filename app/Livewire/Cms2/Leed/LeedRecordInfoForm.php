@@ -38,9 +38,9 @@ class LeedRecordInfoForm extends Component
             'name', 'phone', 'company', 'fio', 'comment', 'budget',
             'client_supplier_id', 'order_product_types_id',
             'telegram', 'whatsapp', 'fio2', 'phone2', 'cooperativ', 'price', 'date_start', 'base_number', 'link',
-            'platform', 'customer', 'payment_due_date', 'submit_before',
-            'pay_day_every_year', 'pay_day_every_month', 'email', 'obj_tender',
-            'zakazchick', 'post_day_ot', 'post_day_do', 'mesto_dostavki',
+//            'platform', 'customer', 'payment_due_date', 'submit_before',
+//            'pay_day_every_year', 'pay_day_every_month', 'email', 'obj_tender',
+//            'zakazchick', 'post_day_ot', 'post_day_do', 'mesto_dostavki',
             'number1', 'number2', 'number3', 'number4', 'number5', 'number6',
             'date1', 'date2', 'date3', 'date4', 'dt1', 'dt2', 'dt3',
             'string1', 'string2', 'string3', 'string4'
