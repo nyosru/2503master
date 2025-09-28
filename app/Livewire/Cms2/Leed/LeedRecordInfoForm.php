@@ -43,7 +43,9 @@ class LeedRecordInfoForm extends Component
 //            'telegram', 'whatsapp',
  'fio2', 'phone2',
 //            //+бд
-//            'cooperativ', 'price', 'date_start',
+//            'cooperativ',
+ 'price',
+ 'date_start',
 //            'base_number', 'link',
 //            'platform', 'customer', 'payment_due_date', 'submit_before',
 //            'pay_day_every_year', 'pay_day_every_month', 'email', 'obj_tender',
