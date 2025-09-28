@@ -54,35 +54,14 @@
                             @endif
 
                         </label>
-                        {{--                        <pre class="text-xs" >{{ print_r($key->toArray()) }}</pre>--}}
+
                         @if($isEditing)
 
-                            {{--                            @if( $key->orderRequest->is_web_link )--}}
+
                             <div
                                 x-data="{ link: '{{$link}}' }"
                                 class="relative max-w-md"
                             >
-                                {{--                                    <div class="relative max-w-md">--}}
-                                {{--                                        <input--}}
-                                {{--                                            wire:model="{{ $key->field_name }}"--}}
-                                {{--                                            id="{{ $key->field_name }}"--}}
-                                {{--                                            :value="$leed->{$key->field_name}"--}}
-                                {{--                                            type="text"--}}
-                                {{--                                            class="w-full border rounded px-3 py-2 pr-20 focus:outline-none focus:ring-2 focus:ring-blue-400"--}}
-                                {{--                                            placeholder="Введите что-то..."--}}
-                                {{--                                            x-model="url"--}}
-                                {{--                                        >--}}
-                                {{--                                        <button--}}
-                                {{--                                            type="button"--}}
-                                {{--                                            class="absolute right-1 top-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition"--}}
-                                {{--                                            @click="window.open(url, '_blank')"--}}
-                                {{--                                        >--}}
-                                {{--                                            --}}{{--            Перейти--}}
-                                {{--                                            ↗--}}
-                                {{--                                        </button>--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
-                                {{--                            @else--}}
 
                                 @if($key->field_name === 'comment')
                                     <textarea wire:model="{{ $key->field_name }}" id="{{ $key }}"
@@ -114,19 +93,16 @@
                                         wire:model="{{ $key->field_name }}"
                                         id="{{ $key->field_name }}"
 
-                                        {{--                                    @if( !empty($key->type) && $key->type === 'number' )--}}
                                         @if( $key->orderRequest->number )
                                             type="number"
                                         @elseif( $key->orderRequest->date )
                                             type="date"
                                         @elseif( $key->orderRequest->is_web_link )
                                             type="text"
-                                        x-model="link"
+                                            x-model="link"
                                         @else
                                             type="text"
                                         @endif
-
-                                        :value="$leed->{$key->field_name}"
 
                                         class="shadow-sm mt-1 block w-full
                                         focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
@@ -158,46 +134,10 @@
                         <div class="mt-2 text-sm text-red-500">{{ $message }}</div>
                         @enderror
 
-                        {{--                        {{$key->field_name}}: {{ ${$key->field_name} ?? 'x' }}<br/>--}}
-                        {{--                        {{$key->field_name}}: {{ $leed->{$key->field_name} ?? 'x' }}<br/>--}}
-
                     </div>
-                    {{--                    @endif--}}
 
                 @endforeach
             </div>
-
-            @if(1==2)
-
-                @if(!empty($leed->client))
-                    <div class="py-1">
-                        <label class="block text-sm font-medium text-gray-700">Клиент</label>
-                        <a href="{{ route('clients.info', ['client_id' => $leed->client->id]) }}" wire:navigate
-                           class="text-indigo-600 hover:text-indigo-900">
-                            {{ $leed->client->name_f ?? '' }} {{ $leed->client->name_i ?? '' }} {{ $leed->client->name_o ?? '' }}
-                            /
-                            @if(!empty($leed->client->ur_name))
-                                {{ $leed->client->ur_name }}
-                            @elseif(!empty($leed->client->name_company))
-                                {{ $leed->client->name_company }}
-                            @endif
-                        </a>
-                    </div>
-                @endif
-
-                @if(!empty($leed->supplier))
-                    <div class="py-1">
-                        <label class="block text-sm font-medium text-gray-700">Источник</label>
-                        <div>
-                            {{ $leed->supplier->title }}
-                            @if(!empty($leed->supplier->name))
-                                <br>{{ $leed->supplier->name }}
-                            @endif
-                        </div>
-                    </div>
-                @endif
-
-            @endif
 
         </div>
 
