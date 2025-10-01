@@ -18,10 +18,37 @@
     <!-- Styles -->
     {{--    @vite(['resources/css/app.css', 'resources/js/app.js'])--}}
     <link href="/css/output.css?v={{ filemtime(public_path('/css/output.css')) }}" rel="stylesheet">
+
     {{--    @livewireStyles--}}
+    {{--    @vite(['resources/js/app.js'])--}}
+
+    @vite(['resources/js/app.js', 'resources/css/app.css'])
+
+
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://ПроцессМастер.рф">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CRM для дел любого маштаба!">
+    <meta property="og:description" content="Мониторинг, ведение, учёт процессов">
+
+    <meta property="og:image" content="https://php-cat.com/processmaster/preview_link_for_fb.jpg">
+
+    <!-- VK Meta Tags -->
+    <meta property="vk:image"  content="https://php-cat.com/processmaster/preview_link_for_vk.jpg" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="ПроцессМастер.рф">
+    <meta property="twitter:url" content="https://ПроцессМастер.рф">
+    <meta name="twitter:title" content="CRM для дел любого маштаба!">
+    <meta name="twitter:description" content="Мониторинг, ведение, учёт процессов">
+    <meta name="twitter:image" content="https://php-cat.com/processmaster/preview_link_for_vk.jpg">
+
 
 </head>
 <body class="antialiased font-sans bg-gray-100 min-h-screen">
+
 {{--@if(request()->getHost() == 'xn--80ajb0aifhffacm9b.xn--p1ai')--}}
 @if(1==2)
 
@@ -207,5 +234,6 @@
         </div>
     </div>
 @endif
+@stack('scripts')
 </body>
 </html>
