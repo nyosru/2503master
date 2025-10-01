@@ -16,20 +16,5 @@
         "vite": "^6.0.11"
     },
     "dependencies": {
-        "@ckeditor/ckeditor5-basic-styles": "^46.0.3",
-        "@ckeditor/ckeditor5-build-classic": "^41.4.2",
-        "@ckeditor/ckeditor5-dev-translations": "^43.1.0",
-        "@ckeditor/ckeditor5-dev-utils": "^43.1.0",
-        "@ckeditor/ckeditor5-editor-classic": "^46.0.3",
-        "@ckeditor/ckeditor5-essentials": "^46.0.3",
-        "@ckeditor/ckeditor5-image": "^46.0.3",
-        "@ckeditor/ckeditor5-link": "^46.0.3",
-        "@ckeditor/ckeditor5-list": "^46.0.3",
-        "@ckeditor/ckeditor5-media-embed": "^46.0.3",
-        "@ckeditor/ckeditor5-paragraph": "^46.0.3",
-        "@ckeditor/ckeditor5-table": "^46.0.3",
-        "@ckeditor/ckeditor5-theme-lark": "^46.0.3",
-        "@ckeditor/ckeditor5-upload": "^46.0.3",
-        "@ckeditor/ckeditor5-vue": "^7.3.0"
     }
 }

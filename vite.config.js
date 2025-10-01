@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+// import viteStaticCopy from 'vite-plugin-static-copy';
 
 export default defineConfig({
     plugins: [
@@ -8,17 +9,17 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-
-    // Оптимизация для Quill
-    build: {
-        rollupOptions: {
-            external: [
-                /^@ckeditor\/ckeditor5-.*/,
-                /^@ckeditor\/ckeditor5-.*\/.*\.css$/
-            ]
-        }
-    },
-    optimizeDeps: {
-        include: ['@ckeditor/ckeditor5-build-classic']
-    }
+    //
+    // // Оптимизация для Quill
+    // build: {
+    //     rollupOptions: {
+    //         external: [
+    //             // /^@ckeditor\/ckeditor5-.*/,
+    //             // /^@ckeditor\/ckeditor5-.*\/.*\.css$/
+    //         ]
+    //     }
+    // },
+    // optimizeDeps: {
+    //     // include: ['@ckeditor/ckeditor5-build-classic']
+    // }
 });

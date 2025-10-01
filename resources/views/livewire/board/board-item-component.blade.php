@@ -1,9 +1,9 @@
 <li
 
-                                    wire:ignore.self
+    wire:ignore.self
     class="p-1 m-1 border-2 border-gray-500 rounded"
     id="record-{{ $record->id }}"
-{{--    :key="'record-'.$record->id"--}}
+    {{--    :key="'record-'.$record->id"--}}
 
     @if($column->can_transfer == true  && isset($record->transfers[0]) && $record->transfers[0]->status == 'новый' )
     @else
@@ -14,7 +14,6 @@
     ondragover="event.preventDefault()"
     ondrop="handleRecordDrop(event, {{ $column->id }})"
 >
-
 
 
     @if(1==1)
@@ -30,22 +29,22 @@
 
             <div class="py-2 text-center">
                 <a
-{{--                    href="{{ route('leed.item',[ 'board_id'=>$column->board_id , 'id'=>$record->id ]) }}"--}}
+                    {{--                    href="{{ route('leed.item',[ 'board_id'=>$column->board_id , 'id'=>$record->id ]) }}"--}}
                     href="{{ route('board.leed.item',[ 'board_id'=>$column->board_id , 'leed_id'=>$record->id ]) }}"
-                   wire:navigate
-                   class="text-blue-800 xblock xtext-center hover:underline p-1"
+                    wire:navigate
+                    class="text-blue-800 xblock xtext-center hover:underline p-1"
                 >
                     @php $hasFields = false; @endphp
-{{--                    @php dump($record->column->board->fieldSettings); @endphp--}}
-{{--                    @php dump($record->toArray()); @endphp--}}
+                    {{--                    @php dump($record->column->board->fieldSettings); @endphp--}}
+                    {{--                    @php dump($record->toArray()); @endphp--}}
                     @foreach( $record->column->board->fieldSettings as $f )
                         @if( !empty($record->{$f->field_name}) )
-                        <div>
-{{--                            {{ $f->field_name }} --}}
-                            {{ $record->{$f->field_name} }}
-{{--                          ee:  {{ $record->{$f->field_name ?? 'id' } ?? 'x'}}--}}
-                        </div>
-{{--                            <br/>--}}
+                            <div>
+                                {{--                            {{ $f->field_name }} --}}
+                                {{ $record->{$f->field_name} }}
+                                {{--                          ee:  {{ $record->{$f->field_name ?? 'id' } ?? 'x'}}--}}
+                            </div>
+                            {{--                            <br/>--}}
                             @php $hasFields = true; @endphp
                         @endif
                     @endforeach
@@ -58,7 +57,8 @@
 
                 {{--блок кнопок менеджер--}}
                 <div class="mx-2 mt-1 flex flex-row space-x-1 items-center"
-                     wire:key="'column-key-'.$column->id.'-but1-'.$record->id"'"
+                     wire:key="'column-key-'.$column->id.'-but1-'.$record->id"
+                '"
                 >
 
                 {{--твои горящие задачи--}}

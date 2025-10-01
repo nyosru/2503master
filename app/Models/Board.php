@@ -110,4 +110,10 @@ class Board extends Model
         return $this->hasMany(News::class);
     }
 
+    public function documentTemplates()
+    {
+        return $this->hasMany(BoardDocumentTemplate::class);
+    }
+
+
 }
