@@ -1,13 +1,13 @@
 <div class="container mx-auto">
 
-{{--    <div>--}}
-{{--        <livewire:Cms2.App.Breadcrumb--}}
-{{--            :menu="[--}}
-{{--                ['route'=>'tech.index','name'=>'Техничка'],--}}
-{{--                ['route'=>'board.list','name'=>'Доски'],--}}
-{{--                --}}{{--        [ 'link'=>'no', 'name'=>'Счета']--}}
-{{--                ]"/>--}}
-{{--    </div>--}}
+    {{--    <div>--}}
+    {{--        <livewire:Cms2.App.Breadcrumb--}}
+    {{--            :menu="[--}}
+    {{--                ['route'=>'tech.index','name'=>'Техничка'],--}}
+    {{--                ['route'=>'board.list','name'=>'Доски'],--}}
+    {{--                --}}{{--        [ 'link'=>'no', 'name'=>'Счета']--}}
+    {{--                ]"/>--}}
+    {{--    </div>--}}
 
     <livewire:board.create-form/>
 
@@ -83,7 +83,7 @@
         </div>
 
         {{--        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">--}}
-{{--        пользователи--}}
+        {{--        пользователи--}}
         <div class="w-full
         lg:flex-1
 {{--        lg:w-4/12 --}}
@@ -141,18 +141,23 @@
             wire:key="tr_board_'.$board->id">
             {{--                <td class="px-6 py-4">{{ $board->id }}</td>--}}
             {{--            <td class="px-6 py-4">--}}
-            <div class="w-full
-                lg:flex-1
-{{--                lg:w-3/12--}}
-             p-2
-                bg-gradient-to-b from-orange-200 to-gray-100
-                {{ $loop->index%2 ? ' md:from-gray-100 ' : ' md:from-white md:to-white ' }}
-            ">
+            <div
+                @if( $loop->index%2 )
+                    class="w-full md:from-gray-100
+lg:flex-1 p-2
+bg-gradient-to-b from-orange-200 to-gray-100
+"
+                @else
+                    class="w-full                md:from-white md:to-white
+                lg:flex-1 p-2
+bg-gradient-to-b from-orange-200 to-gray-100 "
+                @endif
+            >
 
                 <div class="font-bold pb-2
-                ">
-                {{ $board->name }}
-                            </div>
+">
+                    {{ $board->name }}
+                </div>
                 {{--                <pre>{{ print_r($board->toArray()) }}</pre>--}}
                 {{--            </td>--}}
                 {{--            <td class="px-6 py-4">--}}
@@ -171,31 +176,31 @@
                         {{--                                    <pre class="text-xs">{{ print_r($ba['role']->toArray(),1) }}</pre>--}}
 
                         <a href="{{ route('leed.goto',[
-                                'board_id'=>$board->id,
-                                'role_id'=>$ba->role->id
-                                ]) }}"
+                'board_id'=>$board->id,
+                'role_id'=>$ba->role->id
+                ]) }}"
                            class="text-blue-700
-                               bg-blue-100
-                               hover:bg-blue-200
-                               mr-1 mb-1 p-1
-                               border border-bottom-3 border-black
-                               rounded inline-block"
+               bg-blue-100
+               hover:bg-blue-200
+               mr-1 mb-1 p-1
+               border border-bottom-3 border-black
+               rounded inline-block"
                         >
                             {{ ( $ba['role']['name_ru'] ?? $ba['role']['name'] ) }}
                         </a>
 
-{{--                        <pre>{{ print_r($ba->toArray()) }}</pre>--}}
+                        {{--                        <pre>{{ print_r($ba->toArray()) }}</pre>--}}
 
                     @endforeach
                 @endif
                 {{--            </td>--}}
             </div>
 
-{{--            пользователи--}}
+            {{--            пользователи--}}
             <div class="w-full
-            lg:flex-1
+lg:flex-1
 {{--            lg:w-4/12 --}}
-            p-2">
+p-2">
                 {{--            <td class="px-6 py-4">--}}
 
                 @permission('р.Доски / создавать приглашения')
@@ -223,7 +228,7 @@
                     @endpermission
                     @endpermission
                     <div class=" max-h-[150px]
-                            overflow-auto">
+            overflow-auto">
                         @foreach($board->boardUsers as $k => $bu)
                             {{--                            <pre>{{ print_r($bu->toArray()) }}</pre>--}}
                             <div
@@ -234,16 +239,16 @@
 @if( !empty($bu->deleted) ) bg-red-100 @else bg-green-100 @endif
 
 {{--                            rounded-full--}}
-                            px-3 py-1 text-sm
-                            font-semibold text-gray-700
-                            mb-1
-                            ">
-                            <span class="@if( !empty($bu->deleted) ) line-through @endif">
-                                {{ $bu->user->name }}
-                                <sup>
-                                    {{ $bu->role->name_ru ?? $bu->role->name }}
-                                </sup>
-                            </span>
+            px-3 py-1 text-sm
+            font-semibold text-gray-700
+            mb-1
+            ">
+            <span class="@if( !empty($bu->deleted) ) line-through @endif">
+                {{ $bu->user->name }}
+                <sup>
+                    {{ $bu->role->name_ru ?? $bu->role->name }}
+                </sup>
+            </span>
 
                                 @permission('р.Доски / вкл/выкл user')
                                 @if( !empty($bu->deleted) )
@@ -266,8 +271,8 @@
             </div>
             @permission('р.Доски / доп.инфа')
             <div class="w-1/3 lg:w-1/12 p-2
-            hidden md:block
-            ">
+hidden md:block
+">
                 {{--            <td class="px-6 py-4">--}}
                 @if($board->created_at)
                     {{ $board->created_at->format('Y-m-d') }}
@@ -281,8 +286,8 @@
 
             @permission('р.Доски / может изменять "оплачено"')
             <div class="w-1/3 lg:w-1/12 p-2
-            hidden md:block
-            ">
+hidden md:block
+">
                 {{--            <td class="px-6 py-4">--}}
                 <input
                     type="checkbox"
@@ -295,10 +300,9 @@
             @endpermission
 
 
-
             <div class="w-1/3 lg:w-1/12 p-2
-            hidden md:block
-            ">
+hidden md:block
+">
                 {{--            <td class="px-6 py-4">--}}
                 @permission('р.Доски / удалить')
                 <button
@@ -306,23 +310,23 @@
                     wire:click="delete({{ $board->id }})"
                     class="
 {{--                        bg-red-500 hover:bg-red-700 --}}
-                        text-red-300
-                        hover:text-red-500
-                        hover:underline
-                        font-bold py-2 px-4 rounded"
+        text-red-300
+        hover:text-red-500
+        hover:underline
+        font-bold py-2 px-4 rounded"
                 >
                     X
                 </button>
                 @endpermission
 
 
-{{--                @permission('р.Лиды / доска конфиг')--}}
-{{--                <a href="{{ route('board.config',['board'=>$board->id ]) }}"--}}
-{{--                   class="hover:text-gray-600 text-white"--}}
-{{--                   title="конфиг доски"--}}
-{{--                   wire:navigate--}}
-{{--                >⚙️</a>--}}
-{{--                @endpermission--}}
+                {{--                @permission('р.Лиды / доска конфиг')--}}
+                {{--                <a href="{{ route('board.config',['board'=>$board->id ]) }}"--}}
+                {{--                   class="hover:text-gray-600 text-white"--}}
+                {{--                   title="конфиг доски"--}}
+                {{--                   wire:navigate--}}
+                {{--                >⚙️</a>--}}
+                {{--                @endpermission--}}
 
 
                 {{--            </td>--}}
