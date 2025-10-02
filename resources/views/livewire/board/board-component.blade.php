@@ -142,16 +142,17 @@
             {{--                <td class="px-6 py-4">{{ $board->id }}</td>--}}
             {{--            <td class="px-6 py-4">--}}
             <div
-                @if( $loop->index%2 )
-                    class="w-full md:from-gray-100
-lg:flex-1 p-2
-bg-gradient-to-b from-orange-200 to-gray-100
-"
-                @else
-                    class="w-full                md:from-white md:to-white
-                lg:flex-1 p-2
-bg-gradient-to-b from-orange-200 to-gray-100 "
-                @endif
+                    class="w-full
+                        lg:flex-1 p-2
+                        bg-gradient-to-b
+{{--                        from-orange-200 --}}
+                        md:from-gray-100 to-gray-100
+                        @if( $loop->index%2 )
+                        md:from-gray-100
+                        @else
+                        md:from-white md:to-white
+                        @endif
+                        "
             >
 
                 <div class="font-bold pb-2
