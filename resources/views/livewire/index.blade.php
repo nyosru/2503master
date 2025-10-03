@@ -347,6 +347,12 @@
 
             {{--                показ типа доски--}}
             <div class="md:w-1/2 flex justify-center">
+                <img src="/process/board_preview.png" alt="" border="0" class="w-full rounded shadow-xl
+                border border-1 border-blue-700" />
+            </div>
+
+            @if(1==2)
+            <div class="md:w-1/2 flex justify-center">
                 <div class="relative w-full max-w-lg">
                     <div
                         class="absolute -top-6 -left-6 w-64 h-64 bg-blue-200 rounded-lg opacity-50 animate-pulse"></div>
@@ -407,6 +413,8 @@
                     </div>
                 </div>
             </div>
+            @endif
+
         </div>
     </section>
     <section class="bg-white p-4">
