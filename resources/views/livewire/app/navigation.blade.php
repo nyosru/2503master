@@ -8,13 +8,20 @@
     <div class="flex flex-col sm:w-full sm:flex-row space-y-2 pb-3">
         <div class="w-full sm:w-1/2 sm:pt-3 flex justify-center items-center py-2">
             <a href="/" class="hover:underline text-2xl pl-4 font-bold">
-{{--                <livewire:app.navigation-upravlyator-logo />--}}
-                <livewire:app.navigation-logo />
+                {{--                <livewire:app.navigation-upravlyator-logo />--}}
+                <livewire:app.navigation-logo/>
             </a>
         </div>
         <div class="sm:w-1/2 flex justify-center items-center ">
             @guest
-                <livewire:auth.vk />
+                <div class="flex flex-row items-center  space-x-1">
+                    <div class="flex-1 transition duration-300 transform hover:-translate-y-1">
+                        <livewire:app.auth-link/>
+                    </div>
+                    <div class="flex-1 transition duration-300 transform hover:-translate-y-1">
+                        <livewire:auth.vk/>
+                    </div>
+                </div>
             @else
                 <div>
                     <div x-data="{ open: false }">

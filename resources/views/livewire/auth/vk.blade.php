@@ -18,7 +18,8 @@
             }
 
             .VkIdWebSdk__button {
-                background: #0077ff;
+                xbackground: #0077ff;
+                background: #073697;
                 cursor: pointer;
                 transition: all .1s ease-out;
             }
@@ -60,8 +61,12 @@
 
         <button
             wire:click="redir"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg
-        transition duration-300 transform hover:-translate-y-1
+            class="bg-blue-400
+{{--            hover:bg-blue-700 --}}
+            text-white px-4 py-[0.4rem]
+{{--            rounded-xl--}}
+            rounded-full
+{{--        transition duration-300 transform hover:-translate-y-1--}}
         "
         >
             <svg class="inline" width="28" height="28" viewBox="0 0 28 28" fill="none"
