@@ -250,8 +250,11 @@
     @endif
 
     <!-- первый блок -->
-    <section class="py-16 bg-gradient-to-r from-blue-50 to-indigo-50 w-full">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+    <section class="py-16 w-full
+        bg-gradient-to-r from-blue-50 to-indigo-50 ">
+        <div class="container mx-auto
+            px-4
+                flex flex-col md:flex-row items-center">
 
             {{--                блок с нопкой модальный--}}
             @if(1==2)
@@ -329,7 +332,7 @@
             @endif
 
             @if(1==1)
-                <div class="w-full md:w-1/2 sm::w-1/2  mb-10 md:mb-0 px-2">
+                <div class="w-full md:w-1/2 sm::w-1/2 mb-10 px-2">
                     <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Управляйте лидами с&nbsp;помощью
                         интуитивных канбан-досок</h1>
                     <p class="text-lg text-gray-700 mb-8">Создавайте собственные доски, перемещайте задачи между
