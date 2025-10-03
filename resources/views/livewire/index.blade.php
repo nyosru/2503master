@@ -250,7 +250,7 @@
     @endif
 
     <!-- первый блок -->
-    <section class="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
+    <section class="py-16 bg-gradient-to-r from-blue-50 to-indigo-50 w-full">
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
 
             {{--                блок с нопкой модальный--}}
@@ -329,8 +329,8 @@
             @endif
 
             @if(1==1)
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Управляйте лидами с помощью
+                <div class="md:w-1/2 mb-10 md:mb-0 px-2">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Управляйте лидами с&nbsp;помощью
                         интуитивных канбан-досок</h1>
                     <p class="text-lg text-gray-700 mb-8">Создавайте собственные доски, перемещайте задачи между
                         колонками, назначайте права доступа сотрудникам и повышайте эффективность вашей команды.</p>
@@ -346,7 +346,7 @@
             @endif
 
             {{--                показ типа доски--}}
-            <div class="md:w-1/2 flex justify-center">
+            <div class="md:w-1/2 flex justify-center px-2 ">
                 <img src="/process/board_preview.png" alt="" border="0" class="w-full rounded shadow-xl
                 border border-1 border-blue-700" />
             </div>
