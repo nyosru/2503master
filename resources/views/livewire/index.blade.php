@@ -329,7 +329,7 @@
             @endif
 
             @if(1==1)
-                <div class="md:w-1/2 mb-10 md:mb-0 px-2">
+                <div class="w-full md:w-1/2 mb-10 md:mb-0 px-2">
                     <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Управляйте лидами с&nbsp;помощью
                         интуитивных канбан-досок</h1>
                     <p class="text-lg text-gray-700 mb-8">Создавайте собственные доски, перемещайте задачи между
@@ -346,7 +346,7 @@
             @endif
 
             {{--                показ типа доски--}}
-            <div class="md:w-1/2 flex justify-center px-2 ">
+            <div class="w-full md:w-1/2 flex justify-center px-2 ">
                 <img src="/process/board_preview.png" alt="" border="0" class="w-full rounded shadow-xl
                 border border-1 border-blue-700" />
             </div>
